@@ -1,0 +1,34 @@
+.prejoin {
+  display: grid;
+  grid-template-columns: fit-content;
+  grid-template-rows: auto min-content;
+  gap: 2rem;
+  height: 100vh;
+  justify-content: center;
+  align-items: center;
+}
+
+.prejoin main {
+  display: grid;
+  grid-template-columns: 700px 400px;
+  gap: 32px;
+}
+
+.placeholder {
+  width: 100%;
+  height: 100%;
+  border-radius: 4px;
+  background: #2f2f2f;
+}
+
+.prejoin footer {
+  margin-bottom: 10px;
+}
+
+button.dangerButton {
+  background: #981010;
+}
+
+button.dangerButton:hover {
+  background: #b81212;
+}

@@ -1,0 +1,11 @@
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@100;300;400;600&display=swap');
+
+video {
+  border-radius: 4px;
+  width: 100%;
+}
+
+body,
+.react-tiny-popover-container {
+  color: #fff;
+}
