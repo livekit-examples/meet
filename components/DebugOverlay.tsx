@@ -65,10 +65,13 @@ export const DebugOverlay = ({ room }: DebugProps) => {
     if (value == '') {
       return;
     }
+    onClose();
+
     event.target.value = '';
     let isReconnect = false;
     switch (value) {
       case 'signal-reconnect':
+      case 'migration':
         isReconnect = true;
 
       // fall through
@@ -81,14 +84,14 @@ export const DebugOverlay = ({ room }: DebugProps) => {
         title: 'Reconnecting...',
         description: `current server: ${room.engine.connectedServerAddress}`,
         status: 'info',
-        duration: 4000,
+        duration: 3000,
       });
       room.once(RoomEvent.Reconnected, () => {
         toast({
           title: 'Reconnected',
           description: `reconnected server: ${room.engine.connectedServerAddress}`,
           status: 'success',
-          duration: 4000,
+          duration: 3000,
         });
       });
     }
@@ -120,6 +123,7 @@ export const DebugOverlay = ({ room }: DebugProps) => {
               <option value="signal-reconnect">Signal reconnect</option>
               <option value="speaker">Speaker update</option>
               <option value="server-leave">Server booted</option>
+              <option value="migration">Migration (Cloud-only)</option>
             </Select>
           </Td>
         </Tr>
