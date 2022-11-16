@@ -1,0 +1,46 @@
+name: Test
+
+on:
+  # Trigger the workflow on push or pull request,
+  # but only for the main branch
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  run-linters:
+    name: Run linters
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out Git repository
+        uses: actions/checkout@v2
+
+      - uses: actions/setup-node@v2
+        with:
+          node-version: '16.x'
+
+      - uses: actions/cache@v2
+        with:
+          path: |
+            ~/.npm
+            ~/.config/yarn/global
+          key: ${{ runner.os }}-node-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+
+      - name: Install Yarn
+        run: |
+          npm install -g yarn
+          yarn install
+      - name: Run ESLint
+        run: yarn lint
+
+      - name: Run Prettier
+        run: yarn format:check
+
+      - name: Build
+        run: yarn build
