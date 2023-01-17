@@ -2,6 +2,8 @@
 
 This project is home for a simple video conferencing app built with LiveKit.
 
+> There's a new meet example app available! Redesigned from the ground up! Check it out [here](https://github.com/livekit/components-js)
+
 ## Tech Stack
 
 - This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
