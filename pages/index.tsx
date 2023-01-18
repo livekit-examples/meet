@@ -1,6 +1,7 @@
 import { GridLayout } from '@livekit/components-react';
 import type { NextPage } from 'next';
 import { useRouter } from 'next/router';
+import styles from '../styles/Home.module.css';
 
 const Home: NextPage = () => {
   const router = useRouter();
@@ -10,7 +11,7 @@ const Home: NextPage = () => {
 
   return (
     <>
-      <main>
+      <main className={styles.main}>
         <div className="header">
           <img src="/images/livekit-meet-home.svg" alt="LiveKit Meet" width="480" height="60" />
           <h2>
@@ -18,7 +19,11 @@ const Home: NextPage = () => {
             and Next.js.
           </h2>
         </div>
-        <button style={{ fontSize: '1.25rem', paddingInline: '1.25rem' }} className="lk-button" onClick={startMeeting}>
+        <button
+          style={{ fontSize: '1.25rem', paddingInline: '1.25rem' }}
+          className="lk-button"
+          onClick={startMeeting}
+        >
           Start Meeting
         </button>
       </main>
