@@ -87,19 +87,19 @@
     loglevel "^1.8.1"
     rxjs "^7.5.6"
 
-"@livekit/components-react@^0.1.16":
-  version "0.1.16"
-  resolved "https://registry.yarnpkg.com/@livekit/components-react/-/components-react-0.1.16.tgz#0d01728be5ddbb7b2bb96fb21e1e4b7e00f6195e"
-  integrity sha512-wQwaTTRlzBy3FsxoWv1PhH5BBkSCbqzim5Zc7pw46mo4Txx5p+yJPyyWMy0ZbtmuPu3IlfUqQWQh8cjR7DBX8g==
+"@livekit/components-react@^0.1.18":
+  version "0.1.18"
+  resolved "https://registry.yarnpkg.com/@livekit/components-react/-/components-react-0.1.18.tgz#1c660e29ca15be83a75353953b66a5d47dafc5de"
+  integrity sha512-c3Q8KM2AkCa6ieCCbTo8mzbdsA/NOvbR4V/FT38Ahw3VhuleCNl3HuPJZ6oI5ROgs1XGiAaLPt1SWXejcRDeUg==
   dependencies:
     "@floating-ui/react" "^0.15.1"
     "@livekit/components-core" "0.1.12"
     clsx "^1.2.1"
 
-"@livekit/components-styles@^0.1.6":
-  version "0.1.6"
-  resolved "https://registry.yarnpkg.com/@livekit/components-styles/-/components-styles-0.1.6.tgz#cc961f78662290cfed6ff264a705ad412c36a849"
-  integrity sha512-8ZpabmWy+oZR3gaDB5ptLiP5Ln2iKuZadaa5DkcinNiHYSFcRlmsx2ESddvS/4+ObD+R0HINe3xUYX/WLS6kzA==
+"@livekit/components-styles@^0.1.8":
+  version "0.1.8"
+  resolved "https://registry.yarnpkg.com/@livekit/components-styles/-/components-styles-0.1.8.tgz#b088d28dd5f8afec8050f57573ecd66c612ee4d7"
+  integrity sha512-hUoIrIzRTgftqLdfNVvmsFqj5LMgYJCmiUxbn3jsnPtnRl+DFWOhnoliJL9UnRG2mtkx/62kXa+bF63FRgTlXQ==
 
 "@next/env@12.2.4":
   version "12.2.4"
