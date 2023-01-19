@@ -1,12 +1,7 @@
-.container {
+.main {
   display: grid;
-  grid-template-columns: 700px;
-  gap: 16px;
-  height: 100vh;
+  gap: 1rem;
   justify-content: center;
-  align-items: center;
-}
-
-.container main {
-  text-align: center;
+  place-content: center;
+  justify-items: center;
 }

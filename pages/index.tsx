@@ -1,5 +1,3 @@
-import { Box, Button, Text } from '@chakra-ui/react';
-import { typography } from '@livekit/livekit-chakra-theme';
 import type { NextPage } from 'next';
 import { useRouter } from 'next/router';
 import styles from '../styles/Home.module.css';
@@ -11,23 +9,39 @@ const Home: NextPage = () => {
   };
 
   return (
-    <Box className={styles.container} bg="cld.bg1" minH="100vh">
-      <main>
-        <Text textStyle={['h3', 'h3', 'h2']} color="marketing.lk-white" mb={['2rem', null]}>
-          LiveKit Meet
-        </Text>
-        <Button
+    <>
+      <main className={styles.main}>
+        <div className="header">
+          <img src="/images/livekit-meet-home.svg" alt="LiveKit Meet" width="480" height="60" />
+          <h2>
+            Open source video conferencing app built on LiveKit&nbsp;Components, LiveKit&nbsp;Cloud,
+            and Next.js.
+          </h2>
+        </div>
+        <button
+          style={{ fontSize: '1.25rem', paddingInline: '1.25rem' }}
+          className="lk-button"
           onClick={startMeeting}
-          variant="primary"
-          py="0.75rem"
-          px="2rem"
-          {...typography.textStyles['h5-mono']}
-          _hover={{ backgroundColor: '#4963B0' }}
         >
           Start Meeting
-        </Button>
+        </button>
       </main>
-    </Box>
+      <footer>
+        Hosted on{' '}
+        <a href="https://livekit.io/cloud?ref=meet" target="_blank" rel="noreferrer">
+          LiveKit Cloud
+        </a>
+        . Source code on{' '}
+        <a
+          href="https://github.com/livekit/components-js?ref=meet"
+          target="_blank"
+          rel="noreferrer"
+        >
+          GitHub
+        </a>
+        .
+      </footer>
+    </>
   );
 };
 
@@ -38,10 +52,10 @@ function generateRoomId(): string {
 }
 
 function randomString(length: number): string {
-  var result = '';
-  var characters = 'abcdefghijklmnopqrstuvwxyz0123456789';
-  var charactersLength = characters.length;
-  for (var i = 0; i < length; i++) {
+  let result = '';
+  const characters = 'abcdefghijklmnopqrstuvwxyz0123456789';
+  const charactersLength = characters.length;
+  for (let i = 0; i < length; i++) {
     result += characters.charAt(Math.floor(Math.random() * charactersLength));
   }
   return result;
