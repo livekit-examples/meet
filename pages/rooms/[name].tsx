@@ -12,6 +12,7 @@ import type { NextPage } from 'next';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 import { useMemo, useState } from 'react';
+import { DebugMode } from '../../lib/Debug';
 
 const Home: NextPage = () => {
   const router = useRouter();
@@ -96,6 +97,7 @@ const ActiveRoom = ({ roomName, userChoices, onLeave }: ActiveRoomProps) => {
       onDisconnected={onLeave}
     >
       <VideoConference />
+      <DebugMode />
     </LiveKitRoom>
   );
 };
