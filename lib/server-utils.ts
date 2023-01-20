@@ -5,10 +5,10 @@ export function getRoomClient(): RoomServiceClient {
   return new RoomServiceClient(getLiveKitURL());
 }
 
-export function getLiveKitURL(region?: string): string {
-  let targetKey = 'NEXT_PUBLIC_LK_SERVER_URL';
-  if (region) {
-    targetKey = `NEXT_PUBLIC_LK_SERVER_URL${region}`.toUpperCase();
+export function getLiveKitURL(region?: string | string[]): string {
+  let targetKey = 'LIVEKIT_URL';
+  if (region && !Array.isArray(region)) {
+    targetKey = `LIVEKIT_URL_${region}`.toUpperCase();
   }
   const url = process.env[targetKey];
   if (!url) {
