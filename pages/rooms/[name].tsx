@@ -4,6 +4,7 @@ import {
   LocalUserChoices,
   useToken,
   VideoConference,
+  formatChatMessageLinks,
 } from '@livekit/components-react';
 import { LogLevel, RoomOptions } from 'livekit-client';
 
@@ -102,7 +103,7 @@ const ActiveRoom = ({ roomName, userChoices, onLeave }: ActiveRoomProps) => {
           audio={userChoices.audioEnabled}
           onDisconnected={onLeave}
         >
-          <VideoConference />
+          <VideoConference chatMessageFormatter={formatChatMessageLinks} />
           <DebugMode logLevel={LogLevel.info} />
         </LiveKitRoom>
       )}
