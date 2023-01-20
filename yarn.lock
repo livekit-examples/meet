@@ -84,28 +84,30 @@
   resolved "https://registry.yarnpkg.com/@juggle/resize-observer/-/resize-observer-3.4.0.tgz#08d6c5e20cf7e4cc02fd181c4b0c225cd31dbb60"
   integrity sha512-dfLbk+PwWvFzSxwk3n5ySL0hfBog779o8h68wK/7/APo/7cgyWp5jcXockbxdk5kFRkbeXWm4Fbi9FrdN381sA==
 
-"@livekit/components-core@0.1.13":
-  version "0.1.13"
-  resolved "https://registry.yarnpkg.com/@livekit/components-core/-/components-core-0.1.13.tgz#fef5eca81525e9f9c9c3dd75cb2f7108ec786395"
-  integrity sha512-DX3dtc3zgMQj8FXkUu/vgwj1u5/XpD7I3d8n6AdB0RWREQXisT3xCKQcoP8tdOnc28DjPf9/mnddHZxBiPz/pg==
+"@livekit/components-core@0.2.0":
+  version "0.2.0"
+  resolved "https://registry.yarnpkg.com/@livekit/components-core/-/components-core-0.2.0.tgz#86502645f3ed0b4a551cffd2965e23901feb3297"
+  integrity sha512-mXz83N7oymb5o9nrWCKIf3meSczgim4Tb5RJBmeTqX69XC3QWzybj410IP3GONhDvIJiq+ftRWR3Hbx4BunMaA==
   dependencies:
     loglevel "^1.8.1"
     rxjs "^7.8.0"
 
-"@livekit/components-react@^0.1.20":
-  version "0.1.20"
-  resolved "https://registry.yarnpkg.com/@livekit/components-react/-/components-react-0.1.20.tgz#e46c28a1063bce2c581e15467a7f4aaa3f309d05"
-  integrity sha512-ypjmI5GbbtJYm8MlpEe0HXTPgEDFd7SOJNG9p9lTDc85y2+M7s5UIoNfb4/o8aqCMwTWbm+4MWrlOH2LYQooZg==
+"@livekit/components-react@^0.2.0":
+  version "0.2.0"
+  resolved "https://registry.yarnpkg.com/@livekit/components-react/-/components-react-0.2.0.tgz#31b05ebb79eb7e34d1f926f0e80e573af1a30214"
+  integrity sha512-B2o3dhITLNoeGGWFgMyTfTC/vMiHiOPjZCTxed/vuVT1oeGg30dcMvxw4QysJ++k2XTPl7CJIKUDEjlMLrPinA==
   dependencies:
     "@floating-ui/react" "^0.15.1"
-    "@livekit/components-core" "0.1.13"
+    "@livekit/components-core" "0.2.0"
     "@react-hook/resize-observer" "^1.2.6"
     clsx "^1.2.1"
+    email-regex "^5.0.0"
+    url-regex "^5.0.0"
 
 "@livekit/components-styles@^0.1.9":
-  version "0.1.9"
-  resolved "https://registry.yarnpkg.com/@livekit/components-styles/-/components-styles-0.1.9.tgz#f4060355244a3774cf15c57a28605375f3701daa"
-  integrity sha512-YZPSk+1e/D2Pizg6P25qcIvyf7GCR8HCz/tm4KOUs+Ni4wDUtV8mIb22vugksCZJkJO4EF/arJwPzNNVbB3jSg==
+  version "0.1.10"
+  resolved "https://registry.yarnpkg.com/@livekit/components-styles/-/components-styles-0.1.10.tgz#1b489a4022304ddb19b9e973c050a56aaa4b21ca"
+  integrity sha512-z3EUgfueCfnbv3Qvn2kpTFWdDKMMan4l/QgLPxDgauH6Z75Cms+ht8ybVzEuij/8wVQIzq7d/G5f1B6ujbKlWw==
 
 "@next/env@12.2.4":
   version "12.2.4"
@@ -668,6 +670,11 @@ ecdsa-sig-formatter@1.0.11:
   dependencies:
     safe-buffer "^5.0.1"
 
+email-regex@^5.0.0:
+  version "5.0.0"
+  resolved "https://registry.yarnpkg.com/email-regex/-/email-regex-5.0.0.tgz#c8b1f4c7f251929b53586a7a3891da09c8dea26d"
+  integrity sha512-he76Cm8JFxb6OGQHabLBPdsiStgPmJeAEhctmw0uhonUh1pCBsHpI6/rB62s2GNzjBb0YlhIcF/1l9Lp5AfH0Q==
+
 emoji-regex@^9.2.2:
   version "9.2.2"
   resolved "https://registry.yarnpkg.com/emoji-regex/-/emoji-regex-9.2.2.tgz#840c8803b0d8047f4ff0cf963176b32d4ef3ed72"
@@ -1200,6 +1207,11 @@ internal-slot@^1.0.3:
     get-intrinsic "^1.1.0"
     has "^1.0.3"
     side-channel "^1.0.4"
+
+ip-regex@^4.1.0:
+  version "4.3.0"
+  resolved "https://registry.yarnpkg.com/ip-regex/-/ip-regex-4.3.0.tgz#687275ab0f57fa76978ff8f4dddc8a23d5990db5"
+  integrity sha512-B9ZWJxHHOHUhUjCPrMpLD4xEq35bUTClHM1S6CBU5ixQnkZmwipwgc96vAd7AAGM9TGHvJR+Uss+/Ak6UphK+Q==
 
 is-bigint@^1.0.1:
   version "1.0.4"
@@ -2058,6 +2070,11 @@ text-table@^0.2.0:
   resolved "https://registry.yarnpkg.com/text-table/-/text-table-0.2.0.tgz#7f5ee823ae805207c00af2df4a84ec3fcfa570b4"
   integrity sha512-N+8UisAXDGk8PFXP4HAzVR9nbfmVJ3zYLAWiTIoqC5v5isinhr+r5uaO8+7r3BMfuNIufIsA7RdpVgacC2cSpw==
 
+tlds@^1.203.0:
+  version "1.236.0"
+  resolved "https://registry.yarnpkg.com/tlds/-/tlds-1.236.0.tgz#a118eebe33261c577e3a3025144faeabb7dd813c"
+  integrity sha512-oP2PZ3KeGlgpHgsEfrtva3/K9kzsJUNliQSbCfrJ7JMCWFoCdtG+9YMq/g2AnADQ1v5tVlbtvKJZ4KLpy/P6MA==
+
 to-regex-range@^5.0.1:
   version "5.0.1"
   resolved "https://registry.yarnpkg.com/to-regex-range/-/to-regex-range-5.0.1.tgz#1648c44aae7c8d988a326018ed72f5b4dd0392e4"
@@ -2152,6 +2169,14 @@ uri-js@^4.2.2:
   integrity sha512-7rKUyy33Q1yc98pQ1DAmLtwX109F7TIfWlW1Ydo8Wl1ii1SeHieeh0HHfPeL2fMXK6z0s8ecKs9frCuLJvndBg==
   dependencies:
     punycode "^2.1.0"
+
+url-regex@^5.0.0:
+  version "5.0.0"
+  resolved "https://registry.yarnpkg.com/url-regex/-/url-regex-5.0.0.tgz#8f5456ab83d898d18b2f91753a702649b873273a"
+  integrity sha512-O08GjTiAFNsSlrUWfqF1jH0H1W3m35ZyadHrGv5krdnmPPoxP27oDTqux/579PtaroiSGm5yma6KT1mHFH6Y/g==
+  dependencies:
+    ip-regex "^4.1.0"
+    tlds "^1.203.0"
 
 use-sync-external-store@1.2.0:
   version "1.2.0"
