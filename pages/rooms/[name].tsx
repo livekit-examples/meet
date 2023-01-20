@@ -5,13 +5,15 @@ import {
   useToken,
   VideoConference,
 } from '@livekit/components-react';
-import { RoomOptions } from 'livekit-client';
+import { LogLevel, RoomOptions } from 'livekit-client';
 
 import type { NextPage } from 'next';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 import { useMemo, useState } from 'react';
+import { getLiveKitURL } from '../../lib/server-utils';
 import { DebugMode } from '../../lib/Debug';
+import { useServerUrl } from '../../lib/client-utils';
 
 const Home: NextPage = () => {
   const router = useRouter();
@@ -58,6 +60,7 @@ export default Home;
 type ActiveRoomProps = {
   userChoices: LocalUserChoices;
   roomName: string;
+  region?: string;
   onLeave?: () => void;
 };
 const ActiveRoom = ({ roomName, userChoices, onLeave }: ActiveRoomProps) => {
@@ -69,6 +72,11 @@ const ActiveRoom = ({ roomName, userChoices, onLeave }: ActiveRoomProps) => {
       name: userChoices.username,
     },
   });
+
+  const router = useRouter();
+  const { region } = router.query;
+
+  const liveKitUrl = useServerUrl(region as string | undefined);
 
   const roomOptions = useMemo((): RoomOptions => {
     return {
@@ -84,16 +92,20 @@ const ActiveRoom = ({ roomName, userChoices, onLeave }: ActiveRoomProps) => {
   }, [userChoices]);
 
   return (
-    <LiveKitRoom
-      token={token}
-      serverUrl={process.env.NEXT_PUBLIC_LK_SERVER_URL}
-      options={roomOptions}
-      video={userChoices.videoEnabled}
-      audio={userChoices.audioEnabled}
-      onDisconnected={onLeave}
-    >
-      <VideoConference />
-      <DebugMode />
-    </LiveKitRoom>
+    <>
+      {liveKitUrl && (
+        <LiveKitRoom
+          token={token}
+          serverUrl={liveKitUrl}
+          options={roomOptions}
+          video={userChoices.videoEnabled}
+          audio={userChoices.audioEnabled}
+          onDisconnected={onLeave}
+        >
+          <VideoConference />
+          <DebugMode logLevel={LogLevel.info} />
+        </LiveKitRoom>
+      )}
+    </>
   );
 };

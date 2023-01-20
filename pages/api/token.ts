@@ -2,7 +2,6 @@ import { NextApiRequest, NextApiResponse } from 'next';
 
 import { AccessToken } from 'livekit-server-sdk';
 import type { AccessTokenOptions, VideoGrant } from 'livekit-server-sdk';
-import { getLiveKitURL } from '../../lib/clients';
 import { TokenResult } from '../../lib/types';
 
 const apiKey = process.env.LIVEKIT_API_KEY;
@@ -19,7 +18,7 @@ const roomPattern = /\w{4}\-\w{4}/;
 
 export default async function handleToken(req: NextApiRequest, res: NextApiResponse) {
   try {
-    const { roomName, identity, name, metadata, region } = req.query;
+    const { roomName, identity, name, metadata } = req.query;
 
     if (typeof identity !== 'string' || typeof roomName !== 'string') {
       res.status(403).end();
@@ -31,9 +30,6 @@ export default async function handleToken(req: NextApiRequest, res: NextApiRespo
     }
     if (Array.isArray(metadata)) {
       throw Error('provide max one metadata string');
-    }
-    if (Array.isArray(region)) {
-      throw Error('provide max one region string');
     }
 
     // enforce room name to be xxxx-xxxx
@@ -61,7 +57,6 @@ export default async function handleToken(req: NextApiRequest, res: NextApiRespo
     const result: TokenResult = {
       identity,
       accessToken: token,
-      url: getLiveKitURL(region),
     };
 
     res.status(200).json(result);

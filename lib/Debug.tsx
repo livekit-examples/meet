@@ -1,9 +1,9 @@
 import * as React from 'react';
 import { useRoomContext } from '@livekit/components-react';
-import { setLogLevel } from 'livekit-client';
+import { setLogLevel, LogLevel } from 'livekit-client';
 
-export const useDebugMode = () => {
-  setLogLevel('debug');
+export const useDebugMode = ({ logLevel }: { logLevel?: LogLevel }) => {
+  setLogLevel(logLevel ?? 'debug');
   const room = useRoomContext();
   React.useEffect(() => {
     // @ts-expect-error
@@ -16,7 +16,7 @@ export const useDebugMode = () => {
   });
 };
 
-export const DebugMode = () => {
-  useDebugMode();
+export const DebugMode = ({ logLevel }: { logLevel?: LogLevel }) => {
+  useDebugMode({ logLevel });
   return <></>;
 };
