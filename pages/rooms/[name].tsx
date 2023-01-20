@@ -4,9 +4,8 @@ import {
   LocalUserChoices,
   useToken,
   VideoConference,
-  Chat,
 } from '@livekit/components-react';
-import { AudioCaptureOptions, RoomOptions, VideoCaptureOptions } from 'livekit-client';
+import { RoomOptions } from 'livekit-client';
 
 import type { NextPage } from 'next';
 import Head from 'next/head';
@@ -19,9 +18,6 @@ const Home: NextPage = () => {
   const { name: roomName } = router.query;
 
   const [preJoinChoices, setPreJoinChoices] = useState<LocalUserChoices | undefined>(undefined);
-  if (!roomName || Array.isArray(roomName)) {
-    return <h2>no room param passed</h2>;
-  }
   return (
     <>
       <Head>
@@ -30,7 +26,7 @@ const Home: NextPage = () => {
       </Head>
 
       <main>
-        {preJoinChoices ? (
+        {roomName && !Array.isArray(roomName) && preJoinChoices ? (
           <ActiveRoom
             roomName={roomName}
             userChoices={preJoinChoices}
