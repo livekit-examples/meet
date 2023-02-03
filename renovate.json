@@ -5,14 +5,11 @@
       "schedule": "before 6am on the first day of the month",
       "matchDepTypes": ["devDependencies"],
       "matchUpdateTypes": ["patch", "minor"],
-      "rangeStrategy": "auto",
       "groupName": "devDependencies (non-major)"
     },
     {
-      "schedule": "every hour",
       "matchSourceUrlPrefixes": ["https://github.com/livekit/"],
       "matchUpdateTypes": ["patch", "minor"],
-      "rangeStrategy": "replace",
       "groupName": "LiveKit dependencies (non-major)"
     }
   ]
