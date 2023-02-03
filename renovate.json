@@ -9,8 +9,9 @@
     },
     {
       "matchSourceUrlPrefixes": ["https://github.com/livekit/"],
-      "matchUpdateTypes": ["patch", "minor"],
-      "groupName": "LiveKit dependencies (non-major)"
+      "rangeStrategy": "replace",
+      "groupName": "LiveKit dependencies (non-major)",
+      "automerge": true
     }
   ]
 }
