@@ -75,7 +75,7 @@
     loglevel "^1.8.1"
     rxjs "^7.8.0"
 
-"@livekit/components-react@^0.2.5":
+"@livekit/components-react@0.2.5":
   version "0.2.5"
   resolved "https://registry.yarnpkg.com/@livekit/components-react/-/components-react-0.2.5.tgz#0c0fb46af68679ef688abf6624137cd5d48cd131"
   integrity sha512-e2XOd8YnqK8Ym6VjSRVZ9oZzx5tYZGvaJiOykx3489QRLpgRxe2fGajvk9QURFf66EDDTQQoLpBUX87nAH9zug==
@@ -84,7 +84,7 @@
     "@react-hook/latest" "^1.0.3"
     clsx "^1.2.1"
 
-"@livekit/components-styles@^0.1.13":
+"@livekit/components-styles@0.1.13":
   version "0.1.13"
   resolved "https://registry.yarnpkg.com/@livekit/components-styles/-/components-styles-0.1.13.tgz#6a510fb2b40a791492a41ecb2a6ff0b6b90d09ed"
   integrity sha512-BFSr1PM+escUV+BJrheARchfoX0brUnvQjjXtzPwAP42K5U6DW+NH8XOfSH4GAZnUyeexmmYxWfOCYPYwv9IbA==
@@ -1371,7 +1371,7 @@ levn@^0.4.1:
     prelude-ls "^1.2.1"
     type-check "~0.4.0"
 
-livekit-client@^1.6.2:
+livekit-client@1.6.2:
   version "1.6.2"
   resolved "https://registry.yarnpkg.com/livekit-client/-/livekit-client-1.6.2.tgz#a5452ac557e67da099642d01d5fe571254bdedef"
   integrity sha512-OJIcBY8fzS8tf4vvBL/LNjmEHMFRLivnRjBDjbSiJ8nqV7UB7iSN40RMAejp/OPjhB5ys1u8tt6m3RIXrG2TJA==
@@ -1386,10 +1386,10 @@ livekit-client@^1.6.2:
     ua-parser-js "^1.0.2"
     webrtc-adapter "^8.1.1"
 
-livekit-server-sdk@^1.0.3:
-  version "1.1.0"
-  resolved "https://registry.yarnpkg.com/livekit-server-sdk/-/livekit-server-sdk-1.1.0.tgz#6e8c6a0172c6ba223ab5a279d845f38f92783626"
-  integrity sha512-U0KrE8WjoF8hKwCEW9CIO9q1AtFKT5HBY9qvnjEyyzjnwKJedSx8cvMjwtN8TM0SYXcrmp9kImiAnM5gM6W27w==
+livekit-server-sdk@1.0.3:
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/livekit-server-sdk/-/livekit-server-sdk-1.0.3.tgz#6f47cde75f4d6194b30b21cc87dd16b284ae6333"
+  integrity sha512-zZsAUnwv9ahArwaeCAH3Kzybk/UTk4WqrKYzarEMbVYGPUX0GFp/yC0HLcdF0MJ5hvJtcFgslrNTU7tWdGpBFw==
   dependencies:
     axios "^0.21.0"
     camelcase-keys "^7.0.0"
