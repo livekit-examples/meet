@@ -13,7 +13,7 @@
     "@livekit/components-styles": "^0.1.13",
     "livekit-client": "^1.6.2",
     "livekit-server-sdk": "^1.0.3",
-    "next": "12.2.4",
+    "next": "12.3.4",
     "next-seo": "^5.15.0",
     "react": "18.2.0",
     "react-dom": "18.2.0"
