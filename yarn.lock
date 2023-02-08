@@ -63,10 +63,10 @@
   resolved "https://registry.yarnpkg.com/@humanwhocodes/object-schema/-/object-schema-1.2.1.tgz#b520529ec21d8e5945a1851dfd1c32e94e39ff45"
   integrity sha512-ZnQMnLV4e7hDlUvw8H+U8ASL02SS2Gn6+9Ac3wGGLIe7+je2AeAOxPY+izIPJDfFDb7eDjev0Us8MO1iFRN8hA==
 
-"@livekit/components-core@0.2.6":
-  version "0.2.6"
-  resolved "https://registry.yarnpkg.com/@livekit/components-core/-/components-core-0.2.6.tgz#5f1cac93894f976370a23fd4c6a458477659c10c"
-  integrity sha512-7yWmEgTi9vLp0IEcyuGGK8qnpbp+s1f6TxO5ZuahWWmR8PFXmeeummau4MFSmkuvdw7W5NcirgRG9dVK9N2Aig==
+"@livekit/components-core@0.2.7":
+  version "0.2.7"
+  resolved "https://registry.yarnpkg.com/@livekit/components-core/-/components-core-0.2.7.tgz#dfd8dbd5e0ce4c72b8f0ab85c3467022470edc7b"
+  integrity sha512-ITqn0D3mIWgDGpwLmQ1t6hYp3Yp7LDlaYOlGXa0j362NlUn5q+yf1HBOmcdf6788GiwLlru4zEjRo8yG14jMLA==
   dependencies:
     "@floating-ui/dom" "^1.1.0"
     email-regex "^5.0.0"
@@ -75,12 +75,12 @@
     loglevel "^1.8.1"
     rxjs "^7.8.0"
 
-"@livekit/components-react@0.2.6":
-  version "0.2.6"
-  resolved "https://registry.yarnpkg.com/@livekit/components-react/-/components-react-0.2.6.tgz#debe9531ec576d2d5a73eba7224fa5ac5ded75a9"
-  integrity sha512-yhnudBlTZqnrls59yMbCyok9Q3pMzW1BAsCKhzK0V1Zode3feEP6u3x25z/B34BwKRC/w/sVJxZ06tv0tKdxqg==
+"@livekit/components-react@0.2.7":
+  version "0.2.7"
+  resolved "https://registry.yarnpkg.com/@livekit/components-react/-/components-react-0.2.7.tgz#c680c72b3874156a4e4434e6246cf2f9499b4430"
+  integrity sha512-3pqbO/SLzbHw3KDH1UV9L3cpyOQRgpeKqavJE75qMtta41OgS7HatCbnYtLE+xfpMpl8hzqp56HOBCqyDGzk/Q==
   dependencies:
-    "@livekit/components-core" "0.2.6"
+    "@livekit/components-core" "0.2.7"
     "@react-hook/latest" "^1.0.3"
     clsx "^1.2.1"
 
