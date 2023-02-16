@@ -84,10 +84,10 @@
     "@react-hook/latest" "^1.0.3"
     clsx "^1.2.1"
 
-"@livekit/components-styles@0.1.13":
-  version "0.1.13"
-  resolved "https://registry.yarnpkg.com/@livekit/components-styles/-/components-styles-0.1.13.tgz#6a510fb2b40a791492a41ecb2a6ff0b6b90d09ed"
-  integrity sha512-BFSr1PM+escUV+BJrheARchfoX0brUnvQjjXtzPwAP42K5U6DW+NH8XOfSH4GAZnUyeexmmYxWfOCYPYwv9IbA==
+"@livekit/components-styles@0.1.14":
+  version "0.1.14"
+  resolved "https://registry.yarnpkg.com/@livekit/components-styles/-/components-styles-0.1.14.tgz#93b49624c2b1b1fe30949f487d8b5970aae8afaf"
+  integrity sha512-6kwksXZE2OVVOcJPVBfS9b6cXKfNJdSAAkWS2CkxeAbyx5uMDiMudgA6J+B/NNOzpnog0dxK/pUrh0yvn2pltw==
 
 "@next/env@12.3.4":
   version "12.3.4"
