@@ -63,10 +63,10 @@
   resolved "https://registry.yarnpkg.com/@humanwhocodes/object-schema/-/object-schema-1.2.1.tgz#b520529ec21d8e5945a1851dfd1c32e94e39ff45"
   integrity sha512-ZnQMnLV4e7hDlUvw8H+U8ASL02SS2Gn6+9Ac3wGGLIe7+je2AeAOxPY+izIPJDfFDb7eDjev0Us8MO1iFRN8hA==
 
-"@livekit/components-core@0.2.7":
-  version "0.2.7"
-  resolved "https://registry.yarnpkg.com/@livekit/components-core/-/components-core-0.2.7.tgz#dfd8dbd5e0ce4c72b8f0ab85c3467022470edc7b"
-  integrity sha512-ITqn0D3mIWgDGpwLmQ1t6hYp3Yp7LDlaYOlGXa0j362NlUn5q+yf1HBOmcdf6788GiwLlru4zEjRo8yG14jMLA==
+"@livekit/components-core@0.3.0":
+  version "0.3.0"
+  resolved "https://registry.yarnpkg.com/@livekit/components-core/-/components-core-0.3.0.tgz#783f8ffae39cf5315df47e724d01581bf9915732"
+  integrity sha512-zFNStKZvW3U2uT3XA67OLvRwGctc3gROJSHFfSBafB6Odgxn3Zd95ykLbFy1QlUc+jldSwO6KLXt1djoRX7yUA==
   dependencies:
     "@floating-ui/dom" "^1.1.0"
     email-regex "^5.0.0"
@@ -75,12 +75,12 @@
     loglevel "^1.8.1"
     rxjs "^7.8.0"
 
-"@livekit/components-react@0.3.0":
-  version "0.3.0"
-  resolved "https://registry.yarnpkg.com/@livekit/components-react/-/components-react-0.3.0.tgz#ba9467341c1215340522f636e134e0606bfc6a68"
-  integrity sha512-iFpki8ajtwXJGA57dQAcsxCpKEI5LMFThkCD1WLarfHrPunmO8Qm0PAIhHnfOe6IL9Dwp6Vj9RsjOxpWMUjGVA==
+"@livekit/components-react@0.4.0":
+  version "0.4.0"
+  resolved "https://registry.yarnpkg.com/@livekit/components-react/-/components-react-0.4.0.tgz#7869f8416fc2abd74afd924db1a285f729f0be40"
+  integrity sha512-X+GrgGSNXuJYdYbuF1hrhiOK40C/RIvyaCuF9JiaQU2wXn9McUDcABXV/iPC5n+Ecf7H/dNY/AVqvNcQlOBugg==
   dependencies:
-    "@livekit/components-core" "0.2.7"
+    "@livekit/components-core" "0.3.0"
     "@react-hook/latest" "^1.0.3"
     clsx "^1.2.1"
 
@@ -1525,10 +1525,10 @@ levn@^0.4.1:
     prelude-ls "^1.2.1"
     type-check "~0.4.0"
 
-livekit-client@1.6.4:
-  version "1.6.4"
-  resolved "https://registry.yarnpkg.com/livekit-client/-/livekit-client-1.6.4.tgz#57eb7ed69fb7b3c3ab2ccff931e310f2c206ec5c"
-  integrity sha512-SsN7CxXACP0YusIWgyOWGUn0qlUpRrG3iLTvrtW/TVepY2FMHK4iw2e/vmrmTDdF3RRsGrPFFlXKlkmzUdUk1w==
+livekit-client@1.6.5:
+  version "1.6.5"
+  resolved "https://registry.yarnpkg.com/livekit-client/-/livekit-client-1.6.5.tgz#3b3f13fbbf0822824ceff19ee1b5d5002a9b3a19"
+  integrity sha512-UDGSvmPW3gQnvbkFFpfDx0lIlTtp4tUv7HynIb8oT4JbVvvkGMaqMJ3vjxrz0EciasZZsbMAayMMwNnkPh2Pjw==
   dependencies:
     async-await-queue "^1.2.1"
     events "^3.3.0"
