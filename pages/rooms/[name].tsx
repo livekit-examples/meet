@@ -6,14 +6,7 @@ import {
   VideoConference,
   formatChatMessageLinks,
 } from '@livekit/components-react';
-import {
-  LogLevel,
-  RoomOptions,
-  TrackPublishOptions,
-  VideoCaptureOptions,
-  VideoPreset,
-  VideoPresets,
-} from 'livekit-client';
+import { LogLevel, RoomOptions, VideoPresets } from 'livekit-client';
 
 import type { NextPage } from 'next';
 import Head from 'next/head';
@@ -24,7 +17,7 @@ import { useServerUrl } from '../../lib/client-utils';
 
 const Home: NextPage = () => {
   const router = useRouter();
-  const { name: roomName, hq } = router.query;
+  const { name: roomName } = router.query;
 
   const [preJoinChoices, setPreJoinChoices] = useState<LocalUserChoices | undefined>(undefined);
   return (
