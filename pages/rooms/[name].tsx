@@ -6,19 +6,25 @@ import {
   VideoConference,
   formatChatMessageLinks,
 } from '@livekit/components-react';
-import { LogLevel, RoomOptions } from 'livekit-client';
+import {
+  LogLevel,
+  RoomOptions,
+  TrackPublishOptions,
+  VideoCaptureOptions,
+  VideoPreset,
+  VideoPresets,
+} from 'livekit-client';
 
 import type { NextPage } from 'next';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 import { useMemo, useState } from 'react';
-import { getLiveKitURL } from '../../lib/server-utils';
 import { DebugMode } from '../../lib/Debug';
 import { useServerUrl } from '../../lib/client-utils';
 
 const Home: NextPage = () => {
   const router = useRouter();
-  const { name: roomName } = router.query;
+  const { name: roomName, hq } = router.query;
 
   const [preJoinChoices, setPreJoinChoices] = useState<LocalUserChoices | undefined>(undefined);
   return (
@@ -73,7 +79,7 @@ const ActiveRoom = ({ roomName, userChoices, onLeave }: ActiveRoomProps) => {
   });
 
   const router = useRouter();
-  const { region } = router.query;
+  const { region, hq } = router.query;
 
   const liveKitUrl = useServerUrl(region as string | undefined);
 
@@ -81,6 +87,13 @@ const ActiveRoom = ({ roomName, userChoices, onLeave }: ActiveRoomProps) => {
     return {
       videoCaptureDefaults: {
         deviceId: userChoices.videoDeviceId ?? undefined,
+        resolution: hq === 'true' ? VideoPresets.h2160 : VideoPresets.h720,
+      },
+      publishDefaults: {
+        videoSimulcastLayers:
+          hq === 'true'
+            ? [VideoPresets.h1080, VideoPresets.h720]
+            : [VideoPresets.h540, VideoPresets.h216],
       },
       audioCaptureDefaults: {
         deviceId: userChoices.audioDeviceId ?? undefined,
@@ -88,7 +101,7 @@ const ActiveRoom = ({ roomName, userChoices, onLeave }: ActiveRoomProps) => {
       adaptiveStream: { pixelDensity: 'screen' },
       dynacast: true,
     };
-  }, [userChoices]);
+  }, [userChoices, hq]);
 
   return (
     <>
