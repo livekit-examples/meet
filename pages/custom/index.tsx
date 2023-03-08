@@ -14,13 +14,13 @@ export default function CustomRoomConnection() {
   }
 
   return (
-    <>
+    <div data-lk-theme="default">
       {liveKitUrl && (
         <LiveKitRoom token={token} serverUrl={liveKitUrl}>
           <VideoConference chatMessageFormatter={formatChatMessageLinks} />
           <DebugMode logLevel={LogLevel.info} />
         </LiveKitRoom>
       )}
-    </>
+    </div>
   );
 }

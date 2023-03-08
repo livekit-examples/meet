@@ -13,16 +13,17 @@ function Tabs(props: { children: ReactElement[] }) {
   let tabs = React.Children.map(props.children, (child, index) => {
     return (
       <button
+        className="lk-button"
         onClick={() => setActiveIndex(index)}
-        className={activeIndex === index ? 'lk-button tab-button active' : 'lk-button tab-button'}
+        aria-pressed={activeIndex === index}
       >
         {child?.props.label}
       </button>
     );
   });
   return (
-    <div>
-      <div>{tabs}</div>
+    <div className={styles.tabContainer}>
+      <div className={styles.tabSelect}>{tabs}</div>
       {props.children[activeIndex]}
     </div>
   );
@@ -34,13 +35,19 @@ function DemoMeetingTab({ label }: { label: string }) {
     router.push(`/rooms/${generateRoomId()}`);
   };
   return (
-    <button
-      style={{ fontSize: '1.25rem', paddingInline: '1.25rem' }}
-      className="lk-button"
-      onClick={startMeeting}
-    >
-      Start Meeting
-    </button>
+    <div className={styles.tabContent}>
+      <div className="lk-form-control" style={{ width: '100%' }}>
+        <center>
+          <button
+            style={{ fontSize: '1.25rem', paddingInline: '1.25rem', margin: '2rem 0' }}
+            className="lk-button"
+            onClick={startMeeting}
+          >
+            Start Meeting
+          </button>
+        </center>
+      </div>
+    </div>
   );
 }
 
@@ -53,22 +60,35 @@ function CustomConnectionTab({ label }: { label: string }) {
     router.push(`/custom/?liveKitUrl=${liveKitUrl}&token=${token}`);
   };
   return (
-    <div>
-      <label>
-        LiveKit URL
-        <input type="url" onChange={(ev) => setLiveKitUrl(ev.target.value)}></input>
-      </label>
-      <label>
-        Token
-        <input type="text" onChange={(ev) => setToken(ev.target.value)}></input>
-      </label>
-      <button
-        style={{ fontSize: '1.25rem', paddingInline: '1.25rem' }}
-        className="lk-button"
-        onClick={join}
-      >
-        Connect
-      </button>
+    <div className={styles.tabContent}>
+      <div className="lk-form-control" style={{ width: '100%' }}>
+        {/* <label>LiveKit URL</label> */}
+        <div className={styles.userInputs}>
+          <input
+            type="url"
+            placeholder="URL"
+            onChange={(ev) => setLiveKitUrl(ev.target.value)}
+          ></input>
+          {/* <label>Token</label> */}
+          <input
+            type="text"
+            placeholder="Token"
+            onChange={(ev) => setToken(ev.target.value)}
+          ></input>
+        </div>
+        <button
+          style={{
+            fontSize: '1.25rem',
+            paddingInline: '1.25rem',
+            width: '100%',
+            marginTop: '0.5rem',
+          }}
+          className="lk-button"
+          onClick={join}
+        >
+          Connect
+        </button>
+      </div>
     </div>
   );
 }
@@ -89,7 +109,7 @@ const Home: NextPage = () => {
           <CustomConnectionTab label="Custom" />
         </Tabs>
       </main>
-      <footer>
+      <footer data-lk-theme="default" style={{ fontFamily: 'var(--lk-font-family)' }}>
         Hosted on{' '}
         <a href="https://livekit.io/cloud?ref=meet" target="_blank" rel="noreferrer">
           LiveKit Cloud

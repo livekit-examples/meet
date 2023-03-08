@@ -5,3 +5,27 @@
   place-content: center;
   justify-items: center;
 }
+
+.tabContainer {
+  width: 400px;
+}
+
+.tabSelect {
+  display: flex;
+  justify-content: center;
+}
+
+.tabContent {
+  display: flex;
+  justify-content: center;
+}
+
+.userInputs {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.userInputs input {
+  font-size: 1rem;
+}
