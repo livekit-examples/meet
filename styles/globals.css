@@ -14,8 +14,12 @@ main {
   height: 100%;
 }
 
+main {
+  padding-bottom: 100px;
+}
+
 .header {
-  max-width: 600px;
+  max-width: 500px;
   padding-inline: 2rem;
 }
 
