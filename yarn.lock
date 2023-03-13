@@ -68,31 +68,31 @@
   resolved "https://registry.yarnpkg.com/@humanwhocodes/object-schema/-/object-schema-1.2.1.tgz#b520529ec21d8e5945a1851dfd1c32e94e39ff45"
   integrity sha512-ZnQMnLV4e7hDlUvw8H+U8ASL02SS2Gn6+9Ac3wGGLIe7+je2AeAOxPY+izIPJDfFDb7eDjev0Us8MO1iFRN8hA==
 
-"@livekit/components-core@0.3.1":
-  version "0.3.1"
-  resolved "https://registry.yarnpkg.com/@livekit/components-core/-/components-core-0.3.1.tgz#3e5ad7f1230f2a49900773986a33732641678c8e"
-  integrity sha512-+m43k3ippgRLZ6fuRV8e3VWK7R23+VFKiSWmu1hDZYYWYZp60Z/sShx17AD1Gl6Da7NtVnccYO5xU29Hpibpfg==
+"@livekit/components-core@0.4.0":
+  version "0.4.0"
+  resolved "https://registry.yarnpkg.com/@livekit/components-core/-/components-core-0.4.0.tgz#64cd208701623adfe0927de064fd6fb3a88bfa06"
+  integrity sha512-2H3ltfU3pdYn8mF+JjeCLKlmEji1NjJTo4N9XHQZKP0gkMIh37AwONEpHLogcgSa980w8H5or4HVlQpmz2/cMQ==
   dependencies:
     "@floating-ui/dom" "^1.1.0"
     email-regex "^5.0.0"
-    global-tld-list "^0.0.1002"
+    global-tld-list "^0.0.1030"
     ip-regex "^5.0.0"
     loglevel "^1.8.1"
     rxjs "^7.8.0"
 
-"@livekit/components-react@0.4.1":
-  version "0.4.1"
-  resolved "https://registry.yarnpkg.com/@livekit/components-react/-/components-react-0.4.1.tgz#a2d823c108e4b0468d3fb4cef9dcf068930fa290"
-  integrity sha512-hY5aDXaoYaaluKKQ11y7rhomBQwiD1uT2o/mJaVFevI0LrH74HIRs2v8hGJie7sO8d6SaWymPpIsrbSVQvjJWg==
+"@livekit/components-react@0.5.0":
+  version "0.5.0"
+  resolved "https://registry.yarnpkg.com/@livekit/components-react/-/components-react-0.5.0.tgz#dfd64d5b8d989bd54d2e9cfcc61e67b293731f30"
+  integrity sha512-sbn3UnkalgssBL980TWlikE95jK+kht+fbjq9ssl4MGg9KNk+s3+uJFhiFpAkAEar47XOf74LCmS0O6ndguN4g==
   dependencies:
-    "@livekit/components-core" "0.3.1"
+    "@livekit/components-core" "0.4.0"
     "@react-hook/latest" "^1.0.3"
     clsx "^1.2.1"
 
-"@livekit/components-styles@0.1.14":
-  version "0.1.14"
-  resolved "https://registry.yarnpkg.com/@livekit/components-styles/-/components-styles-0.1.14.tgz#93b49624c2b1b1fe30949f487d8b5970aae8afaf"
-  integrity sha512-6kwksXZE2OVVOcJPVBfS9b6cXKfNJdSAAkWS2CkxeAbyx5uMDiMudgA6J+B/NNOzpnog0dxK/pUrh0yvn2pltw==
+"@livekit/components-styles@0.2.0":
+  version "0.2.0"
+  resolved "https://registry.yarnpkg.com/@livekit/components-styles/-/components-styles-0.2.0.tgz#323b42161969e631ac0dfcadb734a07c59a89cbb"
+  integrity sha512-GhpBqmpKBsD3q4Gl1aBz2msJN11/1D94jlUa6+YHkb4BIQOgBtj6a4kj9AerTHq7X0QQ5KcELJ0iebs2sgFFnA==
 
 "@next/env@12.3.4":
   version "12.3.4"
@@ -1169,10 +1169,10 @@ glob@^7.1.3, glob@^7.2.0:
     once "^1.3.0"
     path-is-absolute "^1.0.0"
 
-global-tld-list@^0.0.1002:
-  version "0.0.1002"
-  resolved "https://registry.yarnpkg.com/global-tld-list/-/global-tld-list-0.0.1002.tgz#56a33120c33773837d5d4bec18ae3c83929ae6f0"
-  integrity sha512-11yCbAiy37cLCsb4EZElHdgK08gqJinBLrlWifycRG+8cSymU+SvZ6lBHzfKXwYl/e4hB3o+RCnl1rnR/rkAYA==
+global-tld-list@^0.0.1030:
+  version "0.0.1030"
+  resolved "https://registry.yarnpkg.com/global-tld-list/-/global-tld-list-0.0.1030.tgz#9910fbb3fd52f23f3e878ababb0645246f9cc2b3"
+  integrity sha512-uV9gNIGv1jDHSzewV/8Mnnkn+/JeoLnI3iY4p3XLauBt5J8xzqP4qAXQQvlkbTQoh1e3M8P0VcGDCz1lH42upA==
 
 globals@^13.19.0:
   version "13.20.0"
