@@ -14,10 +14,6 @@ main {
   height: 100%;
 }
 
-main {
-  padding-bottom: 100px;
-}
-
 .header {
   max-width: 500px;
   padding-inline: 2rem;
@@ -47,7 +43,7 @@ footer {
   text-align: center;
   color: rgba(255, 255, 255, 0.6);
   background-color: var(--lk-bg);
-  border-top: 1px solid rgba(255, 255, 255, .15);
+  border-top: 1px solid rgba(255, 255, 255, 0.15);
 }
 
 footer a {
