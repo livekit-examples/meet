@@ -5,3 +5,33 @@
   place-content: center;
   justify-items: center;
 }
+
+.tabContainer {
+  width: 100%;
+  max-width: 500px;
+  padding-inline: 2rem;
+}
+
+.tabSelect {
+  display: flex;
+  justify-content: stretch;
+  gap: .125rem;
+  padding: .125rem;
+  margin: 0 auto 1.5rem;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: .5rem;
+}
+
+.tabSelect > * {
+  width: 100%;
+}
+
+.tabContent {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  gap: .75rem;
+  padding: 1.5rem;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: .5rem;
+}
