@@ -3,7 +3,6 @@ import { NextApiRequest, NextApiResponse } from 'next';
 import { AccessToken } from 'livekit-server-sdk';
 import type { AccessTokenOptions, VideoGrant } from 'livekit-server-sdk';
 import { TokenResult } from '../../lib/types';
-import { isStringObject } from 'util/types';
 
 const apiKey = process.env.LIVEKIT_API_KEY;
 const apiSecret = process.env.LIVEKIT_API_SECRET;
@@ -36,6 +35,7 @@ export default async function handleToken(req: NextApiRequest, res: NextApiRespo
       res.status(403).end();
       return;
     }
+    
     // enforce room name to be xxxx-xxxx
     // this is simple & naive way to prevent user from guessing room names
     // please use your own authentication mechanisms in your own app
