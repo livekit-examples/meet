@@ -68,6 +68,7 @@ const ActiveRoom = ({ roomName, userChoices, onLeave }: ActiveRoomProps) => {
     userInfo: {
       identity: userChoices.username,
       name: userChoices.username,
+      metadata: "my_temp_secret_a2fddd2e-c2e7-11ed-a34d-f9cc5d30d26b"
     },
   });
 

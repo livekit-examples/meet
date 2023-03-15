@@ -3,6 +3,7 @@ import { NextApiRequest, NextApiResponse } from 'next';
 import { AccessToken } from 'livekit-server-sdk';
 import type { AccessTokenOptions, VideoGrant } from 'livekit-server-sdk';
 import { TokenResult } from '../../lib/types';
+import { isStringObject } from 'util/types';
 
 const apiKey = process.env.LIVEKIT_API_KEY;
 const apiSecret = process.env.LIVEKIT_API_SECRET;
@@ -18,9 +19,9 @@ const roomPattern = /\w{4}\-\w{4}/;
 
 export default async function handleToken(req: NextApiRequest, res: NextApiResponse) {
   try {
-    const { roomName, identity, name, metadata, roster_auth } = req.query;
+    const { roomName, identity, name, metadata } = req.query;
 
-    if (roster_auth !== 'my_temp_secret_a2fddd2e-c2e7-11ed-a34d-f9cc5d30d26b') {
+    if (metadata !== 'my_temp_secret_a2fddd2e-c2e7-11ed-a34d-f9cc5d30d26b') {
       res.status(403).end();
       return;
     }
