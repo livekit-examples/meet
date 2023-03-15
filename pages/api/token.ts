@@ -21,11 +21,6 @@ export default async function handleToken(req: NextApiRequest, res: NextApiRespo
   try {
     const { roomName, identity, name, metadata } = req.query;
 
-    if (metadata !== 'my_temp_secret_a2fddd2e-c2e7-11ed-a34d-f9cc5d30d26b') {
-      res.status(403).end();
-      return;
-    }
-
     if (typeof identity !== 'string' || typeof roomName !== 'string') {
       res.status(403).end();
       return;
@@ -37,7 +32,10 @@ export default async function handleToken(req: NextApiRequest, res: NextApiRespo
     if (Array.isArray(metadata)) {
       throw Error('provide max one metadata string');
     }
-
+    if (metadata && JSON.parse(metadata)['roster_auth'] !== 'my_temp_secret_a2fddd2e-c2e7-11ed-a34d-f9cc5d30d26b') {
+      res.status(403).end();
+      return;
+    }
     // enforce room name to be xxxx-xxxx
     // this is simple & naive way to prevent user from guessing room names
     // please use your own authentication mechanisms in your own app
