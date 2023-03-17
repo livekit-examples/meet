@@ -1536,10 +1536,10 @@ levn@^0.4.1:
     prelude-ls "^1.2.1"
     type-check "~0.4.0"
 
-livekit-client@1.6.9:
-  version "1.6.9"
-  resolved "https://registry.yarnpkg.com/livekit-client/-/livekit-client-1.6.9.tgz#a77dcd4434b9cb4efb2c30a834ea576d6d00f719"
-  integrity sha512-fmstsrsO4QRVqBx8OJS/tInEimrdpyM5iarWeGC1AyWstVhJ9HHcuD3o0suvaqtyvUZUW8wZOaJF3oKbrPFjFg==
+livekit-client@1.7.0:
+  version "1.7.0"
+  resolved "https://registry.yarnpkg.com/livekit-client/-/livekit-client-1.7.0.tgz#7090599bb3ce06b585830c0e9535641fade3c827"
+  integrity sha512-LXjSNc+7mkptjMzG3kgWk/SfiME0Ug1GPt8niK55S7ht5gYpncwPIg/N+QqLJqn2YpYVT827bK6sExX7Vlt/vQ==
   dependencies:
     async-await-queue "^1.2.1"
     events "^3.3.0"
