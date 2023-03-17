@@ -16,7 +16,7 @@ export default function CustomRoomConnection() {
   return (
     <main data-lk-theme="default">
       {liveKitUrl && (
-        <LiveKitRoom token={token} serverUrl={liveKitUrl}>
+        <LiveKitRoom token={token} serverUrl={liveKitUrl} audio={true} video={true}>
           <VideoConference chatMessageFormatter={formatChatMessageLinks} />
           <DebugMode logLevel={LogLevel.info} />
         </LiveKitRoom>
