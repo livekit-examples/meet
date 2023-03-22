@@ -80,10 +80,10 @@
     loglevel "^1.8.1"
     rxjs "^7.8.0"
 
-"@livekit/components-react@0.6.1":
-  version "0.6.1"
-  resolved "https://registry.yarnpkg.com/@livekit/components-react/-/components-react-0.6.1.tgz#403d83488dfafc06736e19a85a1018ae4a13bbf0"
-  integrity sha512-9/7E9bGqj4r1QKrwUUdoegsG/vNG44zCDj+qo8WxhlX614gmYTD2IcLQSsTSoleS3ZL4Eaqb6bl4EXviakuiow==
+"@livekit/components-react@0.6.2":
+  version "0.6.2"
+  resolved "https://registry.yarnpkg.com/@livekit/components-react/-/components-react-0.6.2.tgz#2149d8bcb88596b944cbef5d7c80a4fdc5285fd2"
+  integrity sha512-uMcsnxvHnObkgwWaGNNvRFZKa5noNNw/kFRl/fZ9Wg4CK4LyCBPZtNJjSoUuPZ3FSijkoF2mDMXk72beUI/5jA==
   dependencies:
     "@livekit/components-core" "0.5.1"
     "@react-hook/latest" "^1.0.3"
