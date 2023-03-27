@@ -1,11 +1,16 @@
 import type { NextPage } from 'next';
 import { useRouter } from 'next/router';
-import React, { ReactElement, ReactNode } from 'react';
-import { useState } from 'react';
+import React, { ReactElement, useCallback, useEffect, useState } from 'react';
 import styles from '../styles/Home.module.css';
 
-function Tabs(props: { children: ReactElement[] }) {
-  const [activeIndex, setActiveIndex] = useState(0);
+interface TabsProps {
+  children: ReactElement[];
+  selectedIndex?: number;
+  onTabSelected?: (index: number) => void;
+}
+
+function Tabs(props: TabsProps) {
+  const activeIndex = props.selectedIndex ?? 0;
   if (!props.children) {
     return <></>;
   }
@@ -14,7 +19,9 @@ function Tabs(props: { children: ReactElement[] }) {
     return (
       <button
         className="lk-button"
-        onClick={() => setActiveIndex(index)}
+        onClick={() => {
+          if (props.onTabSelected) props.onTabSelected(index);
+        }}
         aria-pressed={activeIndex === index}
       >
         {child?.props.label}
@@ -79,6 +86,30 @@ function CustomConnectionTab({ label }: { label: string }) {
 }
 
 const Home: NextPage = () => {
+  const router = useRouter();
+  const [tabIndex, setTabIndex] = useState<number>(0);
+  const { tab } = router.query;
+
+  useEffect(() => {
+    if (tab === 'custom') {
+      setTabIndex(1);
+    } else {
+      setTabIndex(0);
+    }
+  }, [tab]);
+
+  const onTabSelected = useCallback((index: number) => {
+    setTabIndex(index);
+    const tab = index === 1 ? 'custom' : 'demo';
+    router.push(
+      {},
+      { query: { tab } },
+      {
+        shallow: true,
+      },
+    );
+  }, []);
+
   return (
     <>
       <main className={styles.main} data-lk-theme="default">
@@ -89,7 +120,7 @@ const Home: NextPage = () => {
             and Next.js.
           </h2>
         </div>
-        <Tabs>
+        <Tabs selectedIndex={tabIndex} onTabSelected={onTabSelected}>
           <DemoMeetingTab label="Demo" />
           <CustomConnectionTab label="Custom" />
         </Tabs>
