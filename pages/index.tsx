@@ -116,7 +116,14 @@ const Home: NextPage = () => {
         <div className="header">
           <img src="/images/livekit-meet-home.svg" alt="LiveKit Meet" width="360" height="45" />
           <h2>
-            Open source video conferencing app built on LiveKit&nbsp;Components, LiveKit&nbsp;Cloud,
+            Open source video conferencing app built on{' '}
+            <a href="https://github.com/livekit/components-js?ref=meet" rel="noopener">
+              LiveKit&nbsp;Components
+            </a>
+            ,{' '}
+            <a href="https://livekit.io/cloud?ref=meet" rel="noopener">
+              LiveKit&nbsp;Cloud
+            </a>{' '}
             and Next.js.
           </h2>
         </div>
@@ -127,15 +134,11 @@ const Home: NextPage = () => {
       </main>
       <footer data-lk-theme="default">
         Hosted on{' '}
-        <a href="https://livekit.io/cloud?ref=meet" target="_blank" rel="noreferrer">
+        <a href="https://livekit.io/cloud?ref=meet" rel="noopener">
           LiveKit Cloud
         </a>
         . Source code on{' '}
-        <a
-          href="https://github.com/livekit/components-js?ref=meet"
-          target="_blank"
-          rel="noreferrer"
-        >
+        <a href="https://github.com/livekit/meet?ref=meet" rel="noopener">
           GitHub
         </a>
         .

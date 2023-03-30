@@ -47,12 +47,18 @@ footer {
   border-top: 1px solid rgba(255, 255, 255, 0.15);
 }
 
-footer a {
+footer a,
+h2 a {
   color: #ff6352;
   text-decoration-color: #a33529;
   text-underline-offset: 0.125em;
 }
 
-footer a:hover {
+footer a:hover,
+h2 a {
   text-decoration-color: #ff6352;
+}
+
+h2 a {
+  text-decoration: none;
 }
