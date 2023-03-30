@@ -127,8 +127,8 @@ const Home: NextPage = () => {
             ,{' '}
             <a href="https://livekit.io/cloud?ref=meet" target="_blank" rel="noreferrer">
               LiveKit&nbsp;Cloud
-            </a>
-            , and Next.js.
+            </a>{' '}
+            and Next.js.
           </h2>
         </div>
         <Tabs selectedIndex={tabIndex} onTabSelected={onTabSelected}>
