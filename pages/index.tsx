@@ -1,4 +1,4 @@
-import type { NextPage } from 'next';
+import type { NextPage, GetServerSideProps, InferGetServerSidePropsType } from 'next';
 import { useRouter } from 'next/router';
 import React, { ReactElement, useCallback, useEffect, useState } from 'react';
 import styles from '../styles/Home.module.css';
@@ -85,31 +85,21 @@ function CustomConnectionTab({ label }: { label: string }) {
   );
 }
 
-const Home: NextPage = () => {
+export const getServerSideProps: GetServerSideProps<{ tabIndex: number }> = async ({
+  query,
+  res,
+}) => {
+  res.setHeader('Cache-Control', 'public, max-age=7200');
+  const tabIndex = query.tab === 'custom' ? 1 : 0;
+  return { props: { tabIndex } };
+};
+
+const Home = ({ tabIndex }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
   const router = useRouter();
-  const [tabIndex, setTabIndex] = useState<number>(0);
-  const { tab } = router.query;
-
-  useEffect(() => {
-    if (tab === 'custom') {
-      setTabIndex(1);
-    } else {
-      setTabIndex(0);
-    }
-  }, [tab]);
-
-  const onTabSelected = useCallback((index: number) => {
-    setTabIndex(index);
+  function onTabSelected(index: number) {
     const tab = index === 1 ? 'custom' : 'demo';
-    router.push(
-      {},
-      { query: { tab } },
-      {
-        shallow: true,
-      },
-    );
-  }, []);
-
+    router.push({ query: { tab } });
+  }
   return (
     <>
       <main className={styles.main} data-lk-theme="default">
