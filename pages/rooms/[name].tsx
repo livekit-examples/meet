@@ -33,7 +33,6 @@ const Home: NextPage = () => {
             roomName={roomName}
             userChoices={preJoinChoices}
             onLeave={() => {
-              setPreJoinChoices(undefined);
               router.push('/');
             }}
           ></ActiveRoom>
