@@ -131,11 +131,7 @@ const Home: NextPage = () => {
           LiveKit Cloud
         </a>
         . Source code on{' '}
-        <a
-          href="https://github.com/livekit/components-js?ref=meet"
-          target="_blank"
-          rel="noreferrer"
-        >
+        <a href="https://github.com/livekit/meet?ref=meet" target="_blank" rel="noreferrer">
           GitHub
         </a>
         .
