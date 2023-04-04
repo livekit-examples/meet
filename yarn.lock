@@ -1556,10 +1556,10 @@ livekit-client@1.7.1:
     ua-parser-js "^1.0.2"
     webrtc-adapter "^8.1.1"
 
-livekit-server-sdk@1.1.0:
-  version "1.1.0"
-  resolved "https://registry.yarnpkg.com/livekit-server-sdk/-/livekit-server-sdk-1.1.0.tgz#6e8c6a0172c6ba223ab5a279d845f38f92783626"
-  integrity sha512-U0KrE8WjoF8hKwCEW9CIO9q1AtFKT5HBY9qvnjEyyzjnwKJedSx8cvMjwtN8TM0SYXcrmp9kImiAnM5gM6W27w==
+livekit-server-sdk@1.1.2:
+  version "1.1.2"
+  resolved "https://registry.yarnpkg.com/livekit-server-sdk/-/livekit-server-sdk-1.1.2.tgz#a6d2e6c52c93288c2930546359b05376ae556dbe"
+  integrity sha512-xgAqnCSL1GWhhKt5yXB+7KvJqyHCYK8JrKOP/a6HcxOF03uvP89ci3meuIdIb+zstFNGrjwvzGNNDYTLD48qtQ==
   dependencies:
     axios "^0.21.0"
     camelcase-keys "^7.0.0"
