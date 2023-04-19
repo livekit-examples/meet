@@ -80,31 +80,30 @@
   resolved "https://registry.yarnpkg.com/@humanwhocodes/object-schema/-/object-schema-1.2.1.tgz#b520529ec21d8e5945a1851dfd1c32e94e39ff45"
   integrity sha512-ZnQMnLV4e7hDlUvw8H+U8ASL02SS2Gn6+9Ac3wGGLIe7+je2AeAOxPY+izIPJDfFDb7eDjev0Us8MO1iFRN8hA==
 
-"@livekit/components-core@0.6.3":
-  version "0.6.3"
-  resolved "https://registry.yarnpkg.com/@livekit/components-core/-/components-core-0.6.3.tgz#a375eddd813f2e59eb439cf4252b186e3d000fa9"
-  integrity sha512-8YJ8Yk2X9i/yno2Q6fpzNKNoumUGKTxBTyXcwPA0N51ILOq6ps0xLHEvomUF1HSdh9mVbuBfhRCZ3lNVR/EuQA==
+"@livekit/components-core@0.6.4":
+  version "0.6.4"
+  resolved "https://registry.yarnpkg.com/@livekit/components-core/-/components-core-0.6.4.tgz#0efc3b171377c10320c315439396a4fd0eda728e"
+  integrity sha512-NCAqvlq3VK4r8z1ZhdEZ0lb0ceh6z1d1E1sqI6mqfRGN+DT4g+3jhhTdhLGkm23gnAo8UBhTnIeLQPIg6bruaw==
   dependencies:
     "@floating-ui/dom" "^1.1.0"
     email-regex "^5.0.0"
     global-tld-list "^0.0.1061"
-    ip-regex "^5.0.0"
     loglevel "^1.8.1"
     rxjs "^7.8.0"
 
-"@livekit/components-react@0.7.3":
-  version "0.7.3"
-  resolved "https://registry.yarnpkg.com/@livekit/components-react/-/components-react-0.7.3.tgz#fdcac3482007dbdf33dccafa06077ef72d33483b"
-  integrity sha512-ux3FQqyr6QNpML2utGSb29pL/RUYS/7xgj3sgm2LS1j0L5kmJgO39jEvRKJEQx2OsTi6jn4Febf9kLoGRgXHfA==
+"@livekit/components-react@0.8.0":
+  version "0.8.0"
+  resolved "https://registry.yarnpkg.com/@livekit/components-react/-/components-react-0.8.0.tgz#55e03c4be0c5a35d821b170e95dcf373101ea79e"
+  integrity sha512-7DD3Eh2OfSpMXygRx+Eur4l55cdYuIsTYwjk+wyk5QrLG1yk1dCsuBSjZ6XQd46TjiWsEN9K66YpsZAvebx/fA==
   dependencies:
-    "@livekit/components-core" "0.6.3"
+    "@livekit/components-core" "0.6.4"
     "@react-hook/latest" "^1.0.3"
     clsx "^1.2.1"
 
-"@livekit/components-styles@0.3.1":
-  version "0.3.1"
-  resolved "https://registry.yarnpkg.com/@livekit/components-styles/-/components-styles-0.3.1.tgz#fd0ecf16bec0801cbb8d755fa82e717e34a6c073"
-  integrity sha512-LCyVY3c9EpjgUvsAp3xCZwJsAHmGWECxgi6IdDVNX0VTZiXO20iZTiJ09gcf1nOu9Dj7T0WKLKKBvxHbPQF49w==
+"@livekit/components-styles@0.3.2":
+  version "0.3.2"
+  resolved "https://registry.yarnpkg.com/@livekit/components-styles/-/components-styles-0.3.2.tgz#b404c68fba21e07595cbde39db0cd5669a1b7b20"
+  integrity sha512-31LjRU3mbRoofVmq1zr2MkAMj6+yLrR+pJ8F/SzxP581+0PEVfvRbmGp48yZ+KWZBRqcLR6PEnT4B+4ZsXJ/Dw==
 
 "@next/env@12.3.4":
   version "12.3.4"
@@ -1306,11 +1305,6 @@ internal-slot@^1.0.4:
     get-intrinsic "^1.1.3"
     has "^1.0.3"
     side-channel "^1.0.4"
-
-ip-regex@^5.0.0:
-  version "5.0.0"
-  resolved "https://registry.yarnpkg.com/ip-regex/-/ip-regex-5.0.0.tgz#cd313b2ae9c80c07bd3851e12bf4fa4dc5480632"
-  integrity sha512-fOCG6lhoKKakwv+C6KdsOnGvgXnmgfmp0myi3bcNwj3qfwPAxRKWEuFhvEFF7ceYIz6+1jRZ+yguLFAmUNPEfw==
 
 is-array-buffer@^3.0.1:
   version "3.0.1"
