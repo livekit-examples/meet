@@ -9,8 +9,8 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@livekit/components-react": "0.8.2",
-    "@livekit/components-styles": "0.3.2",
+    "@livekit/components-react": "1.0.0",
+    "@livekit/components-styles": "1.0.0",
     "livekit-client": "1.9.0",
     "livekit-server-sdk": "1.2.1",
     "next": "12.3.4",
