@@ -1,6 +1,6 @@
-import type { NextPage, GetServerSideProps, InferGetServerSidePropsType } from 'next';
+import type { GetServerSideProps, InferGetServerSidePropsType } from 'next';
 import { useRouter } from 'next/router';
-import React, { ReactElement, useCallback, useEffect, useState } from 'react';
+import React, { ReactElement } from 'react';
 import styles from '../styles/Home.module.css';
 
 interface TabsProps {
@@ -52,36 +52,45 @@ function DemoMeetingTab({ label }: { label: string }) {
 }
 
 function CustomConnectionTab({ label }: { label: string }) {
-  const [liveKitUrl, setLiveKitUrl] = useState<string | undefined>();
-  const [token, setToken] = useState<string | undefined>();
-
   const router = useRouter();
-  const join = () => {
-    router.push(`/custom/?liveKitUrl=${liveKitUrl}&token=${token}`);
+  const onSubmit: React.FormEventHandler<HTMLFormElement> = (event) => {
+    event.preventDefault();
+    const formDate = new FormData(event.target as HTMLFormElement);
+    const serverUrl = formDate.get('serverUrl');
+    const token = formDate.get('token');
+    router.push(`/custom/?liveKitUrl=${serverUrl}&token=${token}`);
   };
   return (
-    <div className={styles.tabContent}>
+    <form className={styles.tabContent} onSubmit={onSubmit}>
       <p style={{ marginTop: 0 }}>
         Connect LiveKit Meet with a custom server using LiveKit Cloud or LiveKit Server.
       </p>
-      {/* <label>LiveKit URL</label> */}
-      <input type="url" placeholder="URL" onChange={(ev) => setLiveKitUrl(ev.target.value)}></input>
-      {/* <label>Token</label> */}
-      <input type="text" placeholder="Token" onChange={(ev) => setToken(ev.target.value)}></input>
+      <input
+        id="serverUrl"
+        name="serverUrl"
+        type="url"
+        placeholder="LiveKit Server URL: wss://<>.livekit.cloud"
+        required
+      />
+      <textarea
+        id="token"
+        name="token"
+        placeholder="Token"
+        required
+        rows={9}
+        style={{ padding: '1px 2px', fontSize: 'inherit', lineHeight: 'inherit' }}
+      />
       <hr
         style={{ width: '100%', borderColor: 'rgba(255, 255, 255, 0.15)', marginBlock: '1rem' }}
       />
       <button
-        style={{
-          paddingInline: '1.25rem',
-          width: '100%',
-        }}
+        style={{ paddingInline: '1.25rem', width: '100%' }}
         className="lk-button"
-        onClick={join}
+        type="submit"
       >
         Connect
       </button>
-    </div>
+    </form>
   );
 }
 
