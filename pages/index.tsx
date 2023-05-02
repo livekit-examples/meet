@@ -55,9 +55,9 @@ function CustomConnectionTab({ label }: { label: string }) {
   const router = useRouter();
   const onSubmit: React.FormEventHandler<HTMLFormElement> = (event) => {
     event.preventDefault();
-    const formDate = new FormData(event.target as HTMLFormElement);
-    const serverUrl = formDate.get('serverUrl');
-    const token = formDate.get('token');
+    const formData = new FormData(event.target as HTMLFormElement);
+    const serverUrl = formData.get('serverUrl');
+    const token = formData.get('token');
     router.push(`/custom/?liveKitUrl=${serverUrl}&token=${token}`);
   };
   return (
@@ -69,7 +69,7 @@ function CustomConnectionTab({ label }: { label: string }) {
         id="serverUrl"
         name="serverUrl"
         type="url"
-        placeholder="LiveKit Server URL: wss://<>.livekit.cloud"
+        placeholder="LiveKit Server URL: wss://*.livekit.cloud"
         required
       />
       <textarea
