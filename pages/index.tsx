@@ -10,6 +10,7 @@ async function livekitConnect(provider: any, worldServer: string, worldName: str
     const aboutResponse = await flatFetch(`${worldServer}/world/${worldName}/about`, {
         responseBodyType: 'json'
     })
+    console.log(aboutResponse.json)
     const url = aboutResponse.json['comms']['fixedAdapter'].replace('signed-login:', '').replace('get-comms-adapter', 'meet-adapter')
     const response = await signedFetch(url, identity.authChain, {
         method: 'POST',
@@ -19,9 +20,13 @@ async function livekitConnect(provider: any, worldServer: string, worldName: str
         'intent': 'dcl:explorer:comms-handshake'
     })
 
-    const connStr = response.json['fixedAdapter']
-    return new URL(connStr.replace('livekit:', ''))
-}
+    if (response.status === 200) {
+      const connStr = response.json['fixedAdapter']
+      console.log(connStr);
+      return new URL(connStr.replace('livekit:', ''))
+    }
+    throw Error(`Failed to connect to LiveKit: ${JSON.stringify(response.text || response.json?.message)}`)
+  }
 
 function JoinScreen(provider: any) {
     const router = useRouter();
