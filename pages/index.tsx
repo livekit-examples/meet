@@ -189,17 +189,21 @@ function DemoMeetingTab({ label }: { label: string }) {
 async function livekitConnect(provider: any) {
     const identity = await loginUsingEthereumProvider(provider)
     const worldServer = 'https://worlds-content-server.decentraland.zone'
-    const roomId = 'world-dev-hugoarregui.dcl.eth'
-    const response = await signedFetch(`${worldServer}/meet-adapter/${roomId}`, identity.authChain, {
-        method: 'POST'
+    const worldName = 'hugoarregui.dcl.eth'
+    const aboutResponse = await flatFetch(`${worldServer}/world/${worldName}/about`, {
+        responseBodyType: 'json'
+    })
+    const url = aboutResponse.json['comms']['fixedAdapter'].replace('signed-login:', '').replace('get-comms-adapter', 'meet-adapter')
+    const response = await signedFetch(url, identity.authChain, {
+        method: 'POST',
+        responseBodyType: 'json'
     }, {
         'signer': 'dcl:explorer',
         'intent': 'dcl:explorer:comms-handshake'
     })
 
-    const json = JSON.parse(response.text!)
-    const connStr = json['fixedAdapter']
-    return connStr.replace('livekit:', '')
+    const connStr = response.json['fixedAdapter']
+    return new URL(connStr.replace('livekit:', ''))
 }
 
 export const getServerSideProps: GetServerSideProps<{ tabIndex: number }> = async ({
@@ -221,7 +225,9 @@ const Home = ({ tabIndex }: InferGetServerSidePropsType<typeof getServerSideProp
     const { status, connect, account, chainId, ethereum } = useMetaMask();
     if (status === "connected") {
         livekitConnect(ethereum).then((adapter) => {
-            console.log(adapter)
+            const livekitUrl = adapter.origin
+            const token = adapter.searchParams.get('access_token')
+            router.push(`/custom?liveKitUrl=${livekitUrl}&token=${token}`)
         })
         return
     }
