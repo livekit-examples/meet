@@ -80,23 +80,23 @@
   resolved "https://registry.yarnpkg.com/@humanwhocodes/object-schema/-/object-schema-1.2.1.tgz#b520529ec21d8e5945a1851dfd1c32e94e39ff45"
   integrity sha512-ZnQMnLV4e7hDlUvw8H+U8ASL02SS2Gn6+9Ac3wGGLIe7+je2AeAOxPY+izIPJDfFDb7eDjev0Us8MO1iFRN8hA==
 
-"@livekit/components-core@0.6.5":
-  version "0.6.5"
-  resolved "https://registry.yarnpkg.com/@livekit/components-core/-/components-core-0.6.5.tgz#80edfdb5db0d807d3a93f96ae8b387b5587ac0bc"
-  integrity sha512-j7TSMcsgQNqhLHLbhY+zaUhoCTafCu3c62cZbUSehnYcKM9TOlkqy0OZl4C9Arb2DPsgHIUdUh8tDiUaD6JZuw==
+"@livekit/components-core@0.6.6":
+  version "0.6.6"
+  resolved "https://registry.yarnpkg.com/@livekit/components-core/-/components-core-0.6.6.tgz#e76aa9a9ef97b1cac9b8a66d8fa3468c26f20878"
+  integrity sha512-ohZfFFJ35BAKa0qLVCi26CdblFFNMGkf3e5Cg2uNKDdNtk/UmDTrZiJceKed5Ij6EU4BgSdCv0pGC5jsucZ5qg==
   dependencies:
     "@floating-ui/dom" "^1.1.0"
     email-regex "^5.0.0"
-    global-tld-list "^0.0.1061"
+    global-tld-list "^0.0.1093"
     loglevel "^1.8.1"
     rxjs "^7.8.0"
 
-"@livekit/components-react@1.0.0":
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/@livekit/components-react/-/components-react-1.0.0.tgz#f28d52eaf8202c7e8be16a1d49a307ce8de0c141"
-  integrity sha512-jg09NCebv/QWN6UeFQFZJzTvXg++In/fOZLNUK4ejLOsmMP3/ZZUEMxLBwgiD2bNhkgzTeWtgx+5uNBRal8bCQ==
+"@livekit/components-react@1.0.2":
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/@livekit/components-react/-/components-react-1.0.2.tgz#1e79dfa543c7fa0b2550c6edc631aa1634124ae6"
+  integrity sha512-pTkqUXFf71+bX0epZ4QMAjH5IfrUyyCLOsSwheoOJkKrzdFB2gi5a4wcCRLyujY/Ig8NHcZwwx1A1Q1Pgqb81A==
   dependencies:
-    "@livekit/components-core" "0.6.5"
+    "@livekit/components-core" "0.6.6"
     "@react-hook/latest" "^1.0.3"
     clsx "^1.2.1"
 
@@ -479,11 +479,6 @@ ast-types-flow@^0.0.7:
   version "0.0.7"
   resolved "https://registry.yarnpkg.com/ast-types-flow/-/ast-types-flow-0.0.7.tgz#f70b735c6bca1a5c9c22d982c3e39e7feba3bdad"
   integrity sha512-eBvWn1lvIApYMhzQMsu9ciLfkBY499mFZlNqG+/9WR7PVlroQw0vG30cOQQbaKz3sCEc44TAOu2ykzqXSNnwag==
-
-async-await-queue@^1.2.1:
-  version "1.2.1"
-  resolved "https://registry.yarnpkg.com/async-await-queue/-/async-await-queue-1.2.1.tgz#baf459f5fbac902b060a88fee4da853fd86f2128"
-  integrity sha512-v2j+/EMzAnuJZ8I4570KJMFhi6G9g3WZyFh6cPnmQSJh3nLao77XpRt01kyFegQazPSKvue1yaIYDp/NfV/b0g==
 
 asynckit@^0.4.0:
   version "0.4.0"
@@ -1201,10 +1196,10 @@ glob@^7.1.3, glob@^7.2.0:
     once "^1.3.0"
     path-is-absolute "^1.0.0"
 
-global-tld-list@^0.0.1061:
-  version "0.0.1061"
-  resolved "https://registry.yarnpkg.com/global-tld-list/-/global-tld-list-0.0.1061.tgz#4e253bbf7811985612e80663ee1920405d8f4c33"
-  integrity sha512-XHKnvMvlfJRYMlEDZDcW/U3guKRBEqgjeahg56tmZcv0cVhGClGzHz2BdtzuCiBASHSqbKwwZ2e3+NcrmgNzsg==
+global-tld-list@^0.0.1093:
+  version "0.0.1093"
+  resolved "https://registry.yarnpkg.com/global-tld-list/-/global-tld-list-0.0.1093.tgz#223c3e82e1673f36f8d874d42a30f3b8463508de"
+  integrity sha512-V6ZI9rzpsiVQdEZyMgt4ujKPkR82a+IxmPdMGO7oHc+iBfhdxTTO3nk8+pNUyGCXOHeOCrk7icOKcBMxBMEKkg==
 
 globals@^13.19.0:
   version "13.20.0"
@@ -1564,19 +1559,17 @@ levn@^0.4.1:
     prelude-ls "^1.2.1"
     type-check "~0.4.0"
 
-livekit-client@1.9.2:
-  version "1.9.2"
-  resolved "https://registry.yarnpkg.com/livekit-client/-/livekit-client-1.9.2.tgz#7a11aaa8fee46d6196add725fda9571eb6de4ff4"
-  integrity sha512-YX6lZ7YGFfeG02mWVjPnHfymHfnO/lNhTKT+OcJTD4pLTwAXhmboZ3ESULMulivuLIFQTRVSohWq8F7fbJXqUw==
+livekit-client@1.9.6:
+  version "1.9.6"
+  resolved "https://registry.yarnpkg.com/livekit-client/-/livekit-client-1.9.6.tgz#4e876714b1d952672be2327e2c8575f1feb28d3c"
+  integrity sha512-OltbGeo0aazahiFPPPWdrx1zrZsLb34rXaojX8EIegoo+juA7N9i4EtqhADLMeS3Hxtqi1YppqzpFM23SG81eQ==
   dependencies:
-    async-await-queue "^1.2.1"
     events "^3.3.0"
     loglevel "^1.8.0"
     protobufjs "^7.0.0"
     sdp-transform "^2.14.1"
     ts-debounce "^4.0.0"
     typed-emitter "^2.1.0"
-    ua-parser-js "^1.0.2"
     webrtc-adapter "^8.1.1"
 
 livekit-server-sdk@1.2.1:
@@ -2346,11 +2339,6 @@ typescript@5.0.4:
   version "5.0.4"
   resolved "https://registry.yarnpkg.com/typescript/-/typescript-5.0.4.tgz#b217fd20119bd61a94d4011274e0ab369058da3b"
   integrity sha512-cW9T5W9xY37cc+jfEnaUvX91foxtHkza3Nw3wkoF4sSlKn0MONdkdEndig/qPBWXNkmplh3NzayQzCiHM4/hqw==
-
-ua-parser-js@^1.0.2:
-  version "1.0.32"
-  resolved "https://registry.yarnpkg.com/ua-parser-js/-/ua-parser-js-1.0.32.tgz#786bf17df97de159d5b1c9d5e8e9e89806f8a030"
-  integrity sha512-dXVsz3M4j+5tTiovFVyVqssXBu5HM47//YSOeZ9fQkdDKkfzv2v3PP1jmH6FUyPW+yCSn7aBVK1fGGKNhowdDA==
 
 unbox-primitive@^1.0.2:
   version "1.0.2"
