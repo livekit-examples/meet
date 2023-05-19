@@ -14,7 +14,7 @@
     "livekit-client": "1.9.2",
     "livekit-server-sdk": "1.2.1",
     "next": "12.3.4",
-    "next-seo": "^5.15.0",
+    "next-seo": "^6.0.0",
     "react": "18.2.0",
     "react-dom": "18.2.0"
   },
