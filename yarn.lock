@@ -1698,9 +1698,9 @@ natural-compare@^1.4.0:
   integrity sha512-OWND8ei3VtNC9h7V60qff3SVobHr996CTwgxubgyQYEpg290h9J0buyECNNJexkFm5sOajh5G116RYA1c8ZMSw==
 
 next-seo@^6.0.0:
-  version "6.0.0"
-  resolved "https://registry.yarnpkg.com/next-seo/-/next-seo-6.0.0.tgz#4568dc61a44dbdf5fe5ff44156cd0ff8804889a2"
-  integrity sha512-jKKt1p1z4otMA28AyeoAONixVjdYmgFCWwpEFtu+DwRHQDllVX3RjtyXbuCQiUZEfQ9rFPBpAI90vDeLZlMBdg==
+  version "6.1.0"
+  resolved "https://registry.yarnpkg.com/next-seo/-/next-seo-6.1.0.tgz#b60b06958cc77e7ed56f0a61b2d6cd0afed88ebb"
+  integrity sha512-iMBpFoJsR5zWhguHJvsoBDxDSmdYTHtnVPB1ij+CD0NReQCP78ZxxbdL9qkKIf4oEuZEqZkrjAQLB0bkII7RYA==
 
 next@12.3.4:
   version "12.3.4"
