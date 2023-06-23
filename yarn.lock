@@ -80,10 +80,10 @@
   resolved "https://registry.yarnpkg.com/@humanwhocodes/object-schema/-/object-schema-1.2.1.tgz#b520529ec21d8e5945a1851dfd1c32e94e39ff45"
   integrity sha512-ZnQMnLV4e7hDlUvw8H+U8ASL02SS2Gn6+9Ac3wGGLIe7+je2AeAOxPY+izIPJDfFDb7eDjev0Us8MO1iFRN8hA==
 
-"@livekit/components-core@0.6.8":
-  version "0.6.8"
-  resolved "https://registry.yarnpkg.com/@livekit/components-core/-/components-core-0.6.8.tgz#f3922fc878cfecf815f5e6b8b88a55eb74bee1e6"
-  integrity sha512-4ib2ixqz2zGCjPfmTc6+kt1SXUw9aD09Bhw7WhGK5toAVJt57mULH8zZ2ccC3NzenioToZVVaJhM06C4ipApBQ==
+"@livekit/components-core@0.6.9":
+  version "0.6.9"
+  resolved "https://registry.yarnpkg.com/@livekit/components-core/-/components-core-0.6.9.tgz#dedc0908daf3ca888bbfba0c2573536683868d85"
+  integrity sha512-nimz6jGNjB1JvxT1/c5EsTcyBwh+F9mp8qF4xsAN0PTwychLp//mOvKI4Ng2/sahjPtnSRbRucWwRmEVeBB81g==
   dependencies:
     "@floating-ui/dom" "^1.1.0"
     email-regex "^5.0.0"
@@ -91,19 +91,19 @@
     loglevel "^1.8.1"
     rxjs "^7.8.0"
 
-"@livekit/components-react@1.0.5":
-  version "1.0.5"
-  resolved "https://registry.yarnpkg.com/@livekit/components-react/-/components-react-1.0.5.tgz#d32dd5b6117d7a1432b4f6749c13d9c342e7d059"
-  integrity sha512-EhtCGDKK0japLj1FKi1sJeX7iSyzugNBNhNQQdqslpJx/8oI5C6gniWw2yN04YzSsHAeuz6XBZEwrrGpBGbs4g==
+"@livekit/components-react@1.0.6":
+  version "1.0.6"
+  resolved "https://registry.yarnpkg.com/@livekit/components-react/-/components-react-1.0.6.tgz#b44ff9176e152458609b1b8388cee300aa43d408"
+  integrity sha512-hWJkuUf2Rir47y6F/wQ0foTySyBUV4tT9n4Vou4uU3TuzBlH5uchXE2CFMrkuIxjH3ZcfdYlRZo4FbTwi0sjsw==
   dependencies:
-    "@livekit/components-core" "0.6.8"
+    "@livekit/components-core" "0.6.9"
     "@react-hook/latest" "^1.0.3"
     clsx "^1.2.1"
 
-"@livekit/components-styles@1.0.1":
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/@livekit/components-styles/-/components-styles-1.0.1.tgz#8bdce9ee89709cab4605c934b38da210c434cbb7"
-  integrity sha512-h6Cyj/98ytBXUCn/DcgaU0aLeEWBJmqM63jxWtekNXMbXdDm4JS2aRPVa0L472fi4H0inudvFm75jL912lJ9lg==
+"@livekit/components-styles@1.0.2":
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/@livekit/components-styles/-/components-styles-1.0.2.tgz#99d8b9ca0e943cfea8c87d0e4ddd3d03472d34f3"
+  integrity sha512-VMTo+db7BhtdV3dMmbqMEYMBVCwgT7KS83lW/aCP5ZuTXDImqCciYSP3H4OWO8IHNkQEMLHOgrygOcr/B5jtKw==
 
 "@next/env@12.3.4":
   version "12.3.4"
