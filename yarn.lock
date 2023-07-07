@@ -1559,10 +1559,10 @@ levn@^0.4.1:
     prelude-ls "^1.2.1"
     type-check "~0.4.0"
 
-livekit-client@1.11.4:
-  version "1.11.4"
-  resolved "https://registry.yarnpkg.com/livekit-client/-/livekit-client-1.11.4.tgz#e222afc111f36a28a7171755cdcfe6b8fa2ca2dc"
-  integrity sha512-TX53HRrtz7ZPWLasnrUOkrGN8EL22/IDwg39uLT7aJcSBWtgKlCueQkwjW4nn7KVWRF8mv00g8WiPDE9jyS8fQ==
+livekit-client@1.12.0:
+  version "1.12.0"
+  resolved "https://registry.yarnpkg.com/livekit-client/-/livekit-client-1.12.0.tgz#4b4f18087331d4893adaccb148e33fe870eb9a2e"
+  integrity sha512-G1KHNMSaEMXtPIKxTQt+WH/uRvhkQ0tQaZ5Kkem2CvB/5I4KPrV4DSmhBKP1P+8reHcaBBiye8V9bfpD69aHyQ==
   dependencies:
     eventemitter3 "^5.0.1"
     loglevel "^1.8.0"
