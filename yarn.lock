@@ -1571,15 +1571,15 @@ livekit-client@1.12.0:
     ts-debounce "^4.0.0"
     webrtc-adapter "^8.1.1"
 
-livekit-server-sdk@1.2.3:
-  version "1.2.3"
-  resolved "https://registry.yarnpkg.com/livekit-server-sdk/-/livekit-server-sdk-1.2.3.tgz#851a104b0f05da1038a69ecc27267c199ff635fd"
-  integrity sha512-asyuNuqV1spetkG6WZ67DTBhoN4P0v8CEri9Y0DREtwm+TO70wnO4SWux18G8YojvKNClKRd4O1jHJmI//RuMQ==
+livekit-server-sdk@1.2.4:
+  version "1.2.4"
+  resolved "https://registry.yarnpkg.com/livekit-server-sdk/-/livekit-server-sdk-1.2.4.tgz#9808472f501f3a03a26a03f8e9f6eacade894c74"
+  integrity sha512-fXUfLyTgXI666xBEA+4RSKGKgTEoxSPUtp/wIlE7CnAaOYS5bLeim1kco6JOMLOjqLru1cOTzwnrJx7uNBVL4w==
   dependencies:
     axios "^1.3.6"
     camelcase-keys "^7.0.0"
     jsonwebtoken "^9.0.0"
-    protobufjs "^7.2.3"
+    protobufjs "^7.2.4"
 
 locate-path@^2.0.0:
   version "2.0.0"
@@ -1952,10 +1952,10 @@ protobufjs@^7.0.0:
     "@types/node" ">=13.7.0"
     long "^5.0.0"
 
-protobufjs@^7.2.3:
-  version "7.2.3"
-  resolved "https://registry.yarnpkg.com/protobufjs/-/protobufjs-7.2.3.tgz#01af019e40d9c6133c49acbb3ff9e30f4f0f70b2"
-  integrity sha512-TtpvOqwB5Gdz/PQmOjgsrGH1nHjAQVCN7JG4A6r1sXRWESL5rNMAiRcBQlCAdKxZcAbstExQePYG8xof/JVRgg==
+protobufjs@^7.2.4:
+  version "7.2.4"
+  resolved "https://registry.yarnpkg.com/protobufjs/-/protobufjs-7.2.4.tgz#3fc1ec0cdc89dd91aef9ba6037ba07408485c3ae"
+  integrity sha512-AT+RJgD2sH8phPmCf7OUZR8xGdcJRga4+1cOaXJ64hvcSkVhNcRHOwIxUatPH15+nj59WAGTDv3LSGZPEQbJaQ==
   dependencies:
     "@protobufjs/aspromise" "^1.1.2"
     "@protobufjs/base64" "^1.1.2"
