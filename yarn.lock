@@ -1571,10 +1571,10 @@ livekit-client@1.12.1:
     ts-debounce "^4.0.0"
     webrtc-adapter "^8.1.1"
 
-livekit-server-sdk@1.2.4:
-  version "1.2.4"
-  resolved "https://registry.yarnpkg.com/livekit-server-sdk/-/livekit-server-sdk-1.2.4.tgz#9808472f501f3a03a26a03f8e9f6eacade894c74"
-  integrity sha512-fXUfLyTgXI666xBEA+4RSKGKgTEoxSPUtp/wIlE7CnAaOYS5bLeim1kco6JOMLOjqLru1cOTzwnrJx7uNBVL4w==
+livekit-server-sdk@1.2.5:
+  version "1.2.5"
+  resolved "https://registry.yarnpkg.com/livekit-server-sdk/-/livekit-server-sdk-1.2.5.tgz#2a30f2d1897acd042acd0d723895205c17c9c8d0"
+  integrity sha512-QYHGEoilSAXUQQBAZE2SXU1oXW8z08VFp2UxcZzXdPt3u4E9xamghTMhgniLMWmpSCl7oqVObQ6XXnK9rkr0Pg==
   dependencies:
     axios "^1.3.6"
     camelcase-keys "^7.0.0"
