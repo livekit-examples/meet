@@ -11,7 +11,7 @@
   "dependencies": {
     "@livekit/components-react": "1.0.8",
     "@livekit/components-styles": "1.0.4",
-    "livekit-client": "1.12.2",
+    "livekit-client": "1.12.3",
     "livekit-server-sdk": "1.2.5",
     "next": "12.3.4",
     "next-seo": "^6.0.0",
