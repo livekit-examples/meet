@@ -1,0 +1,8 @@
+{
+  "NETWORK": "sepolia",
+  "CHAIN_ID": "11155111",
+  "EXPLORER_URL": "https://play.decentraland.zone",
+  "PEER_URL": "https://peer-ap1.decentraland.zone",
+  "MARKETPLACE_GRAPH_URL": "https://api.studio.thegraph.com/query/49472/marketplace-sepolia/version/latest",
+  "WORLDS_CONTENT_SERVER_URL": "https://worlds-content-server.decentraland.zone"
+}

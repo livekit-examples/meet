@@ -1,0 +1,139 @@
+:root {
+  --page-header-height: 420px;
+  /* Colors */
+  --gray: rgba(115, 110, 125, 0.4);
+  --superGray: #37333d;
+  --superGrayHovered: #3d3a45;
+  --sidebar-width: 320px;
+}
+
+#root {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans',
+    'Helvetica Neue', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
+}
+
+.danger-text {
+  color: var(--danger);
+}
+
+.ui.toggle.checkbox.checked input.hidden + label:after,
+.ui.toggle.checkbox.checked input.hidden:focus + label:after {
+  background: var(--summer-red);
+}
+
+/** full-width */
+.AssetBrowse .ui.container,
+.Navigation .ui.container,
+.dcl.navbar.fullscreen .ui.container,
+.dcl.footer.ui.container {
+  width: 100vw;
+  box-sizing: border-box;
+  max-width: 100% !important;
+}
+
+.Navigation,
+.dcl.navbar.fullscreen,
+.dcl.page,
+.dcl.footer.ui.container {
+  padding: 0 24px;
+  box-sizing: border-box;
+}
+
+.ui.container {
+  width: 100%;
+  max-width: 1360px !important;
+}
+
+.dcl.toast .toast-info .body .ui.basic.button.no-padding {
+  padding: 0;
+}
+
+.Profile.inline .dcl.blockie {
+  border-radius: 50%;
+}
+
+/* TODO: place navbar colors to ui and change it on all dApps */
+.dcl.navbar .ui.menu .item,
+.dcl.footer .main-footer .links a,
+.dcl.footer .copyright {
+  color: var(--text);
+}
+
+.dcl.footer {
+  margin-top: 30px;
+}
+
+.dcl.footer .social-links .social-icon {
+  fill: var(--text);
+}
+
+.WearablePreview {
+  background-color: unset;
+}
+
+.iconSize {
+  height: 18px;
+}
+
+.ui.button.customIconButton {
+  align-items: center;
+  display: flex;
+  justify-content: center;
+}
+
+@media only screen and (min-width: 768px) {
+  .dcl.toast .toast-info .body .list-flow-toast {
+    width: 350px;
+  }
+}
+
+@media (max-width: 767px) {
+  .Navigation,
+  .dcl.navbar.fullscreen,
+  .dcl.page {
+    padding: 0;
+  }
+
+  .dcl.navbar.fullscreen .ui.container {
+    width: 100% !important;
+  }
+
+  .ui.modal .actions {
+    flex-direction: column-reverse;
+  }
+
+  .ui.modal .actions .ui.button + .ui.button {
+    margin-left: 0px;
+  }
+
+  .modals.dimmer .ui.scrolling.modal {
+    display: flex !important;
+    flex-direction: column;
+  }
+
+  .ui.modal > .content {
+    flex: 1;
+  }
+
+  .ui.modal .actions {
+    align-self: flex-end;
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 100%;
+    margin-bottom: 20px;
+    margin-right: unset;
+  }
+}

@@ -1,0 +1,24 @@
+.page {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  background-image: url('../../assets/images/background.png');
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.content {
+  padding: 0 24px;
+  flex-grow: 1;
+}
+
+.navbar {
+  flex-shrink: 0;
+}
+
+@media (max-width: 767px) {
+  .content {
+    padding: 0;
+  }
+}
