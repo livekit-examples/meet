@@ -77,42 +77,75 @@ export const DebugMode = ({ logLevel }: { logLevel?: LogLevel }) => {
       <div
         style={{ position: 'absolute', top: '0', background: 'rgba(0,0,0,0.6)', padding: '1rem' }}
       >
+        <section id="room-info">
+          <h3>
+            Room Info {room.name}: {room.sid}
+          </h3>
+        </section>
         <details open>
-          <summary>
-            <b>Published tracks</b>
-          </summary>
-          <div style={{ paddingLeft: '1rem' }}>
-            {Array.from(lp.tracks.values()).map((t) => (
-              <>
-                <div>
-                  <p>
-                    {t.source.toString()}
-                    &nbsp;<span>{t.trackSid}</span>
-                  </p>
-                </div>
-                <table>
-                  <tbody>
-                    <tr>
-                      <td>Kind</td>
-                      <td>
-                        {t.kind}&nbsp;
-                        {t.kind === 'video' && (
-                          <span>
-                            {t.track?.dimensions?.width}x{t.track?.dimensions?.height}
-                          </span>
-                        )}
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>Bitrate</td>
-                      <td>{Math.ceil(t.track!.currentBitrate / 1000)} kbps</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </>
-            ))}
-          </div>
+          <summary>Local Participant: {lp.identity}</summary>
+          <details open style={{ paddingLeft: '1rem' }}>
+            <summary>
+              <b>Published tracks</b>
+            </summary>
+            <div style={{ paddingLeft: '1rem' }}>
+              {Array.from(lp.tracks.values()).map((t) => (
+                <>
+                  <div>
+                    <p>
+                      {t.source.toString()}
+                      &nbsp;<span>{t.trackSid}</span>
+                    </p>
+                  </div>
+                  <table>
+                    <tbody>
+                      <tr>
+                        <td>Kind</td>
+                        <td>
+                          {t.kind}&nbsp;
+                          {t.kind === 'video' && (
+                            <span>
+                              {t.track?.dimensions?.width}x{t.track?.dimensions?.height}
+                            </span>
+                          )}
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>Bitrate</td>
+                        <td>{Math.ceil(t.track!.currentBitrate / 1000)} kbps</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </>
+              ))}
+            </div>
+          </details>
+          <details open style={{ paddingLeft: '1rem' }}>
+            <summary>
+              <b>Permissions</b>
+            </summary>
+            <div style={{ paddingLeft: '1rem' }}>
+              <table>
+                <tbody>
+                  {lp.permissions &&
+                    Object.entries(lp.permissions).map(([key, val]) => (
+                      <>
+                        <tr>
+                          <td>{key}</td>
+                          {key !== 'canPublishSources' ? (
+                            <td>{val.toString()}</td>
+                          ) : (
+                            <td> {val.join(', ')} </td>
+                          )}
+                        </tr>
+                      </>
+                    ))}
+                </tbody>
+              </table>
+            </div>
+          </details>
         </details>
+
         <details>
           <summary>
             <b>Remote Participants</b>
