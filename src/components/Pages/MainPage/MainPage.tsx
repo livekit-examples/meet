@@ -7,9 +7,9 @@ import { Loader } from "decentraland-ui"
 import { locations } from "../../../modules/routing/locations"
 import { getView } from "../../../utils/view"
 import { PageLayout } from "../../PageLayout"
-import { nullAddress } from "./constants"
 import { Props } from "./MainPage.types"
 import styles from "./MainPage.module.css"
+import { LiveKitRoom, VideoConference } from "@livekit/components-react"
 
 function MainPage(props: Props) {
   const { isLoading, onFetchProfile, profileAddress, loggedInAddress } = props
@@ -55,7 +55,9 @@ function MainPage(props: Props) {
                 </Tabs.Tab>
               ))}
             </Tabs>
-            <div>content</div>
+            <LiveKitRoom token="" serverUrl="wss://dcl.livekit.cloud" connect={true}>
+              <VideoConference />
+            </LiveKitRoom>
           </div>
         </div>
       )}
