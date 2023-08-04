@@ -2,6 +2,7 @@ import * as React from 'react';
 import { useRoomContext } from '@livekit/components-react';
 import { setLogLevel, LogLevel, RemoteTrackPublication } from 'livekit-client';
 import { tinykeys } from 'tinykeys';
+import styles from '../styles/Debug.module.css';
 
 export const useDebugMode = ({ logLevel }: { logLevel?: LogLevel }) => {
   setLogLevel(logLevel ?? 'debug');
@@ -74,9 +75,7 @@ export const DebugMode = ({ logLevel }: { logLevel?: LogLevel }) => {
     return <></>;
   } else {
     return (
-      <div
-        style={{ position: 'absolute', top: '0', background: 'rgba(0,0,0,0.6)', padding: '1rem' }}
-      >
+      <div className={styles.overlay}>
         <section id="room-info">
           <h3>
             Room Info {room.name}: {room.sid}
@@ -86,11 +85,11 @@ export const DebugMode = ({ logLevel }: { logLevel?: LogLevel }) => {
           <summary>
             <b>Local Participant: {lp.identity}</b>
           </summary>
-          <details open style={{ paddingLeft: '1rem' }}>
+          <details open className={styles.detailsSection}>
             <summary>
               <b>Published tracks</b>
             </summary>
-            <div style={{ paddingLeft: '1rem' }}>
+            <div>
               {Array.from(lp.tracks.values()).map((t) => (
                 <>
                   <div>
@@ -122,11 +121,11 @@ export const DebugMode = ({ logLevel }: { logLevel?: LogLevel }) => {
               ))}
             </div>
           </details>
-          <details open style={{ paddingLeft: '1rem' }}>
+          <details open className={styles.detailsSection}>
             <summary>
               <b>Permissions</b>
             </summary>
-            <div style={{ paddingLeft: '1rem' }}>
+            <div>
               <table>
                 <tbody>
                   {lp.permissions &&
@@ -153,14 +152,14 @@ export const DebugMode = ({ logLevel }: { logLevel?: LogLevel }) => {
             <b>Remote Participants</b>
           </summary>
           {Array.from(room.participants.values()).map((p) => (
-            <details key={p.sid} style={{ paddingLeft: '1rem' }}>
+            <details key={p.sid} className={styles.detailsSection}>
               <summary>
                 <b>
                   {p.identity}
                   <span></span>
                 </b>
               </summary>
-              <div style={{ paddingLeft: '1rem' }}>
+              <div>
                 {Array.from(p.tracks.values()).map((t) => (
                   <>
                     <div>
