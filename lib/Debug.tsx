@@ -93,10 +93,10 @@ export const DebugMode = ({ logLevel }: { logLevel?: LogLevel }) => {
               {Array.from(lp.tracks.values()).map((t) => (
                 <>
                   <div>
-                    <p>
+                    <i>
                       {t.source.toString()}
                       &nbsp;<span>{t.trackSid}</span>
-                    </p>
+                    </i>
                   </div>
                   <table>
                     <tbody>
@@ -163,10 +163,10 @@ export const DebugMode = ({ logLevel }: { logLevel?: LogLevel }) => {
                 {Array.from(p.tracks.values()).map((t) => (
                   <>
                     <div>
-                      <span>
+                      <i>
                         {t.source.toString()}
                         &nbsp;<span>{t.trackSid}</span>
-                      </span>
+                      </i>
                     </div>
                     <table>
                       <tbody>
