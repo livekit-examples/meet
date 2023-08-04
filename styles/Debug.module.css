@@ -3,7 +3,7 @@
   top: 0;
   background: rgba(0, 0, 0, 0.6);
   padding: 1rem;
-  max-height: 100%;
+  max-height: min(100%, 100vh);
   overflow-y: auto;
 }
 
