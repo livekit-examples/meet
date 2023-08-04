@@ -83,7 +83,9 @@ export const DebugMode = ({ logLevel }: { logLevel?: LogLevel }) => {
           </h3>
         </section>
         <details open>
-          <summary>Local Participant: {lp.identity}</summary>
+          <summary>
+            <b>Local Participant: {lp.identity}</b>
+          </summary>
           <details open style={{ paddingLeft: '1rem' }}>
             <summary>
               <b>Published tracks</b>
