@@ -1,2 +1,10 @@
 {
+  "connect_to_world": {
+    "title": "Reunirse en Decentraland",
+    "description": "Elija el mundo al que desea conectarse y comience a transmitir.",
+    "image_alt": "Reunirse en Decentraland",
+    "cta": "Conectar",
+    "input_label": "Nombre del mundo",
+    "input_placeholder": "ejemplo:<name>.dcl.eth"
+  }
 }

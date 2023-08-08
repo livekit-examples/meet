@@ -1,2 +1,10 @@
 {
+  "connect_to_world": {
+    "title": "Meet on Decentraland",
+    "description": "Choose the world you want to connect to and start streaming.",
+    "image_alt": "Meet on Decentraland",
+    "cta": "Connect",
+    "input_label": "World name",
+    "input_placeholder": "example:<name>.dcl.eth"
+  }
 }

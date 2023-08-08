@@ -1,2 +1,10 @@
 {
+  "connect_to_world": {
+    "title": "在 Decentraland 上见面",
+    "description": "选择您想要连接的世界并开始流式传输。",
+    "image_alt": "在 Decentraland 上见面",
+    "cta": "连接",
+    "input_label": "世界名称",
+    "input_placeholder": "example:<name>.dcl.eth"
+  }
 }

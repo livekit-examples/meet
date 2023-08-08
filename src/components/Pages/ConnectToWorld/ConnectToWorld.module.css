@@ -1,0 +1,56 @@
+:global(#root) {
+  height: 100%;
+  width: 100%;
+}
+
+.ConnectToWorld {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
+
+.ConnectToWorld .content {
+  background: var(--background);
+  padding: 24px 141px 50px;
+  border-radius: 10px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  row-gap: 20px;
+}
+
+.ConnectToWorld .content .title {
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 24px;
+  letter-spacing: 0px;
+}
+
+.ConnectToWorld .content .description {
+  font-size: 15px;
+  font-weight: 400;
+  line-height: 24px;
+  letter-spacing: 0px;
+}
+
+.ConnectToWorld .content .img {
+  max-width: 260px;
+}
+
+.ConnectToWorld .content .inputContainer {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  row-gap: 5px;
+  text-align: left;
+}
+
+.ConnectToWorld .content .inputContainer .label {
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 15px;
+  letter-spacing: 0px;
+}

@@ -8,7 +8,7 @@ import ModalProvider from "decentraland-dapps/dist/providers/ModalProvider"
 import TranslationProvider from "decentraland-dapps/dist/providers/TranslationProvider"
 import WalletProvider from "decentraland-dapps/dist/providers/WalletProvider"
 import * as modals from "./components/Modals"
-import MainPage from "./components/Pages/MainPage"
+import ConnectToWorld from "./components/Pages/ConnectToWorld"
 import SignInPage from "./components/Pages/SignInPage"
 import { initStore } from "./modules/store"
 import * as locales from "./modules/translation/locales"
@@ -20,11 +20,7 @@ import "./index.css"
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <MainPage />,
-  },
-  {
-    path: "/accounts/:profileAddress?",
-    element: <MainPage />,
+    element: <ConnectToWorld />,
   },
   {
     path: "sign-in",
