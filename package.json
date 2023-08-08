@@ -5,7 +5,7 @@
   "scripts": {
     "start": "vite",
     "prebuild": "node scripts/prebuild.js",
-    "build": "tsc && vite build",
+    "build": "tsc && vite build --base /",
     "preview": "vite preview",
     "lint": "eslint -c .eslintrc.js --ext .ts src",
     "check:code": "eslint -c .eslintrc.js src",
