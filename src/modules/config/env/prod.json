@@ -3,10 +3,5 @@
   "CHAIN_ID": "1",
   "EXPLORER_URL": "https://play.decentraland.org",
   "PEER_URL": "https://peer.decentraland.org",
-  "MARKETPLACE_GRAPH_URL": "https://api.thegraph.com/subgraphs/name/decentraland/marketplace-goerli",
-  "WORLDS_CONTENT_SERVER_URL": "https://worlds-content-server.decentraland.org",
-  "BUILDER_URL": "https://builder.decentraland.org",
-  "SYNAPSE_URL": "https://social.decentraland.org",
-  "SOCIAL_RPC_URL": "wss://rpc-social-service.decentraland.org",
-  "PROFILE_URL": "https://profile.decentraland.org"
+  "WORLDS_CONTENT_SERVER_URL": "https://worlds-content-server.decentraland.org"
 }

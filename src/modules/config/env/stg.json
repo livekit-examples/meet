@@ -1,12 +1,6 @@
 {
   "NETWORK": "mainnet",
   "CHAIN_ID": "1",
-  "EXPLORER_URL": "https://play.decentraland.today",
   "PEER_URL": "https://peer.decentraland.org",
-  "MARKETPLACE_GRAPH_URL": "https://api.thegraph.com/subgraphs/name/decentraland/marketplace",
-  "WORLDS_CONTENT_SERVER_URL": "https://worlds-content-server.decentraland.org",
-  "SOCIAL_RPC_URL": "wss://rpc-social-service.decentraland.today",
-  "BUILDER_URL": "https://builder.decentraland.today",
-  "SYNAPSE_URL": "https://social.decentraland.today",
-  "PROFILE_URL": "https://profile.decentraland.today"
+  "WORLDS_CONTENT_SERVER_URL": "https://worlds-content-server.decentraland.org"
 }
