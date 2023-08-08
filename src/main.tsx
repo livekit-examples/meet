@@ -12,10 +12,10 @@ import MainPage from "./components/Pages/MainPage"
 import SignInPage from "./components/Pages/SignInPage"
 import { initStore } from "./modules/store"
 import * as locales from "./modules/translation/locales"
-// These CSS styles must be defined last to avoid overriding other styles
-import "decentraland-ui/dist/themes/alternative/dark-theme.css"
-import "./index.css"
 import Conference from "./components/Pages/Conference"
+// These CSS styles must be defined last to avoid overriding other styles
+import "decentraland-ui/dist/themes/alternative/light-theme.css"
+import "./index.css"
 
 const router = createBrowserRouter([
   {
