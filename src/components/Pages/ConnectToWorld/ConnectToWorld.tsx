@@ -17,7 +17,7 @@ function ConnectToWorld(props: Props) {
   const [selectedServer, setSelectedServer] = useState('')
   const [error, setError] = useState<string>('')
   const [availableServers, setAvailableServers] = useState<string[]>([])
-  const [isConnectingToServer] = useState(false)
+  const [isConnectingToServer, setIsConnectingToServer] = useState(false)
 
   const { isLoading, loggedInAddress, identity, previouslyLoadedServers, worldsContentServerUrl, onSubmitConnectForm } = props
 
@@ -96,6 +96,7 @@ function ConnectToWorld(props: Props) {
     async (event: React.MouseEvent<HTMLButtonElement>) => {
       event.preventDefault()
       setError('')
+      setIsConnectingToServer(true)
 
       try {
         if (!identity) return
@@ -114,7 +115,7 @@ function ConnectToWorld(props: Props) {
 
   return (
     <PageLayout>
-      {isLoading || isConnectingToServer ? (
+      {isLoading ? (
         <Loader active />
       ) : (
         <div className={styles.ConnectToWorld}>
@@ -157,7 +158,14 @@ function ConnectToWorld(props: Props) {
                   />
                 )}
               </div>
-              <Button primary onClick={handleClick} fluid disabled={!selectedServer} type="submit">
+              <Button
+                primary
+                onClick={handleClick}
+                fluid
+                disabled={!selectedServer || isConnectingToServer}
+                type="submit"
+                loading={isConnectingToServer}
+              >
                 {t('connect_to_world.cta')}
               </Button>
             </Form>
