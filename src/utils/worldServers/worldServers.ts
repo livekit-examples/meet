@@ -5,6 +5,9 @@ export const getPreviouslyLoadedServers = () =>
 
 export const addServerToPreviouslyLoaded = (server: string) => {
   const previouslyLoadedServers = getPreviouslyLoadedServers() || []
+
+  if (previouslyLoadedServers.includes(server)) return
+
   previouslyLoadedServers.push(server)
   localStorage.setItem(PREVIOUSLY_LOADED_SERVERS_KEY, previouslyLoadedServers.join(','))
 }

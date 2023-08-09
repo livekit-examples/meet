@@ -80,6 +80,18 @@ describe('when adding a new server to the same key in the local storage', () => 
     jest.spyOn(Storage.prototype, 'setItem').mockImplementationOnce(jest.fn())
   })
 
+  describe('and the new server is already in the array of previously loaded servers', () => {
+    beforeEach(() => {
+      jest.spyOn(Storage.prototype, 'getItem').mockReturnValueOnce([newServer].join(','))
+      addServerToPreviouslyLoaded(newServer)
+    })
+
+    it('should not call the local storage set method to add the new server', () => {
+      // eslint-disable-next-line @typescript-eslint/unbound-method
+      expect(localStorage.setItem).not.toBeCalled()
+    })
+  })
+
   describe('and there was not previous loaded servers in the local storage', () => {
     beforeEach(() => {
       jest.spyOn(Storage.prototype, 'getItem').mockReturnValueOnce(null)
