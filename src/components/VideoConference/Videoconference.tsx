@@ -12,7 +12,7 @@ import {
   MessageFormatter,
   RoomAudioRenderer,
   useCreateLayoutContext,
-  useParticipants,
+  // useParticipants,
   usePinnedTracks,
   useTracks
 } from '@livekit/components-react'
@@ -56,10 +56,9 @@ export function VideoConference({ chatMessageFormatter, ...props }: VideoConfere
   )
 
   // TODO: remove this unused declaration if it's not needed
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const participants = useParticipants({
+  /* const participants = useParticipants({
     updateOnlyOn: [RoomEvent.ParticipantConnected, RoomEvent.ParticipantDisconnected]
-  })
+  }) */
 
   const widgetUpdate = (state: WidgetState) => {
     log.debug('updating widget state', state)
