@@ -55,6 +55,8 @@ export function VideoConference({ chatMessageFormatter, ...props }: VideoConfere
     { updateOnlyOn: [RoomEvent.ActiveSpeakersChanged] }
   )
 
+  // TODO: remove this unused declaration if it's not needed
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const participants = useParticipants({
     updateOnlyOn: [RoomEvent.ParticipantConnected, RoomEvent.ParticipantDisconnected]
   })
