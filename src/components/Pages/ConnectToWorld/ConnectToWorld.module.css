@@ -1,6 +1,5 @@
 :global(#root) {
   height: 100%;
-  width: 100%;
 }
 
 .ConnectToWorld {
@@ -29,6 +28,10 @@
   letter-spacing: 0px;
 }
 
+.ConnectToWorld .content .form {
+  width: 100%;
+}
+
 .ConnectToWorld .content .description {
   font-size: 15px;
   font-weight: 400;
@@ -53,4 +56,26 @@
   font-weight: 400;
   line-height: 15px;
   letter-spacing: 0px;
+}
+
+.ConnectToWorld .content :global(.select-field.error.warning p.message) {
+  margin-bottom: 15px;
+}
+
+@media (min-width: 769px) {
+  .content :global(.SignIn.center) {
+    min-width: 700px;
+  }
+}
+
+@media (max-width: 768px) {
+  .ConnectToWorld .content :global(.dcl.field), .ConnectToWorld .content :global(.dcl.select-field) {
+    min-width: auto;
+  }
+
+  .ConnectToWorld .content {
+    height: 100%;
+    border-radius: unset;
+    padding: 24px;
+  }
 }

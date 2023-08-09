@@ -2,7 +2,7 @@ import React, { ChangeEvent, useCallback, useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { AuthIdentity } from '@dcl/crypto'
 import { t } from 'decentraland-dapps/dist/modules/translation/utils'
-import { Button, Loader, SelectField, Field, DropdownProps } from 'decentraland-ui'
+import { Button, Loader, SelectField, Field, DropdownProps, Form } from 'decentraland-ui'
 import meetOnDecentralandImg from '../../../assets/images/meet-on-decentraland.png'
 import { locations } from '../../../modules/routing/locations'
 import { signedFetch } from '../../../utils/auth'
@@ -92,25 +92,29 @@ function ConnectToWorld(props: Props) {
     throw Error('An error has occurred')
   }
 
-  const handleClick = useCallback(async () => {
-    setError('')
+  const handleClick = useCallback(
+    async (event: React.MouseEvent<HTMLButtonElement>) => {
+      event.preventDefault()
+      setError('')
 
-    try {
-      if (!identity) return
+      try {
+        if (!identity) return
 
-      const response: { url: string; token: string } = await livekitConnect(
-        identity,
-        'https://worlds-content-server.decentraland.zone',
-        selectedServer
-      )
-      onSubmitConnectForm(response.url, response.token)
-      addServerToPreviouslyLoaded(selectedServer)
-      navigate(`/meet/${encodeURIComponent(response.url)}?token=${encodeURIComponent(response.token)}`)
-    } catch (error) {
-      console.error('ERROR livekit connect', error)
-      if (isErrorMessage(error)) setError(error.message)
-    }
-  }, [identity, selectedServer, onSubmitConnectForm])
+        const response: { url: string; token: string } = await livekitConnect(
+          identity,
+          'https://worlds-content-server.decentraland.zone',
+          selectedServer
+        )
+        onSubmitConnectForm(response.url, response.token)
+        addServerToPreviouslyLoaded(selectedServer)
+        navigate(`/meet/${encodeURIComponent(response.url)}?token=${encodeURIComponent(response.token)}`)
+      } catch (error) {
+        console.error('ERROR livekit connect', error)
+        if (isErrorMessage(error)) setError(error.message)
+      }
+    },
+    [identity, selectedServer, onSubmitConnectForm]
+  )
 
   return (
     <PageLayout>
@@ -127,38 +131,40 @@ function ConnectToWorld(props: Props) {
               alt={t('connect_to_world.image_alt')}
               aria-label={t('connect_to_world.image_alt')}
             />
-            <div className={styles.inputContainer}>
-              <label className={styles.label} htmlFor="server">
-                {t('connect_to_world.input_label')}
-              </label>
-              {availableServers.length > 0 ? (
-                <SelectField
-                  value={selectedServer}
-                  options={availableServers.map(server => ({
-                    value: server,
-                    text: server
-                  }))}
-                  onAddItem={handleSelectChange}
-                  onChange={handleSelectChange}
-                  allowAdditions
-                  error={!!error}
-                  message={error}
-                />
-              ) : (
-                <Field
-                  className={styles.input}
-                  name="server"
-                  value={selectedServer}
-                  onChange={handleChange}
-                  placeholder={t('connect_to_world.input_placeholder')}
-                  error={!!error}
-                  message={error}
-                />
-              )}
-            </div>
-            <Button primary onClick={handleClick} fluid disabled={!selectedServer}>
-              {t('connect_to_world.cta')}
-            </Button>
+            <Form className={styles.form}>
+              <div className={styles.inputContainer}>
+                <label className={styles.label} htmlFor="server">
+                  {t('connect_to_world.input_label')}
+                </label>
+                {availableServers.length > 0 ? (
+                  <SelectField
+                    value={selectedServer}
+                    options={availableServers.map(server => ({
+                      value: server,
+                      text: server
+                    }))}
+                    onAddItem={handleSelectChange}
+                    onChange={handleSelectChange}
+                    allowAdditions
+                    error={!!error}
+                    message={error}
+                  />
+                ) : (
+                  <Field
+                    name="server"
+                    value={selectedServer}
+                    onChange={handleChange}
+                    placeholder={t('connect_to_world.input_placeholder')}
+                    error={!!error}
+                    message={error}
+                    onEnter={handleClick}
+                  />
+                )}
+              </div>
+              <Button primary onClick={handleClick} fluid disabled={!selectedServer} type="submit">
+                {t('connect_to_world.cta')}
+              </Button>
+            </Form>
           </div>
         </div>
       )}
