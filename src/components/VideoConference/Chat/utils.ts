@@ -49,7 +49,12 @@ export function setupChat(room: Room) {
       const packet = Packet.decode(msg.payload)
       return { packet, msg }
     }),
-    filter(({ packet }) => packet.message?.$case === 'chat'),
+    filter(
+      ({ packet }) =>
+        packet.message?.$case === 'chat' &&
+        !packet.message.chat.message.startsWith('␆') /* ping */ &&
+        !packet.message.chat.message.startsWith('␑') /* pong */
+    ),
     map(({ packet, msg }) => {
       if (packet.message?.$case === 'chat') {
         const { timestamp, message } = packet.message.chat

@@ -1,7 +1,16 @@
 import type { ChatMessage, ReceivedChatMessage } from '@livekit/components-core'
-import { ChatEntry, MessageFormatter, useMaybeLayoutContext, useRoomContext } from '@livekit/components-react'
+import {
+  ChatEntry,
+  MessageFormatter,
+  useLocalParticipant,
+  useMaybeLayoutContext,
+  useParticipantPermissions,
+  useRoomContext
+} from '@livekit/components-react'
 import * as React from 'react'
 import { cloneSingleChild, setupChat, useObservableState } from './utils'
+import { ParticipantPermission } from 'livekit-server-sdk'
+import { Participant } from 'livekit-client'
 
 export type { ChatMessage, ReceivedChatMessage }
 
@@ -85,6 +94,8 @@ export default function Chat({ messageFormatter, ...props }: ChatProps) {
     }
   }, [chatMessages, layoutContext?.widget])
 
+  const localParticipant = useLocalParticipant().localParticipant
+
   return (
     <div {...props} className="lk-chat">
       <ul className="lk-list lk-chat-messages" ref={ulRef}>
@@ -112,18 +123,20 @@ export default function Chat({ messageFormatter, ...props }: ChatProps) {
               )
             })}
       </ul>
-      <form className="lk-chat-form" onSubmit={handleSubmit}>
-        <input
-          className="lk-form-control lk-chat-form-input"
-          disabled={isSending}
-          ref={inputRef}
-          type="text"
-          placeholder="Enter a message..."
-        />
-        <button type="submit" className="lk-button lk-chat-form-button" disabled={isSending}>
-          Send
-        </button>
-      </form>
+      {localParticipant.permissions?.canPublish && (
+        <form className="lk-chat-form" onSubmit={handleSubmit}>
+          <input
+            className="lk-form-control lk-chat-form-input"
+            disabled={isSending}
+            ref={inputRef}
+            type="text"
+            placeholder="Enter a message..."
+          />
+          <button type="submit" className="lk-button lk-chat-form-button" disabled={isSending}>
+            Send
+          </button>
+        </form>
+      )}
     </div>
   )
 }
