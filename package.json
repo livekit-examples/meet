@@ -17,6 +17,7 @@
   },
   "dependencies": {
     "@dcl/crypto": "^3.4.3",
+    "@dcl/protocol": "^1.0.0-5810343446.commit-4ee6d08",
     "@dcl/schemas": "^7.4.1",
     "@dcl/social-rpc-client": "^0.0.0-20230725183127.commit-e0fdbae",
     "@dcl/ui-env": "^1.4.0",
@@ -38,7 +39,8 @@
     "react-virtualized-auto-sizer": "^1.0.20",
     "react-window": "^1.8.9",
     "redux-logger": "^3.0.6",
-    "redux-saga": "^1.2.3"
+    "redux-saga": "^1.2.3",
+    "rxjs": "^7.8.1"
   },
   "devDependencies": {
     "@dcl/eslint-config": "1.1.7",

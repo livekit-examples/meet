@@ -2,7 +2,6 @@ import * as React from 'react'
 import { isEqualTrackRef, isTrackReference, log, isWeb } from '@livekit/components-core'
 import {
   CarouselView,
-  Chat,
   ConnectionStateToast,
   ControlBar,
   FocusLayout,
@@ -14,11 +13,34 @@ import {
   useCreateLayoutContext,
   // useParticipants,
   usePinnedTracks,
-  useTracks
+  useTracks,
+  MessageEncoder,
+  MessageDecoder
 } from '@livekit/components-react'
 import { RoomEvent, Track } from 'livekit-client'
 import ParticipantTile from './ParticipantTile'
 import type { TrackReferenceOrPlaceholder, WidgetState } from '@livekit/components-core'
+import { ChatMessage } from '@livekit/components-react'
+import { Packet } from '@dcl/protocol/out-js/decentraland/kernel/comms/rfc4/comms.gen'
+import Chat from './Chat'
+
+const messageDecoder: MessageDecoder = (message: Uint8Array) => {
+  const packet = Packet.decode(message)
+  if (packet.message && packet.message.$case === 'chat') {
+    const { timestamp, message } = packet.message.chat
+    return { timestamp, message }
+  } else if (packet.message?.$case === 'position') {
+  }
+
+  return {
+    message: 'Error',
+    timestamp: 0
+  }
+}
+
+const messageEncoder: MessageEncoder = (message: ChatMessage) => {
+  return new Uint8Array()
+}
 
 /**
  * @public
@@ -44,7 +66,7 @@ export interface VideoConferenceProps extends React.HTMLAttributes<HTMLDivElemen
  * @public
  */
 export function VideoConference({ chatMessageFormatter, ...props }: VideoConferenceProps) {
-  const [widgetState, setWidgetState] = React.useState<WidgetState>({ showChat: false })
+  const [widgetState, setWidgetState] = React.useState<WidgetState>({ showChat: false, unreadMessages: 0 })
   const lastAutoFocusedScreenShareTrack = React.useRef<TrackReferenceOrPlaceholder | null>(null)
 
   const tracks = useTracks(
@@ -115,7 +137,12 @@ export function VideoConference({ chatMessageFormatter, ...props }: VideoConfere
             )}
             <ControlBar controls={{ chat: true }} />
           </div>
-          <Chat style={{ display: widgetState.showChat ? 'flex' : 'none' }} messageFormatter={chatMessageFormatter} />
+          <Chat
+            style={{ display: widgetState.showChat ? 'flex' : 'none' }}
+            messageFormatter={chatMessageFormatter}
+            messageEncoder={messageEncoder}
+            messageDecoder={messageDecoder}
+          />
         </LayoutContextProvider>
       )}
       <RoomAudioRenderer />
