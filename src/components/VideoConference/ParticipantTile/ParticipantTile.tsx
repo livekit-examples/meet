@@ -16,8 +16,9 @@ import {
 } from '@livekit/components-react'
 import { Track } from 'livekit-client'
 import Profile from 'decentraland-dapps/dist/containers/Profile'
-import type { ParticipantClickEvent, TrackReferenceOrPlaceholder } from '@livekit/components-core'
-import type { Participant, TrackPublication } from 'livekit-client'
+import type { TrackReferenceOrPlaceholder } from '@livekit/components-core'
+import type { Participant } from 'livekit-client'
+import type { Props } from './ParticipantTile.types'
 
 /** @public */
 export function ParticipantContextIfNeeded(
@@ -31,16 +32,6 @@ export function ParticipantContextIfNeeded(
   ) : (
     <>{props.children}</>
   )
-}
-
-/** @public */
-export interface ParticipantTileProps extends React.HTMLAttributes<HTMLDivElement> {
-  disableSpeakingIndicator?: boolean
-  participant?: Participant
-  source?: Track.Source
-  publication?: TrackPublication
-  onParticipantClick?: (event: ParticipantClickEvent) => void
-  imageSize?: 'normal' | 'large' | 'huge' | 'massive'
 }
 
 /**
@@ -63,8 +54,9 @@ export function ParticipantTile({
   publication,
   disableSpeakingIndicator,
   imageSize,
+  profiles,
   ...htmlProps
-}: ParticipantTileProps) {
+}: Props) {
   const p = useEnsureParticipant(participant)
   const trackRef: TrackReferenceOrPlaceholder = useMaybeTrackContext() ?? {
     participant: p,
@@ -101,9 +93,9 @@ export function ParticipantTile({
   const participantWithProfile: Participant = React.useMemo(
     () => ({
       ...trackRef.participant,
-      name: 'Edita me'
+      name: profiles[trackRef.participant.identity]?.avatars[0]?.name ?? trackRef.participant.identity
     }),
-    [trackRef.participant]
+    [trackRef.participant, profiles]
   ) as Participant
 
   return (

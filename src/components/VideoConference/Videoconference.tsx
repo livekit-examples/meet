@@ -17,7 +17,7 @@ import {
   useTracks
 } from '@livekit/components-react'
 import { RoomEvent, Track } from 'livekit-client'
-import { ParticipantTile } from './ParticipantTile'
+import ParticipantTile from './ParticipantTile'
 import type { TrackReferenceOrPlaceholder, WidgetState } from '@livekit/components-core'
 
 /**
