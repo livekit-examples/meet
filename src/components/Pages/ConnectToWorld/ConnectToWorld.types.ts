@@ -7,17 +7,15 @@ export type Props = {
   isLoading: boolean
   previouslyLoadedServers: string[] | null
   identity: AuthIdentity | null
+  worldsContentServerUrl: string
   onSubmitConnectForm: (server: string, token: string) => void
 }
 
-export type MapStateProps = Pick<Props, 'loggedInAddress' | 'isLoading' | 'previouslyLoadedServers' | 'identity'>
+export type MapStateProps = Pick<Props, 'loggedInAddress' | 'isLoading' | 'previouslyLoadedServers' | 'identity' | 'worldsContentServerUrl'>
 export type MapDispatchProps = Pick<Props, 'onSubmitConnectForm'>
 export type MapDispatch = Dispatch
 
-// TODO: world-content-server qs
-type Params = {
-  profileAddress?: string
-}
+type Params = Record<string, never>
 export type OwnProps = {
   router: RouterProps<Params>
 }

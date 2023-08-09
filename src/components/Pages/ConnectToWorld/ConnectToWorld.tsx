@@ -19,7 +19,7 @@ function ConnectToWorld(props: Props) {
   const [availableServers, setAvailableServers] = useState<string[]>([])
   const [isConnectingToServer] = useState(false)
 
-  const { isLoading, loggedInAddress, identity, previouslyLoadedServers, onSubmitConnectForm } = props
+  const { isLoading, loggedInAddress, identity, previouslyLoadedServers, worldsContentServerUrl, onSubmitConnectForm } = props
 
   const navigate = useNavigate()
 
@@ -100,11 +100,7 @@ function ConnectToWorld(props: Props) {
       try {
         if (!identity) return
 
-        const response: { url: string; token: string } = await livekitConnect(
-          identity,
-          'https://worlds-content-server.decentraland.zone',
-          selectedServer
-        )
+        const response: { url: string; token: string } = await livekitConnect(identity, worldsContentServerUrl, selectedServer)
         onSubmitConnectForm(response.url, response.token)
         addServerToPreviouslyLoaded(selectedServer)
         navigate(`/meet/${encodeURIComponent(response.url)}?token=${encodeURIComponent(response.token)}`)
