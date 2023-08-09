@@ -11,10 +11,8 @@ import {
   MessageFormatter,
   RoomAudioRenderer,
   useCreateLayoutContext,
-  // useParticipants,
   usePinnedTracks,
-  useTracks,
-  useParticipantContext
+  useTracks
 } from '@livekit/components-react'
 import { RoomEvent, Track } from 'livekit-client'
 import ParticipantTile from './ParticipantTile'

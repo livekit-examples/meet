@@ -1,16 +1,7 @@
 import type { ChatMessage, ReceivedChatMessage } from '@livekit/components-core'
-import {
-  ChatEntry,
-  MessageFormatter,
-  useLocalParticipant,
-  useMaybeLayoutContext,
-  useParticipantPermissions,
-  useRoomContext
-} from '@livekit/components-react'
+import { ChatEntry, MessageFormatter, useLocalParticipant, useMaybeLayoutContext, useRoomContext } from '@livekit/components-react'
 import * as React from 'react'
 import { cloneSingleChild, setupChat, useObservableState } from './utils'
-import { ParticipantPermission } from 'livekit-server-sdk'
-import { Participant } from 'livekit-client'
 
 export type { ChatMessage, ReceivedChatMessage }
 
