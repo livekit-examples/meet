@@ -25,7 +25,7 @@ function ConnectToWorld(props: Props) {
 
   useEffect(() => {
     if (!loggedInAddress && !isLoading) {
-      navigate(locations.signIn(locations.root()))
+      navigate(locations.signIn(locations.root(worldsContentServerUrl)))
     }
   }, [isLoading, loggedInAddress])
 

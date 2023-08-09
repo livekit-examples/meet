@@ -1,6 +1,5 @@
 export const locations = {
-  root: () => '/',
-  account: (address: string) => `/accounts/${address}`,
+  root: (worldsContentServerUrl?: string) => '/' + (worldsContentServerUrl ? `?worlds-content-server-url=${worldsContentServerUrl}` : ''),
   signIn: (redirectTo?: string) => {
     return `/sign-in${redirectTo ? `?redirectTo=${encodeURIComponent(redirectTo)}` : ''}`
   },
