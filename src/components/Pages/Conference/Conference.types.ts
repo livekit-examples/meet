@@ -1,5 +1,5 @@
-import { Dispatch } from "redux"
-import { RouterProps } from "../../../utils/WithRouter"
+import { Dispatch } from 'redux'
+import { RouterProps } from '../../../utils/WithRouter'
 
 export type Props = {
   loggedInAddress?: string
@@ -9,7 +9,7 @@ export type Props = {
   token?: string
 }
 
-export type MapStateProps = Pick<Props, "loggedInAddress" | "isLoading" | "profileAddress" | "server" | "token">
+export type MapStateProps = Pick<Props, 'loggedInAddress' | 'isLoading' | 'profileAddress' | 'server' | 'token'>
 export type MapDispatch = Dispatch
 type Params = {
   profileAddress?: string

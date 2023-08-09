@@ -1,2 +1,2 @@
-import Conference from "./Conference.container"
+import Conference from './Conference.container'
 export default Conference

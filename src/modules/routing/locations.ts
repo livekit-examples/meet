@@ -1,8 +1,8 @@
 export const locations = {
-  root: () => "/",
+  root: () => '/',
   account: (address: string) => `/accounts/${address}`,
   signIn: (redirectTo?: string) => {
-    return `/sign-in${redirectTo ? `?redirectTo=${encodeURIComponent(redirectTo)}` : ""}`
+    return `/sign-in${redirectTo ? `?redirectTo=${encodeURIComponent(redirectTo)}` : ''}`
   },
-  meet: (server: string, token: string) => `/meet/${server}?token${token}`,
+  meet: (server: string, token: string) => `/meet/${server}?token${token}`
 }

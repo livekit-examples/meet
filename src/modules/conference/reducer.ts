@@ -1,5 +1,5 @@
-import { createReducer } from "@reduxjs/toolkit"
-import { setServer, setToken } from "./action"
+import { createReducer } from '@reduxjs/toolkit'
+import { setServer, setToken } from './action'
 
 export type ConferenceState = {
   token: string
@@ -7,11 +7,11 @@ export type ConferenceState = {
 }
 
 export const INITIAL_STATE: ConferenceState = {
-  token: "",
-  server: "",
+  token: '',
+  server: ''
 }
 
-export const conferenceReducer = createReducer<ConferenceState>(INITIAL_STATE, (builder) =>
+export const conferenceReducer = createReducer<ConferenceState>(INITIAL_STATE, builder =>
   builder
     .addCase(setServer, (state, action) => {
       state.server = action.payload.server

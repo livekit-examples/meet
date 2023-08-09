@@ -1,7 +1,7 @@
-import React from "react"
-import classNames from "classnames"
-import { Props } from "./PageLayout.types"
-import styles from "./PageLayout.module.css"
+import React from 'react'
+import classNames from 'classnames'
+import { Props } from './PageLayout.types'
+import styles from './PageLayout.module.css'
 
 const PageLayout = ({ children, className }: Props) => {
   return (

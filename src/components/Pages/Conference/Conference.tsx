@@ -1,9 +1,9 @@
-import React from "react"
-import { Props } from "./Conference.types"
-import { LiveKitRoom } from "@livekit/components-react"
-import { VideoConference } from "../../VideoConference/Videoconference"
-import "@livekit/components-styles"
-import "./Conference.css"
+import React from 'react'
+import { LiveKitRoom } from '@livekit/components-react'
+import '@livekit/components-styles'
+import { VideoConference } from '../../VideoConference/Videoconference'
+import { Props } from './Conference.types'
+import './Conference.css'
 
 export default function Conference(props: Props) {
   const { token, server } = props

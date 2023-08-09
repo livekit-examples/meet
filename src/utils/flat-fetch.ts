@@ -7,14 +7,14 @@ type FlatFetchResponse = {
   text?: string
 }
 
-type BodyType = "json" | "text"
+type BodyType = 'json' | 'text'
 
 export type FlatFetchInit = RequestInit & { responseBodyType?: BodyType }
 
 export async function flatFetch(url: string, init?: FlatFetchInit): Promise<FlatFetchResponse> {
   const response = await fetch(url, init)
 
-  const responseBodyType = init?.responseBodyType || "text"
+  const responseBodyType = init?.responseBodyType || 'text'
 
   const headers: Record<string, string> = {}
 
@@ -24,14 +24,14 @@ export async function flatFetch(url: string, init?: FlatFetchInit): Promise<Flat
     ok: response.ok,
     status: response.status,
     statusText: response.statusText,
-    headers,
+    headers
   }
 
   switch (responseBodyType) {
-    case "json":
+    case 'json':
       flatFetchResponse.json = await response.json()
       break
-    case "text":
+    case 'text':
       flatFetchResponse.text = await response.text()
       break
   }
