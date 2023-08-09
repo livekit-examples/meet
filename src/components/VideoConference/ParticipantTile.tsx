@@ -1,8 +1,5 @@
-import * as React from "react"
-import type { Participant, TrackPublication } from "livekit-client"
-import { Track } from "livekit-client"
-import type { ParticipantClickEvent, TrackReferenceOrPlaceholder } from "@livekit/components-core"
-import { isParticipantSourcePinned } from "@livekit/components-core"
+import * as React from 'react'
+import { isParticipantSourcePinned } from '@livekit/components-core'
 import {
   AudioTrack,
   ConnectionQualityIndicator,
@@ -15,9 +12,12 @@ import {
   useMaybeLayoutContext,
   useMaybeParticipantContext,
   useMaybeTrackContext,
-  useParticipantTile,
-} from "@livekit/components-react"
-import Profile from "decentraland-dapps/dist/containers/Profile"
+  useParticipantTile
+} from '@livekit/components-react'
+import { Track } from 'livekit-client'
+import Profile from 'decentraland-dapps/dist/containers/Profile'
+import type { ParticipantClickEvent, TrackReferenceOrPlaceholder } from '@livekit/components-core'
+import type { Participant, TrackPublication } from 'livekit-client'
 
 /** @public */
 export function ParticipantContextIfNeeded(
@@ -40,7 +40,7 @@ export interface ParticipantTileProps extends React.HTMLAttributes<HTMLDivElemen
   source?: Track.Source
   publication?: TrackPublication
   onParticipantClick?: (event: ParticipantClickEvent) => void
-  imageSize?: "normal" | "large" | "huge" | "massive"
+  imageSize?: 'normal' | 'large' | 'huge' | 'massive'
 }
 
 /**
@@ -69,7 +69,7 @@ export function ParticipantTile({
   const trackRef: TrackReferenceOrPlaceholder = useMaybeTrackContext() ?? {
     participant: p,
     source,
-    publication,
+    publication
   }
 
   const { elementProps } = useParticipantTile<HTMLDivElement>({
@@ -78,7 +78,7 @@ export function ParticipantTile({
     source: trackRef.source,
     publication: trackRef.publication,
     disableSpeakingIndicator,
-    onParticipantClick,
+    onParticipantClick
   })
 
   const layoutContext = useMaybeLayoutContext()
@@ -92,7 +92,7 @@ export function ParticipantTile({
         layoutContext.pin.dispatch &&
         isParticipantSourcePinned(trackRef.participant, trackRef.source, layoutContext.pin.state)
       ) {
-        layoutContext.pin.dispatch({ msg: "clear_pin" })
+        layoutContext.pin.dispatch({ msg: 'clear_pin' })
       }
     },
     [trackRef.participant, layoutContext, trackRef.source]
@@ -101,17 +101,17 @@ export function ParticipantTile({
   const participantWithProfile: Participant = React.useMemo(
     () => ({
       ...trackRef.participant,
-      name: "Edita me",
+      name: 'Edita me'
     }),
     [trackRef.participant]
   ) as Participant
 
   return (
-    <div style={{ position: "relative" }} {...elementProps}>
+    <div style={{ position: 'relative' }} {...elementProps}>
       <ParticipantContextIfNeeded participant={trackRef.participant}>
         {children ?? (
           <>
-            {trackRef.publication?.kind === "video" ||
+            {trackRef.publication?.kind === 'video' ||
             trackRef.source === Track.Source.Camera ||
             trackRef.source === Track.Source.ScreenShare ? (
               <VideoTrack
@@ -135,7 +135,7 @@ export function ParticipantTile({
               <div className="lk-participant-metadata-item">
                 {trackRef.source === Track.Source.Camera ? (
                   <>
-                    <TrackMutedIndicator source={Track.Source.Microphone} show={"muted"}></TrackMutedIndicator>
+                    <TrackMutedIndicator source={Track.Source.Microphone} show={'muted'}></TrackMutedIndicator>
                     <ParticipantName participant={participantWithProfile} />
                   </>
                 ) : (

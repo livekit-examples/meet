@@ -1,46 +1,10 @@
 {
-  "avatar": {
-    "edit": "Edit Avatar",
-    "message": "Edit your avatar in Decentraland"
-  },
-  "profile_information": {
-    "default_name": "Unnamed",
-    "edit": "Edit Profile",
-    "copied": "Copied",
-    "copy_link": "Copy Link",
-    "share_on_tw": "Share on Twitter",
-    "tw_message": "Hey, checkout my profile in decentraland\n"
-  },
-  "worlds_button": {
-    "get_a_name": "Get an unique name",
-    "activate_world": "Activate my world",
-    "jump": "Jump to \"{domain}\" World"
-  },
-  "tabs": {
-    "assets": "Assets",
-    "creations": "Creations",
-    "dao_activity": "DAO Activity",
-    "lists": "Lists",
-    "overview": "Overview",
-    "places": "Places"
-  },
-  "friendship_button": {
-    "friends": "Friends",
-    "add_friend": "Add Friend",
-    "pending": "Pending Request",
-    "cancel_request": "Cancel Request",
-    "accept_request": "Accept Request",
-    "blocked": "Blocked",
-    "unfriend": "Unfriend"
-  },
-  "friends_modal": {
-    "friends_title": "Friends",
-    "mutuals_title": "Mutual friends"
-  },
-  "friends_counter": {
-    "friends": "{count} {count, plural, one {friend} other {friends}}"
-  },
-  "mutual_friends_counter": {
-    "mutual": "mutual"
+  "connect_to_world": {
+    "title": "Meet on Decentraland",
+    "description": "Choose the world you want to connect to and start streaming.",
+    "image_alt": "Meet on Decentraland",
+    "cta": "Connect",
+    "input_label": "World name",
+    "input_placeholder": "example:<name>.dcl.eth"
   }
 }

@@ -3,6 +3,7 @@ import { useSearchParams, useNavigate } from 'react-router-dom'
 import { default as SignIn } from 'decentraland-dapps/dist/containers/SignInPage'
 import { PageLayout } from '../../PageLayout'
 import { Props } from './SignInPage.types'
+import styles from './SignInPage.module.css'
 
 const SignInPage = (props: Props) => {
   const { isConnected, onConnect } = props
@@ -19,7 +20,9 @@ const SignInPage = (props: Props) => {
 
   return (
     <PageLayout>
-      <SignIn isConnected={isConnected} handleLoginConnect={onConnect} />
+      <div className={styles.content}>
+        <SignIn isConnected={isConnected} handleLoginConnect={onConnect} />
+      </div>
     </PageLayout>
   )
 }

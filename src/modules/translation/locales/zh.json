@@ -1,46 +1,10 @@
 {
-  "avatar": {
-    "edit": "編輯頭像",
-    "message": "在 Decentraland 中编辑您的头像"
-  },
-  "profile_information": {
-    "default_name": "未命名的",
-    "edit": "編輯個人資料",
-    "copied": "已復制",
-    "copy_link": "複製鏈接",
-    "share_on_tw": "在 Twitter 上分享",
-    "tw_message": "嘿，查看我在 decentraland 中的個人資料\n"
-  },
-  "worlds_button": {
-    "get_a_name": "取一个独特的名字",
-    "activate_world": "创造我的世界",
-    "jump": "跳转到“{domain}”世界"
-  },
-  "tabs": {
-    "overview": "概述",
-    "assets": "資產",
-    "creations": "創作",
-    "lists": "列表",
-    "dao_activity": "DAO 活動",
-    "places": "地點"
-  },
-  "friendship_button": {
-    "friends": "朋友们",
-    "add_friend": "添加好友",
-    "pending": "待处理请求",
-    "cancel_request": "取消请求",
-    "accept_request": "接受请求",
-    "blocked": "阻止",
-    "unfriend": "不朋友"
-  },
-  "friends_modal": {
-    "friends_title": "朋友们",
-    "mutuals_title": "共同的朋友"
-  },
-  "friends_counter": {
-    "friends": "{count} 朋友們"
-  },
-  "mutual_friends_counter": {
-    "mutual": "共同的朋友"
+  "connect_to_world": {
+    "title": "在 Decentraland 上见面",
+    "description": "选择您想要连接的世界并开始流式传输。",
+    "image_alt": "在 Decentraland 上见面",
+    "cta": "连接",
+    "input_label": "世界名称",
+    "input_placeholder": "example:<name>.dcl.eth"
   }
 }

@@ -1,46 +1,10 @@
 {
-  "avatar": {
-    "edit": "Editar Avatar",
-    "message": "Edita tu Avatar en Decentraland"
-  },
-  "profile_information": {
-    "default_name": "Sin nombrar",
-    "edit": "Editar Perfil",
-    "copied": "Copiado",
-    "copy_link": "Copiar enlace",
-    "share_on_tw": "Compartir en Twitter",
-    "tw_message": "Oye, revisa mi perfil en decentraland\n"
-  },
-  "worlds_button": {
-    "get_a_name": "Obtenga un nombre único",
-    "activate_world": "Activar mi mundo",
-    "jump": "Saltar al mundo \"{domain}\""
-  },
-  "tabs": {
-    "overview": "Resumen",
-    "assets": "Objetos",
-    "creations": "Creaciones",
-    "lists": "Listas",
-    "dao_activity": "Actividad DAO",
-    "places": "Places"
-  },
-  "friendship_button": {
-    "friends": "Amigos",
-    "add_friend": "Agregar amigo",
-    "pending": "Petición pendiente",
-    "cancel_request": "Cancelar petición",
-    "accept_request": "Acceptar petición",
-    "blocked": "Bloqueado",
-    "unfriend": "Dejar de ser amigo"
-  },
-  "friends_modal": {
-    "friends_title": "Amigos",
-    "mutuals_title": "Amigos en común"
-  },
-  "friends_counter": {
-    "friends": "{count} {count, plural, one {amigo} other {amigos}}"
-  },
-  "mutual_friends_counter": {
-    "mutual": "amigos en común"
+  "connect_to_world": {
+    "title": "Reunirse en Decentraland",
+    "description": "Elija el mundo al que desea conectarse y comience a transmitir.",
+    "image_alt": "Reunirse en Decentraland",
+    "cta": "Conectar",
+    "input_label": "Nombre del mundo",
+    "input_placeholder": "ejemplo:<name>.dcl.eth"
   }
 }

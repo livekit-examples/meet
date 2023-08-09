@@ -1,7 +1,7 @@
-import { RequestManager } from "eth-connect"
-import { createUnsafeIdentity } from "@dcl/crypto/dist/crypto"
-import { FlatFetchInit, flatFetch } from "./flat-fetch"
-import { AuthChain, AuthIdentity, Authenticator } from "@dcl/crypto"
+import { RequestManager } from 'eth-connect'
+import { AuthChain, AuthIdentity, Authenticator } from '@dcl/crypto'
+import { createUnsafeIdentity } from '@dcl/crypto/dist/crypto'
+import { FlatFetchInit, flatFetch } from './flat-fetch'
 
 const ephemeralLifespanMinutes = 10_000
 
@@ -16,10 +16,7 @@ export type ExplorerIdentity = {
   signer: (message: string) => Promise<string>
 }
 
-export async function getUserAccount(
-  requestManager: RequestManager,
-  returnChecksum: boolean
-): Promise<string | undefined> {
+export async function getUserAccount(requestManager: RequestManager, returnChecksum: boolean): Promise<string | undefined> {
   try {
     const accounts = await requestManager.eth_accounts()
 
@@ -33,25 +30,20 @@ export async function getUserAccount(
   }
 }
 
-const AUTH_CHAIN_HEADER_PREFIX = "x-identity-auth-chain-"
-const AUTH_TIMESTAMP_HEADER = "x-identity-timestamp"
-const AUTH_METADATA_HEADER = "x-identity-metadata"
+const AUTH_CHAIN_HEADER_PREFIX = 'x-identity-auth-chain-'
+const AUTH_TIMESTAMP_HEADER = 'x-identity-timestamp'
+const AUTH_METADATA_HEADER = 'x-identity-metadata'
 
-export function getAuthChainSignature(
-  method: string,
-  path: string,
-  metadata: string,
-  chainProvider: (payload: string) => AuthChain
-) {
+export function getAuthChainSignature(method: string, path: string, metadata: string, chainProvider: (payload: string) => AuthChain) {
   const timestamp = Date.now()
   const payloadParts = [method.toLowerCase(), path.toLowerCase(), timestamp.toString(), metadata]
-  const payloadToSign = payloadParts.join(":").toLowerCase()
+  const payloadToSign = payloadParts.join(':').toLowerCase()
   const authChain = chainProvider(payloadToSign)
 
   return {
     authChain,
     metadata,
-    timestamp,
+    timestamp
   }
 }
 
@@ -72,28 +64,23 @@ export function getSignedHeaders(
   return headers
 }
 
-export function signedFetch(
-  url: string,
-  identity: AuthIdentity,
-  init?: FlatFetchInit,
-  additionalMetadata: Record<string, any> = {}
-) {
+export function signedFetch(url: string, identity: AuthIdentity, init?: FlatFetchInit, additionalMetadata: Record<string, any> = {}) {
   const path = new URL(url).pathname
 
   const actualInit = {
     ...init,
     headers: {
       ...getSignedHeaders(
-        init?.method ?? "get",
+        init?.method ?? 'get',
         path,
         {
           origin: location.origin,
-          ...additionalMetadata,
+          ...additionalMetadata
         },
-        (payload) => Authenticator.signPayload(identity, payload)
+        payload => Authenticator.signPayload(identity, payload)
       ),
-      ...init?.headers,
-    },
+      ...init?.headers
+    }
   } as FlatFetchInit
 
   return flatFetch(url, actualInit)
@@ -104,10 +91,7 @@ export function signedFetch(
 // the ephemeral private key is used to sign the rest of the authChain and subsequent
 // messages. this is a good way to not over-expose the real user accounts to excessive
 // signing requests.
-export async function identityFromSigner(
-  address: string,
-  signer: (message: string) => Promise<string>
-): Promise<ExplorerIdentity> {
+export async function identityFromSigner(address: string, signer: (message: string) => Promise<string>): Promise<ExplorerIdentity> {
   const ephemeral = createUnsafeIdentity()
 
   const authChain = await Authenticator.initializeAuthChain(address, ephemeral, ephemeralLifespanMinutes, signer)
@@ -116,6 +100,6 @@ export async function identityFromSigner(
     address,
     signer,
     authChain,
-    isGuest: true,
+    isGuest: true
   }
 }
