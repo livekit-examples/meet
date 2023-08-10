@@ -53,7 +53,8 @@ export function setupChat(room: Room) {
       ({ packet }) =>
         packet.message?.$case === 'chat' &&
         !packet.message.chat.message.startsWith('␆') /* ping */ &&
-        !packet.message.chat.message.startsWith('␑') /* pong */
+        !packet.message.chat.message.startsWith('␑') /* pong */ &&
+        !packet.message.chat.message.startsWith('␐') /* emotes */
     ),
     map(({ packet, msg }) => {
       if (packet.message?.$case === 'chat') {
