@@ -108,6 +108,8 @@ function ConnectToWorld(props: Props) {
       } catch (error) {
         console.error('ERROR livekit connect', error)
         if (isErrorMessage(error)) setError(error.message)
+      } finally {
+        setIsConnectingToServer(false)
       }
     },
     [identity, selectedServer, onSubmitConnectForm]
