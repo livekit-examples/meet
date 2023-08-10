@@ -8,23 +8,16 @@ import {
   FocusLayoutContainer,
   GridLayout,
   LayoutContextProvider,
-  MessageFormatter,
   RoomAudioRenderer,
   useCreateLayoutContext,
   usePinnedTracks,
   useTracks
 } from '@livekit/components-react'
 import { RoomEvent, Track } from 'livekit-client'
-import ParticipantTile from './ParticipantTile'
+import Chat from '../Chat'
+import ParticipantTile from '../ParticipantTile'
+import { VideoConferenceProps } from './VideoConference.types'
 import type { TrackReferenceOrPlaceholder, WidgetState } from '@livekit/components-core'
-import Chat from './Chat'
-
-/**
- * @public
- */
-export interface VideoConferenceProps extends React.HTMLAttributes<HTMLDivElement> {
-  chatMessageFormatter?: MessageFormatter
-}
 
 /**
  * This component is the default setup of a classic LiveKit video conferencing app.
@@ -107,7 +100,7 @@ export function VideoConference({ chatMessageFormatter, ...props }: VideoConfere
                 </FocusLayoutContainer>
               </div>
             )}
-            <ControlBar controls={{ chat: true }} />
+            <ControlBar controls={{ chat: true }} variation="minimal" />
           </div>
           <Chat style={{ display: widgetState.showChat ? 'flex' : 'none' }} messageFormatter={chatMessageFormatter} />
         </LayoutContextProvider>

@@ -1,7 +1,7 @@
 import React from 'react'
 import { LiveKitRoom } from '@livekit/components-react'
 import '@livekit/components-styles'
-import { VideoConference } from '../../VideoConference/Videoconference'
+import { VideoConference } from '../../VideoConference/'
 import { Props } from './Conference.types'
 import './Conference.css'
 
