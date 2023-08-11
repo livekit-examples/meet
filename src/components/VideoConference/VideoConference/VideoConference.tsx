@@ -3,7 +3,6 @@ import { isEqualTrackRef, isTrackReference, log, isWeb } from '@livekit/componen
 import {
   CarouselView,
   ConnectionStateToast,
-  ControlBar,
   FocusLayout,
   FocusLayoutContainer,
   GridLayout,
@@ -15,6 +14,7 @@ import {
 } from '@livekit/components-react'
 import { RoomEvent, Track } from 'livekit-client'
 import Chat from '../Chat'
+import { ControlBar } from '../ControlBar'
 import ParticipantTile from '../ParticipantTile'
 import { VideoConferenceProps } from './VideoConference.types'
 import type { TrackReferenceOrPlaceholder, WidgetState } from '@livekit/components-core'
