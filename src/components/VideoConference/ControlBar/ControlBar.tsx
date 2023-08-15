@@ -1,5 +1,4 @@
-import * as React from 'react'
-import { useEffect, useMemo, useRef, useState } from 'react'
+import React, { useEffect, useMemo, useRef, useState } from 'react'
 import { supportsScreenSharing } from '@livekit/components-core'
 import {
   ChatToggle,
@@ -8,16 +7,18 @@ import {
   StartAudio,
   TrackToggle,
   useLocalParticipantPermissions,
-  useMaybeLayoutContext,
   useRoomContext
 } from '@livekit/components-react'
 import { LocalAudioTrack, LocalVideoTrack, Track } from 'livekit-client'
 import ChatIcon from '../../../assets/icons/ChatIcon'
 import LeaveIcon from '../../../assets/icons/LeaveIcon'
+import { useLayoutContext } from '../../../hooks/useLayoutContext'
 import { useMediaQuery } from '../../../hooks/useMediaQuery'
 import { usePreviewTracks } from '../../../hooks/usePreviewTracks'
 import { mergeProps } from '../../../utils/mergeProps'
+import PeoplePanelToggleButton from './PeoplePanelToggleButton'
 import { ControlBarProps, DEFAULT_USER_CHOICES } from './ControlBar.types'
+import styles from './ControlBar.module.css'
 
 /**
  * The ControlBar prefab component gives the user the basic user interface
@@ -37,7 +38,7 @@ import { ControlBarProps, DEFAULT_USER_CHOICES } from './ControlBar.types'
  */
 export function ControlBar({ variation, controls, ...props }: ControlBarProps) {
   const [isChatOpen, setIsChatOpen] = useState(false)
-  const layoutContext = useMaybeLayoutContext()
+  const layoutContext = useLayoutContext()
   const {
     options: { videoCaptureDefaults, audioCaptureDefaults }
   } = useRoomContext()
@@ -73,7 +74,7 @@ export function ControlBar({ variation, controls, ...props }: ControlBarProps) {
     setIsScreenShareEnabled(enabled)
   }
 
-  const htmlProps = mergeProps({ className: 'lk-control-bar' }, props)
+  const htmlProps = mergeProps({ className: `lk-control-bar ${styles.ControlBarContainer}` }, props)
 
   const [videoEnabled, setVideoEnabled] = useState<boolean>(visibleControls.camera ?? DEFAULT_USER_CHOICES.videoEnabled)
   const initialVideoDeviceId = (videoCaptureDefaults?.deviceId as string) ?? DEFAULT_USER_CHOICES.videoDeviceId
@@ -166,12 +167,6 @@ export function ControlBar({ variation, controls, ...props }: ControlBarProps) {
           {showText && (isScreenShareEnabled ? 'Stop screen share' : 'Share screen')}
         </TrackToggle>
       )}
-      {visibleControls.chat && (
-        <ChatToggle>
-          {showIcon && <ChatIcon />}
-          {showText && 'Chat'}
-        </ChatToggle>
-      )}
       {visibleControls.leave && (
         <DisconnectButton>
           {showIcon && <LeaveIcon />}
@@ -179,6 +174,15 @@ export function ControlBar({ variation, controls, ...props }: ControlBarProps) {
         </DisconnectButton>
       )}
       <StartAudio label="Start Audio" />
+      <div className={styles.ControlBarRightButtonGroup}>
+        {visibleControls.chat && (
+          <ChatToggle>
+            {showIcon && <ChatIcon />}
+            {showText && 'Chat'}
+          </ChatToggle>
+        )}
+        {visibleControls.peoplePanel && <PeoplePanelToggleButton />}
+      </div>
     </div>
   )
 }

@@ -6,5 +6,9 @@
     "cta": "Conectar",
     "input_label": "Nombre del mundo",
     "input_placeholder": "ejemplo:<name>.dcl.eth"
+  },
+  "people_panel": {
+    "title": "Personas",
+    "subtitle": "Personas en esta reunión"
   }
 }

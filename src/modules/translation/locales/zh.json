@@ -6,5 +6,9 @@
     "cta": "连接",
     "input_label": "世界名称",
     "input_placeholder": "example:<name>.dcl.eth"
+  },
+  "people_panel": {
+    "title": "人们",
+    "subtitle": "这次会议的人"
   }
 }

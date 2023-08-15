@@ -1,0 +1,71 @@
+.container {
+  display: none;
+  flex-direction: column;
+  flex-shrink: 0;
+  width: 100%;
+}
+
+.open {
+  display: flex;
+}
+
+.headerContainer {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  margin-bottom: 16px;
+}
+
+.close:global(.ui.button) {
+  padding: 0;
+  min-width: 24px;
+  width: 24px;
+  background: url('../../../../assets/icons/Close.svg');
+  color: var(--toast-text);
+}
+
+.close:global(.ui.button):hover {
+  transform: none;
+  box-shadow: none;
+}
+
+.title:global(.ui.header) {
+  font-size: 24px;
+  margin-bottom: 0px;
+  font-size: 24px;
+  font-weight: 600;
+  line-height: 24px;
+  color: var(--toast-text);
+}
+
+.subtitle:global(.ui.header) {
+  margin-top: 0;
+  margin-bottom: 18px;
+  font-size: 20px;
+  font-weight: 400;
+  line-height: 24px;
+  color: var(--toast-text);
+}
+
+.profile:not(:last-child) {
+  margin-bottom: 18px;
+}
+
+:global(div.ProfileContainer > span.Profile) {
+  display: flex;
+  padding: 2px 181px 2px 2px;
+  align-items: center;
+  gap: 12px;
+}
+
+:global(div.ProfileContainer > span.Profile > div.dcl.avatar-face.tiny.inline) {
+  width: 40px;
+  height: 40px;
+}
+
+:global(div.ProfileContainer > span.Profile > span.name) {
+  color: var(--toast-text);
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 24px;
+}

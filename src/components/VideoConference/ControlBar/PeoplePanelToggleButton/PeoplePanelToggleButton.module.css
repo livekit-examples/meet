@@ -1,0 +1,20 @@
+.button {
+  background-color: transparent;
+  padding: 0.625rem 1rem;
+}
+
+.buttonActive {
+  background-color: var(--lk-control-active-bg);
+}
+
+.peopleIcon {
+  height: 18px;
+  width: 18px;
+}
+
+.label {
+  position: relative;
+  top: -16px;
+  left: -14px;
+  min-width: 40px;
+}

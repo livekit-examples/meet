@@ -6,5 +6,9 @@
     "cta": "Connect",
     "input_label": "World name",
     "input_placeholder": "example:<name>.dcl.eth"
+  },
+  "people_panel": {
+    "title": "People",
+    "subtitle": "People in this meeting"
   }
 }

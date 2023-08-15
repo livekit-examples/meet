@@ -1,8 +1,9 @@
+import * as React from 'react'
 import type { ChatMessage, ReceivedChatMessage } from '@livekit/components-core'
 import { MessageFormatter, useLocalParticipant, useMaybeLayoutContext, useRoomContext } from '@livekit/components-react'
-import * as React from 'react'
+import ChatEntry from './ChatEntry'
 import { cloneSingleChild, setupChat, useObservableState } from './utils'
-import { ChatEntry } from './ChatEntry'
+import styles from './Chat.module.css'
 
 export type { ChatMessage, ReceivedChatMessage }
 
@@ -89,7 +90,7 @@ export default function Chat({ messageFormatter, ...props }: ChatProps) {
   const localParticipant = useLocalParticipant().localParticipant
 
   return (
-    <div {...props} className="lk-chat">
+    <div {...props} className={styles.container}>
       <ul className="lk-list lk-chat-messages" ref={ulRef}>
         {props.children
           ? chatMessages.map((msg, idx) =>

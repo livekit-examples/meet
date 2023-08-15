@@ -11,6 +11,7 @@
     "check:code": "eslint -c .eslintrc.js src",
     "fix:code": "npm run check:code -- --fix",
     "pre-commit:fix:code": "eslint -c .eslintrc.js --fix",
+    "pre-commit:fix:prettier": "prettier --config .prettierrc.json --write",
     "prepare": "husky install",
     "test": "jest",
     "test:coverage": "npm run test -- --coverage"

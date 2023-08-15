@@ -1,0 +1,12 @@
+.container {
+  display: none;
+  height: 100%;
+  width: 441px;
+  padding: 16px 30px 0px 30px;
+  border-radius: 10px;
+  border: 1px solid var(--dcl-cloudy-sky, #716b7c);
+}
+
+.container.open {
+  display: flex;
+}

@@ -8,7 +8,9 @@ export const DEFAULT_USER_CHOICES = {
 }
 
 /** @public */
-export type ControlBarControls = BaseControlBarControls
+export type ControlBarControls = BaseControlBarControls & {
+  peoplePanel?: boolean
+}
 
 /** @public */
 export interface ControlBarProps extends BaseControlBarProps {

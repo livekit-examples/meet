@@ -1,4 +1,4 @@
-import * as React from 'react'
+import React, { useRef, useEffect } from 'react'
 import { isEqualTrackRef, isTrackReference, log, isWeb } from '@livekit/components-core'
 import {
   CarouselView,
@@ -8,16 +8,18 @@ import {
   GridLayout,
   LayoutContextProvider,
   RoomAudioRenderer,
-  useCreateLayoutContext,
   usePinnedTracks,
   useTracks
 } from '@livekit/components-react'
+import classNames from 'classnames'
 import { RoomEvent, Track } from 'livekit-client'
-import Chat from '../Chat'
+import { useCreateLayoutContext } from '../../../hooks/useLayoutContext'
 import { ControlBar } from '../ControlBar'
 import ParticipantTile from '../ParticipantTile'
-import { VideoConferenceProps } from './VideoConference.types'
-import type { TrackReferenceOrPlaceholder, WidgetState } from '@livekit/components-core'
+import RightPanel from '../RightPanel'
+import type { VideoConferenceProps } from './VideoConference.types'
+import type { TrackReferenceOrPlaceholder } from '@livekit/components-core'
+import styles from './VideoConference.module.css'
 
 /**
  * This component is the default setup of a classic LiveKit video conferencing app.
@@ -35,9 +37,8 @@ import type { TrackReferenceOrPlaceholder, WidgetState } from '@livekit/componen
  * ```
  * @public
  */
-export function VideoConference({ chatMessageFormatter, ...props }: VideoConferenceProps) {
-  const [widgetState, setWidgetState] = React.useState<WidgetState>({ showChat: false, unreadMessages: 0 })
-  const lastAutoFocusedScreenShareTrack = React.useRef<TrackReferenceOrPlaceholder | null>(null)
+export function VideoConference(props: VideoConferenceProps) {
+  const lastAutoFocusedScreenShareTrack = useRef<TrackReferenceOrPlaceholder | null>(null)
 
   const tracks = useTracks(
     [
@@ -47,11 +48,6 @@ export function VideoConference({ chatMessageFormatter, ...props }: VideoConfere
     { updateOnlyOn: [RoomEvent.ActiveSpeakersChanged] }
   )
 
-  const widgetUpdate = (state: WidgetState) => {
-    log.debug('updating widget state', state)
-    setWidgetState(state)
-  }
-
   const layoutContext = useCreateLayoutContext()
 
   const screenShareTracks = tracks.filter(isTrackReference).filter(track => track.publication.source === Track.Source.ScreenShare)
@@ -59,7 +55,7 @@ export function VideoConference({ chatMessageFormatter, ...props }: VideoConfere
   const focusTrack = usePinnedTracks(layoutContext)?.[0]
   const carouselTracks = tracks.filter(track => !isEqualTrackRef(track, focusTrack))
 
-  React.useEffect(() => {
+  useEffect(() => {
     // If screen share tracks are published, and no pin is set explicitly, auto set the screen share.
     if (screenShareTracks.length > 0 && lastAutoFocusedScreenShareTrack.current === null) {
       log.debug('Auto set screen share focus:', { newScreenShareTrack: screenShareTracks[0] })
@@ -78,17 +74,14 @@ export function VideoConference({ chatMessageFormatter, ...props }: VideoConfere
   return (
     <div className="lk-video-conference" {...props}>
       {isWeb() && (
-        <LayoutContextProvider
-          value={layoutContext}
-          // onPinChange={handleFocusStateChange}
-          onWidgetChange={widgetUpdate}
-        >
+        <LayoutContextProvider value={layoutContext}>
           <div className="lk-video-conference-inner">
             {!focusTrack ? (
-              <div className="lk-grid-layout-wrapper">
-                <GridLayout tracks={tracks}>
+              <div className={classNames('lk-grid-layout-wrapper', styles.LayoutWrapper)}>
+                <GridLayout tracks={tracks} className={styles.GridLayout}>
                   <ParticipantTile imageSize="massive" />
                 </GridLayout>
+                <RightPanel />
               </div>
             ) : (
               <div className="lk-focus-layout-wrapper">
@@ -100,9 +93,8 @@ export function VideoConference({ chatMessageFormatter, ...props }: VideoConfere
                 </FocusLayoutContainer>
               </div>
             )}
-            <ControlBar controls={{ chat: true }} variation="minimal" />
+            <ControlBar controls={{ chat: true, peoplePanel: true }} variation="minimal" />
           </div>
-          <Chat style={{ display: widgetState.showChat ? 'flex' : 'none' }} messageFormatter={chatMessageFormatter} />
         </LayoutContextProvider>
       )}
       <RoomAudioRenderer />

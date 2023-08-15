@@ -1,7 +1,7 @@
-import { tokenize, createDefaultGrammar, ReceivedChatMessage } from '@livekit/components-core'
 import * as React from 'react'
-import Profile from 'decentraland-dapps/dist/containers/Profile'
+import { tokenize, createDefaultGrammar, ReceivedChatMessage } from '@livekit/components-core'
 import { MessageFormatter } from '@livekit/components-react'
+import Profile from 'decentraland-dapps/dist/containers/Profile'
 
 /**
  * ChatEntry composes the HTML div element under the hood, so you can pass all its props.

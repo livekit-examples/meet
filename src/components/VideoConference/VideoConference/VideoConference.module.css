@@ -1,0 +1,7 @@
+.LayoutWrapper {
+  flex-direction: row;
+}
+
+.GridLayout {
+  flex: 1;
+}
