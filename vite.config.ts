@@ -45,6 +45,6 @@ export default defineConfig(({ command, mode }) => {
             }
           }
         }
-      : undefined)
+      : { server: { open: true } })
   }
 })

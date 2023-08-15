@@ -15,6 +15,7 @@
 
 .navbar {
   flex-shrink: 0;
+  background-color: var(--background);
 }
 
 @media (max-width: 767px) {
