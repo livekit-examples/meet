@@ -1,5 +1,6 @@
 import * as React from 'react'
 import { isParticipantSourcePinned } from '@livekit/components-core'
+import type { TrackReferenceOrPlaceholder } from '@livekit/components-core'
 import {
   AudioTrack,
   ConnectionQualityIndicator,
@@ -15,10 +16,9 @@ import {
   useParticipantTile
 } from '@livekit/components-react'
 import { Track } from 'livekit-client'
+import type { Participant } from 'livekit-client'
 import Profile from 'decentraland-dapps/dist/containers/Profile'
 import type { Props } from './ParticipantTile.types'
-import type { TrackReferenceOrPlaceholder } from '@livekit/components-core'
-import type { Participant } from 'livekit-client'
 
 /** @public */
 export function ParticipantContextIfNeeded(

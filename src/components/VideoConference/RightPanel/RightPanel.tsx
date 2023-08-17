@@ -15,7 +15,7 @@ export const RightPanel = () => {
   return (
     <div className={classNames(styles.container, { [styles.open]: showChat || showPeoplePanel })}>
       <PeoplePanel isOpen={showPeoplePanel} />
-      <Chat style={{ display: showChat ? 'flex' : 'none' }} />
+      <Chat isOpen={showChat} />
     </div>
   )
 }

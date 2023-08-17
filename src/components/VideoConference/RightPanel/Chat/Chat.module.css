@@ -1,6 +1,57 @@
 .container {
+  display: none;
   height: 100%;
   width: 100%;
   flex-direction: column;
   align-items: stretch;
+}
+
+.open {
+  display: flex;
+}
+
+.headerContainer {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  margin-bottom: 16px;
+}
+
+.close:global(.ui.button) {
+  padding: 0;
+  min-width: 24px;
+  width: 24px;
+  background: url('../../../../assets/icons/Close.svg');
+  color: var(--toast-text);
+}
+
+.close:global(.ui.button):hover {
+  transform: none;
+  box-shadow: none;
+}
+
+.title:global(.ui.header) {
+  font-size: 24px;
+  margin-bottom: 0px;
+  font-size: 24px;
+  font-weight: 600;
+  line-height: 24px;
+  color: var(--toast-text);
+}
+
+.chatMessages {
+  justify-content: flex-start;
+}
+
+.form {
+  display: flex;
+}
+
+.input {
+  width: 100%;
+  margin-bottom: 24px;
+}
+
+.button {
+  height: 42px;
 }

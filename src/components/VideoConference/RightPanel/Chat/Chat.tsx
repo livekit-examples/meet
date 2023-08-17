@@ -1,31 +1,16 @@
-import * as React from 'react'
-import type { ChatMessage, ReceivedChatMessage } from '@livekit/components-core'
-import { MessageFormatter, useLocalParticipant, useMaybeLayoutContext, useRoomContext } from '@livekit/components-react'
+import React, { useCallback, useEffect, useRef } from 'react'
+import type { ChatMessage } from '@livekit/components-core'
+import { useLocalParticipant } from '@livekit/components-react'
+import classNames from 'classnames'
+import { t } from 'decentraland-dapps/dist/modules/translation/utils'
+import { Button, Header, Input } from 'decentraland-ui'
+import SendIcon from '../../../../assets/icons/SendIcon'
+import { useChat } from '../../../../hooks/useChat'
+import { useLayoutContext } from '../../../../hooks/useLayoutContext'
+import { cloneSingleChild } from '../../../../utils/chat'
 import ChatEntry from './ChatEntry'
-import { cloneSingleChild, setupChat, useObservableState } from './utils'
+import { Props } from './Chat.types'
 import styles from './Chat.module.css'
-
-export type { ChatMessage, ReceivedChatMessage }
-
-export interface ChatProps extends React.HTMLAttributes<HTMLDivElement> {
-  messageFormatter?: MessageFormatter
-}
-
-/** @public */
-export function useChat() {
-  const room = useRoomContext()
-  const [setup, setSetup] = React.useState<ReturnType<typeof setupChat>>()
-  const isSending = useObservableState(setup?.isSendingObservable, false)
-  const chatMessages = useObservableState(setup?.messageObservable, [])
-
-  React.useEffect(() => {
-    const setupChatReturn = setupChat(room)
-    setSetup(setupChatReturn)
-    return setupChatReturn.destroy
-  }, [room])
-
-  return { send: setup?.send, chatMessages, isSending }
-}
 
 /**
  * The Chat component adds a basis chat functionality to the LiveKit room. The messages are distributed to all participants
@@ -39,14 +24,13 @@ export function useChat() {
  * ```
  * @public
  */
-export default function Chat({ messageFormatter, ...props }: ChatProps) {
-  const inputRef = React.useRef<HTMLInputElement>(null)
-  const ulRef = React.useRef<HTMLUListElement>(null)
-
+export default function Chat({ messageFormatter, isOpen, ...props }: Props) {
   const { send, chatMessages, isSending } = useChat()
+  const inputRef = useRef<HTMLInputElement>(null)
+  const ulRef = useRef<HTMLUListElement>(null)
 
-  const layoutContext = useMaybeLayoutContext()
-  const lastReadMsgAt = React.useRef<ChatMessage['timestamp']>(0)
+  const layoutContext = useLayoutContext()
+  const lastReadMsgAt = useRef<ChatMessage['timestamp']>(0)
 
   async function handleSubmit(event: React.FormEvent) {
     event.preventDefault()
@@ -59,13 +43,13 @@ export default function Chat({ messageFormatter, ...props }: ChatProps) {
     }
   }
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (ulRef) {
       ulRef.current?.scrollTo({ top: ulRef.current.scrollHeight })
     }
   }, [ulRef, chatMessages])
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (!layoutContext || chatMessages.length === 0) {
       return
     }
@@ -87,11 +71,24 @@ export default function Chat({ messageFormatter, ...props }: ChatProps) {
     }
   }, [chatMessages, layoutContext?.widget])
 
+  const handleClosePanel = useCallback(() => {
+    const { dispatch } = layoutContext.widget
+    if (dispatch) {
+      dispatch({ msg: 'hide_chat' })
+    }
+  }, [layoutContext])
+
   const localParticipant = useLocalParticipant().localParticipant
 
   return (
-    <div {...props} className={styles.container}>
-      <ul className="lk-list lk-chat-messages" ref={ulRef}>
+    <div {...props} className={classNames(styles.container, { [styles['open']]: isOpen })}>
+      <div className={styles.headerContainer}>
+        <Header className={styles.title} size="medium">
+          {t('chat_panel.title')}
+        </Header>
+        <Button className={styles.close} onClick={handleClosePanel} />
+      </div>
+      <ul className={classNames(styles.chatMessages, 'lk-list', 'lk-chat-messages')} ref={ulRef}>
         {props.children
           ? chatMessages.map((msg, idx) =>
               cloneSingleChild(props.children, {
@@ -101,9 +98,9 @@ export default function Chat({ messageFormatter, ...props }: ChatProps) {
               })
             )
           : chatMessages.map((msg, idx, allMsg) => {
-              const hideName = idx >= 1 && allMsg[idx - 1].from === msg.from
               // If the time delta between two messages is bigger than 60s show timestamp.
               const hideTimestamp = idx >= 1 && msg.timestamp - allMsg[idx - 1].timestamp < 60_000
+              const hideName = idx >= 1 && allMsg[idx - 1].from === msg.from && hideTimestamp
 
               return (
                 <ChatEntry
@@ -117,17 +114,13 @@ export default function Chat({ messageFormatter, ...props }: ChatProps) {
             })}
       </ul>
       {localParticipant.permissions?.canPublish && (
-        <form className="lk-chat-form" onSubmit={handleSubmit}>
-          <input
-            className="lk-form-control lk-chat-form-input"
-            disabled={isSending}
-            ref={inputRef}
-            type="text"
-            placeholder="Enter a message..."
-          />
-          <button type="submit" className="lk-button lk-chat-form-button" disabled={isSending}>
-            Send
-          </button>
+        <form className={styles.form} onSubmit={handleSubmit}>
+          <Input className={styles.input} disabled={isSending} placeholder="Enter a message">
+            <input ref={inputRef} />
+            <Button type="submit" className={styles.button} basic size="small" disabled={isSending}>
+              <SendIcon />
+            </Button>
+          </Input>
         </form>
       )}
     </div>

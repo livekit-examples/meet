@@ -1,3 +1,3 @@
-import { ChatEntry } from './ChatEntry'
+import ChatEntry from './ChatEntry.container'
 
 export default ChatEntry

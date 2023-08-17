@@ -1,0 +1,42 @@
+.chatEntry:not(:last-child) {
+  margin-bottom: 16px;
+}
+
+.sameSender {
+  margin-top: -16px;
+}
+
+.info {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+:global(li.lk-chat-entry span.Profile > div.dcl.avatar-face.tiny.inline) {
+  width: 26px;
+  height: 26px;
+  border: 2px solid #fcfcfc;
+  background: #ecebed;
+}
+
+.name {
+  color: #fff;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: normal;
+  text-transform: uppercase;
+  margin-right: 6px;
+}
+
+.timestamp {
+  color: #716b7c;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.message {
+  color: #fff;
+  font-size: 14px;
+  font-weight: 400;
+  line-break: anywhere;
+}

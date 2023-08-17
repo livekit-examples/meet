@@ -137,3 +137,7 @@ code {
     margin-right: unset;
   }
 }
+
+[data-lk-theme='default'] {
+  --lk-control-bar-height: 44px;
+}

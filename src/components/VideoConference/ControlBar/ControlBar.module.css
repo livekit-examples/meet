@@ -1,5 +1,7 @@
 .ControlBarContainer {
   position: relative;
+  height: var(--lk-control-bar-height);
+  border-top: none;
 }
 
 .ControlBarRightButtonGroup {
@@ -9,4 +11,8 @@
   gap: 0.5rem;
   align-items: center;
   justify-content: center;
+}
+
+.chatToggleButton {
+  background-color: transparent;
 }

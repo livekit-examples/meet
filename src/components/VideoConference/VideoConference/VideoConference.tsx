@@ -1,5 +1,6 @@
 import React, { useRef, useEffect } from 'react'
 import { isEqualTrackRef, isTrackReference, log, isWeb } from '@livekit/components-core'
+import type { TrackReferenceOrPlaceholder } from '@livekit/components-core'
 import {
   CarouselView,
   ConnectionStateToast,
@@ -18,7 +19,6 @@ import { ControlBar } from '../ControlBar'
 import ParticipantTile from '../ParticipantTile'
 import RightPanel from '../RightPanel'
 import type { VideoConferenceProps } from './VideoConference.types'
-import type { TrackReferenceOrPlaceholder } from '@livekit/components-core'
 import styles from './VideoConference.module.css'
 
 /**
@@ -75,7 +75,7 @@ export function VideoConference(props: VideoConferenceProps) {
     <div className="lk-video-conference" {...props}>
       {isWeb() && (
         <LayoutContextProvider value={layoutContext}>
-          <div className="lk-video-conference-inner">
+          <div className={`${styles.VideoConferenceInnerContainer} lk-video-conference-inner`}>
             {!focusTrack ? (
               <div className={classNames('lk-grid-layout-wrapper', styles.LayoutWrapper)}>
                 <GridLayout tracks={tracks} className={styles.GridLayout}>

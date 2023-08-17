@@ -9,6 +9,13 @@
   },
   "people_panel": {
     "title": "People",
-    "subtitle": "People in this meeting"
+    "subtitle": "People in this meeting",
+    "more": "{name} and {count} people more."
+  },
+  "chat_panel": {
+    "title": "Chat"
+  },
+  "chat_entry": {
+    "you": "You"
   }
 }

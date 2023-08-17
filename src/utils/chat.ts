@@ -1,7 +1,7 @@
+import React, { useEffect, useState, isValidElement, cloneElement } from 'react'
 import { DataTopic, sendMessage, setupDataMessageHandler } from '@livekit/components-core'
 import { ReceivedChatMessage } from '@livekit/components-react'
 import { DataPacket_Kind, Participant, Room } from 'livekit-client'
-import * as React from 'react'
 import { BehaviorSubject, Subject, takeUntil, map, scan, filter } from 'rxjs'
 import type { Observable } from 'rxjs'
 import { Packet } from '@dcl/protocol/out-js/decentraland/kernel/comms/rfc4/comms.gen'
@@ -10,8 +10,8 @@ import { Packet } from '@dcl/protocol/out-js/decentraland/kernel/comms/rfc4/comm
  * @internal
  */
 export function useObservableState<T>(observable: Observable<T> | undefined, startWith: T) {
-  const [state, setState] = React.useState<T>(startWith)
-  React.useEffect(() => {
+  const [state, setState] = useState<T>(startWith)
+  useEffect(() => {
     // observable state doesn't run in SSR
     if (typeof window === 'undefined' || !observable) return
     const subscription = observable.subscribe(setState)
@@ -24,8 +24,8 @@ export function cloneSingleChild(children: React.ReactNode | React.ReactNode[], 
   return React.Children.map(children, child => {
     // Checking isValidElement is the safe way and avoids a typescript
     // error too.
-    if (React.isValidElement(child) && React.Children.only(children)) {
-      return React.cloneElement(child, { ...props, key })
+    if (isValidElement(child) && React.Children.only(children)) {
+      return cloneElement(child, { ...props, key })
     }
     return child
   })

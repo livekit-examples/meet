@@ -9,6 +9,13 @@
   },
   "people_panel": {
     "title": "人们",
-    "subtitle": "这次会议的人"
+    "subtitle": "这次会议的人",
+    "more": "{name} 和另外 {count} 人。"
+  },
+  "chat_panel": {
+    "title": "聊天"
+  },
+  "chat_entry": {
+    "you": "你"
   }
 }

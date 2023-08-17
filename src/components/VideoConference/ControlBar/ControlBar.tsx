@@ -176,7 +176,7 @@ export function ControlBar({ variation, controls, ...props }: ControlBarProps) {
       <StartAudio label="Start Audio" />
       <div className={styles.ControlBarRightButtonGroup}>
         {visibleControls.chat && (
-          <ChatToggle>
+          <ChatToggle className={styles.chatToggleButton}>
             {showIcon && <ChatIcon />}
             {showText && 'Chat'}
           </ChatToggle>

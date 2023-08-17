@@ -47,7 +47,7 @@
   color: var(--toast-text);
 }
 
-.profile:not(:last-child) {
+.profile {
   margin-bottom: 18px;
 }
 
@@ -68,4 +68,18 @@
   font-size: 16px;
   font-weight: 600;
   line-height: 24px;
+}
+
+:global(div.ProfileContainer > span.Profile > div.dcl.avatar-face.tiny.inline),
+:global(div.TrimmedProfileContainer span.Profile div.dcl.avatar-face.tiny.inline) {
+  border: 2px solid #fcfcfc;
+  background: #ecebed;
+}
+
+:global(div.TrimmedProfileContainer) {
+  padding: 2px;
+}
+
+:global(div.TrimmedProfileContainer span.Profile:not(:last-child) div.dcl.avatar-face.tiny.inline) {
+  margin-right: -8px;
 }

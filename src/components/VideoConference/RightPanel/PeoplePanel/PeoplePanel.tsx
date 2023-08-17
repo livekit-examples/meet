@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react'
+import React, { useCallback, useMemo } from 'react'
 import classNames from 'classnames'
 import { t } from 'decentraland-dapps/dist/modules/translation/utils'
 import { Button, Header, Profile } from 'decentraland-ui'
@@ -6,12 +6,14 @@ import { useLayoutContext } from '../../../../hooks/useLayoutContext'
 import type { Props } from './PeoplePanel.types'
 import styles from './PeoplePanel.module.css'
 
+const MAX_VISIBLE_PROFILES = 12
+
 /**
  * The PeoplePanel component shows all the participants in a list.
  *
  * @example
  * ```tsx
- * <PeoplePanel />
+ * <PeoplePanel isOpen={true} />
  * ```
  * @public
  */
@@ -25,6 +27,14 @@ export const PeoplePanel: React.FC<Props> = ({ profiles, isOpen }: Props) => {
     }
   }, [layoutContext])
 
+  const visibleProfiles = useMemo(() => {
+    return Object.entries(profiles).slice(0, MAX_VISIBLE_PROFILES)
+  }, [profiles])
+
+  const trimmedProfiles = useMemo(() => {
+    return Object.entries(profiles).slice(MAX_VISIBLE_PROFILES)
+  }, [profiles])
+
   return (
     <div className={classNames(styles.container, { [styles['open']]: isOpen })}>
       <div className={styles.headerContainer}>
@@ -37,13 +47,22 @@ export const PeoplePanel: React.FC<Props> = ({ profiles, isOpen }: Props) => {
         {t('people_panel.subtitle')}
       </Header>
 
-      {Object.entries(profiles).map(([address, profile]) =>
+      {visibleProfiles.map(([address, profile]) =>
         address ? (
           <div className={`${styles.profile} ProfileContainer`}>
             <Profile key={address} address={address} avatar={profile?.avatars[0]} />
           </div>
         ) : null
       )}
+
+      {visibleProfiles.length === MAX_VISIBLE_PROFILES ? (
+        <div className={`${styles.profile} TrimmedProfileContainer`}>
+          {trimmedProfiles.slice(0, 3).map(([address, profile]) => (
+            <Profile key={address} address={address} avatar={profile?.avatars[0]} imageOnly />
+          ))}
+          {t('people_panel.more', { name: trimmedProfiles[0][1].avatars[0].name, count: trimmedProfiles.length - 1 })}
+        </div>
+      ) : null}
     </div>
   )
 }

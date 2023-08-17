@@ -1,7 +1,14 @@
+.VideoConferenceInnerContainer {
+  padding: 0px 60px;
+}
+
 .LayoutWrapper {
   flex-direction: row;
+  padding: 8px 0px;
 }
 
 .GridLayout {
   flex: 1;
+  padding: 0;
+  margin-right: 12px;
 }

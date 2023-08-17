@@ -1,7 +1,7 @@
 import React, { useContext, useReducer } from 'react'
 import { WIDGET_DEFAULT_STATE, PIN_DEFAULT_STATE } from '@livekit/components-core'
-import { LayoutContext } from '@livekit/components-react'
 import type { WidgetState as LivekitWidgetState, PinState, TrackReference } from '@livekit/components-core'
+import { LayoutContext } from '@livekit/components-react'
 
 export type PinAction =
   | {
