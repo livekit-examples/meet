@@ -6,7 +6,7 @@ import {
   VideoConference,
   formatChatMessageLinks,
 } from '@livekit/components-react';
-import { LogLevel, RoomOptions, VideoPresets } from 'livekit-client';
+import { LogLevel, RoomConnectOptions, RoomOptions, VideoPresets } from 'livekit-client';
 
 import type { NextPage } from 'next';
 import Head from 'next/head';
@@ -98,6 +98,12 @@ const ActiveRoom = ({ roomName, userChoices, onLeave }: ActiveRoomProps) => {
     };
   }, [userChoices, hq]);
 
+  const connectOptions = useMemo((): RoomConnectOptions => {
+    return {
+      autoSubscribe: false,
+    };
+  }, []);
+
   return (
     <>
       {liveKitUrl && (
@@ -105,6 +111,7 @@ const ActiveRoom = ({ roomName, userChoices, onLeave }: ActiveRoomProps) => {
           token={token}
           serverUrl={liveKitUrl}
           options={roomOptions}
+          connectOptions={connectOptions}
           video={userChoices.videoEnabled}
           audio={userChoices.audioEnabled}
           onDisconnected={onLeave}
