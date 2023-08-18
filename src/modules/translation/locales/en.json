@@ -1,4 +1,7 @@
 {
+  "global": {
+    "learn_more": "Learn more"
+  },
   "connect_to_world": {
     "title": "Meet on Decentraland",
     "description": "Choose the world you want to connect to and start streaming.",

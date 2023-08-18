@@ -1,4 +1,7 @@
 {
+  "global": {
+    "learn_more": "Aprende más"
+  },
   "connect_to_world": {
     "title": "Reunirse en Decentraland",
     "description": "Elija el mundo al que desea conectarse y comience a transmitir.",

@@ -6,6 +6,7 @@ import { Button, Loader, SelectField, Field, DropdownProps, Form } from 'decentr
 import meetOnDecentralandImg from '../../../assets/images/meet-on-decentraland.png'
 import { locations } from '../../../modules/routing/locations'
 import { signedFetch } from '../../../utils/auth'
+import { DOCS_URL } from '../../../utils/constants'
 import { isErrorMessage } from '../../../utils/errors'
 import { flatFetch } from '../../../utils/flat-fetch'
 import { addServerToPreviouslyLoaded } from '../../../utils/worldServers'
@@ -22,19 +23,6 @@ function ConnectToWorld(props: Props) {
   const { isLoading, loggedInAddress, identity, previouslyLoadedServers, worldsContentServerUrl, onSubmitConnectForm } = props
 
   const navigate = useNavigate()
-
-  useEffect(() => {
-    if (!loggedInAddress && !isLoading) {
-      navigate(locations.signIn(locations.root(worldsContentServerUrl)))
-    }
-  }, [isLoading, loggedInAddress])
-
-  useEffect(() => {
-    if (previouslyLoadedServers) {
-      setAvailableServers(previouslyLoadedServers)
-      setSelectedServer(previouslyLoadedServers[0])
-    }
-  }, [previouslyLoadedServers, setAvailableServers])
 
   const handleChange = useCallback(
     (e: ChangeEvent<HTMLInputElement>) => {
@@ -115,6 +103,23 @@ function ConnectToWorld(props: Props) {
     [identity, selectedServer, onSubmitConnectForm]
   )
 
+  const handleLearnMore = useCallback(() => {
+    window.open(DOCS_URL, '_blank', 'noopener noreferrer')
+  }, [])
+
+  useEffect(() => {
+    if (!loggedInAddress && !isLoading) {
+      navigate(locations.signIn(locations.root(worldsContentServerUrl)))
+    }
+  }, [isLoading, loggedInAddress])
+
+  useEffect(() => {
+    if (previouslyLoadedServers) {
+      setAvailableServers(previouslyLoadedServers)
+      setSelectedServer(previouslyLoadedServers[0])
+    }
+  }, [previouslyLoadedServers, setAvailableServers])
+
   return (
     <PageLayout>
       {isLoading ? (
@@ -160,16 +165,21 @@ function ConnectToWorld(props: Props) {
                   />
                 )}
               </div>
-              <Button
-                primary
-                onClick={handleClick}
-                fluid
-                disabled={!selectedServer || isConnectingToServer}
-                type="submit"
-                loading={isConnectingToServer}
-              >
-                {t('connect_to_world.cta')}
-              </Button>
+              <div className={styles.actions}>
+                <Button
+                  primary
+                  onClick={handleClick}
+                  fluid
+                  disabled={!selectedServer || isConnectingToServer}
+                  type="submit"
+                  loading={isConnectingToServer}
+                >
+                  {t('connect_to_world.cta')}
+                </Button>
+                <Button inverted fluid onClick={handleLearnMore}>
+                  {t('global.learn_more')}
+                </Button>
+              </div>
             </Form>
           </div>
         </div>

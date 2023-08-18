@@ -1,4 +1,4 @@
-.content {
+.SignIn {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -6,21 +6,40 @@
   height: 100%;
 }
 
-.content :global(.SignIn.center) {
-  background: var(--background);
-  padding: 24px 11px 14px 11px;
-  border-radius: 10px;
+.SignIn .content :global(.SignIn.center) {
   position: unset;
 }
 
+.SignIn .content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: var(--background);
+  padding: 24px 11px 48px 11px;
+  border-radius: 10px;
+}
+
+.SignIn .content :global(.SignIn .error) {
+  margin-top: 0px;
+}
+
+.SignIn .content :global(.SignIn .error.visible) {
+  margin-top: 20px;
+}
+
+.SignIn .content :global(.SignIn .ui.button) {
+  min-width: 151px;
+}
+
 @media (min-width: 769px) {
-  .content :global(.SignIn.center) {
+  .SignIn .content {
     min-width: 700px;
   }
 }
 
 @media (max-width: 768px) {
-  .content :global(.SignIn.center) {
+  .SignIn .content {
     height: 100%;
     border-radius: unset;
   }

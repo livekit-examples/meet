@@ -62,6 +62,14 @@
   margin-bottom: 15px;
 }
 
+.ConnectToWorld .content .actions {
+  display: flex;
+  flex-direction: column;
+  row-gap: 16px;
+  align-items: center;
+  justify-content: center;
+}
+
 @media (min-width: 769px) {
   .content :global(.SignIn.center) {
     min-width: 700px;
