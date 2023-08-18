@@ -1,5 +1,6 @@
 {
   "CHAIN_ID": "11155111",
   "PEER_URL": "https://peer.decentraland.zone",
-  "WORLDS_CONTENT_SERVER_URL": "https://worlds-content-server.decentraland.zone"
+  "WORLDS_CONTENT_SERVER_URL": "https://worlds-content-server.decentraland.zone",
+  "SEGMENT_API_KEY": "XiymjAbQV5OJZXaT1doKqHgvgoUGHprP"
 }

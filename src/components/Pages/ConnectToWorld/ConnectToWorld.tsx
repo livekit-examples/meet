@@ -90,7 +90,7 @@ function ConnectToWorld(props: Props) {
         if (!identity) return
 
         const response: { url: string; token: string } = await livekitConnect(identity, worldsContentServerUrl, selectedServer)
-        onSubmitConnectForm(response.url, response.token)
+        onSubmitConnectForm(response.url, response.token, worldsContentServerUrl, selectedServer)
         addServerToPreviouslyLoaded(selectedServer)
         navigate(`/meet/${encodeURIComponent(response.url)}?token=${encodeURIComponent(response.token)}`)
       } catch (error) {

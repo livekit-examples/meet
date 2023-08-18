@@ -1,6 +1,6 @@
 import { connect } from 'react-redux'
 import { getAddress, isConnecting } from 'decentraland-dapps/dist/modules/wallet/selectors'
-import { setServer, setToken } from '../../../modules/conference/action'
+import { setServer, setToken, setWorldRelatedInformation } from '../../../modules/conference/action'
 import { config } from '../../../modules/config'
 import { getCurrentIdentity, isLoggingIn } from '../../../modules/identity/selector'
 import { RootState } from '../../../modules/reducer'
@@ -22,9 +22,10 @@ const mapStateToProps = (state: RootState, ownProps: OwnProps): MapStateProps =>
 }
 
 const mapDispatch = (dispatch: MapDispatch): MapDispatchProps => ({
-  onSubmitConnectForm: (server: string, token: string) => {
+  onSubmitConnectForm: (server: string, token: string, worldsContentServerUrl: string, selectedServer: string) => {
     dispatch(setServer({ server }))
     dispatch(setToken({ token }))
+    dispatch(setWorldRelatedInformation({ contentServerUrl: worldsContentServerUrl, name: selectedServer }))
   }
 })
 

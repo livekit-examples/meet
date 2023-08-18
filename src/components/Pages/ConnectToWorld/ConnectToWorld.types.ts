@@ -8,7 +8,7 @@ export type Props = {
   previouslyLoadedServers: string[] | null
   identity: AuthIdentity | null
   worldsContentServerUrl: string
-  onSubmitConnectForm: (server: string, token: string) => void
+  onSubmitConnectForm: (server: string, token: string, worldsContentServerUrl: string, selectedServer: string) => void
 }
 
 export type MapStateProps = Pick<Props, 'loggedInAddress' | 'isLoading' | 'previouslyLoadedServers' | 'identity' | 'worldsContentServerUrl'>
