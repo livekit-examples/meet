@@ -1,6 +1,7 @@
-import * as React from 'react'
-import type { SVGProps } from 'react'
-const SvgLeaveIcon = (props: SVGProps<SVGSVGElement>) => (
+import React from 'react'
+import { Props } from './Icons.type'
+
+const LeaveIcon = (props: Props) => (
   <svg xmlns="http://www.w3.org/2000/svg" width={16} height={16} fill="none" {...props}>
     <path
       fill="currentColor"
@@ -16,4 +17,5 @@ const SvgLeaveIcon = (props: SVGProps<SVGSVGElement>) => (
     />
   </svg>
 )
-export default SvgLeaveIcon
+
+export default LeaveIcon

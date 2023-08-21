@@ -20,5 +20,9 @@
   },
   "chat_entry": {
     "you": "You"
+  },
+  "control_bar": {
+    "leave": "Leave",
+    "stop_sharing": "Stop sharing"
   }
 }

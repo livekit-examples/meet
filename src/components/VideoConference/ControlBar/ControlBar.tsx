@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useRef, useState } from 'react'
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { supportsScreenSharing } from '@livekit/components-core'
 import {
   ChatToggle,
@@ -7,15 +7,18 @@ import {
   StartAudio,
   TrackToggle,
   useLocalParticipantPermissions,
-  useRoomContext
+  useRoomContext,
+  useTrackToggle
 } from '@livekit/components-react'
+import classNames from 'classnames'
 import { LocalAudioTrack, LocalVideoTrack, Track } from 'livekit-client'
-import ChatIcon from '../../../assets/icons/ChatIcon'
-import LeaveIcon from '../../../assets/icons/LeaveIcon'
+import { t } from 'decentraland-dapps/dist/modules/translation/utils'
+import { Button, Popup } from 'decentraland-ui'
 import { useLayoutContext } from '../../../hooks/useLayoutContext'
 import { useMediaQuery } from '../../../hooks/useMediaQuery'
 import { usePreviewTracks } from '../../../hooks/usePreviewTracks'
 import { mergeProps } from '../../../utils/mergeProps'
+import { CameraIcon, ChatIcon, MicrophoneIcon, PhoneIcon, ShareScreenIcon } from '../../Icons'
 import PeoplePanelToggleButton from './PeoplePanelToggleButton'
 import { ControlBarProps, DEFAULT_USER_CHOICES } from './ControlBar.types'
 import styles from './ControlBar.module.css'
@@ -38,6 +41,7 @@ import styles from './ControlBar.module.css'
  */
 export function ControlBar({ variation, controls, ...props }: ControlBarProps) {
   const [isChatOpen, setIsChatOpen] = useState(false)
+  const [confirmStopSharing, setConfirmStopSharing] = useState(false)
   const layoutContext = useLayoutContext()
   const {
     options: { videoCaptureDefaults, audioCaptureDefaults }
@@ -56,6 +60,7 @@ export function ControlBar({ variation, controls, ...props }: ControlBarProps) {
     visibleControls.chat = false
     visibleControls.microphone = false
     visibleControls.screenShare = false
+    visibleControls.peoplePanel = false
   } else {
     visibleControls.camera ??= localPermissions.canPublish
     visibleControls.microphone ??= localPermissions.canPublish
@@ -68,13 +73,12 @@ export function ControlBar({ variation, controls, ...props }: ControlBarProps) {
 
   const browserSupportsScreenSharing = supportsScreenSharing()
 
-  const [isScreenShareEnabled, setIsScreenShareEnabled] = useState(false)
+  const handleStopScreenShare = useCallback(() => {
+    toggleScreenShare()
+    setConfirmStopSharing(false)
+  }, [])
 
-  const onScreenShareChange = (enabled: boolean) => {
-    setIsScreenShareEnabled(enabled)
-  }
-
-  const htmlProps = mergeProps({ className: `lk-control-bar ${styles.ControlBarContainer}` }, props)
+  const htmlProps = mergeProps({ className: styles.ControlBarContainer }, props)
 
   const [videoEnabled, setVideoEnabled] = useState<boolean>(visibleControls.camera ?? DEFAULT_USER_CHOICES.videoEnabled)
   const initialVideoDeviceId = (videoCaptureDefaults?.deviceId as string) ?? DEFAULT_USER_CHOICES.videoDeviceId
@@ -82,6 +86,23 @@ export function ControlBar({ variation, controls, ...props }: ControlBarProps) {
   const initialAudioDeviceId = (audioCaptureDefaults?.deviceId as string) ?? DEFAULT_USER_CHOICES.audioDeviceId
   const [audioEnabled, setAudioEnabled] = useState<boolean>(visibleControls.microphone ?? DEFAULT_USER_CHOICES.audioEnabled)
   const [audioDeviceId, setAudioDeviceId] = useState<string>(initialAudioDeviceId)
+
+  const { enabled: isScreenShareEnabled, toggle: toggleScreenShare } = useTrackToggle({
+    source: Track.Source.ScreenShare,
+    captureOptions: { audio: true, selfBrowserSurface: 'include' }
+  })
+
+  const handleOpen = () => {
+    if (!isScreenShareEnabled) {
+      toggleScreenShare()
+    } else {
+      setConfirmStopSharing(true)
+    }
+  }
+
+  const handleClose = () => {
+    setConfirmStopSharing(false)
+  }
 
   const tracks = usePreviewTracks(
     {
@@ -115,69 +136,89 @@ export function ControlBar({ variation, controls, ...props }: ControlBarProps) {
 
   return (
     <div {...htmlProps}>
-      {visibleControls.microphone && (
-        <div className="lk-button-group">
-          <TrackToggle
-            source={Track.Source.Microphone}
-            showIcon={showIcon}
-            initialState={audioEnabled}
-            onChange={enabled => setAudioEnabled(enabled)}
-          >
-            {showText && 'Microphone'}
-          </TrackToggle>
-          <div className="lk-button-group-menu">
-            <MediaDeviceMenu
-              initialSelection={audioDeviceId}
-              kind="audioinput"
-              disabled={!audioTrack}
-              tracks={{ audioinput: audioTrack }}
-              onActiveDeviceChange={(_, id) => setAudioDeviceId(id)}
-            />
+      <div className={styles.ControlBarCenterButtonGroup}>
+        {visibleControls.microphone && (
+          <div className={styles.controlBarButtonGroup}>
+            <TrackToggle
+              className={classNames(styles.controlBarButton, { [styles.disabled]: !audioEnabled })}
+              source={Track.Source.Microphone}
+              showIcon={false}
+              initialState={audioEnabled}
+              onChange={enabled => setAudioEnabled(enabled)}
+            >
+              <MicrophoneIcon enabled={audioEnabled} />
+            </TrackToggle>
+            <div className={`lk-button-group-menu ${styles.controlBarMenuButton}`}>
+              <MediaDeviceMenu
+                initialSelection={audioDeviceId}
+                kind="audioinput"
+                disabled={!audioTrack}
+                tracks={{ audioinput: audioTrack }}
+                onActiveDeviceChange={(_, id) => setAudioDeviceId(id)}
+              />
+            </div>
           </div>
-        </div>
-      )}
-      {visibleControls.camera && (
-        <div className="lk-button-group">
-          <TrackToggle
-            source={Track.Source.Camera}
-            showIcon={showIcon}
-            initialState={videoEnabled}
-            onChange={enabled => setVideoEnabled(enabled)}
-          >
-            {showText && 'Camera'}
-          </TrackToggle>
-          <div className="lk-button-group-menu">
-            <MediaDeviceMenu
-              kind="videoinput"
-              initialSelection={videoDeviceId}
-              disabled={!videoTrack}
-              tracks={{ videoinput: videoTrack }}
-              onActiveDeviceChange={(_, id) => setVideoDeviceId(id)}
-            />
+        )}
+        {visibleControls.camera && (
+          <div className={styles.controlBarButtonGroup}>
+            <TrackToggle
+              className={classNames(styles.controlBarButton, { [styles.disabled]: !videoEnabled })}
+              source={Track.Source.Camera}
+              showIcon={false}
+              initialState={videoEnabled}
+              onChange={enabled => setVideoEnabled(enabled)}
+            >
+              <CameraIcon enabled={videoEnabled} />
+            </TrackToggle>
+            <div className={`lk-button-group-menu ${styles.controlBarMenuButton}`}>
+              <MediaDeviceMenu
+                kind="videoinput"
+                initialSelection={videoDeviceId}
+                disabled={!videoTrack}
+                tracks={{ videoinput: videoTrack }}
+                onActiveDeviceChange={(_, id) => setVideoDeviceId(id)}
+              />
+            </div>
           </div>
-        </div>
-      )}
-      {visibleControls.screenShare && browserSupportsScreenSharing && (
-        <TrackToggle
-          source={Track.Source.ScreenShare}
-          captureOptions={{ audio: true, selfBrowserSurface: 'include' }}
-          showIcon={showIcon}
-          onChange={onScreenShareChange}
-        >
-          {showText && (isScreenShareEnabled ? 'Stop screen share' : 'Share screen')}
-        </TrackToggle>
-      )}
-      {visibleControls.leave && (
-        <DisconnectButton>
-          {showIcon && <LeaveIcon />}
-          {showText && 'Leave'}
-        </DisconnectButton>
-      )}
+        )}
+        {visibleControls.screenShare && browserSupportsScreenSharing && (
+          <Popup
+            position="top left"
+            open={confirmStopSharing}
+            on="click"
+            closeOnTriggerBlur
+            onOpen={handleOpen}
+            onClose={handleClose}
+            content={
+              <Button className={styles.stopSharingButton} onClick={handleStopScreenShare}>
+                <div className={styles.stopSharingCloseButton} />
+                {t('control_bar.stop_sharing')}
+              </Button>
+            }
+            trigger={
+              <button className={classNames('lk-button', styles.controlBarButton, { [styles.screenShareEnabled]: isScreenShareEnabled })}>
+                <ShareScreenIcon enabled={isScreenShareEnabled} />
+              </button>
+            }
+            basic
+            style={{
+              backgroundColor: 'transparent',
+              padding: 0
+            }}
+          />
+        )}
+        {visibleControls.leave && (
+          <DisconnectButton className={styles.disconnectButton}>
+            {showIcon && <PhoneIcon />}
+            {t('control_bar.leave')}
+          </DisconnectButton>
+        )}
+      </div>
       <StartAudio label="Start Audio" />
       <div className={styles.ControlBarRightButtonGroup}>
         {visibleControls.chat && (
           <ChatToggle className={styles.chatToggleButton}>
-            {showIcon && <ChatIcon />}
+            {showIcon && <ChatIcon className={styles.chatToggleIcon} />}
             {showText && 'Chat'}
           </ChatToggle>
         )}

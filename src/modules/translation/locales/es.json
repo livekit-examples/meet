@@ -20,5 +20,9 @@
   },
   "chat_entry": {
     "you": "Tu"
+  },
+  "control_bar": {
+    "leave": "Salir",
+    "stop_sharing": "Deja de compartir"
   }
 }

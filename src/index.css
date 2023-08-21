@@ -139,5 +139,7 @@ code {
 }
 
 [data-lk-theme='default'] {
-  --lk-control-bar-height: 44px;
+  --lk-control-bar-height: 48px;
+  --lk-control-bar-margin-top: 18px;
+  --lk-control-bar-margin-bottom: 26px;
 }

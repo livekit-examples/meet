@@ -1,0 +1,8 @@
+export { default as CameraIcon } from './CameraIcon'
+export { default as ChatIcon } from './ChatIcon'
+export { default as LeaveIcon } from './LeaveIcon'
+export { default as MicrophoneIcon } from './MicrophoneIcon'
+export { default as PeopleIcon } from './PeopleIcon'
+export { default as PhoneIcon } from './PhoneIcon'
+export { default as SendIcon } from './SendIcon'
+export { default as ShareScreenIcon } from './ShareScreenIcon'

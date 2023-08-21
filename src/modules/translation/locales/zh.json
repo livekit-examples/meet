@@ -20,5 +20,9 @@
   },
   "chat_entry": {
     "you": "你"
+  },
+  "control_bar": {
+    "leave": "离开",
+    "stop_sharing": "停止共享"
   }
 }

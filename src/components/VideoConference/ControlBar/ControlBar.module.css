@@ -1,7 +1,19 @@
 .ControlBarContainer {
+  display: flex;
   position: relative;
+  align-items: center;
   height: var(--lk-control-bar-height);
-  border-top: none;
+  margin-top: var(--lk-control-bar-margin-top);
+  margin-bottom: var(--lk-control-bar-margin-bottom);
+  justify-content: space-between;
+}
+
+.ControlBarCenterButtonGroup {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+  justify-content: center;
+  flex: 1;
 }
 
 .ControlBarRightButtonGroup {
@@ -13,6 +25,110 @@
   justify-content: center;
 }
 
+.controlBarButtonGroup {
+  display: flex;
+  align-items: center;
+}
+
+.controlBarButton:global(.lk-button) {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 48px;
+  height: 48px;
+  background-color: #716b7c;
+  border: 0;
+  border-radius: 100%;
+  padding: 0;
+}
+
+.controlBarButton:global(.lk-button):hover {
+  background-color: #928ea4;
+}
+
+.controlBarMenuButton:global(.lk-button-group-menu .lk-button.lk-button-menu) {
+  background-color: transparent;
+}
+
+.controlBarMenuButton:global(.lk-button-group-menu .lk-button[aria-pressed='true'])::after {
+  transform: rotate(135deg);
+}
+
+.controlBarMenuButton:global(.lk-button-group-menu .lk-device-menu) {
+  left: 10px !important;
+}
+
+.disabled:global(.lk-button) {
+  background-color: #ff2d55;
+}
+
+.disabled:global(.lk-button):hover {
+  background-color: #ff2d55;
+}
+
+.screenShareEnabled:global(.lk-button) {
+  background-color: #ffffff;
+}
+
+.screenShareEnabled:global(.lk-button):hover {
+  background-color: #ffffff;
+}
+
+.stopSharingButton:global(.ui.button) {
+  display: flex;
+  align-items: center;
+  padding: 0 10px;
+  height: 30px;
+  gap: 8px;
+  width: 134px;
+  background-color: #ffffff;
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.stopSharingButton:global(.ui.button):hover {
+  transform: none;
+}
+
+.stopSharingCloseButton {
+  background-image: url('../../../assets/icons/Close.svg');
+  background-size: contain;
+  background-position: center;
+  filter: invert(50%);
+  width: 16px;
+  height: 16px;
+  border: 1px solid #a09ba8;
+}
+
+.microphoneButtonGroup {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
 .chatToggleButton {
   background-color: transparent;
+}
+
+.chatToggleIcon {
+  height: 24px;
+  width: 24px;
+}
+
+.disconnectButton {
+  margin-left: 61px;
+  display: flex;
+  height: 45px;
+  padding: 14px 44px;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  background-color: #ff2d55;
+  border-radius: 6px;
+  color: #fff;
+  text-align: center;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: normal;
+  text-transform: uppercase;
 }

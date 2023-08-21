@@ -1,6 +1,8 @@
 .button {
+  padding: 8px;
+  height: 48px;
+  width: 48px;
   background-color: transparent;
-  padding: 0.625rem 1rem;
 }
 
 .buttonActive {
@@ -8,8 +10,8 @@
 }
 
 .peopleIcon {
-  height: 18px;
-  width: 18px;
+  height: 32px;
+  width: 32px;
 }
 
 .label {

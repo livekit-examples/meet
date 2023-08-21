@@ -5,6 +5,7 @@
 .LayoutWrapper {
   flex-direction: row;
   padding: 8px 0px;
+  height: calc(100% - (var(--lk-control-bar-height) + var(--lk-control-bar-margin-top) + var(--lk-control-bar-margin-bottom)));
 }
 
 .GridLayout {

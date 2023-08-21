@@ -1,8 +1,8 @@
 import React, { useCallback, useMemo } from 'react'
 import classNames from 'classnames'
 import { Label } from 'decentraland-ui'
-import PeopleIcon from '../../../../assets/icons/PeopleIcon'
 import { WidgetState, useLayoutContext } from '../../../../hooks/useLayoutContext'
+import { PeopleIcon } from '../../../Icons'
 import type { Props } from './PeoplePanelToggleButton.types'
 import styles from './PeoplePanelToggleButton.module.css'
 
