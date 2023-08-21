@@ -8,20 +8,21 @@ import { Props } from './Conference.types'
 import './Conference.css'
 
 export default function Conference(props: Props) {
-  const { token, server, worldName, worldContentServerUrl } = props
+  const { token, server, worldName, worldContentServerUrl, loggedInAddress: userAddress } = props
   const [alreadyDisconnected, setAlreadyDisconnected] = useState(false)
   const analytics = getAnalytics()
 
   const track = useCallback(
     (event: Events) => {
-      if (!worldName || !worldContentServerUrl) return
+      if (!worldName || !worldContentServerUrl || !userAddress) return
 
       analytics.track(event, {
         worldName,
-        worldContentServerUrl
+        worldContentServerUrl,
+        userAddress
       })
     },
-    [worldName, worldContentServerUrl]
+    [worldName, worldContentServerUrl, userAddress]
   )
 
   const handleConnect = useCallback(() => track(Events.CONNECT), [track])
