@@ -135,7 +135,6 @@ const ActiveRoom = ({ roomName, userChoices, onLeave }: ActiveRoomProps) => {
           room={room}
           token={token}
           serverUrl={liveKitUrl}
-          options={roomOptions}
           connectOptions={connectOptions}
           video={userChoices.videoEnabled}
           audio={userChoices.audioEnabled}
