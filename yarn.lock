@@ -90,10 +90,10 @@
   resolved "https://registry.yarnpkg.com/@humanwhocodes/object-schema/-/object-schema-1.2.1.tgz#b520529ec21d8e5945a1851dfd1c32e94e39ff45"
   integrity sha512-ZnQMnLV4e7hDlUvw8H+U8ASL02SS2Gn6+9Ac3wGGLIe7+je2AeAOxPY+izIPJDfFDb7eDjev0Us8MO1iFRN8hA==
 
-"@livekit/components-core@0.6.14":
-  version "0.6.14"
-  resolved "https://registry.yarnpkg.com/@livekit/components-core/-/components-core-0.6.14.tgz#b400a36573aeb6ac94c652c7a5191c72db6e3d63"
-  integrity sha512-fp+beRvVFCZDRvJdRAyTaoJRLFDcQGyFRAKpPitAThvSh8CqXbLMmWZ2CcM2juIH56lN/g8ckVZkYIehizMBng==
+"@livekit/components-core@0.6.15":
+  version "0.6.15"
+  resolved "https://registry.yarnpkg.com/@livekit/components-core/-/components-core-0.6.15.tgz#c64076b3176d51389d100b418c3335705f5a6808"
+  integrity sha512-M+xJT5pkEzldFHoybN6ttS/1tb+sVI1SBrjLTMBKjeNk7F3Y+XF0sbRY/PtoR1CYz+duPh0NV4DBPy8Fvx84sw==
   dependencies:
     "@floating-ui/dom" "^1.1.0"
     email-regex "^5.0.0"
@@ -101,12 +101,12 @@
     loglevel "^1.8.1"
     rxjs "^7.8.0"
 
-"@livekit/components-react@1.1.3":
-  version "1.1.3"
-  resolved "https://registry.yarnpkg.com/@livekit/components-react/-/components-react-1.1.3.tgz#b1fbe3263fb1d9058a3ce9eb52a66148aa2c636e"
-  integrity sha512-w1Zxc/+qVpZXPs8BgkaZvjNm5q5ACdsJ03L7l7+Yxg6ly2W+CX2BGQZbY8N5Ow+HpRW93aFeBeA7oiY5Ippu5Q==
+"@livekit/components-react@1.1.5":
+  version "1.1.5"
+  resolved "https://registry.yarnpkg.com/@livekit/components-react/-/components-react-1.1.5.tgz#518cb6fa196e5b583500fe40db7f2490364469e8"
+  integrity sha512-TEnW2jxizYyj6WgVYEz+xzwY9igLAntbTFgMIjfvYJ+oZA5LQA8Y31QYVwmdUKnckEQTOO4x+C1uJjhgwUuOsw==
   dependencies:
-    "@livekit/components-core" "0.6.14"
+    "@livekit/components-core" "0.6.15"
     "@react-hook/latest" "^1.0.3"
     clsx "^2.0.0"
     usehooks-ts "^2.9.1"
@@ -1562,10 +1562,10 @@ levn@^0.4.1:
     prelude-ls "^1.2.1"
     type-check "~0.4.0"
 
-livekit-client@1.13.0:
-  version "1.13.0"
-  resolved "https://registry.yarnpkg.com/livekit-client/-/livekit-client-1.13.0.tgz#d6c57555ca977eb00bf737ac829ca9c848ed7d97"
-  integrity sha512-RCYi1Ty2af6qAosDSJCxgaYdA5we48jxIAgwly5TD5HMe6fwm1+vhePLQPwOU8fqRt4Ia/3bCX1g10fcerifgg==
+livekit-client@1.13.1:
+  version "1.13.1"
+  resolved "https://registry.yarnpkg.com/livekit-client/-/livekit-client-1.13.1.tgz#35e4cfba08b6c12a1dcde21b0d1ffafd99a15179"
+  integrity sha512-KJuin4kZ1bzExnhm6zbosQL1I2cD/kwFyBnYnI8o1w9bJoQJ+rGA3c/9dKWCpeNSGw4urz+i1QPVB2qoetXK5Q==
   dependencies:
     "@bufbuild/protobuf" "^1.3.0"
     events "^3.3.0"
