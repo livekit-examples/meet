@@ -21,7 +21,6 @@ import { useRouter } from 'next/router';
 import { useMemo, useState } from 'react';
 import { DebugMode } from '../../lib/Debug';
 import { decodePassphrase, useServerUrl } from '../../lib/client-utils';
-import { DummyKeyProvider } from '../../lib/DummyKeyProvider';
 
 const Home: NextPage = () => {
   const router = useRouter();
@@ -87,14 +86,12 @@ const ActiveRoom = ({ roomName, userChoices, onLeave }: ActiveRoomProps) => {
   const liveKitUrl = useServerUrl(region as string | undefined);
 
   const hash = typeof window !== 'undefined' && window.location.hash;
-  const keyProvider = new ExternalE2EEKeyProvider();
-  if (hash) {
-    keyProvider.setKey(decodePassphrase(hash.substring(1)));
-  }
-
   const worker =
     typeof window !== 'undefined' &&
     new Worker(new URL('livekit-client/e2ee-worker', import.meta.url));
+
+  const e2eeEnabled = !!(hash && worker);
+  const keyProvider = new ExternalE2EEKeyProvider();
 
   const roomOptions = useMemo((): RoomOptions => {
     return {
@@ -113,20 +110,21 @@ const ActiveRoom = ({ roomName, userChoices, onLeave }: ActiveRoomProps) => {
       },
       adaptiveStream: { pixelDensity: 'screen' },
       dynacast: true,
-      e2ee:
-        hash && worker
-          ? {
-              keyProvider,
-              worker,
-            }
-          : undefined,
+      e2ee: e2eeEnabled
+        ? {
+            keyProvider,
+            worker,
+          }
+        : undefined,
     };
   }, [userChoices, hq]);
 
   const room = useMemo(() => new Room(roomOptions), []);
 
-  room.setE2EEEnabled(true);
-
+  if (e2eeEnabled) {
+    keyProvider.setKey(decodePassphrase(hash.substring(1)));
+    room.setE2EEEnabled(true);
+  }
   const connectOptions = useMemo((): RoomConnectOptions => {
     return {
       autoSubscribe: false,
