@@ -21,7 +21,6 @@ import { useRouter } from 'next/router';
 import { useMemo, useState } from 'react';
 import { DebugMode } from '../../lib/Debug';
 import { decodePassphrase, useServerUrl } from '../../lib/client-utils';
-import { DummyKeyProvider } from '../../lib/DummyKeyProvider';
 
 const Home: NextPage = () => {
   const router = useRouter();
@@ -105,7 +104,6 @@ const ActiveRoom = ({ roomName, userChoices, onLeave }: ActiveRoomProps) => {
           hq === 'true'
             ? [VideoPresets.h1080, VideoPresets.h720]
             : [VideoPresets.h540, VideoPresets.h216],
-        dtx: false,
       },
       audioCaptureDefaults: {
         deviceId: userChoices.audioDeviceId ?? undefined,
