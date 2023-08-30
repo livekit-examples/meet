@@ -6,14 +6,22 @@ import {
   VideoConference,
   formatChatMessageLinks,
 } from '@livekit/components-react';
-import { LogLevel, RoomConnectOptions, RoomOptions, VideoPresets } from 'livekit-client';
+import {
+  ExternalE2EEKeyProvider,
+  LogLevel,
+  Room,
+  RoomConnectOptions,
+  RoomOptions,
+  VideoPresets,
+} from 'livekit-client';
 
 import type { NextPage } from 'next';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 import { useMemo, useState } from 'react';
 import { DebugMode } from '../../lib/Debug';
-import { useServerUrl } from '../../lib/client-utils';
+import { decodePassphrase, useServerUrl } from '../../lib/client-utils';
+import { DummyKeyProvider } from '../../lib/DummyKeyProvider';
 
 const Home: NextPage = () => {
   const router = useRouter();
@@ -78,6 +86,16 @@ const ActiveRoom = ({ roomName, userChoices, onLeave }: ActiveRoomProps) => {
 
   const liveKitUrl = useServerUrl(region as string | undefined);
 
+  const hash = typeof window !== 'undefined' && window.location.hash;
+  const keyProvider = new ExternalE2EEKeyProvider();
+  if (hash) {
+    keyProvider.setKey(decodePassphrase(hash.substring(1)));
+  }
+
+  const worker =
+    typeof window !== 'undefined' &&
+    new Worker(new URL('livekit-client/e2ee-worker', import.meta.url));
+
   const roomOptions = useMemo((): RoomOptions => {
     return {
       videoCaptureDefaults: {
@@ -95,8 +113,19 @@ const ActiveRoom = ({ roomName, userChoices, onLeave }: ActiveRoomProps) => {
       },
       adaptiveStream: { pixelDensity: 'screen' },
       dynacast: true,
+      e2ee:
+        hash && worker
+          ? {
+              keyProvider,
+              worker,
+            }
+          : undefined,
     };
   }, [userChoices, hq]);
+
+  const room = useMemo(() => new Room(roomOptions), []);
+
+  room.setE2EEEnabled(true);
 
   const connectOptions = useMemo((): RoomConnectOptions => {
     return {
@@ -108,9 +137,9 @@ const ActiveRoom = ({ roomName, userChoices, onLeave }: ActiveRoomProps) => {
     <>
       {liveKitUrl && (
         <LiveKitRoom
+          room={room}
           token={token}
           serverUrl={liveKitUrl}
-          options={roomOptions}
           connectOptions={connectOptions}
           video={userChoices.videoEnabled}
           audio={userChoices.audioEnabled}
