@@ -28,6 +28,8 @@ export default function CustomRoomConnection() {
     return {
       publishDefaults: {
         videoSimulcastLayers: [VideoPresets.h540, VideoPresets.h216],
+        red: false,
+        dtx: false,
       },
       adaptiveStream: { pixelDensity: 'screen' },
       dynacast: true,

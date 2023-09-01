@@ -25,6 +25,7 @@ import { decodePassphrase, useServerUrl } from '../../lib/client-utils';
 const Home: NextPage = () => {
   const router = useRouter();
   const { name: roomName } = router.query;
+  const [e2ee, setE2ee] = useState(false);
 
   const [preJoinChoices, setPreJoinChoices] = useState<LocalUserChoices | undefined>(undefined);
   return (
@@ -45,6 +46,21 @@ const Home: NextPage = () => {
           ></ActiveRoom>
         ) : (
           <div style={{ display: 'grid', placeItems: 'center', height: '100%' }}>
+            <div style={{ display: 'flex', gap: '1rem' }}>
+              <input
+                id="use-e2ee"
+                type="checkbox"
+                checked={e2ee}
+                onChange={(ev) => setE2ee(ev.target.checked)}
+              ></input>
+              <label htmlFor="use-e2ee">Enable end-to-end encryption</label>
+              {e2ee && (
+                <>
+                  <input id="passphrase" type="text" />{' '}
+                  <label htmlFor="passphrase">Pass phrase</label>
+                </>
+              )}
+            </div>
             <PreJoin
               onError={(err) => console.log('error while setting up prejoin', err)}
               defaults={{
@@ -100,6 +116,8 @@ const ActiveRoom = ({ roomName, userChoices, onLeave }: ActiveRoomProps) => {
         resolution: hq === 'true' ? VideoPresets.h2160 : VideoPresets.h720,
       },
       publishDefaults: {
+        red: false,
+        dtx: false,
         videoSimulcastLayers:
           hq === 'true'
             ? [VideoPresets.h1080, VideoPresets.h720]

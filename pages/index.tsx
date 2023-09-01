@@ -51,7 +51,7 @@ function DemoMeetingTab({ label }: { label: string }) {
   return (
     <div className={styles.tabContent}>
       <p style={{ margin: 0 }}>Try LiveKit Meet for free with our live demo project.</p>
-      <div style={{ display: 'flex', gap: '1rem' }}>
+      {/* <div style={{ display: 'flex', gap: '1rem' }}>
         <input
           id="use-e2ee"
           type="checkbox"
@@ -59,7 +59,7 @@ function DemoMeetingTab({ label }: { label: string }) {
           onChange={(ev) => setE2ee(ev.target.checked)}
         ></input>
         <label htmlFor="use-e2ee">Enable end-to-end encryption</label>
-      </div>
+      </div> */}
       <button style={{ marginTop: '1rem' }} className="lk-button" onClick={startMeeting}>
         Start Meeting
       </button>
@@ -103,15 +103,7 @@ function CustomConnectionTab({ label }: { label: string }) {
         rows={9}
         style={{ padding: '1px 2px', fontSize: 'inherit', lineHeight: 'inherit' }}
       />
-      <div style={{ display: 'flex', gap: '1rem' }}>
-        <input
-          id="use-e2ee"
-          type="checkbox"
-          checked={e2ee}
-          onChange={(ev) => setE2ee(ev.target.checked)}
-        ></input>
-        <label htmlFor="use-e2ee">Enable end-to-end encryption</label>
-      </div>
+
       <hr
         style={{ width: '100%', borderColor: 'rgba(255, 255, 255, 0.15)', marginBlock: '1rem' }}
       />
