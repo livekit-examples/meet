@@ -1,6 +1,7 @@
 import React, { useCallback, useEffect, useState } from 'react'
 import { LiveKitRoom } from '@livekit/components-react'
 import '@livekit/components-styles'
+import { v4 as uuidv4 } from 'uuid'
 import { getAnalytics } from 'decentraland-dapps/dist/modules/analytics/utils'
 import { Events } from '../../../modules/analytics/types'
 import { VideoConference } from '../../VideoConference/'
@@ -11,12 +12,14 @@ export default function Conference(props: Props) {
   const { token, server, worldName, worldContentServerUrl, loggedInAddress: userAddress } = props
   const [alreadyDisconnected, setAlreadyDisconnected] = useState(false)
   const analytics = getAnalytics()
+  const [sessionId] = useState(uuidv4())
 
   const track = useCallback(
     (event: Events) => {
       if (!worldName || !worldContentServerUrl || !userAddress) return
 
       analytics.track(event, {
+        uuid: sessionId,
         worldName,
         worldContentServerUrl,
         userAddress
