@@ -1,0 +1,9 @@
+version: "3"
+
+services:
+  app:
+    build: .
+    ports:
+      - "5000:${PORT:-3000}"
+    volumes:
+      - ./.env.local:/app/.env.local
