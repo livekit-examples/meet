@@ -1,3 +1,4 @@
+'use client';
 import {
   LiveKitRoom,
   PreJoin,
@@ -20,13 +21,35 @@ import Head from 'next/head';
 import { useRouter } from 'next/router';
 import { useMemo, useState } from 'react';
 import { DebugMode } from '../../lib/Debug';
-import { decodePassphrase, useServerUrl } from '../../lib/client-utils';
+import {
+  decodePassphrase,
+  encodePassphrase,
+  randomString,
+  useServerUrl,
+} from '../../lib/client-utils';
+import dynamic from 'next/dynamic';
+
+const PreJoinNoSSR = dynamic(
+  async () => {
+    return (await import('@livekit/components-react')).PreJoin;
+  },
+  { ssr: false },
+);
 
 const Home: NextPage = () => {
   const router = useRouter();
   const { name: roomName } = router.query;
+  const e2eePassphrase =
+    typeof window !== 'undefined' && decodePassphrase(location.hash.substring(1));
 
   const [preJoinChoices, setPreJoinChoices] = useState<LocalUserChoices | undefined>(undefined);
+
+  function handlePreJoinSubmit(values: LocalUserChoices) {
+    if (values.e2ee) {
+      location.hash = encodePassphrase(values.sharedPassphrase);
+    }
+    setPreJoinChoices(values);
+  }
   return (
     <>
       <Head>
@@ -45,18 +68,18 @@ const Home: NextPage = () => {
           ></ActiveRoom>
         ) : (
           <div style={{ display: 'grid', placeItems: 'center', height: '100%' }}>
-            <PreJoin
+            <PreJoinNoSSR
               onError={(err) => console.log('error while setting up prejoin', err)}
               defaults={{
                 username: '',
                 videoEnabled: true,
                 audioEnabled: true,
+                e2ee: !!e2eePassphrase,
+                sharedPassphrase: e2eePassphrase || randomString(64),
               }}
-              onSubmit={(values) => {
-                console.log('Joining with: ', values);
-                setPreJoinChoices(values);
-              }}
-            ></PreJoin>
+              onSubmit={handlePreJoinSubmit}
+              showE2EEOptions={true}
+            ></PreJoinNoSSR>
           </div>
         )}
       </main>
@@ -85,12 +108,12 @@ const ActiveRoom = ({ roomName, userChoices, onLeave }: ActiveRoomProps) => {
 
   const liveKitUrl = useServerUrl(region as string | undefined);
 
-  const hash = typeof window !== 'undefined' && window.location.hash;
   const worker =
     typeof window !== 'undefined' &&
+    userChoices.e2ee &&
     new Worker(new URL('livekit-client/e2ee-worker', import.meta.url));
 
-  const e2eeEnabled = !!(hash && worker);
+  const e2eeEnabled = !!(userChoices.e2ee && worker);
   const keyProvider = new ExternalE2EEKeyProvider();
 
   const roomOptions = useMemo((): RoomOptions => {
@@ -100,6 +123,7 @@ const ActiveRoom = ({ roomName, userChoices, onLeave }: ActiveRoomProps) => {
         resolution: hq === 'true' ? VideoPresets.h2160 : VideoPresets.h720,
       },
       publishDefaults: {
+        dtx: false,
         videoSimulcastLayers:
           hq === 'true'
             ? [VideoPresets.h1080, VideoPresets.h720]
@@ -123,7 +147,7 @@ const ActiveRoom = ({ roomName, userChoices, onLeave }: ActiveRoomProps) => {
   const room = useMemo(() => new Room(roomOptions), []);
 
   if (e2eeEnabled) {
-    keyProvider.setKey(decodePassphrase(hash.substring(1)));
+    keyProvider.setKey(decodePassphrase(userChoices.sharedPassphrase));
     room.setE2EEEnabled(true);
   }
   const connectOptions = useMemo((): RoomConnectOptions => {

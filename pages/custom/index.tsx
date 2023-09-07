@@ -16,13 +16,13 @@ export default function CustomRoomConnection() {
   const router = useRouter();
   const { liveKitUrl, token } = router.query;
 
-  const hash = typeof window !== 'undefined' && window.location.hash;
+  const e2eePassphrase = typeof window !== 'undefined' && decodePassphrase(window.location.hash);
   const worker =
     typeof window !== 'undefined' &&
     new Worker(new URL('livekit-client/e2ee-worker', import.meta.url));
   const keyProvider = new ExternalE2EEKeyProvider();
 
-  const e2eeEnabled = !!(hash && worker);
+  const e2eeEnabled = !!(e2eePassphrase && worker);
 
   const roomOptions = useMemo((): RoomOptions => {
     return {
@@ -43,7 +43,7 @@ export default function CustomRoomConnection() {
 
   const room = useMemo(() => new Room(roomOptions), []);
   if (e2eeEnabled) {
-    keyProvider.setKey(decodePassphrase(hash.substring(1)));
+    keyProvider.setKey(e2eePassphrase);
     room.setE2EEEnabled(true);
   }
 

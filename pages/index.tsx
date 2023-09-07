@@ -2,7 +2,7 @@ import type { GetServerSideProps, InferGetServerSidePropsType } from 'next';
 import { useRouter } from 'next/router';
 import React, { ReactElement, useState } from 'react';
 import styles from '../styles/Home.module.css';
-import { encodePassphrase } from '../lib/client-utils';
+import { encodePassphrase, generateRoomId, randomString } from '../lib/client-utils';
 
 interface TabsProps {
   children: ReactElement[];
@@ -39,27 +39,12 @@ function Tabs(props: TabsProps) {
 
 function DemoMeetingTab({ label }: { label: string }) {
   const router = useRouter();
-  const [e2ee, setE2ee] = useState(false);
   const startMeeting = () => {
-    if (e2ee) {
-      const phrase = encodePassphrase(crypto.getRandomValues(new Uint8Array(256)));
-      router.push(`/rooms/${generateRoomId()}#${phrase}`);
-    } else {
-      router.push(`/rooms/${generateRoomId()}`);
-    }
+    router.push(`/rooms/${generateRoomId()}`);
   };
   return (
     <div className={styles.tabContent}>
       <p style={{ margin: 0 }}>Try LiveKit Meet for free with our live demo project.</p>
-      <div style={{ display: 'flex', gap: '1rem' }}>
-        <input
-          id="use-e2ee"
-          type="checkbox"
-          checked={e2ee}
-          onChange={(ev) => setE2ee(ev.target.checked)}
-        ></input>
-        <label htmlFor="use-e2ee">Enable end-to-end encryption</label>
-      </div>
       <button style={{ marginTop: '1rem' }} className="lk-button" onClick={startMeeting}>
         Start Meeting
       </button>
@@ -69,7 +54,9 @@ function DemoMeetingTab({ label }: { label: string }) {
 
 function CustomConnectionTab({ label }: { label: string }) {
   const router = useRouter();
+
   const [e2ee, setE2ee] = useState(false);
+  const [sharedPassphrase, setSharedPassphrase] = useState(randomString(64));
 
   const onSubmit: React.FormEventHandler<HTMLFormElement> = (event) => {
     event.preventDefault();
@@ -77,8 +64,9 @@ function CustomConnectionTab({ label }: { label: string }) {
     const serverUrl = formData.get('serverUrl');
     const token = formData.get('token');
     if (e2ee) {
-      const passphrase = encodePassphrase(crypto.getRandomValues(new Uint8Array(256)));
-      router.push(`/custom/?liveKitUrl=${serverUrl}&token=${token}#${passphrase}`);
+      router.push(
+        `/custom/?liveKitUrl=${serverUrl}&token=${token}#${encodePassphrase(sharedPassphrase)}`,
+      );
     } else {
       router.push(`/custom/?liveKitUrl=${serverUrl}&token=${token}`);
     }
@@ -103,15 +91,29 @@ function CustomConnectionTab({ label }: { label: string }) {
         rows={9}
         style={{ padding: '1px 2px', fontSize: 'inherit', lineHeight: 'inherit' }}
       />
-      <div style={{ display: 'flex', gap: '1rem' }}>
-        <input
-          id="use-e2ee"
-          type="checkbox"
-          checked={e2ee}
-          onChange={(ev) => setE2ee(ev.target.checked)}
-        ></input>
-        <label htmlFor="use-e2ee">Enable end-to-end encryption</label>
+      <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+        <div style={{ display: 'flex', flexDirection: 'row', gap: '1rem' }}>
+          <input
+            id="use-e2ee"
+            type="checkbox"
+            checked={e2ee}
+            onChange={(ev) => setE2ee(ev.target.checked)}
+          ></input>
+          <label htmlFor="use-e2ee">Enable end-to-end encryption</label>
+        </div>
+        {e2ee && (
+          <div style={{ display: 'flex', flexDirection: 'row', gap: '1rem' }}>
+            <label htmlFor="passphrase">Passphrase</label>
+            <input
+              id="passphrase"
+              type="password"
+              value={sharedPassphrase}
+              onChange={(ev) => setSharedPassphrase(ev.target.value)}
+            />
+          </div>
+        )}
       </div>
+
       <hr
         style={{ width: '100%', borderColor: 'rgba(255, 255, 255, 0.15)', marginBlock: '1rem' }}
       />
@@ -179,17 +181,3 @@ const Home = ({ tabIndex }: InferGetServerSidePropsType<typeof getServerSideProp
 };
 
 export default Home;
-
-function generateRoomId(): string {
-  return `${randomString(4)}-${randomString(4)}`;
-}
-
-function randomString(length: number): string {
-  let result = '';
-  const characters = 'abcdefghijklmnopqrstuvwxyz0123456789';
-  const charactersLength = characters.length;
-  for (let i = 0; i < length; i++) {
-    result += characters.charAt(Math.floor(Math.random() * charactersLength));
-  }
-  return result;
-}
