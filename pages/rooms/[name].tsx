@@ -46,9 +46,6 @@ const Home: NextPage = () => {
 
   function handlePreJoinSubmit(values: LocalUserChoices) {
     if (values.e2ee) {
-      if (values.sharedPassphrase === '') {
-        values.sharedPassphrase = randomString(64);
-      }
       location.hash = encodePassphrase(values.sharedPassphrase);
     }
     setPreJoinChoices(values);
@@ -78,7 +75,7 @@ const Home: NextPage = () => {
                 videoEnabled: true,
                 audioEnabled: true,
                 e2ee: !!e2eePassphrase,
-                sharedPassphrase: e2eePassphrase ? e2eePassphrase : undefined,
+                sharedPassphrase: e2eePassphrase || randomString(64),
               }}
               onSubmit={handlePreJoinSubmit}
               showE2EEOptions={true}
