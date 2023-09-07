@@ -1,3 +1,4 @@
+'use client';
 import {
   LiveKitRoom,
   PreJoin,
@@ -20,14 +21,38 @@ import Head from 'next/head';
 import { useRouter } from 'next/router';
 import { useMemo, useState } from 'react';
 import { DebugMode } from '../../lib/Debug';
-import { decodePassphrase, useServerUrl } from '../../lib/client-utils';
+import {
+  decodePassphrase,
+  encodePassphrase,
+  randomString,
+  useServerUrl,
+} from '../../lib/client-utils';
+import dynamic from 'next/dynamic';
+
+const PreJoinNoSSR = dynamic(
+  async () => {
+    return (await import('@livekit/components-react')).PreJoin;
+  },
+  { ssr: false },
+);
 
 const Home: NextPage = () => {
   const router = useRouter();
   const { name: roomName } = router.query;
-  const [e2ee, setE2ee] = useState(false);
+  const e2eePassphrase =
+    typeof window !== 'undefined' && decodePassphrase(location.hash.substring(1));
 
   const [preJoinChoices, setPreJoinChoices] = useState<LocalUserChoices | undefined>(undefined);
+
+  function handlePreJoinSubmit(values: LocalUserChoices) {
+    if (values.e2ee) {
+      if (values.sharedPassphrase === '') {
+        values.sharedPassphrase = randomString(64);
+      }
+      location.hash = encodePassphrase(values.sharedPassphrase);
+    }
+    setPreJoinChoices(values);
+  }
   return (
     <>
       <Head>
@@ -46,33 +71,18 @@ const Home: NextPage = () => {
           ></ActiveRoom>
         ) : (
           <div style={{ display: 'grid', placeItems: 'center', height: '100%' }}>
-            <div style={{ display: 'flex', gap: '1rem' }}>
-              <input
-                id="use-e2ee"
-                type="checkbox"
-                checked={e2ee}
-                onChange={(ev) => setE2ee(ev.target.checked)}
-              ></input>
-              <label htmlFor="use-e2ee">Enable end-to-end encryption</label>
-              {e2ee && (
-                <>
-                  <input id="passphrase" type="text" />{' '}
-                  <label htmlFor="passphrase">Pass phrase</label>
-                </>
-              )}
-            </div>
-            <PreJoin
+            <PreJoinNoSSR
               onError={(err) => console.log('error while setting up prejoin', err)}
               defaults={{
                 username: '',
                 videoEnabled: true,
                 audioEnabled: true,
+                e2ee: !!e2eePassphrase,
+                sharedPassphrase: e2eePassphrase ? e2eePassphrase : undefined,
               }}
-              onSubmit={(values) => {
-                console.log('Joining with: ', values);
-                setPreJoinChoices(values);
-              }}
-            ></PreJoin>
+              onSubmit={handlePreJoinSubmit}
+              showE2EEOptions={true}
+            ></PreJoinNoSSR>
           </div>
         )}
       </main>
@@ -101,12 +111,12 @@ const ActiveRoom = ({ roomName, userChoices, onLeave }: ActiveRoomProps) => {
 
   const liveKitUrl = useServerUrl(region as string | undefined);
 
-  const hash = typeof window !== 'undefined' && window.location.hash;
   const worker =
     typeof window !== 'undefined' &&
+    userChoices.e2ee &&
     new Worker(new URL('livekit-client/e2ee-worker', import.meta.url));
 
-  const e2eeEnabled = !!(hash && worker);
+  const e2eeEnabled = !!(userChoices.e2ee && worker);
   const keyProvider = new ExternalE2EEKeyProvider();
 
   const roomOptions = useMemo((): RoomOptions => {
@@ -116,12 +126,12 @@ const ActiveRoom = ({ roomName, userChoices, onLeave }: ActiveRoomProps) => {
         resolution: hq === 'true' ? VideoPresets.h2160 : VideoPresets.h720,
       },
       publishDefaults: {
-        red: false,
         dtx: false,
         videoSimulcastLayers:
           hq === 'true'
             ? [VideoPresets.h1080, VideoPresets.h720]
             : [VideoPresets.h540, VideoPresets.h216],
+        red: !e2eeEnabled,
       },
       audioCaptureDefaults: {
         deviceId: userChoices.audioDeviceId ?? undefined,
@@ -140,7 +150,7 @@ const ActiveRoom = ({ roomName, userChoices, onLeave }: ActiveRoomProps) => {
   const room = useMemo(() => new Room(roomOptions), []);
 
   if (e2eeEnabled) {
-    keyProvider.setKey(decodePassphrase(hash.substring(1)));
+    keyProvider.setKey(decodePassphrase(userChoices.sharedPassphrase));
     room.setE2EEEnabled(true);
   }
   const connectOptions = useMemo((): RoomConnectOptions => {

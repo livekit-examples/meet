@@ -11,6 +11,14 @@ import { useRouter } from 'next/router';
 import { DebugMode } from '../../lib/Debug';
 import { decodePassphrase } from '../../lib/client-utils';
 import { useMemo } from 'react';
+import dynamic from 'next/dynamic';
+
+const PreJoinNoSSR = dynamic(
+  async () => {
+    return (await import('@livekit/components-react')).PreJoin;
+  },
+  { ssr: false },
+);
 
 export default function CustomRoomConnection() {
   const router = useRouter();
@@ -28,8 +36,7 @@ export default function CustomRoomConnection() {
     return {
       publishDefaults: {
         videoSimulcastLayers: [VideoPresets.h540, VideoPresets.h216],
-        red: false,
-        dtx: false,
+        red: !e2eeEnabled,
       },
       adaptiveStream: { pixelDensity: 'screen' },
       dynacast: true,
