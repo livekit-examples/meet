@@ -152,7 +152,7 @@ const ActiveRoom = ({ roomName, userChoices, onLeave }: ActiveRoomProps) => {
   }
   const connectOptions = useMemo((): RoomConnectOptions => {
     return {
-      autoSubscribe: true,
+      autoSubscribe: false,
     };
   }, []);
 
