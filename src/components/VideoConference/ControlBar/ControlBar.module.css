@@ -132,3 +132,57 @@
   line-height: normal;
   text-transform: uppercase;
 }
+
+@media (max-width: 768px) {
+  .controlBarButton:global(.lk-button) {
+    width: 36px;
+    height: 36px;
+  }
+
+  .controlBarButton:not(.disabled) .controlMic {
+    height: 20px;
+    width: 14px;
+  }
+
+  .controlBarButton.disabled .controlMic {
+    height: 20.625px;
+    width: 20.625px;
+  }
+
+  .controlBarButtonGroup .lk-button.lk-button-menu {
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+
+  .controlShare {
+    width: 21.75px;
+    height: 15.75px;
+  }
+
+  .chatToggleButton svg {
+    width: 22px;
+    height: 19.879px;
+  }
+  .chatToggleButton {
+    padding: calc(36px - 19.879px) calc(36px - 22px);
+  }
+
+  .disconnectButton {
+    width: 56px;
+    height: 32px;
+    padding: 0;
+    margin-left: 0;
+  }
+
+  .ControlBarCenterButtonGroup {
+    justify-content: space-between;
+    padding-left: 14px;
+    padding-right: 14px;
+  }
+
+  .ControlBarRightButtonGroup {
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+  }
+}

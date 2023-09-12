@@ -13,3 +13,13 @@
   padding: 0;
   margin-right: 12px;
 }
+
+@media (max-width: 768px) {
+  .VideoConferenceInnerContainer {
+    padding: 0px 2px;
+  }
+
+  .GridLayout {
+    margin-right: 0;
+  }
+}

@@ -20,3 +20,10 @@
   left: -14px;
   min-width: 40px;
 }
+
+@media (max-width: 768px) {
+  .label {
+    margin-right: -20px;
+    margin-left: -10px;
+  }
+}
