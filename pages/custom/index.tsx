@@ -49,7 +49,7 @@ export default function CustomRoomConnection() {
 
   const connectOptions = useMemo((): RoomConnectOptions => {
     return {
-      autoSubscribe: false,
+      autoSubscribe: true,
     };
   }, []);
 
