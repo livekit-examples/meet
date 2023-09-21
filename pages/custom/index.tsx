@@ -44,7 +44,6 @@ export default function CustomRoomConnection() {
 
   const room = useMemo(() => new Room(roomOptions), []);
   if (e2eeEnabled) {
-    console.log(e2eePassphrase);
     keyProvider.setKey(e2eePassphrase);
     room.setE2EEEnabled(true);
   }
