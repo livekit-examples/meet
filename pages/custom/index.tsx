@@ -16,7 +16,8 @@ export default function CustomRoomConnection() {
   const router = useRouter();
   const { liveKitUrl, token } = router.query;
 
-  const e2eePassphrase = typeof window !== 'undefined' && decodePassphrase(window.location.hash);
+  const e2eePassphrase =
+    typeof window !== 'undefined' && decodePassphrase(window.location.hash.substring(1));
   const worker =
     typeof window !== 'undefined' &&
     new Worker(new URL('livekit-client/e2ee-worker', import.meta.url));
