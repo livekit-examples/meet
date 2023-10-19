@@ -1,11 +1,10 @@
 'use client';
 import {
   LiveKitRoom,
-  PreJoin,
   LocalUserChoices,
-  useToken,
   VideoConference,
   formatChatMessageLinks,
+  useToken,
 } from '@livekit/components-react';
 import {
   ExternalE2EEKeyProvider,
@@ -17,6 +16,7 @@ import {
 } from 'livekit-client';
 
 import type { NextPage } from 'next';
+import dynamic from 'next/dynamic';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 import { useMemo, useState } from 'react';
@@ -27,7 +27,6 @@ import {
   randomString,
   useServerUrl,
 } from '../../lib/client-utils';
-import dynamic from 'next/dynamic';
 
 const PreJoinNoSSR = dynamic(
   async () => {
@@ -129,6 +128,7 @@ const ActiveRoom = ({ roomName, userChoices, onLeave }: ActiveRoomProps) => {
             ? [VideoPresets.h1080, VideoPresets.h720]
             : [VideoPresets.h540, VideoPresets.h216],
         red: !e2eeEnabled,
+        videoCodec: 'vp9',
       },
       audioCaptureDefaults: {
         deviceId: userChoices.audioDeviceId ?? undefined,
