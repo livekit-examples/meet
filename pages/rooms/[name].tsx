@@ -27,6 +27,7 @@ import {
   randomString,
   useServerUrl,
 } from '../../lib/client-utils';
+import { getLocalStorageData, setLocalStorageData } from '../../lib/local-storage';
 
 const PreJoinNoSSR = dynamic(
   async () => {
@@ -41,13 +42,21 @@ const Home: NextPage = () => {
   const e2eePassphrase =
     typeof window !== 'undefined' && decodePassphrase(location.hash.substring(1));
 
-  const [preJoinChoices, setPreJoinChoices] = useState<LocalUserChoices | undefined>(undefined);
+  const initValues = getLocalStorageData();
+  const [preJoinChoices, setPreJoinChoices] = useState<LocalUserChoices | undefined>(
+    initValues?.userChoices ?? undefined,
+  );
+
+  const [autoJoinRoom, setAutoJoinRoom] = useState(initValues?.autoJoinRoom ?? false);
+  const [enterRoom, setEnterRoom] = useState(false);
 
   function handlePreJoinSubmit(values: LocalUserChoices) {
     if (values.e2ee) {
       location.hash = encodePassphrase(values.sharedPassphrase);
     }
     setPreJoinChoices(values);
+    setLocalStorageData({ userChoices: values, autoJoinRoom });
+    setEnterRoom(true);
   }
   return (
     <>
@@ -57,28 +66,55 @@ const Home: NextPage = () => {
       </Head>
 
       <main data-lk-theme="default">
-        {roomName && !Array.isArray(roomName) && preJoinChoices ? (
+        {(roomName && !Array.isArray(roomName) && preJoinChoices && enterRoom) ||
+        (roomName &&
+          !Array.isArray(roomName) &&
+          preJoinChoices &&
+          (initValues?.autoJoinRoom ?? false)) ? (
           <ActiveRoom
             roomName={roomName}
             userChoices={preJoinChoices}
             onLeave={() => {
               router.push('/');
             }}
-          ></ActiveRoom>
+          />
         ) : (
           <div style={{ display: 'grid', placeItems: 'center', height: '100%' }}>
-            <PreJoinNoSSR
-              onError={(err) => console.log('error while setting up prejoin', err)}
-              defaults={{
-                username: '',
-                videoEnabled: true,
-                audioEnabled: true,
-                e2ee: !!e2eePassphrase,
-                sharedPassphrase: e2eePassphrase || randomString(64),
-              }}
-              onSubmit={handlePreJoinSubmit}
-              showE2EEOptions={true}
-            ></PreJoinNoSSR>
+            <div style={{ width: 'min-content' }}>
+              <PreJoinNoSSR
+                onError={(err) => console.log('error while setting up prejoin', err)}
+                defaults={{
+                  username: preJoinChoices?.username ?? '',
+                  videoEnabled: preJoinChoices?.videoEnabled ?? true,
+                  audioEnabled: preJoinChoices?.audioEnabled ?? true,
+                  e2ee: !!e2eePassphrase,
+                  sharedPassphrase: e2eePassphrase || randomString(64),
+                }}
+                onSubmit={handlePreJoinSubmit}
+                showE2EEOptions={true}
+              />
+              <div
+                style={{
+                  display: 'flex',
+                  flexDirection: 'row',
+                  gap: '1rem',
+                  marginLeft: '1rem',
+                  width: 'fit-content',
+                }}
+              >
+                <input
+                  id="auto-join"
+                  name="auto-join"
+                  type="checkbox"
+                  style={{ cursor: 'pointer' }}
+                  defaultChecked={enterRoom}
+                  onChange={() => setAutoJoinRoom((v) => !v)}
+                />
+                <label htmlFor="auto-join" style={{ cursor: 'pointer', opacity: '0.5' }}>
+                  Next time, skip this step
+                </label>
+              </div>
+            </div>
           </div>
         )}
       </main>
