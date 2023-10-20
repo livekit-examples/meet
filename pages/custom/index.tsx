@@ -2,15 +2,15 @@ import { formatChatMessageLinks, LiveKitRoom, VideoConference } from '@livekit/c
 import {
   ExternalE2EEKeyProvider,
   LogLevel,
-  Room,
   RoomConnectOptions,
+  Room,
   RoomOptions,
   VideoPresets,
 } from 'livekit-client';
 import { useRouter } from 'next/router';
-import { useMemo } from 'react';
-import { decodePassphrase } from '../../lib/client-utils';
 import { DebugMode } from '../../lib/Debug';
+import { decodePassphrase } from '../../lib/client-utils';
+import { useMemo } from 'react';
 
 export default function CustomRoomConnection() {
   const router = useRouter();
@@ -30,7 +30,6 @@ export default function CustomRoomConnection() {
       publishDefaults: {
         videoSimulcastLayers: [VideoPresets.h540, VideoPresets.h216],
         red: !e2eeEnabled,
-        videoCodec: 'vp9',
       },
       adaptiveStream: { pixelDensity: 'screen' },
       dynacast: true,
