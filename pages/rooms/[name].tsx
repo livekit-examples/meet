@@ -89,6 +89,8 @@ const Home: NextPage = () => {
                   audioEnabled: preJoinChoices?.audioEnabled ?? true,
                   e2ee: !!e2eePassphrase,
                   sharedPassphrase: e2eePassphrase || randomString(64),
+                  videoDeviceId: preJoinChoices?.videoDeviceId ?? undefined,
+                  audioDeviceId: preJoinChoices?.audioDeviceId ?? undefined,
                 }}
                 onSubmit={handlePreJoinSubmit}
                 showE2EEOptions={true}
