@@ -3,6 +3,7 @@ import { useRouter } from 'next/router';
 import React, { ReactElement, useState } from 'react';
 import styles from '../styles/Home.module.css';
 import { encodePassphrase, generateRoomId, randomString } from '../lib/client-utils';
+import { getLocalStorageData, setLocalStorageAutoJoin } from '../lib/local-storage';
 
 interface TabsProps {
   children: ReactElement[];
@@ -138,6 +139,7 @@ export const getServerSideProps: GetServerSideProps<{ tabIndex: number }> = asyn
 };
 
 const Home = ({ tabIndex }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
+  const [autoJoinRoom, setAutoJoinRoom] = useState(getLocalStorageData()?.autoJoinRoom ?? false);
   const router = useRouter();
   function onTabSelected(index: number) {
     const tab = index === 1 ? 'custom' : 'demo';
@@ -164,6 +166,18 @@ const Home = ({ tabIndex }: InferGetServerSidePropsType<typeof getServerSideProp
           <DemoMeetingTab label="Demo" />
           <CustomConnectionTab label="Custom" />
         </Tabs>
+        {autoJoinRoom && (
+          <button
+            className={'lk-button ' + styles.autoJoinButton}
+            onClick={() => {
+              setLocalStorageAutoJoin(false);
+              setAutoJoinRoom(false);
+            }}
+            style={{ opacity: 0.5, background: '' }}
+          >
+            Stop auto-joining rooms
+          </button>
+        )}
       </main>
       <footer data-lk-theme="default">
         Hosted on{' '}

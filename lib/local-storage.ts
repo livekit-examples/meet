@@ -21,3 +21,10 @@ export function getLocalStorageData(): LocalStorageData | undefined {
 export function setLocalStorageData(data: LocalStorageData) {
   localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(data));
 }
+
+export function setLocalStorageAutoJoin(autoJoin: boolean) {
+  const data = getLocalStorageData();
+  if (!data) return;
+  data.autoJoinRoom = autoJoin;
+  setLocalStorageData(data);
+}
