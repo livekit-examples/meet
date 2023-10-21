@@ -128,7 +128,7 @@ const ActiveRoom = ({ roomName, userChoices, onLeave }: ActiveRoomProps) => {
             ? [VideoPresets.h1080, VideoPresets.h720]
             : [VideoPresets.h540, VideoPresets.h216],
         red: !e2eeEnabled,
-        // videoCodec: 'vp9',
+        videoCodec: 'vp9',
       },
       audioCaptureDefaults: {
         deviceId: userChoices.audioDeviceId ?? undefined,
