@@ -8,6 +8,11 @@ html {
 }
 
 html,
+body {
+  overflow: hidden;
+}
+
+html,
 body,
 #__next,
 main {
