@@ -12,6 +12,7 @@ import {
   Room,
   RoomConnectOptions,
   RoomOptions,
+  VideoCodec,
   VideoPresets,
 } from 'livekit-client';
 
@@ -103,7 +104,7 @@ const ActiveRoom = ({ roomName, userChoices, onLeave }: ActiveRoomProps) => {
   });
 
   const router = useRouter();
-  const { region, hq } = router.query;
+  const { region, hq, codec } = router.query;
 
   const liveKitUrl = useServerUrl(region as string | undefined);
 
@@ -128,7 +129,7 @@ const ActiveRoom = ({ roomName, userChoices, onLeave }: ActiveRoomProps) => {
             ? [VideoPresets.h1080, VideoPresets.h720]
             : [VideoPresets.h540, VideoPresets.h216],
         red: !e2eeEnabled,
-        videoCodec: 'vp9',
+        videoCodec: codec as VideoCodec | undefined,
       },
       audioCaptureDefaults: {
         deviceId: userChoices.audioDeviceId ?? undefined,
@@ -142,7 +143,7 @@ const ActiveRoom = ({ roomName, userChoices, onLeave }: ActiveRoomProps) => {
           }
         : undefined,
     };
-  }, [userChoices, hq]);
+  }, [userChoices, hq, codec]);
 
   const room = useMemo(() => new Room(roomOptions), []);
 
