@@ -5,6 +5,7 @@
 html {
   color-scheme: dark;
   background-color: #111;
+  overflow: hidden;
 }
 
 html,
