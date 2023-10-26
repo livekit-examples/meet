@@ -5,6 +5,7 @@
   place-content: center;
   justify-items: center;
   padding-bottom: 100px;
+  overflow: auto;
 }
 
 .tabContainer {

@@ -1,8 +1,8 @@
 import type { GetServerSideProps, InferGetServerSidePropsType } from 'next';
 import { useRouter } from 'next/router';
 import React, { ReactElement, useState } from 'react';
-import styles from '../styles/Home.module.css';
 import { encodePassphrase, generateRoomId, randomString } from '../lib/client-utils';
+import styles from '../styles/Home.module.css';
 
 interface TabsProps {
   children: ReactElement[];
@@ -88,7 +88,7 @@ function CustomConnectionTab({ label }: { label: string }) {
         name="token"
         placeholder="Token"
         required
-        rows={9}
+        rows={5}
         style={{ padding: '1px 2px', fontSize: 'inherit', lineHeight: 'inherit' }}
       />
       <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>

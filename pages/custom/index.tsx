@@ -5,6 +5,7 @@ import {
   Room,
   RoomConnectOptions,
   RoomOptions,
+  VideoCodec,
   VideoPresets,
 } from 'livekit-client';
 import { useRouter } from 'next/router';
@@ -14,7 +15,7 @@ import { DebugMode } from '../../lib/Debug';
 
 export default function CustomRoomConnection() {
   const router = useRouter();
-  const { liveKitUrl, token } = router.query;
+  const { liveKitUrl, token, codec } = router.query;
 
   const e2eePassphrase =
     typeof window !== 'undefined' && decodePassphrase(window.location.hash.substring(1));
@@ -30,7 +31,7 @@ export default function CustomRoomConnection() {
       publishDefaults: {
         videoSimulcastLayers: [VideoPresets.h540, VideoPresets.h216],
         red: !e2eeEnabled,
-        videoCodec: 'vp9',
+        videoCodec: codec as VideoCodec | undefined,
       },
       adaptiveStream: { pixelDensity: 'screen' },
       dynacast: true,
