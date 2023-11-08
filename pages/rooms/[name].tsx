@@ -4,7 +4,7 @@ import {
   VideoConference,
   formatChatMessageLinks,
   useToken,
-  UserChoices,
+  LocalUserChoices,
 } from '@livekit/components-react';
 import {
   DeviceUnsupportedError,
@@ -36,9 +36,11 @@ const Home: NextPage = () => {
   const router = useRouter();
   const { name: roomName } = router.query;
 
-  const [preJoinChoices, setPreJoinChoices] = React.useState<UserChoices | undefined>(undefined);
+  const [preJoinChoices, setPreJoinChoices] = React.useState<LocalUserChoices | undefined>(
+    undefined,
+  );
 
-  function handlePreJoinSubmit(values: UserChoices) {
+  function handlePreJoinSubmit(values: LocalUserChoices) {
     setPreJoinChoices(values);
   }
   return (
@@ -78,7 +80,7 @@ const Home: NextPage = () => {
 export default Home;
 
 type ActiveRoomProps = {
-  userChoices: UserChoices;
+  userChoices: LocalUserChoices;
   roomName: string;
   region?: string;
   onLeave?: () => void;
@@ -110,7 +112,7 @@ const ActiveRoom = ({ roomName, userChoices, onLeave }: ActiveRoomProps) => {
   const roomOptions = React.useMemo((): RoomOptions => {
     return {
       videoCaptureDefaults: {
-        deviceId: userChoices.videoInputDeviceId ?? undefined,
+        deviceId: userChoices.videoDeviceId ?? undefined,
         resolution: hq === 'true' ? VideoPresets.h2160 : VideoPresets.h720,
       },
       publishDefaults: {
@@ -123,7 +125,7 @@ const ActiveRoom = ({ roomName, userChoices, onLeave }: ActiveRoomProps) => {
         videoCodec: codec as VideoCodec | undefined,
       },
       audioCaptureDefaults: {
-        deviceId: userChoices.audioInputDeviceId ?? undefined,
+        deviceId: userChoices.audioDeviceId ?? undefined,
       },
       adaptiveStream: { pixelDensity: 'screen' },
       dynacast: true,
@@ -163,8 +165,8 @@ const ActiveRoom = ({ roomName, userChoices, onLeave }: ActiveRoomProps) => {
           token={token}
           serverUrl={liveKitUrl}
           connectOptions={connectOptions}
-          video={userChoices.videoInputEnabled}
-          audio={userChoices.audioInputEnabled}
+          video={userChoices.videoEnabled}
+          audio={userChoices.audioEnabled}
           onDisconnected={onLeave}
         >
           <VideoConference chatMessageFormatter={formatChatMessageLinks} />
