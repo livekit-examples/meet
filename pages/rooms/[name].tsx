@@ -1,12 +1,13 @@
 'use client';
 import {
   LiveKitRoom,
-  LocalUserChoices,
   VideoConference,
   formatChatMessageLinks,
   useToken,
+  LocalUserChoices,
 } from '@livekit/components-react';
 import {
+  DeviceUnsupportedError,
   ExternalE2EEKeyProvider,
   LogLevel,
   Room,
@@ -20,14 +21,9 @@ import type { NextPage } from 'next';
 import dynamic from 'next/dynamic';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
-import { useMemo, useState } from 'react';
+import * as React from 'react';
 import { DebugMode } from '../../lib/Debug';
-import {
-  decodePassphrase,
-  encodePassphrase,
-  randomString,
-  useServerUrl,
-} from '../../lib/client-utils';
+import { decodePassphrase, useServerUrl } from '../../lib/client-utils';
 
 const PreJoinNoSSR = dynamic(
   async () => {
@@ -39,15 +35,12 @@ const PreJoinNoSSR = dynamic(
 const Home: NextPage = () => {
   const router = useRouter();
   const { name: roomName } = router.query;
-  const e2eePassphrase =
-    typeof window !== 'undefined' && decodePassphrase(location.hash.substring(1));
 
-  const [preJoinChoices, setPreJoinChoices] = useState<LocalUserChoices | undefined>(undefined);
+  const [preJoinChoices, setPreJoinChoices] = React.useState<LocalUserChoices | undefined>(
+    undefined,
+  );
 
   function handlePreJoinSubmit(values: LocalUserChoices) {
-    if (values.e2ee) {
-      location.hash = encodePassphrase(values.sharedPassphrase);
-    }
     setPreJoinChoices(values);
   }
   return (
@@ -74,11 +67,8 @@ const Home: NextPage = () => {
                 username: '',
                 videoEnabled: true,
                 audioEnabled: true,
-                e2ee: !!e2eePassphrase,
-                sharedPassphrase: e2eePassphrase || randomString(64),
               }}
               onSubmit={handlePreJoinSubmit}
-              showE2EEOptions={true}
             ></PreJoinNoSSR>
           </div>
         )}
@@ -106,17 +96,20 @@ const ActiveRoom = ({ roomName, userChoices, onLeave }: ActiveRoomProps) => {
   const router = useRouter();
   const { region, hq, codec } = router.query;
 
+  const e2eePassphrase =
+    typeof window !== 'undefined' && decodePassphrase(location.hash.substring(1));
+
   const liveKitUrl = useServerUrl(region as string | undefined);
 
   const worker =
     typeof window !== 'undefined' &&
-    userChoices.e2ee &&
+    e2eePassphrase &&
     new Worker(new URL('livekit-client/e2ee-worker', import.meta.url));
 
-  const e2eeEnabled = !!(userChoices.e2ee && worker);
+  const e2eeEnabled = !!(e2eePassphrase && worker);
   const keyProvider = new ExternalE2EEKeyProvider();
 
-  const roomOptions = useMemo((): RoomOptions => {
+  const roomOptions = React.useMemo((): RoomOptions => {
     return {
       videoCaptureDefaults: {
         deviceId: userChoices.videoDeviceId ?? undefined,
@@ -145,13 +138,20 @@ const ActiveRoom = ({ roomName, userChoices, onLeave }: ActiveRoomProps) => {
     };
   }, [userChoices, hq, codec]);
 
-  const room = useMemo(() => new Room(roomOptions), []);
+  const room = React.useMemo(() => new Room(roomOptions), []);
 
   if (e2eeEnabled) {
-    keyProvider.setKey(decodePassphrase(userChoices.sharedPassphrase));
-    room.setE2EEEnabled(true);
+    keyProvider.setKey(decodePassphrase(e2eePassphrase));
+    room.setE2EEEnabled(true).catch((e) => {
+      if (e instanceof DeviceUnsupportedError) {
+        alert(
+          `You're trying to join an encrypted meeting, but your browser does not support it. Please update it to the latest version and try again.`,
+        );
+        console.error(e);
+      }
+    });
   }
-  const connectOptions = useMemo((): RoomConnectOptions => {
+  const connectOptions = React.useMemo((): RoomConnectOptions => {
     return {
       autoSubscribe: true,
     };
