@@ -7,13 +7,13 @@ settings:
 dependencies:
   '@livekit/components-react':
     specifier: 1.4.0
-    version: 1.4.0(livekit-client@1.14.4)(react-dom@18.2.0)(react@18.2.0)(tslib@2.6.2)
+    version: 1.4.0(livekit-client@1.15.0)(react-dom@18.2.0)(react@18.2.0)(tslib@2.6.2)
   '@livekit/components-styles':
     specifier: 1.0.7
     version: 1.0.7
   livekit-client:
-    specifier: 1.14.4
-    version: 1.14.4
+    specifier: 1.15.0
+    version: 1.15.0
   livekit-server-sdk:
     specifier: 1.2.7
     version: 1.2.7
@@ -185,7 +185,7 @@ packages:
       '@jridgewell/sourcemap-codec': 1.4.15
     dev: true
 
-  /@livekit/components-core@0.8.0(livekit-client@1.14.4)(tslib@2.6.2):
+  /@livekit/components-core@0.8.0(livekit-client@1.15.0)(tslib@2.6.2):
     resolution: {integrity: sha512-nfJO5BBKR1hvkImsErxl7EwSJMXcZ0xSpHT42sevUeL5VKVYUj5YJFuhOs/xUMx06kBSDNMGHNsjRvbYgLFv0w==}
     engines: {node: '>=14'}
     peerDependencies:
@@ -194,13 +194,13 @@ packages:
     dependencies:
       '@floating-ui/dom': 1.5.3
       email-regex: 5.0.0
-      livekit-client: 1.14.4
+      livekit-client: 1.15.0
       loglevel: 1.8.1
       rxjs: 7.8.1
       tslib: 2.6.2
     dev: false
 
-  /@livekit/components-react@1.4.0(livekit-client@1.14.4)(react-dom@18.2.0)(react@18.2.0)(tslib@2.6.2):
+  /@livekit/components-react@1.4.0(livekit-client@1.15.0)(react-dom@18.2.0)(react@18.2.0)(tslib@2.6.2):
     resolution: {integrity: sha512-hcJWM/E9rqa1KH76nLVlbL6twM5W/xUwobSOGwklCxih4D575qd9XWB3hlOHqHL0h1FIvzuhOJgyJ8NXoRpucA==}
     engines: {node: '>=14'}
     peerDependencies:
@@ -209,10 +209,10 @@ packages:
       react-dom: '>=18'
       tslib: ^2.6.2
     dependencies:
-      '@livekit/components-core': 0.8.0(livekit-client@1.14.4)(tslib@2.6.2)
+      '@livekit/components-core': 0.8.0(livekit-client@1.15.0)(tslib@2.6.2)
       '@react-hook/latest': 1.0.3(react@18.2.0)
       clsx: 2.0.0
-      livekit-client: 1.14.4
+      livekit-client: 1.15.0
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
       tslib: 2.6.2
@@ -2026,14 +2026,15 @@ packages:
       type-check: 0.4.0
     dev: true
 
-  /livekit-client@1.14.4:
-    resolution: {integrity: sha512-sXNH+qhqkmXeCVsw3hcEbUsh9QfguBIGgM3glM0v0+YW4C2LdeGWD4pQBLR7USbkwbbVMEHDmqr/iY6XvEIoeQ==}
+  /livekit-client@1.15.0:
+    resolution: {integrity: sha512-uyp1sIFeOdezYBn9J0FnrMuG8uPgR4fwWPENodNisJC999xJwTSV3xVLX76AAnfky3IJoJehU4gY2UqoyXjm2w==}
     dependencies:
       '@bufbuild/protobuf': 1.4.2
       events: 3.3.0
       loglevel: 1.8.1
       sdp-transform: 2.14.1
       ts-debounce: 4.0.0
+      tslib: 2.6.2
       typed-emitter: 2.1.0
       webrtc-adapter: 8.2.3
     dev: false
