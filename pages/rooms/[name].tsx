@@ -1,10 +1,10 @@
 'use client';
 import {
   LiveKitRoom,
+  LocalUserChoices,
   VideoConference,
   formatChatMessageLinks,
   useToken,
-  LocalUserChoices,
 } from '@livekit/components-react';
 import {
   DeviceUnsupportedError,
@@ -79,6 +79,12 @@ const Home: NextPage = () => {
 
 export default Home;
 
+const reconnectPolicy = {
+  nextRetryDelayInMs(context: any): number | null {
+    return 1000;
+  },
+};
+
 type ActiveRoomProps = {
   userChoices: LocalUserChoices;
   roomName: string;
@@ -127,6 +133,7 @@ const ActiveRoom = ({ roomName, userChoices, onLeave }: ActiveRoomProps) => {
       audioCaptureDefaults: {
         deviceId: userChoices.audioDeviceId ?? undefined,
       },
+      reconnectPolicy: reconnectPolicy,
       adaptiveStream: { pixelDensity: 'screen' },
       dynacast: true,
       e2ee: e2eeEnabled
