@@ -110,7 +110,7 @@ const ActiveRoom = ({ roomName, userChoices, onLeave }: ActiveRoomProps) => {
   const keyProvider = new ExternalE2EEKeyProvider();
 
   const roomOptions = React.useMemo((): RoomOptions => {
-    let videoCodec: VideoCodec | undefined = codec ?? 'av1';
+    let videoCodec: VideoCodec | undefined = (codec as VideoCodec) ?? 'av1';
     if (e2eeEnabled && (videoCodec === 'av1' || videoCodec === 'vp9')) {
       videoCodec = undefined;
     }
