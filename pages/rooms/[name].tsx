@@ -111,7 +111,7 @@ const ActiveRoom = ({ roomName, userChoices, onLeave }: ActiveRoomProps) => {
 
   const roomOptions = React.useMemo((): RoomOptions => {
     let videoCodec: VideoCodec | undefined = (
-      Array.isArray(codec) ? codec[0] : codec ?? 'av1'
+      Array.isArray(codec) ? codec[0] : codec ?? 'vp9'
     ) as VideoCodec;
     if (e2eeEnabled && (videoCodec === 'av1' || videoCodec === 'vp9')) {
       videoCodec = undefined;
