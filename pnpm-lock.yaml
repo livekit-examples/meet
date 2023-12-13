@@ -6,11 +6,11 @@ settings:
 
 dependencies:
   '@livekit/components-react':
-    specifier: 1.4.2
-    version: 1.4.2(livekit-client@1.15.4)(react-dom@18.2.0)(react@18.2.0)(tslib@2.6.2)
+    specifier: 1.5.0
+    version: 1.5.0(livekit-client@1.15.4)(react-dom@18.2.0)(react@18.2.0)(tslib@2.6.2)
   '@livekit/components-styles':
-    specifier: 1.0.7
-    version: 1.0.7
+    specifier: 1.0.8
+    version: 1.0.8
   livekit-client:
     specifier: 1.15.4
     version: 1.15.4
@@ -200,8 +200,8 @@ packages:
       tslib: 2.6.2
     dev: false
 
-  /@livekit/components-react@1.4.2(livekit-client@1.15.4)(react-dom@18.2.0)(react@18.2.0)(tslib@2.6.2):
-    resolution: {integrity: sha512-Na2fMdjVF0Uw/qPa0Z30nDNrw2nZ0nRUzUnTsiBETkIii83yS7HYJ4vSoWPs2TiY2ALXaryJDM0786CdakhHyg==}
+  /@livekit/components-react@1.5.0(livekit-client@1.15.4)(react-dom@18.2.0)(react@18.2.0)(tslib@2.6.2):
+    resolution: {integrity: sha512-oDhjwrUgIlaGIkxsdSUkkLrPdUiyuyiMPBZ/vEBavhcI27c/R9EKXGIhjVw1QymEiELRuT0A1aHvewjWocc3Fg==}
     engines: {node: '>=14'}
     peerDependencies:
       livekit-client: ^1.15.1
@@ -219,8 +219,8 @@ packages:
       usehooks-ts: 2.9.1(react-dom@18.2.0)(react@18.2.0)
     dev: false
 
-  /@livekit/components-styles@1.0.7:
-    resolution: {integrity: sha512-toGyh1tx9j/pmtN6NtF0mEm/fvSJm0hv5R5pfnjALFle6PksNesGHmpuQ8zHgYxjx6AFuFGHJPJ4j1QAkCcrtw==}
+  /@livekit/components-styles@1.0.8:
+    resolution: {integrity: sha512-7R/flwyvc2AglCTleqi3JW50bi5mA5gMYKXHLFp7+OniS3pvb2deEiz6apjR3Vt5MiiVusUvCsjiCjMPShBEug==}
     engines: {node: '>=14'}
     dev: false
 
