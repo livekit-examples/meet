@@ -17,7 +17,7 @@ import { RoomEvent, Track } from 'livekit-client'
 import { useCreateLayoutContext } from '../../../hooks/useLayoutContext'
 import { ControlBar } from '../ControlBar'
 import ParticipantTile from '../ParticipantTile'
-import RightPanel from '../RightPanel'
+/* import RightPanel from '../RightPanel' */
 import type { VideoConferenceProps } from './VideoConference.types'
 import styles from './VideoConference.module.css'
 
@@ -81,7 +81,7 @@ export function VideoConference(props: VideoConferenceProps) {
                 <GridLayout tracks={tracks} className={styles.GridLayout}>
                   <ParticipantTile imageSize="massive" />
                 </GridLayout>
-                <RightPanel />
+                {/* <RightPanel /> */}
               </div>
             ) : (
               <div className="lk-focus-layout-wrapper">
