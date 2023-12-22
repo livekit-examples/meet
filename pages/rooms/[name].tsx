@@ -116,7 +116,6 @@ const ActiveRoom = ({ roomName, userChoices, onLeave }: ActiveRoomProps) => {
     if (e2eeEnabled && (videoCodec === 'av1' || videoCodec === 'vp9')) {
       videoCodec = undefined;
     }
-    console.log('video codec', videoCodec);
     return {
       videoCaptureDefaults: {
         deviceId: userChoices.videoDeviceId ?? undefined,
