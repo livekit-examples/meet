@@ -47,7 +47,8 @@ function ConnectToWorld(props: Props) {
     console.log(aboutResponse.text)
     if (aboutResponse.status === 200) {
       const url = JSON.parse(aboutResponse.text!)
-        ['comms']['fixedAdapter'].replace('signed-login:', '')
+        ['comms']['adapter'].replace('fixed-adapter:', '')
+        .replace('signed-login:', '')
         .replace('get-comms-adapter', 'cast-adapter')
       const response = await signedFetch(
         url,
