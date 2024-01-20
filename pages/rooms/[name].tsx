@@ -15,6 +15,7 @@ import {
   RoomOptions,
   VideoCodec,
   VideoPresets,
+  setLogLevel,
 } from 'livekit-client';
 
 import type { NextPage } from 'next';
@@ -108,7 +109,7 @@ const ActiveRoom = ({ roomName, userChoices, onLeave }: ActiveRoomProps) => {
 
   const e2eeEnabled = !!(e2eePassphrase && worker);
   const keyProvider = new ExternalE2EEKeyProvider();
-
+  setLogLevel('debug');
   const roomOptions = React.useMemo((): RoomOptions => {
     let videoCodec: VideoCodec | undefined = (
       Array.isArray(codec) ? codec[0] : codec ?? 'vp9'

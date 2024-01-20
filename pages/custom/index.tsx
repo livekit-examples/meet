@@ -5,6 +5,7 @@ import {
   Room,
   RoomConnectOptions,
   RoomOptions,
+  setLogLevel,
   VideoCodec,
   VideoPresets,
 } from 'livekit-client';
@@ -49,7 +50,7 @@ export default function CustomRoomConnection() {
     keyProvider.setKey(e2eePassphrase);
     room.setE2EEEnabled(true);
   }
-
+  setLogLevel('debug');
   const connectOptions = useMemo((): RoomConnectOptions => {
     return {
       autoSubscribe: true,
