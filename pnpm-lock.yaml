@@ -7,13 +7,13 @@ settings:
 dependencies:
   '@livekit/components-react':
     specifier: 1.5.3
-    version: 1.5.3(livekit-client@1.15.9)(react-dom@18.2.0)(react@18.2.0)(tslib@2.6.2)
+    version: 1.5.3(livekit-client@1.15.10)(react-dom@18.2.0)(react@18.2.0)(tslib@2.6.2)
   '@livekit/components-styles':
     specifier: 1.0.9
     version: 1.0.9
   livekit-client:
-    specifier: 1.15.9
-    version: 1.15.9
+    specifier: 1.15.10
+    version: 1.15.10
   livekit-server-sdk:
     specifier: 1.2.7
     version: 1.2.7
@@ -197,7 +197,7 @@ packages:
       '@jridgewell/sourcemap-codec': 1.4.15
     dev: true
 
-  /@livekit/components-core@0.8.3(livekit-client@1.15.9)(tslib@2.6.2):
+  /@livekit/components-core@0.8.3(livekit-client@1.15.10)(tslib@2.6.2):
     resolution: {integrity: sha512-xwHjE7B4oQmhL3Nme7HKR5X71D5SaG0PbM750VpFOkdMkD6fhiouiblDc4/Ys0yK1iLFUAM8lXq/jBzU+xf2ZA==}
     engines: {node: '>=14'}
     peerDependencies:
@@ -206,13 +206,13 @@ packages:
     dependencies:
       '@floating-ui/dom': 1.5.4
       email-regex: 5.0.0
-      livekit-client: 1.15.9
+      livekit-client: 1.15.10
       loglevel: 1.8.1
       rxjs: 7.8.1
       tslib: 2.6.2
     dev: false
 
-  /@livekit/components-react@1.5.3(livekit-client@1.15.9)(react-dom@18.2.0)(react@18.2.0)(tslib@2.6.2):
+  /@livekit/components-react@1.5.3(livekit-client@1.15.10)(react-dom@18.2.0)(react@18.2.0)(tslib@2.6.2):
     resolution: {integrity: sha512-OL2BhyltXz4GTEmTPZPMehBMoWWNILTqHClPpFLJyM3KLnk2lLvaH9QWwlbqIJVr6vkm39pvq39ckv6GKa7jJw==}
     engines: {node: '>=14'}
     peerDependencies:
@@ -221,10 +221,10 @@ packages:
       react-dom: '>=18'
       tslib: ^2.6.2
     dependencies:
-      '@livekit/components-core': 0.8.3(livekit-client@1.15.9)(tslib@2.6.2)
+      '@livekit/components-core': 0.8.3(livekit-client@1.15.10)(tslib@2.6.2)
       '@react-hook/latest': 1.0.3(react@18.2.0)
       clsx: 2.1.0
-      livekit-client: 1.15.9
+      livekit-client: 1.15.10
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
       tslib: 2.6.2
@@ -871,7 +871,7 @@ packages:
     engines: {node: ^6 || ^7 || ^8 || ^9 || ^10 || ^11 || ^12 || >=13.7}
     hasBin: true
     dependencies:
-      caniuse-lite: 1.0.30001561
+      caniuse-lite: 1.0.30001579
       electron-to-chromium: 1.4.577
       node-releases: 2.0.13
       update-browserslist-db: 1.0.13(browserslist@4.22.1)
@@ -920,13 +920,8 @@ packages:
     engines: {node: '>=10'}
     dev: false
 
-  /caniuse-lite@1.0.30001561:
-    resolution: {integrity: sha512-NTt0DNoKe958Q0BE0j0c1V9jbUzhBxHIEJy7asmGrpE0yG63KTV7PLHPnK2E1O9RsQrQ081I3NLuXGS6zht3cw==}
-    dev: true
-
   /caniuse-lite@1.0.30001579:
     resolution: {integrity: sha512-u5AUVkixruKHJjw/pj9wISlcMpgFWzSrczLZbrqBSxukQixmg0SJ5sZTpvaFvxU0HoQKd4yoyAogyrAz9pzJnA==}
-    dev: false
 
   /chalk@4.1.2:
     resolution: {integrity: sha512-oKnbhFyRIXpUuez8iBMmyEa4nbj4IOQyuhc/wy9kY7/WVPcwIO9VA668Pu8RkO7+0G76SLROeyw9CpQ061i4mA==}
@@ -2098,8 +2093,8 @@ packages:
       type-check: 0.4.0
     dev: true
 
-  /livekit-client@1.15.9:
-    resolution: {integrity: sha512-BfK5mKrOUSO+mff83R+NntUUTitzBr5HVVCetMYWSR67LP5rLQw96A+3xbEXV0Orj07u7azPPrNnIsFIo4GOEA==}
+  /livekit-client@1.15.10:
+    resolution: {integrity: sha512-fNiXakeJyoaInt8Yo2i7kzsEG5YtlvqVqgXX1OPv7U7Y6D5TVwJc7dR1sIPpMxsAGMEIwbvsIweRXlObpp2mxA==}
     dependencies:
       '@bufbuild/protobuf': 1.4.2
       events: 3.3.0
