@@ -5,7 +5,6 @@ import {
   Room,
   RoomConnectOptions,
   RoomOptions,
-  setLogLevel,
   VideoCodec,
   VideoPresets,
 } from 'livekit-client';

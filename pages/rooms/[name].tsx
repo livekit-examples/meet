@@ -15,7 +15,6 @@ import {
   RoomOptions,
   VideoCodec,
   VideoPresets,
-  setLogLevel,
 } from 'livekit-client';
 
 import type { NextPage } from 'next';
