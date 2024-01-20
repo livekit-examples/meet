@@ -5,10 +5,10 @@ import { tinykeys } from 'tinykeys';
 import styles from '../styles/Debug.module.css';
 
 export const useDebugMode = ({ logLevel }: { logLevel?: LogLevel }) => {
-  setLogLevel(logLevel ?? 'debug');
   const room = useRoomContext();
 
   React.useEffect(() => {
+    setLogLevel(logLevel ?? 'debug');
     // @ts-expect-error
     window.__lk_room = room;
 
@@ -16,7 +16,7 @@ export const useDebugMode = ({ logLevel }: { logLevel?: LogLevel }) => {
       // @ts-expect-error
       window.__lk_room = undefined;
     };
-  }, []);
+  }, [room, logLevel]);
 };
 
 export const DebugMode = ({ logLevel }: { logLevel?: LogLevel }) => {

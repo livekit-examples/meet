@@ -50,7 +50,6 @@ export default function CustomRoomConnection() {
     keyProvider.setKey(e2eePassphrase);
     room.setE2EEEnabled(true);
   }
-  setLogLevel('debug');
   const connectOptions = useMemo((): RoomConnectOptions => {
     return {
       autoSubscribe: true,
@@ -76,7 +75,7 @@ export default function CustomRoomConnection() {
           video={true}
         >
           <VideoConference chatMessageFormatter={formatChatMessageLinks} />
-          <DebugMode logLevel={LogLevel.info} />
+          <DebugMode logLevel={LogLevel.debug} />
         </LiveKitRoom>
       )}
     </main>

@@ -87,12 +87,15 @@ type ActiveRoomProps = {
   onLeave?: () => void;
 };
 const ActiveRoom = ({ roomName, userChoices, onLeave }: ActiveRoomProps) => {
-  const token = useToken(process.env.NEXT_PUBLIC_LK_TOKEN_ENDPOINT, roomName, {
-    userInfo: {
-      identity: userChoices.username,
-      name: userChoices.username,
-    },
-  });
+  const tokenOptions = React.useMemo(() => {
+    return {
+      userInfo: {
+        identity: userChoices.username,
+        name: userChoices.username,
+      },
+    };
+  }, [userChoices.username]);
+  const token = useToken(process.env.NEXT_PUBLIC_LK_TOKEN_ENDPOINT, roomName, tokenOptions);
 
   const router = useRouter();
   const { region, hq, codec } = router.query;
@@ -109,7 +112,6 @@ const ActiveRoom = ({ roomName, userChoices, onLeave }: ActiveRoomProps) => {
 
   const e2eeEnabled = !!(e2eePassphrase && worker);
   const keyProvider = new ExternalE2EEKeyProvider();
-  setLogLevel('debug');
   const roomOptions = React.useMemo((): RoomOptions => {
     let videoCodec: VideoCodec | undefined = (
       Array.isArray(codec) ? codec[0] : codec ?? 'vp9'
@@ -177,7 +179,7 @@ const ActiveRoom = ({ roomName, userChoices, onLeave }: ActiveRoomProps) => {
           onDisconnected={onLeave}
         >
           <VideoConference chatMessageFormatter={formatChatMessageLinks} />
-          <DebugMode logLevel={LogLevel.info} />
+          <DebugMode logLevel={LogLevel.debug} />
         </LiveKitRoom>
       )}
     </>
