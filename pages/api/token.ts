@@ -53,7 +53,7 @@ export default async function handleToken(req: NextApiRequest, res: NextApiRespo
       canSubscribe: true,
     };
 
-    const token = createToken({ identity, name, metadata }, grant);
+    const token = await createToken({ identity, name, metadata }, grant);
     const result: TokenResult = {
       identity,
       accessToken: token,
