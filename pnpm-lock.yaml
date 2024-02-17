@@ -15,8 +15,8 @@ dependencies:
     specifier: 1.15.12
     version: 1.15.12
   livekit-server-sdk:
-    specifier: 2.0.1
-    version: 2.0.1
+    specifier: 2.0.2
+    version: 2.0.2
   next:
     specifier: 14.1.0
     version: 14.1.0(react-dom@18.2.0)(react@18.2.0)
@@ -1978,8 +1978,8 @@ packages:
       webrtc-adapter: 8.2.3
     dev: false
 
-  /livekit-server-sdk@2.0.1:
-    resolution: {integrity: sha512-1dLABTksUAXSzpx7eW6G4YRQB15VY8QwaqP01KiM3OLdpuuXXU3boIXFRzxoBEn+tvq0U1VKq+Hz6LqQTSfbuA==}
+  /livekit-server-sdk@2.0.2:
+    resolution: {integrity: sha512-txRuM8HDXTpzKGdwUwL6uJI7AuOeB+a+ozJNO/OWJhf/xLnYmJn4Vwpzar5+DkW10878pfFpu/NsWiu6j3120g==}
     engines: {node: '>=18'}
     dependencies:
       '@bufbuild/protobuf': 1.4.2
