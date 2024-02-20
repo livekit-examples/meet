@@ -23,6 +23,11 @@ export const DebugMode = ({ logLevel }: { logLevel?: LogLevel }) => {
   const room = useRoomContext();
   const [isOpen, setIsOpen] = React.useState(false);
   const [, setRender] = React.useState({});
+  const [roomSid, setRoomSid] = React.useState('');
+
+  React.useEffect(() => {
+    room.getSid().then(setRoomSid);
+  }, [room]);
 
   useDebugMode({ logLevel });
 
@@ -78,7 +83,7 @@ export const DebugMode = ({ logLevel }: { logLevel?: LogLevel }) => {
       <div className={styles.overlay}>
         <section id="room-info">
           <h3>
-            Room Info {room.name}: {room.sid}
+            Room Info {room.name}: {roomSid}
           </h3>
         </section>
         <details open>
@@ -90,7 +95,7 @@ export const DebugMode = ({ logLevel }: { logLevel?: LogLevel }) => {
               <b>Published tracks</b>
             </summary>
             <div>
-              {Array.from(lp.tracks.values()).map((t) => (
+              {Array.from(lp.trackPublications.values()).map((t) => (
                 <>
                   <div>
                     <i>
@@ -151,7 +156,7 @@ export const DebugMode = ({ logLevel }: { logLevel?: LogLevel }) => {
           <summary>
             <b>Remote Participants</b>
           </summary>
-          {Array.from(room.participants.values()).map((p) => (
+          {Array.from(room.remoteParticipants.values()).map((p) => (
             <details key={p.sid} className={styles.detailsSection}>
               <summary>
                 <b>
@@ -160,7 +165,7 @@ export const DebugMode = ({ logLevel }: { logLevel?: LogLevel }) => {
                 </b>
               </summary>
               <div>
-                {Array.from(p.tracks.values()).map((t) => (
+                {Array.from(p.trackPublications.values()).map((t) => (
                   <>
                     <div>
                       <i>
