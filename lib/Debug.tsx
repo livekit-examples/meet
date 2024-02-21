@@ -3,12 +3,14 @@ import { useRoomContext } from '@livekit/components-react';
 import { setLogLevel, LogLevel, RemoteTrackPublication } from 'livekit-client';
 import { tinykeys } from 'tinykeys';
 import styles from '../styles/Debug.module.css';
+import { LoggerNames } from 'livekit-client/dist/src/logger';
 
 export const useDebugMode = ({ logLevel }: { logLevel?: LogLevel }) => {
   const room = useRoomContext();
 
   React.useEffect(() => {
     setLogLevel(logLevel ?? 'debug');
+    setLogLevel(logLevel ?? 'debug', LoggerNames.E2EE);
     // @ts-expect-error
     window.__lk_room = room;
 
