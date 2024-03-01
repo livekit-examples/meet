@@ -11,6 +11,7 @@
   "dependencies": {
     "@livekit/components-react": "2.0.0",
     "@livekit/components-styles": "1.0.9",
+    "@livekit/noise-filter": "^0.1.2",
     "livekit-client": "2.0.3",
     "livekit-server-sdk": "2.0.3",
     "next": "14.1.0",
@@ -30,5 +31,9 @@
   },
   "engines": {
     "node": ">=18"
+  },
+  "pnpm": {
+    "overrides": {
+    }
   }
 }

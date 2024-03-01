@@ -11,6 +11,9 @@ dependencies:
   '@livekit/components-styles':
     specifier: 1.0.9
     version: 1.0.9
+  '@livekit/noise-filter':
+    specifier: ^0.1.2
+    version: 0.1.2(livekit-client@2.0.3)
   livekit-client:
     specifier: 2.0.3
     version: 2.0.3
@@ -234,6 +237,14 @@ packages:
   /@livekit/components-styles@1.0.9:
     resolution: {integrity: sha512-rxsqp7KwblvW81OxcRa2KQZ+YZ8Arl8IBzG4k8X4HhA+sZRKxXrlGQJsvZlnAqc1EqIMQ7aMJTGRkLqcmXArMw==}
     engines: {node: '>=14'}
+    dev: false
+
+  /@livekit/noise-filter@0.1.2(livekit-client@2.0.3):
+    resolution: {integrity: sha512-2XoR+yyJJlAg3TEClAQdOFXqLx4ROIP2kHPSBx1tQSsRl2GtTfXXVDqojcAUgFIClZiXJPU1/k7EmtVt4emFGQ==}
+    peerDependencies:
+      livekit-client: ^2.0.2
+    dependencies:
+      livekit-client: 2.0.3
     dev: false
 
   /@next/env@14.1.0:
@@ -1971,7 +1982,7 @@ packages:
       '@bufbuild/protobuf': 1.4.2
       events: 3.3.0
       loglevel: 1.9.1
-      sdp-transform: 2.14.1
+      sdp-transform: 2.14.2
       ts-debounce: 4.0.0
       tslib: 2.6.2
       typed-emitter: 2.1.0
@@ -2444,7 +2455,6 @@ packages:
 
   /rxjs@7.8.1:
     resolution: {integrity: sha512-AA3TVj+0A2iuIoQkWEK/tqFjBq2j+6PO6Y0zJcvzLAFhEFIO3HL0vls9hWLncZbAAbK0mar7oZ4V079I/qPMxg==}
-    requiresBuild: true
     dependencies:
       tslib: 2.6.2
     dev: false
@@ -2490,8 +2500,8 @@ packages:
       ajv-keywords: 3.5.2(ajv@6.12.6)
     dev: true
 
-  /sdp-transform@2.14.1:
-    resolution: {integrity: sha512-RjZyX3nVwJyCuTo5tGPx+PZWkDMCg7oOLpSlhjDdZfwUoNqG1mM8nyj31IGHyaPWXhjbP7cdK3qZ2bmkJ1GzRw==}
+  /sdp-transform@2.14.2:
+    resolution: {integrity: sha512-icY6jVao7MfKCieyo1AyxFYm1baiM+fA00qW/KrNNVlkxHAd34riEKuEkUe4bBb3gJwLJZM+xT60Yj1QL8rHiA==}
     hasBin: true
     dev: false
 
