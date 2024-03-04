@@ -9,7 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@livekit/components-react": "2.0.1",
+    "@livekit/components-react": "2.0.2",
     "@livekit/components-styles": "1.0.10",
     "livekit-client": "2.0.4",
     "livekit-server-sdk": "2.0.4",
