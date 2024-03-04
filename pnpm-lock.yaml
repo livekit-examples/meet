@@ -6,11 +6,11 @@ settings:
 
 dependencies:
   '@livekit/components-react':
-    specifier: 2.0.0
-    version: 2.0.0(livekit-client@2.0.4)(react-dom@18.2.0)(react@18.2.0)(tslib@2.6.2)
+    specifier: 2.0.1
+    version: 2.0.1(livekit-client@2.0.4)(react-dom@18.2.0)(react@18.2.0)(tslib@2.6.2)
   '@livekit/components-styles':
-    specifier: 1.0.9
-    version: 1.0.9
+    specifier: 1.0.10
+    version: 1.0.10
   livekit-client:
     specifier: 2.0.4
     version: 2.0.4
@@ -197,8 +197,8 @@ packages:
       '@jridgewell/sourcemap-codec': 1.4.15
     dev: true
 
-  /@livekit/components-core@0.9.0(livekit-client@2.0.4)(tslib@2.6.2):
-    resolution: {integrity: sha512-CNDBkJLWiNciFJtrmYrjJfU9ToVzs9ubR24VPa9ekb/jYeJxxq4zKbudIaTeppUzcfGenkS6O6RgcyWjFVbpCw==}
+  /@livekit/components-core@0.9.1(livekit-client@2.0.4)(tslib@2.6.2):
+    resolution: {integrity: sha512-zD0TsiT+uW09GrHrsqEz9kzJ+raSXmu2YYgWrq5OEA7pO6ZbB8aGk2tPJthVTUwySOzW4rE7rNusOVEFvMkvxA==}
     engines: {node: '>=18'}
     peerDependencies:
       livekit-client: ^2.0.2
@@ -212,8 +212,8 @@ packages:
       tslib: 2.6.2
     dev: false
 
-  /@livekit/components-react@2.0.0(livekit-client@2.0.4)(react-dom@18.2.0)(react@18.2.0)(tslib@2.6.2):
-    resolution: {integrity: sha512-trgOAmnIXok/VqWTHG3pbjCKy/wiZA1ZTFFbHOnRz4gpMf7s7lRWqyreF1BjcIQPKXwgF6lMWQTRjgCAqRuU+A==}
+  /@livekit/components-react@2.0.1(livekit-client@2.0.4)(react-dom@18.2.0)(react@18.2.0)(tslib@2.6.2):
+    resolution: {integrity: sha512-3H2wFoLCTTpbOcV+88EFQfcBUG0r3bnfTGCavHdoiRSUYKkrvXuDVXFdXFwBakjPbASRdeINW7+OyFBwWj2SgQ==}
     engines: {node: '>=18'}
     peerDependencies:
       livekit-client: ^2.0.2
@@ -221,7 +221,7 @@ packages:
       react-dom: '>=18'
       tslib: ^2.6.2
     dependencies:
-      '@livekit/components-core': 0.9.0(livekit-client@2.0.4)(tslib@2.6.2)
+      '@livekit/components-core': 0.9.1(livekit-client@2.0.4)(tslib@2.6.2)
       '@react-hook/latest': 1.0.3(react@18.2.0)
       clsx: 2.1.0
       livekit-client: 2.0.4
@@ -231,9 +231,9 @@ packages:
       usehooks-ts: 2.14.0(react@18.2.0)
     dev: false
 
-  /@livekit/components-styles@1.0.9:
-    resolution: {integrity: sha512-rxsqp7KwblvW81OxcRa2KQZ+YZ8Arl8IBzG4k8X4HhA+sZRKxXrlGQJsvZlnAqc1EqIMQ7aMJTGRkLqcmXArMw==}
-    engines: {node: '>=14'}
+  /@livekit/components-styles@1.0.10:
+    resolution: {integrity: sha512-WCTtXnMAcZiXgo2N+1SmlcpPwltpGp8fW+x83P9OnHHTK3qrKEzfcfKi1z0xS8VMu/KKLgJm+yhAlCmZPme/RA==}
+    engines: {node: '>=18'}
     dev: false
 
   /@next/env@14.1.0:
