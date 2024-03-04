@@ -39,7 +39,7 @@ function Tabs(props: TabsProps) {
 
 function DemoMeetingTab({ label }: { label: string }) {
   const router = useRouter();
-  const [e2ee, setE2ee] = useState(true);
+  const [e2ee, setE2ee] = useState(false);
   const [sharedPassphrase, setSharedPassphrase] = useState(randomString(64));
   const startMeeting = () => {
     if (e2ee) {
