@@ -44,10 +44,15 @@ export function SettingsMenu(props: SettingsMenuProps) {
         micPublication.track.stopProcessor();
       } else if (!currentProcessor && isNoiseFilterEnabled) {
         import('@livekit/noise-filter')
-          .then(({ NoiseFilter }) => {
+          .then(({ NoiseFilter, isNoiseFilterSupported }) => {
+            if (!isNoiseFilterSupported()) {
+              console.error('Enhanced noise filter is not supported for this browser');
+              setIsNoiseFilterEnabled(false);
+              return;
+            }
             micPublication?.track
               // @ts-ignore
-              ?.setProcessor(NoiseFilter({}))
+              ?.setProcessor(NoiseFilter())
               .then(() => console.log('successfully set noise filter'));
           })
           .catch((e) => console.error('Failed to load noise filter', e));
