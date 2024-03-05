@@ -5,6 +5,9 @@ settings:
   excludeLinksFromLockfile: false
 
 dependencies:
+  '@datadog/browser-logs':
+    specifier: ^5.10.0
+    version: 5.10.0
   '@livekit/components-react':
     specifier: 2.0.2
     version: 2.0.2(livekit-client@2.0.4)(react-dom@18.2.0)(react@18.2.0)(tslib@2.6.2)
@@ -75,6 +78,21 @@ packages:
 
   /@bufbuild/protobuf@1.4.2:
     resolution: {integrity: sha512-JyEH8Z+OD5Sc2opSg86qMHn1EM1Sa+zj/Tc0ovxdwk56ByVNONJSabuCUbLQp+eKN3rWNfrho0X+3SEqEPXIow==}
+    dev: false
+
+  /@datadog/browser-core@5.10.0:
+    resolution: {integrity: sha512-fHTay/sPuh7tuGnXhnOkjMUuWewmkNJPlZOf+aVgUKPpv3uHYusl7j8l+YO2QUl86b1wtw487xpEVrlxsPA0aA==}
+    dev: false
+
+  /@datadog/browser-logs@5.10.0:
+    resolution: {integrity: sha512-MjFjN9yv++EyVBUKfmL+Jp364+jP+tHNisvEHhQIkTrZ2GZ7Iy2NaC/tfPMfrcL9k0Fr8QOLEPP0tnwY+TCh/w==}
+    peerDependencies:
+      '@datadog/browser-rum': 5.10.0
+    peerDependenciesMeta:
+      '@datadog/browser-rum':
+        optional: true
+    dependencies:
+      '@datadog/browser-core': 5.10.0
     dev: false
 
   /@eslint-community/eslint-utils@4.4.0(eslint@8.56.0):
