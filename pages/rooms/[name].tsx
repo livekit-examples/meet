@@ -15,6 +15,7 @@ import {
   RoomOptions,
   VideoCodec,
   VideoPresets,
+  setLogLevel,
 } from 'livekit-client';
 
 import type { NextPage } from 'next';
@@ -24,6 +25,7 @@ import { useRouter } from 'next/router';
 import * as React from 'react';
 import { DebugMode } from '../../lib/Debug';
 import { decodePassphrase, useServerUrl } from '../../lib/client-utils';
+import { SettingsMenu } from '../../lib/SettingsMenu';
 
 const PreJoinNoSSR = dynamic(
   async () => {
@@ -144,6 +146,8 @@ const ActiveRoom = ({ roomName, userChoices, onLeave }: ActiveRoomProps) => {
           }
         : undefined,
     };
+    // @ts-ignore
+    setLogLevel('debug', 'lk-e2ee');
   }, [userChoices, hq, codec]);
 
   const room = React.useMemo(() => new Room(roomOptions), []);
@@ -177,8 +181,13 @@ const ActiveRoom = ({ roomName, userChoices, onLeave }: ActiveRoomProps) => {
           audio={userChoices.audioEnabled}
           onDisconnected={onLeave}
         >
-          <VideoConference chatMessageFormatter={formatChatMessageLinks} />
-          <DebugMode logLevel={LogLevel.debug} />
+          <VideoConference
+            chatMessageFormatter={formatChatMessageLinks}
+            SettingsComponent={
+              process.env.NEXT_PUBLIC_SHOW_SETTINGS_MENU === 'true' ? SettingsMenu : undefined
+            }
+          />
+          <DebugMode />
         </LiveKitRoom>
       )}
     </>
