@@ -183,7 +183,9 @@ const ActiveRoom = ({ roomName, userChoices, onLeave }: ActiveRoomProps) => {
         >
           <VideoConference
             chatMessageFormatter={formatChatMessageLinks}
-            SettingsComponent={SettingsMenu}
+            SettingsComponent={
+              process.env.NEXT_PUBLIC_SHOW_SETTINGS_MENU ? SettingsMenu : undefined
+            }
           />
           <DebugMode />
         </LiveKitRoom>
