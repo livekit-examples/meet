@@ -7,16 +7,16 @@ settings:
 dependencies:
   '@livekit/components-react':
     specifier: 2.0.2
-    version: 2.0.2(livekit-client@2.0.4)(react-dom@18.2.0)(react@18.2.0)(tslib@2.6.2)
+    version: 2.0.2(livekit-client@2.0.5)(react-dom@18.2.0)(react@18.2.0)(tslib@2.6.2)
   '@livekit/components-styles':
     specifier: 1.0.10
     version: 1.0.10
   '@livekit/noise-filter':
     specifier: ^0.1.3
-    version: 0.1.3(livekit-client@2.0.4)
+    version: 0.1.3(livekit-client@2.0.5)
   livekit-client:
-    specifier: 2.0.4
-    version: 2.0.4
+    specifier: 2.0.5
+    version: 2.0.5
   livekit-server-sdk:
     specifier: 2.0.4
     version: 2.0.4
@@ -200,7 +200,7 @@ packages:
       '@jridgewell/sourcemap-codec': 1.4.15
     dev: true
 
-  /@livekit/components-core@0.9.1(livekit-client@2.0.4)(tslib@2.6.2):
+  /@livekit/components-core@0.9.1(livekit-client@2.0.5)(tslib@2.6.2):
     resolution: {integrity: sha512-zD0TsiT+uW09GrHrsqEz9kzJ+raSXmu2YYgWrq5OEA7pO6ZbB8aGk2tPJthVTUwySOzW4rE7rNusOVEFvMkvxA==}
     engines: {node: '>=18'}
     peerDependencies:
@@ -209,13 +209,13 @@ packages:
     dependencies:
       '@floating-ui/dom': 1.6.1
       email-regex: 5.0.0
-      livekit-client: 2.0.4
+      livekit-client: 2.0.5
       loglevel: 1.9.1
       rxjs: 7.8.1
       tslib: 2.6.2
     dev: false
 
-  /@livekit/components-react@2.0.2(livekit-client@2.0.4)(react-dom@18.2.0)(react@18.2.0)(tslib@2.6.2):
+  /@livekit/components-react@2.0.2(livekit-client@2.0.5)(react-dom@18.2.0)(react@18.2.0)(tslib@2.6.2):
     resolution: {integrity: sha512-7r7k7AO3GY+aR3AfO8EeTR/QYNc1NDfKJYwdbOapb5SZy9o+E23jlhKwUaxTWpSGHbZt/8qyHsOKZNROcgVUTg==}
     engines: {node: '>=18'}
     peerDependencies:
@@ -224,10 +224,10 @@ packages:
       react-dom: '>=18'
       tslib: ^2.6.2
     dependencies:
-      '@livekit/components-core': 0.9.1(livekit-client@2.0.4)(tslib@2.6.2)
+      '@livekit/components-core': 0.9.1(livekit-client@2.0.5)(tslib@2.6.2)
       '@react-hook/latest': 1.0.3(react@18.2.0)
       clsx: 2.1.0
-      livekit-client: 2.0.4
+      livekit-client: 2.0.5
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
       tslib: 2.6.2
@@ -239,12 +239,12 @@ packages:
     engines: {node: '>=18'}
     dev: false
 
-  /@livekit/noise-filter@0.1.3(livekit-client@2.0.4):
+  /@livekit/noise-filter@0.1.3(livekit-client@2.0.5):
     resolution: {integrity: sha512-y5FVS8wOmDJ40ml3nqVJ2I40pFUwIx37B3XiLhPQrgXaY2saZpZebfN4D22XsbaEqPs5kCMQ82IqdLxRkQpbMA==}
     peerDependencies:
       livekit-client: ^2.0.2
     dependencies:
-      livekit-client: 2.0.4
+      livekit-client: 2.0.5
     dev: false
 
   /@next/env@14.1.0:
@@ -1976,8 +1976,8 @@ packages:
       type-check: 0.4.0
     dev: true
 
-  /livekit-client@2.0.4:
-    resolution: {integrity: sha512-9TWHU2Gw0BXJi6SFkHXEizIZY2BEacDd2O6Qn4i9D0resjhMfq5+9EqoVlP/KjfYNIjt8+VdIoEZQ/v4bgU2tQ==}
+  /livekit-client@2.0.5:
+    resolution: {integrity: sha512-v8qGALpGc8hCKJGiNsMML5F7QB/QBJ1aeox14xkyGpIxhQC4lwIRXRktymTzlDnOiZu5fvgB2KxifiOAzWByzw==}
     dependencies:
       '@bufbuild/protobuf': 1.4.2
       events: 3.3.0
