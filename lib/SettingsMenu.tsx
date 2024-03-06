@@ -43,16 +43,16 @@ export function SettingsMenu(props: SettingsMenuProps) {
       if (currentProcessor && !isNoiseFilterEnabled) {
         micPublication.track.stopProcessor();
       } else if (!currentProcessor && isNoiseFilterEnabled) {
-        import('@livekit/noise-filter')
-          .then(({ NoiseFilter, isNoiseFilterSupported }) => {
-            if (!isNoiseFilterSupported()) {
+        import('@livekit/krisp-noise-filter')
+          .then(({ KrispNoiseFilter, isKrispNoiseFilterSupported }) => {
+            if (!isKrispNoiseFilterSupported()) {
               console.error('Enhanced noise filter is not supported for this browser');
               setIsNoiseFilterEnabled(false);
               return;
             }
             micPublication?.track
               // @ts-ignore
-              ?.setProcessor(NoiseFilter())
+              ?.setProcessor(KrispNoiseFilter())
               .then(() => console.log('successfully set noise filter'));
           })
           .catch((e) => console.error('Failed to load noise filter', e));
