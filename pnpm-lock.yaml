@@ -11,7 +11,7 @@ dependencies:
   '@livekit/components-styles':
     specifier: 1.0.10
     version: 1.0.10
-  '@livekit/noise-filter':
+  '@livekit/krisp-noise-filter':
     specifier: ^0.1.3
     version: 0.1.3(livekit-client@2.0.5)
   livekit-client:
@@ -239,8 +239,8 @@ packages:
     engines: {node: '>=18'}
     dev: false
 
-  /@livekit/noise-filter@0.1.3(livekit-client@2.0.5):
-    resolution: {integrity: sha512-y5FVS8wOmDJ40ml3nqVJ2I40pFUwIx37B3XiLhPQrgXaY2saZpZebfN4D22XsbaEqPs5kCMQ82IqdLxRkQpbMA==}
+  /@livekit/krisp-noise-filter@0.1.3(livekit-client@2.0.5):
+    resolution: {integrity: sha512-wXWXJ52mXUasjOhilKmUd3YfXlgtAgdaL33AX2EhCvOLRnBC2qtH+J2+3LkRVZAlOVVIPta7yzj3z6mBzuK5Ow==}
     peerDependencies:
       livekit-client: ^2.0.2
     dependencies:
