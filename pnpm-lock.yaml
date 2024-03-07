@@ -6,8 +6,8 @@ settings:
 
 dependencies:
   '@livekit/components-react':
-    specifier: 2.0.2
-    version: 2.0.2(livekit-client@2.0.5)(react-dom@18.2.0)(react@18.2.0)(tslib@2.6.2)
+    specifier: 2.0.3
+    version: 2.0.3(livekit-client@2.0.5)(react-dom@18.2.0)(react@18.2.0)(tslib@2.6.2)
   '@livekit/components-styles':
     specifier: 1.0.10
     version: 1.0.10
@@ -215,8 +215,8 @@ packages:
       tslib: 2.6.2
     dev: false
 
-  /@livekit/components-react@2.0.2(livekit-client@2.0.5)(react-dom@18.2.0)(react@18.2.0)(tslib@2.6.2):
-    resolution: {integrity: sha512-7r7k7AO3GY+aR3AfO8EeTR/QYNc1NDfKJYwdbOapb5SZy9o+E23jlhKwUaxTWpSGHbZt/8qyHsOKZNROcgVUTg==}
+  /@livekit/components-react@2.0.3(livekit-client@2.0.5)(react-dom@18.2.0)(react@18.2.0)(tslib@2.6.2):
+    resolution: {integrity: sha512-ejwoCbeHk94TolGlFmua6cRVmIdSCx5VKeviYoajnNcOJn1qw5u09JVU6bR24MCLYVvuxGZK5aHua1BvnW5Ryw==}
     engines: {node: '>=18'}
     peerDependencies:
       livekit-client: ^2.0.2
