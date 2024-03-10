@@ -98,7 +98,7 @@ export function SettingsMenu(props: SettingsMenuProps) {
               <>
                 <h3>Microphone</h3>
                 <section className="lk-button-group">
-                  <TrackToggle source={Track.Source.Microphone}>Camera</TrackToggle>
+                  <TrackToggle source={Track.Source.Microphone}>Microphone</TrackToggle>
                   <div className="lk-button-group-menu">
                     <MediaDeviceMenu kind="audioinput" />
                   </div>
