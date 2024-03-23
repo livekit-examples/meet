@@ -7,7 +7,7 @@ settings:
 dependencies:
   '@datadog/browser-logs':
     specifier: ^5.10.0
-    version: 5.11.0
+    version: 5.12.0
   '@livekit/components-react':
     specifier: 2.0.3
     version: 2.0.3(livekit-client@2.0.8)(react-dom@18.2.0)(react@18.2.0)(tslib@2.6.2)
@@ -57,7 +57,7 @@ devDependencies:
     version: 14.1.3(eslint@8.57.0)(typescript@5.4.2)
   source-map-loader:
     specifier: ^5.0.0
-    version: 5.0.0(webpack@5.90.3)
+    version: 5.0.0(webpack@5.91.0)
   typescript:
     specifier: 5.4.2
     version: 5.4.2
@@ -80,19 +80,19 @@ packages:
     resolution: {integrity: sha512-i5GE2Dk5ekdlK1TR7SugY4LWRrKSfb5T1Qn4unpIMbfxoeGKERKQ59HG3iYewacGD10SR7UzevfPnh6my4tNmQ==}
     dev: false
 
-  /@datadog/browser-core@5.11.0:
-    resolution: {integrity: sha512-s5ak4Wf0xrxtlyruYtHZELEil+6ido+Zb/owpaYYU4ca05BDo4slIS03ztRCTYBv1dWpKJ6QkedvfklgWWAn6Q==}
+  /@datadog/browser-core@5.12.0:
+    resolution: {integrity: sha512-DVV64OqKMxfJXvHJrHjcCji0guytLGBun9jf7tugXN1ylMNurloV5sF1KW1W1Pb0BuEMiJsuyz1DEIqZHO3z0w==}
     dev: false
 
-  /@datadog/browser-logs@5.11.0:
-    resolution: {integrity: sha512-EvyZcfFOlQpopBtUIKFzj9cXzKfrALmF3GXUFxV6VfuQ5ByHywYdkdlUs0xGGblHyzXlidA7YEwTJiBa6Hn38A==}
+  /@datadog/browser-logs@5.12.0:
+    resolution: {integrity: sha512-acS4JexEUi5ACJg5nWoXMug26hC9g+t+mNDjMEtpEJbMSRfxdCwxTlHr8G+gYIVAICp63hUYue3Rfs9uQC08ow==}
     peerDependencies:
-      '@datadog/browser-rum': 5.11.0
+      '@datadog/browser-rum': 5.12.0
     peerDependenciesMeta:
       '@datadog/browser-rum':
         optional: true
     dependencies:
-      '@datadog/browser-core': 5.11.0
+      '@datadog/browser-core': 5.12.0
     dev: false
 
   /@eslint-community/eslint-utils@4.4.0(eslint@8.57.0):
@@ -417,12 +417,12 @@ packages:
   /@types/eslint-scope@3.7.7:
     resolution: {integrity: sha512-MzMFlSLBqNF2gcHWO0G1vP/YQyfvrxZ0bF+u7mzUdZ1/xK4A4sru+nraZz5i3iEIk1l1uyicaDVTB4QbbEkAYg==}
     dependencies:
-      '@types/eslint': 8.56.5
+      '@types/eslint': 8.56.6
       '@types/estree': 1.0.5
     dev: true
 
-  /@types/eslint@8.56.5:
-    resolution: {integrity: sha512-u5/YPJHo1tvkSF2CE0USEkxon82Z5DBy2xR+qfyYNszpX9qcs4sT6uq2kBbj4BXY1+DBGDPnrhMZV3pKWGNukw==}
+  /@types/eslint@8.56.6:
+    resolution: {integrity: sha512-ymwc+qb1XkjT/gfoQwxIeHZ6ixH23A+tCT2ADSA/DPVKzAjwYkTXBMCQ/f6fe4wEa85Lhp26VPeUxI7wMhAi7A==}
     dependencies:
       '@types/estree': 1.0.5
       '@types/json-schema': 7.0.15
@@ -859,7 +859,7 @@ packages:
     hasBin: true
     dependencies:
       caniuse-lite: 1.0.30001599
-      electron-to-chromium: 1.4.708
+      electron-to-chromium: 1.4.713
       node-releases: 2.0.14
       update-browserslist-db: 1.0.13(browserslist@4.23.0)
     dev: true
@@ -1039,8 +1039,8 @@ packages:
     resolution: {integrity: sha512-I88TYZWc9XiYHRQ4/3c5rjjfgkjhLyW2luGIheGERbNQ6OY7yTybanSpDXZa8y7VUP9YmDcYa+eyq4ca7iLqWA==}
     dev: true
 
-  /electron-to-chromium@1.4.708:
-    resolution: {integrity: sha512-iWgEEvREL4GTXXHKohhh33+6Y8XkPI5eHihDmm8zUk5Zo7HICEW+wI/j5kJ2tbuNUCXJ/sNXa03ajW635DiJXA==}
+  /electron-to-chromium@1.4.713:
+    resolution: {integrity: sha512-vDarADhwntXiULEdmWd77g2dV6FrNGa8ecAC29MZ4TwPut2fvosD0/5sJd1qWNNe8HcJFAC+F5Lf9jW1NPtWmw==}
     dev: true
 
   /email-regex@5.0.0:
@@ -1136,8 +1136,8 @@ packages:
       safe-array-concat: 1.0.1
     dev: true
 
-  /es-module-lexer@1.4.1:
-    resolution: {integrity: sha512-cXLGjP0c4T3flZJKQSuziYoq7MlT+rnvfZjfp7h+I7K9BNX54kP9nyWvdbwjQ4u1iWbOL4u96fgeZLToQlZC7w==}
+  /es-module-lexer@1.4.2:
+    resolution: {integrity: sha512-7nOqkomXZEaxUDJw21XZNtRk739QvrPSoZoRtbsEfcii00vdzZUh6zh1CQwHhrib8MdEtJfv5rJiGeb4KuV/vw==}
     dev: true
 
   /es-set-tostringtag@2.0.2:
@@ -2625,7 +2625,7 @@ packages:
     resolution: {integrity: sha512-R0XvVJ9WusLiqTCEiGCmICCMplcCkIwwR11mOSD9CR5u+IXYdiseeEuXCVAjS54zqwkLcPNnmU4OeJ6tUrWhDw==}
     engines: {node: '>=0.10.0'}
 
-  /source-map-loader@5.0.0(webpack@5.90.3):
+  /source-map-loader@5.0.0(webpack@5.91.0):
     resolution: {integrity: sha512-k2Dur7CbSLcAH73sBcIkV5xjPV4SzqO1NJ7+XaQl8if3VODDUj3FNchNGpqgJSKbvUfJuhVdv8K2Eu8/TNl2eA==}
     engines: {node: '>= 18.12.0'}
     peerDependencies:
@@ -2633,7 +2633,7 @@ packages:
     dependencies:
       iconv-lite: 0.6.3
       source-map-js: 1.0.2
-      webpack: 5.90.3
+      webpack: 5.91.0
     dev: true
 
   /source-map-support@0.5.21:
@@ -2775,7 +2775,7 @@ packages:
     engines: {node: '>=6'}
     dev: true
 
-  /terser-webpack-plugin@5.3.10(webpack@5.90.3):
+  /terser-webpack-plugin@5.3.10(webpack@5.91.0):
     resolution: {integrity: sha512-BKFPWlPDndPs+NGGCr1U59t0XScL5317Y0UReNrHaw9/FwhPENlq6bfgs+4yPfyP51vqC1bQ4rp1EfXW5ZSH9w==}
     engines: {node: '>= 10.13.0'}
     peerDependencies:
@@ -2796,7 +2796,7 @@ packages:
       schema-utils: 3.3.0
       serialize-javascript: 6.0.2
       terser: 5.29.2
-      webpack: 5.90.3
+      webpack: 5.91.0
     dev: true
 
   /terser@5.29.2:
@@ -2971,8 +2971,8 @@ packages:
     engines: {node: '>=10.13.0'}
     dev: true
 
-  /webpack@5.90.3:
-    resolution: {integrity: sha512-h6uDYlWCctQRuXBs1oYpVe6sFcWedl0dpcVaTf/YF67J9bKvwJajFulMVSYKHrksMB3I/pIagRzDxwxkebuzKA==}
+  /webpack@5.91.0:
+    resolution: {integrity: sha512-rzVwlLeBWHJbmgTC/8TvAcu5vpJNII+MelQpylD4jNERPwpBJOE2lEcko1zJX3QJeLjTTAnQxn/OJ8bjDzVQaw==}
     engines: {node: '>=10.13.0'}
     hasBin: true
     peerDependencies:
@@ -2991,7 +2991,7 @@ packages:
       browserslist: 4.23.0
       chrome-trace-event: 1.0.3
       enhanced-resolve: 5.16.0
-      es-module-lexer: 1.4.1
+      es-module-lexer: 1.4.2
       eslint-scope: 5.1.1
       events: 3.3.0
       glob-to-regexp: 0.4.1
@@ -3002,7 +3002,7 @@ packages:
       neo-async: 2.6.2
       schema-utils: 3.3.0
       tapable: 2.2.1
-      terser-webpack-plugin: 5.3.10(webpack@5.90.3)
+      terser-webpack-plugin: 5.3.10(webpack@5.91.0)
       watchpack: 2.4.1
       webpack-sources: 3.2.3
     transitivePeerDependencies:
