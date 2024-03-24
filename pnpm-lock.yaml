@@ -16,7 +16,7 @@ dependencies:
     version: 1.0.10
   '@livekit/krisp-noise-filter':
     specifier: ^0.2.0
-    version: 0.2.0(livekit-client@2.0.10)
+    version: 0.2.1(livekit-client@2.0.10)
   livekit-client:
     specifier: 2.0.10
     version: 2.0.10
@@ -257,8 +257,8 @@ packages:
     engines: {node: '>=18'}
     dev: false
 
-  /@livekit/krisp-noise-filter@0.2.0(livekit-client@2.0.10):
-    resolution: {integrity: sha512-EGqIopSDfZDYi1/JZPwFSmhhe1c2QE6gSEWEeHFTj0/mlxjTNztbVQOvyPHKaB0lSQuTK31EDZ9AE2+z6xLsAA==}
+  /@livekit/krisp-noise-filter@0.2.1(livekit-client@2.0.10):
+    resolution: {integrity: sha512-P1+5DLN52i5KbQXPYer/yvvN3ATdz+aoEi66+rpeJj8huyO95mmvPB9t+tD1wZI3lIgtBerKh4YHQkaw9KFeSA==}
     peerDependencies:
       livekit-client: ^2.0.8
     dependencies:
@@ -858,8 +858,8 @@ packages:
     engines: {node: ^6 || ^7 || ^8 || ^9 || ^10 || ^11 || ^12 || >=13.7}
     hasBin: true
     dependencies:
-      caniuse-lite: 1.0.30001599
-      electron-to-chromium: 1.4.713
+      caniuse-lite: 1.0.30001600
+      electron-to-chromium: 1.4.715
       node-releases: 2.0.14
       update-browserslist-db: 1.0.13(browserslist@4.23.0)
     dev: true
@@ -905,6 +905,11 @@ packages:
 
   /caniuse-lite@1.0.30001599:
     resolution: {integrity: sha512-LRAQHZ4yT1+f9LemSMeqdMpMxZcc4RMWdj4tiFe3G8tNkWK+E58g+/tzotb5cU6TbcVJLr4fySiAW7XmxQvZQA==}
+    dev: false
+
+  /caniuse-lite@1.0.30001600:
+    resolution: {integrity: sha512-+2S9/2JFhYmYaDpZvo0lKkfvuKIglrx68MwOBqMGHhQsNkLjB5xtc/TGoEPs+MxjSyN/72qer2g97nzR641mOQ==}
+    dev: true
 
   /chalk@4.1.2:
     resolution: {integrity: sha512-oKnbhFyRIXpUuez8iBMmyEa4nbj4IOQyuhc/wy9kY7/WVPcwIO9VA668Pu8RkO7+0G76SLROeyw9CpQ061i4mA==}
@@ -1039,8 +1044,8 @@ packages:
     resolution: {integrity: sha512-I88TYZWc9XiYHRQ4/3c5rjjfgkjhLyW2luGIheGERbNQ6OY7yTybanSpDXZa8y7VUP9YmDcYa+eyq4ca7iLqWA==}
     dev: true
 
-  /electron-to-chromium@1.4.713:
-    resolution: {integrity: sha512-vDarADhwntXiULEdmWd77g2dV6FrNGa8ecAC29MZ4TwPut2fvosD0/5sJd1qWNNe8HcJFAC+F5Lf9jW1NPtWmw==}
+  /electron-to-chromium@1.4.715:
+    resolution: {integrity: sha512-XzWNH4ZSa9BwVUQSDorPWAUQ5WGuYz7zJUNpNif40zFCiCl20t8zgylmreNmn26h5kiyw2lg7RfTmeMBsDklqg==}
     dev: true
 
   /email-regex@5.0.0:
