@@ -9,11 +9,11 @@ dependencies:
     specifier: ^5.10.0
     version: 5.13.0
   '@livekit/components-react':
-    specifier: 2.0.3
-    version: 2.0.3(livekit-client@2.0.10)(react-dom@18.2.0)(react@18.2.0)(tslib@2.6.2)
+    specifier: 2.0.4
+    version: 2.0.4(@livekit/protocol@1.12.0)(livekit-client@2.0.10)(react-dom@18.2.0)(react@18.2.0)(tslib@2.6.2)
   '@livekit/components-styles':
-    specifier: 1.0.10
-    version: 1.0.10
+    specifier: 1.0.11
+    version: 1.0.11
   '@livekit/krisp-noise-filter':
     specifier: ^0.2.0
     version: 0.2.1(livekit-client@2.0.10)
@@ -138,8 +138,8 @@ packages:
       '@floating-ui/utils': 0.2.1
     dev: false
 
-  /@floating-ui/dom@1.6.1:
-    resolution: {integrity: sha512-iA8qE43/H5iGozC3W0YSnVSW42Vh522yyM1gj+BqRwVsTNOyr231PsXDaV04yT39PsO0QL2QpbI/M0ZaLUQgRQ==}
+  /@floating-ui/dom@1.6.3:
+    resolution: {integrity: sha512-RnDthu3mzPlQ31Ss/BTwQ1zjzIhr3lk1gZB1OC56h/1vEtaXkESrOqL5fQVMfXpwGtRwX+YsZBdyHtJMQnkArw==}
     dependencies:
       '@floating-ui/core': 1.6.0
       '@floating-ui/utils': 0.2.1
@@ -218,14 +218,16 @@ packages:
       '@jridgewell/sourcemap-codec': 1.4.15
     dev: true
 
-  /@livekit/components-core@0.9.1(livekit-client@2.0.10)(tslib@2.6.2):
-    resolution: {integrity: sha512-zD0TsiT+uW09GrHrsqEz9kzJ+raSXmu2YYgWrq5OEA7pO6ZbB8aGk2tPJthVTUwySOzW4rE7rNusOVEFvMkvxA==}
+  /@livekit/components-core@0.9.2(@livekit/protocol@1.12.0)(livekit-client@2.0.10)(tslib@2.6.2):
+    resolution: {integrity: sha512-P1a5el4HSKTaZsmIOgtMrmDu9iViTOSR2G5FLvcmLcnzmpQgw+2oQVNPzNQSPXh7GjB9MXvTW17/eXVI1YeeXw==}
     engines: {node: '>=18'}
     peerDependencies:
-      livekit-client: ^2.0.2
+      '@livekit/protocol': ^1.12.0
+      livekit-client: ^2.0.10
       tslib: ^2.6.2
     dependencies:
-      '@floating-ui/dom': 1.6.1
+      '@floating-ui/dom': 1.6.3
+      '@livekit/protocol': 1.12.0
       email-regex: 5.0.0
       livekit-client: 2.0.10
       loglevel: 1.9.1
@@ -233,27 +235,29 @@ packages:
       tslib: 2.6.2
     dev: false
 
-  /@livekit/components-react@2.0.3(livekit-client@2.0.10)(react-dom@18.2.0)(react@18.2.0)(tslib@2.6.2):
-    resolution: {integrity: sha512-ejwoCbeHk94TolGlFmua6cRVmIdSCx5VKeviYoajnNcOJn1qw5u09JVU6bR24MCLYVvuxGZK5aHua1BvnW5Ryw==}
+  /@livekit/components-react@2.0.4(@livekit/protocol@1.12.0)(livekit-client@2.0.10)(react-dom@18.2.0)(react@18.2.0)(tslib@2.6.2):
+    resolution: {integrity: sha512-PEwoLhgI1wKSZE1hZD1ldC6ybmU3E6c1tUt0sDYLTuRTsWwNlsCv8kphYaM5SPTorTfmzw/uzAu1NO98+6cVFA==}
     engines: {node: '>=18'}
     peerDependencies:
-      livekit-client: ^2.0.2
+      '@livekit/protocol': ^1.12.0
+      livekit-client: ^2.0.10
       react: '>=18'
       react-dom: '>=18'
       tslib: ^2.6.2
     dependencies:
-      '@livekit/components-core': 0.9.1(livekit-client@2.0.10)(tslib@2.6.2)
+      '@livekit/components-core': 0.9.2(@livekit/protocol@1.12.0)(livekit-client@2.0.10)(tslib@2.6.2)
+      '@livekit/protocol': 1.12.0
       '@react-hook/latest': 1.0.3(react@18.2.0)
       clsx: 2.1.0
       livekit-client: 2.0.10
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
       tslib: 2.6.2
-      usehooks-ts: 2.14.0(react@18.2.0)
+      usehooks-ts: 2.16.0(react@18.2.0)
     dev: false
 
-  /@livekit/components-styles@1.0.10:
-    resolution: {integrity: sha512-WCTtXnMAcZiXgo2N+1SmlcpPwltpGp8fW+x83P9OnHHTK3qrKEzfcfKi1z0xS8VMu/KKLgJm+yhAlCmZPme/RA==}
+  /@livekit/components-styles@1.0.11:
+    resolution: {integrity: sha512-zRvy87VPvpSW8IjdujYaHRR5EQBPIBno5+A/WfUMWq7DjKlIR9QTQAh3wjdNfWqaV6SkB1KEAC/QxADUZb4j9g==}
     engines: {node: '>=18'}
     dev: false
 
@@ -2953,8 +2957,8 @@ packages:
       punycode: 2.3.1
     dev: true
 
-  /usehooks-ts@2.14.0(react@18.2.0):
-    resolution: {integrity: sha512-jnhrjTRJoJS7cFxz63tRYc5mzTKf/h+Ii8P0PDHymT9qDe4ZA2/gzDRmDR4WGausg5X8wMIdghwi3BBCN9JKow==}
+  /usehooks-ts@2.16.0(react@18.2.0):
+    resolution: {integrity: sha512-bez95WqYujxp6hFdM/CpRDiVPirZPxlMzOH2QB8yopoKQMXpscyZoxOjpEdaxvV+CAWUDSM62cWnqHE0E/MZ7w==}
     engines: {node: '>=16.15.0'}
     peerDependencies:
       react: ^16.8.0  || ^17 || ^18
