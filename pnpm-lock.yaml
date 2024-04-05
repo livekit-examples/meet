@@ -9,8 +9,8 @@ dependencies:
     specifier: ^5.10.0
     version: 5.13.0
   '@livekit/components-react':
-    specifier: 2.0.5
-    version: 2.0.5(@livekit/protocol@1.12.0)(livekit-client@2.0.10)(react-dom@18.2.0)(react@18.2.0)(tslib@2.6.2)
+    specifier: 2.0.6
+    version: 2.0.6(@livekit/protocol@1.12.0)(livekit-client@2.0.10)(react-dom@18.2.0)(react@18.2.0)(tslib@2.6.2)
   '@livekit/components-styles':
     specifier: 1.0.11
     version: 1.0.11
@@ -218,8 +218,8 @@ packages:
       '@jridgewell/sourcemap-codec': 1.4.15
     dev: true
 
-  /@livekit/components-core@0.9.2(@livekit/protocol@1.12.0)(livekit-client@2.0.10)(tslib@2.6.2):
-    resolution: {integrity: sha512-P1a5el4HSKTaZsmIOgtMrmDu9iViTOSR2G5FLvcmLcnzmpQgw+2oQVNPzNQSPXh7GjB9MXvTW17/eXVI1YeeXw==}
+  /@livekit/components-core@0.9.3(@livekit/protocol@1.12.0)(livekit-client@2.0.10)(tslib@2.6.2):
+    resolution: {integrity: sha512-RUhKw/eg2frnOHq6Xurfg4HqawmdpC/o8Dkp+J6PgnieA6mSQOOez7mUdPNqsAybnLujjJvVJ735sZJRqTb1Sg==}
     engines: {node: '>=18'}
     peerDependencies:
       '@livekit/protocol': ^1.12.0
@@ -235,8 +235,8 @@ packages:
       tslib: 2.6.2
     dev: false
 
-  /@livekit/components-react@2.0.5(@livekit/protocol@1.12.0)(livekit-client@2.0.10)(react-dom@18.2.0)(react@18.2.0)(tslib@2.6.2):
-    resolution: {integrity: sha512-ymM+JcXkAir9fKh6DJqm2V11OnIpGonrOkZb9RrYXhbfIAt57iLM96C7We6ZqqxYNuPnWRaVMQHoXhXqwkqFXw==}
+  /@livekit/components-react@2.0.6(@livekit/protocol@1.12.0)(livekit-client@2.0.10)(react-dom@18.2.0)(react@18.2.0)(tslib@2.6.2):
+    resolution: {integrity: sha512-L0iaIPasPJLftI6FBcWcGicmGpw5LKKFvMV6GSyuv0q8oYrmUYoLLQdGmw7eW4q+7bQFAcFHeD9BzMXdprzCgw==}
     engines: {node: '>=18'}
     peerDependencies:
       '@livekit/protocol': ^1.12.0
@@ -245,7 +245,7 @@ packages:
       react-dom: '>=18'
       tslib: ^2.6.2
     dependencies:
-      '@livekit/components-core': 0.9.2(@livekit/protocol@1.12.0)(livekit-client@2.0.10)(tslib@2.6.2)
+      '@livekit/components-core': 0.9.3(@livekit/protocol@1.12.0)(livekit-client@2.0.10)(tslib@2.6.2)
       '@livekit/protocol': 1.12.0
       '@react-hook/latest': 1.0.3(react@18.2.0)
       clsx: 2.1.0
