@@ -6,16 +6,16 @@ const SendIcon = (props: Props) => (
     <path
       d="M25.7422 5.75146L14.0085 24.4085L12.2228 15.2179L4.19727 10.3964L25.7422 5.75146Z"
       stroke={props.stroke ?? 'white'}
-      stroke-width="2"
-      stroke-linecap="round"
-      stroke-linejoin="round"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
     />
     <path
       d="M12.167 15.2561L25.7411 5.75146"
       stroke={props.stroke ?? 'white'}
-      stroke-width="2"
-      stroke-linecap="round"
-      stroke-linejoin="round"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
     />
   </svg>
 )
