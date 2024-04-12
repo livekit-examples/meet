@@ -1,9 +1,10 @@
 /* eslint-disable import/order */
 import 'semantic-ui-css/semantic.min.css'
-import React from 'react'
+import React, { useEffect } from 'react'
 import ReactDOM from 'react-dom'
 import { Provider } from 'react-redux'
-import { RouterProvider, createBrowserRouter } from 'react-router-dom'
+import { BrowserRouter, Route, Routes, useLocation } from 'react-router-dom'
+import { getAnalytics } from 'decentraland-dapps/dist/modules/analytics/utils'
 import ModalProvider from 'decentraland-dapps/dist/providers/ModalProvider'
 import TranslationProvider from 'decentraland-dapps/dist/providers/TranslationProvider'
 import WalletProvider from 'decentraland-dapps/dist/providers/WalletProvider'
@@ -17,33 +18,40 @@ import Conference from './components/Pages/Conference'
 import 'decentraland-ui/dist/themes/alternative/light-theme.css'
 import './index.css'
 
-const router = createBrowserRouter([
-  {
-    path: '/',
-    element: <ConnectToWorld />
-  },
-  {
-    path: 'sign-in',
-    element: <SignInPage />
-  },
-  {
-    path: '/meet/:server',
-    element: <Conference />
-  }
-])
+const SiteRoutes = () => {
+  const location = useLocation()
+  const analytics = getAnalytics()
 
-const component = (
-  <React.StrictMode>
-    <Provider store={initStore()}>
-      <WalletProvider>
-        <TranslationProvider locales={Object.keys(locales)}>
-          <ModalProvider components={modals}>
-            <RouterProvider router={router} />
-          </ModalProvider>
-        </TranslationProvider>
-      </WalletProvider>
-    </Provider>
-  </React.StrictMode>
-)
+  useEffect(() => {
+    analytics.page()
+  }, [location, analytics])
 
-ReactDOM.render(component, document.getElementById('root') as HTMLElement)
+  return (
+    <Routes>
+      <Route path="/" element={<ConnectToWorld />} />
+      <Route path="sign-in" element={<SignInPage />} />
+      <Route path="/meet/:server" element={<Conference />} />
+      <Route path="*" element={<ConnectToWorld />} />
+    </Routes>
+  )
+}
+
+const component = () => {
+  return (
+    <React.StrictMode>
+      <Provider store={initStore()}>
+        <WalletProvider>
+          <TranslationProvider locales={Object.keys(locales)}>
+            <ModalProvider components={modals}>
+              <BrowserRouter>
+                <SiteRoutes />
+              </BrowserRouter>
+            </ModalProvider>
+          </TranslationProvider>
+        </WalletProvider>
+      </Provider>
+    </React.StrictMode>
+  )
+}
+
+ReactDOM.render(component(), document.getElementById('root') as HTMLElement)
