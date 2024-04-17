@@ -1,3 +1,4 @@
+'use client';
 import { formatChatMessageLinks, LiveKitRoom, VideoConference } from '@livekit/components-react';
 import {
   ExternalE2EEKeyProvider,
