@@ -34,9 +34,24 @@ const Home: NextPage = () => {
     undefined,
   );
 
-  function handlePreJoinSubmit(values: LocalUserChoices) {
+  const preJoinDefaults = React.useMemo(() => {
+    return {
+      username: '',
+      videoEnabled: true,
+      audioEnabled: true,
+    };
+  }, []);
+
+  const handlePreJoinSubmit = React.useCallback((values: LocalUserChoices) => {
     setPreJoinChoices(values);
-  }
+  }, []);
+
+  const onPreJoinError = React.useCallback((e: any) => {
+    console.error(e);
+  }, []);
+
+  const onLeave = React.useCallback(() => router.push('/'), []);
+
   return (
     <>
       <Head>
@@ -49,19 +64,13 @@ const Home: NextPage = () => {
           <ActiveRoom
             roomName={roomName}
             userChoices={preJoinChoices}
-            onLeave={() => {
-              router.push('/');
-            }}
+            onLeave={onLeave}
           ></ActiveRoom>
         ) : (
           <div style={{ display: 'grid', placeItems: 'center', height: '100%' }}>
             <PreJoin
-              onError={(err) => console.error(err)}
-              defaults={{
-                username: '',
-                videoEnabled: true,
-                audioEnabled: true,
-              }}
+              onError={onPreJoinError}
+              defaults={preJoinDefaults}
               onSubmit={handlePreJoinSubmit}
             ></PreJoin>
           </div>
