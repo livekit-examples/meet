@@ -5,11 +5,11 @@ import {
   formatChatMessageLinks,
   useToken,
   LocalUserChoices,
+  PreJoin,
 } from '@livekit/components-react';
 import {
   DeviceUnsupportedError,
   ExternalE2EEKeyProvider,
-  LogLevel,
   Room,
   RoomConnectOptions,
   RoomOptions,
@@ -19,20 +19,12 @@ import {
 } from 'livekit-client';
 
 import type { NextPage } from 'next';
-import dynamic from 'next/dynamic';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 import * as React from 'react';
 import { DebugMode } from '../../lib/Debug';
 import { decodePassphrase, useServerUrl } from '../../lib/client-utils';
 import { SettingsMenu } from '../../lib/SettingsMenu';
-
-const PreJoinNoSSR = dynamic(
-  async () => {
-    return (await import('@livekit/components-react')).PreJoin;
-  },
-  { ssr: false },
-);
 
 const Home: NextPage = () => {
   const router = useRouter();
@@ -42,9 +34,24 @@ const Home: NextPage = () => {
     undefined,
   );
 
-  function handlePreJoinSubmit(values: LocalUserChoices) {
+  const preJoinDefaults = React.useMemo(() => {
+    return {
+      username: '',
+      videoEnabled: true,
+      audioEnabled: true,
+    };
+  }, []);
+
+  const handlePreJoinSubmit = React.useCallback((values: LocalUserChoices) => {
     setPreJoinChoices(values);
-  }
+  }, []);
+
+  const onPreJoinError = React.useCallback((e: any) => {
+    console.error(e);
+  }, []);
+
+  const onLeave = React.useCallback(() => router.push('/'), []);
+
   return (
     <>
       <Head>
@@ -57,21 +64,15 @@ const Home: NextPage = () => {
           <ActiveRoom
             roomName={roomName}
             userChoices={preJoinChoices}
-            onLeave={() => {
-              router.push('/');
-            }}
+            onLeave={onLeave}
           ></ActiveRoom>
         ) : (
           <div style={{ display: 'grid', placeItems: 'center', height: '100%' }}>
-            <PreJoinNoSSR
-              onError={(err) => console.log('error while setting up prejoin', err)}
-              defaults={{
-                username: '',
-                videoEnabled: true,
-                audioEnabled: true,
-              }}
+            <PreJoin
+              onError={onPreJoinError}
+              defaults={preJoinDefaults}
               onSubmit={handlePreJoinSubmit}
-            ></PreJoinNoSSR>
+            ></PreJoin>
           </div>
         )}
       </main>
