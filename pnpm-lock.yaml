@@ -12,8 +12,8 @@ importers:
         specifier: ^5.10.0
         version: 5.13.0
       '@livekit/components-react':
-        specifier: 2.1.1
-        version: 2.1.1(@livekit/protocol@1.13.0)(livekit-client@2.1.0)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(tslib@2.6.2)
+        specifier: 2.1.2
+        version: 2.1.2(@livekit/protocol@1.13.0)(livekit-client@2.1.0)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(tslib@2.6.2)
       '@livekit/components-styles':
         specifier: 1.0.11
         version: 1.0.11
@@ -159,8 +159,8 @@ packages:
       livekit-client: ^2.1.0
       tslib: ^2.6.2
 
-  '@livekit/components-react@2.1.1':
-    resolution: {integrity: sha512-AbPOcFXvdpmkkuHtQeeX22lI4zxTMGH4KfwOtsdYrixC33NlaaZhdLzndQ/XHmi43qLqPnaXmogp3B7yIWnlsQ==}
+  '@livekit/components-react@2.1.2':
+    resolution: {integrity: sha512-+gZsnIwfS2tLc0Cuj3bKcp+UYrm5p9AVIbuY02R6MGRjLWV7UCaQuSD1PXIlkWSp9ZGS2nnY6CB9a69IsEGglA==}
     engines: {node: '>=18'}
     peerDependencies:
       '@livekit/protocol': ^1.12.0
@@ -1774,7 +1774,7 @@ snapshots:
       rxjs: 7.8.1
       tslib: 2.6.2
 
-  '@livekit/components-react@2.1.1(@livekit/protocol@1.13.0)(livekit-client@2.1.0)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(tslib@2.6.2)':
+  '@livekit/components-react@2.1.2(@livekit/protocol@1.13.0)(livekit-client@2.1.0)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(tslib@2.6.2)':
     dependencies:
       '@livekit/components-core': 0.10.0(@livekit/protocol@1.13.0)(livekit-client@2.1.0)(tslib@2.6.2)
       '@livekit/protocol': 1.13.0
