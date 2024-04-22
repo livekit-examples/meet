@@ -19,7 +19,7 @@ importers:
         version: 1.0.11
       '@livekit/krisp-noise-filter':
         specifier: ^0.2.0
-        version: 0.2.1(livekit-client@2.1.0)
+        version: 0.2.2(livekit-client@2.1.0)
       livekit-client:
         specifier: 2.1.0
         version: 2.1.0
@@ -173,8 +173,8 @@ packages:
     resolution: {integrity: sha512-zRvy87VPvpSW8IjdujYaHRR5EQBPIBno5+A/WfUMWq7DjKlIR9QTQAh3wjdNfWqaV6SkB1KEAC/QxADUZb4j9g==}
     engines: {node: '>=18'}
 
-  '@livekit/krisp-noise-filter@0.2.1':
-    resolution: {integrity: sha512-P1+5DLN52i5KbQXPYer/yvvN3ATdz+aoEi66+rpeJj8huyO95mmvPB9t+tD1wZI3lIgtBerKh4YHQkaw9KFeSA==}
+  '@livekit/krisp-noise-filter@0.2.2':
+    resolution: {integrity: sha512-jGAxvw07+6jF3iU7jEeZ6dnr2c2nSIW3J9zt18KM+dwVsLpLNAfFchlwUStpJEmQoDhw9sQgRSOOKpqHcjj7GQ==}
     peerDependencies:
       livekit-client: ^2.0.8
 
@@ -274,8 +274,8 @@ packages:
   '@types/eslint-scope@3.7.7':
     resolution: {integrity: sha512-MzMFlSLBqNF2gcHWO0G1vP/YQyfvrxZ0bF+u7mzUdZ1/xK4A4sru+nraZz5i3iEIk1l1uyicaDVTB4QbbEkAYg==}
 
-  '@types/eslint@8.56.6':
-    resolution: {integrity: sha512-ymwc+qb1XkjT/gfoQwxIeHZ6ixH23A+tCT2ADSA/DPVKzAjwYkTXBMCQ/f6fe4wEa85Lhp26VPeUxI7wMhAi7A==}
+  '@types/eslint@8.56.10':
+    resolution: {integrity: sha512-Shavhk87gCtY2fhXDctcfS3e6FdxWkCx1iUZ9eEUbh7rTqlZT0/IzOkCOVt0fCjcFuZ9FPYfuezTBImfHCDBGQ==}
 
   '@types/estree@1.0.5':
     resolution: {integrity: sha512-/kYRxGDLWzHOB7q+wtSUQlFrtcdUccpfy+X+9iMBpHK8QLLhx2wIPYuS5DYtR9Wa/YlZAbIovy7qVdB1Aq6Lyw==}
@@ -523,8 +523,8 @@ packages:
   caniuse-lite@1.0.30001599:
     resolution: {integrity: sha512-LRAQHZ4yT1+f9LemSMeqdMpMxZcc4RMWdj4tiFe3G8tNkWK+E58g+/tzotb5cU6TbcVJLr4fySiAW7XmxQvZQA==}
 
-  caniuse-lite@1.0.30001600:
-    resolution: {integrity: sha512-+2S9/2JFhYmYaDpZvo0lKkfvuKIglrx68MwOBqMGHhQsNkLjB5xtc/TGoEPs+MxjSyN/72qer2g97nzR641mOQ==}
+  caniuse-lite@1.0.30001611:
+    resolution: {integrity: sha512-19NuN1/3PjA3QI8Eki55N8my4LzfkMCRLgCVfrl/slbSAchQfV0+GwjPrK3rq37As4UCLlM/DHajbKkAqbv92Q==}
 
   chalk@4.1.2:
     resolution: {integrity: sha512-oKnbhFyRIXpUuez8iBMmyEa4nbj4IOQyuhc/wy9kY7/WVPcwIO9VA668Pu8RkO7+0G76SLROeyw9CpQ061i4mA==}
@@ -611,8 +611,8 @@ packages:
   eastasianwidth@0.2.0:
     resolution: {integrity: sha512-I88TYZWc9XiYHRQ4/3c5rjjfgkjhLyW2luGIheGERbNQ6OY7yTybanSpDXZa8y7VUP9YmDcYa+eyq4ca7iLqWA==}
 
-  electron-to-chromium@1.4.717:
-    resolution: {integrity: sha512-6Fmg8QkkumNOwuZ/5mIbMU9WI3H2fmn5ajcVya64I5Yr5CcNmO7vcLt0Y7c96DCiMO5/9G+4sI2r6eEvdg1F7A==}
+  electron-to-chromium@1.4.744:
+    resolution: {integrity: sha512-nAGcF0yeKKfrP13LMFr5U1eghfFSvFLg302VUFzWlcjPOnUYd52yU5x6PBYrujhNbc4jYmZFrGZFK+xasaEzVA==}
 
   email-regex@5.0.0:
     resolution: {integrity: sha512-he76Cm8JFxb6OGQHabLBPdsiStgPmJeAEhctmw0uhonUh1pCBsHpI6/rB62s2GNzjBb0YlhIcF/1l9Lp5AfH0Q==}
@@ -1526,8 +1526,8 @@ packages:
       uglify-js:
         optional: true
 
-  terser@5.29.2:
-    resolution: {integrity: sha512-ZiGkhUBIM+7LwkNjXYJq8svgkd+QK3UUr0wJqY4MieaezBSAIPgbSPZyIx0idM6XWK5CMzSWa8MJIzmRcB8Caw==}
+  terser@5.30.3:
+    resolution: {integrity: sha512-STdUgOUx8rLbMGO9IOwHLpCqolkDITFFQSMYYwKE1N2lY6MVSaeoi10z/EhWxRc6ybqoVmKSkhKYH/XUpl7vSA==}
     engines: {node: '>=10'}
     hasBin: true
 
@@ -1788,7 +1788,7 @@ snapshots:
 
   '@livekit/components-styles@1.0.11': {}
 
-  '@livekit/krisp-noise-filter@0.2.1(livekit-client@2.1.0)':
+  '@livekit/krisp-noise-filter@0.2.2(livekit-client@2.1.0)':
     dependencies:
       livekit-client: 2.1.0
 
@@ -1860,10 +1860,10 @@ snapshots:
 
   '@types/eslint-scope@3.7.7':
     dependencies:
-      '@types/eslint': 8.56.6
+      '@types/eslint': 8.56.10
       '@types/estree': 1.0.5
 
-  '@types/eslint@8.56.6':
+  '@types/eslint@8.56.10':
     dependencies:
       '@types/estree': 1.0.5
       '@types/json-schema': 7.0.15
@@ -2135,8 +2135,8 @@ snapshots:
 
   browserslist@4.23.0:
     dependencies:
-      caniuse-lite: 1.0.30001600
-      electron-to-chromium: 1.4.717
+      caniuse-lite: 1.0.30001611
+      electron-to-chromium: 1.4.744
       node-releases: 2.0.14
       update-browserslist-db: 1.0.13(browserslist@4.23.0)
 
@@ -2165,7 +2165,7 @@ snapshots:
 
   caniuse-lite@1.0.30001599: {}
 
-  caniuse-lite@1.0.30001600: {}
+  caniuse-lite@1.0.30001611: {}
 
   chalk@4.1.2:
     dependencies:
@@ -2236,7 +2236,7 @@ snapshots:
 
   eastasianwidth@0.2.0: {}
 
-  electron-to-chromium@1.4.717: {}
+  electron-to-chromium@1.4.744: {}
 
   email-regex@5.0.0: {}
 
@@ -3309,10 +3309,10 @@ snapshots:
       jest-worker: 27.5.1
       schema-utils: 3.3.0
       serialize-javascript: 6.0.2
-      terser: 5.29.2
+      terser: 5.30.3
       webpack: 5.91.0
 
-  terser@5.29.2:
+  terser@5.30.3:
     dependencies:
       '@jridgewell/source-map': 0.3.6
       acorn: 8.11.3
