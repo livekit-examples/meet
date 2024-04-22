@@ -10,7 +10,7 @@ importers:
     dependencies:
       '@datadog/browser-logs':
         specifier: ^5.10.0
-        version: 5.13.0
+        version: 5.15.0
       '@livekit/components-react':
         specifier: 2.1.2
         version: 2.1.2(@livekit/protocol@1.13.0)(livekit-client@2.1.0)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(tslib@2.6.2)
@@ -77,13 +77,13 @@ packages:
   '@bufbuild/protobuf@1.7.2':
     resolution: {integrity: sha512-i5GE2Dk5ekdlK1TR7SugY4LWRrKSfb5T1Qn4unpIMbfxoeGKERKQ59HG3iYewacGD10SR7UzevfPnh6my4tNmQ==}
 
-  '@datadog/browser-core@5.13.0':
-    resolution: {integrity: sha512-5WciDj4IqpfaFZViJNXxovmDQiwoPZ/UWq4WMW7YafG22XNjrc6XbL5PWuAaG6fqcYFW0peE8g56ji5O78vMSA==}
+  '@datadog/browser-core@5.15.0':
+    resolution: {integrity: sha512-vZeHK0aEqyQqJOal8skaGrGi788Tt+MSP+pH/+J56/Bj4tjLggeIw2SPN+j7XSS+3Q5atk1ZRoEMwvHVV7/s7Q==}
 
-  '@datadog/browser-logs@5.13.0':
-    resolution: {integrity: sha512-eCowmFRigKorj8edLkG361B/GVZ6sUbgo/wpdi8m/c6IkiLlDzY0D2IEJU1Q9Zbcct7D/LXHTNcffP1NMgqSqg==}
+  '@datadog/browser-logs@5.15.0':
+    resolution: {integrity: sha512-H+ZXAKSVYgcNf7ntiyoYYWlp36s71LTctkRzK/HpWubwmud2yy/hoeMhY0hWV32qSPEGXrlcxOyw6G8IhVEDsQ==}
     peerDependencies:
-      '@datadog/browser-rum': 5.13.0
+      '@datadog/browser-rum': 5.15.0
     peerDependenciesMeta:
       '@datadog/browser-rum':
         optional: true
@@ -526,6 +526,9 @@ packages:
   caniuse-lite@1.0.30001611:
     resolution: {integrity: sha512-19NuN1/3PjA3QI8Eki55N8my4LzfkMCRLgCVfrl/slbSAchQfV0+GwjPrK3rq37As4UCLlM/DHajbKkAqbv92Q==}
 
+  caniuse-lite@1.0.30001612:
+    resolution: {integrity: sha512-lFgnZ07UhaCcsSZgWW0K5j4e69dK1u/ltrL9lTUiFOwNHs12S3UMIEYgBV0Z6C6hRDev7iRnMzzYmKabYdXF9g==}
+
   chalk@4.1.2:
     resolution: {integrity: sha512-oKnbhFyRIXpUuez8iBMmyEa4nbj4IOQyuhc/wy9kY7/WVPcwIO9VA668Pu8RkO7+0G76SLROeyw9CpQ061i4mA==}
     engines: {node: '>=10'}
@@ -611,8 +614,8 @@ packages:
   eastasianwidth@0.2.0:
     resolution: {integrity: sha512-I88TYZWc9XiYHRQ4/3c5rjjfgkjhLyW2luGIheGERbNQ6OY7yTybanSpDXZa8y7VUP9YmDcYa+eyq4ca7iLqWA==}
 
-  electron-to-chromium@1.4.744:
-    resolution: {integrity: sha512-nAGcF0yeKKfrP13LMFr5U1eghfFSvFLg302VUFzWlcjPOnUYd52yU5x6PBYrujhNbc4jYmZFrGZFK+xasaEzVA==}
+  electron-to-chromium@1.4.745:
+    resolution: {integrity: sha512-tRbzkaRI5gbUn5DEvF0dV4TQbMZ5CLkWeTAXmpC9IrYT+GE+x76i9p+o3RJ5l9XmdQlI1pPhVtE9uNcJJ0G0EA==}
 
   email-regex@5.0.0:
     resolution: {integrity: sha512-he76Cm8JFxb6OGQHabLBPdsiStgPmJeAEhctmw0uhonUh1pCBsHpI6/rB62s2GNzjBb0YlhIcF/1l9Lp5AfH0Q==}
@@ -1684,11 +1687,11 @@ snapshots:
 
   '@bufbuild/protobuf@1.7.2': {}
 
-  '@datadog/browser-core@5.13.0': {}
+  '@datadog/browser-core@5.15.0': {}
 
-  '@datadog/browser-logs@5.13.0':
+  '@datadog/browser-logs@5.15.0':
     dependencies:
-      '@datadog/browser-core': 5.13.0
+      '@datadog/browser-core': 5.15.0
 
   '@eslint-community/eslint-utils@4.4.0(eslint@8.57.0)':
     dependencies:
@@ -2141,8 +2144,8 @@ snapshots:
 
   browserslist@4.23.0:
     dependencies:
-      caniuse-lite: 1.0.30001611
-      electron-to-chromium: 1.4.744
+      caniuse-lite: 1.0.30001612
+      electron-to-chromium: 1.4.745
       node-releases: 2.0.14
       update-browserslist-db: 1.0.13(browserslist@4.23.0)
 
@@ -2170,6 +2173,8 @@ snapshots:
   camelcase@6.3.0: {}
 
   caniuse-lite@1.0.30001611: {}
+
+  caniuse-lite@1.0.30001612: {}
 
   chalk@4.1.2:
     dependencies:
@@ -2240,7 +2245,7 @@ snapshots:
 
   eastasianwidth@0.2.0: {}
 
-  electron-to-chromium@1.4.744: {}
+  electron-to-chromium@1.4.745: {}
 
   email-regex@5.0.0: {}
 
