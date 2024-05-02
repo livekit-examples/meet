@@ -24,8 +24,8 @@ importers:
         specifier: 2.1.1
         version: 2.1.1
       livekit-server-sdk:
-        specifier: 2.2.0
-        version: 2.2.0
+        specifier: 2.3.0
+        version: 2.3.0
       next:
         specifier: 14.2.2
         version: 14.2.2(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
@@ -1088,8 +1088,8 @@ packages:
   livekit-client@2.1.1:
     resolution: {integrity: sha512-ffnXHQt210GPJ9sR846o7g0lCg/3TJqZxdu55mzQFS1YXGgn9PYKGzcAhKtuOsQ0NEkkn1zKQ0ABHBt7iADiqg==}
 
-  livekit-server-sdk@2.2.0:
-    resolution: {integrity: sha512-FbmEav8Jr5VWQhuzt4JHJAHcBrdSiBIGBEmqxWq2Gl7i7XlAOUtNMuvgHis++mhTnw5jmbvfkZLulDMK1z48zg==}
+  livekit-server-sdk@2.3.0:
+    resolution: {integrity: sha512-JYOM4YXGctd4fcjr1mINcmDDV5PvCIY5isNVB1Ej1kTrNwQcx7NVWTj79kDAOaMNt+CbMb3XcHEo5Hgub9BmAQ==}
     engines: {node: '>=19'}
 
   loader-runner@4.3.0:
@@ -2884,7 +2884,7 @@ snapshots:
       typed-emitter: 2.1.0
       webrtc-adapter: 8.2.3
 
-  livekit-server-sdk@2.2.0:
+  livekit-server-sdk@2.3.0:
     dependencies:
       '@livekit/protocol': 1.14.0
       camelcase-keys: 9.1.3
