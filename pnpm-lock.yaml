@@ -12,17 +12,17 @@ importers:
         specifier: ^5.10.0
         version: 5.15.0
       '@livekit/components-react':
-        specifier: 2.2.0
-        version: 2.2.0(@livekit/protocol@1.14.0)(livekit-client@2.1.1)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(tslib@2.6.2)
+        specifier: 2.2.1
+        version: 2.2.1(@livekit/protocol@1.15.0)(livekit-client@2.1.2)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(tslib@2.6.2)
       '@livekit/components-styles':
-        specifier: 1.0.11
-        version: 1.0.11
+        specifier: 1.0.12
+        version: 1.0.12
       '@livekit/krisp-noise-filter':
         specifier: ^0.2.0
-        version: 0.2.2(livekit-client@2.1.1)
+        version: 0.2.2(livekit-client@2.1.2)
       livekit-client:
-        specifier: 2.1.1
-        version: 2.1.1
+        specifier: 2.1.2
+        version: 2.1.2
       livekit-server-sdk:
         specifier: 2.3.0
         version: 2.3.0
@@ -159,8 +159,8 @@ packages:
       livekit-client: ^2.1.0
       tslib: ^2.6.2
 
-  '@livekit/components-react@2.2.0':
-    resolution: {integrity: sha512-TDa2YNBphkdf2dz85pEZs1UBl8wD/LHFeYupNoTqjtlLVlTXpr09Buv3/eegQFJhXoDSK6fAYqKZ4U/oYydv/w==}
+  '@livekit/components-react@2.2.1':
+    resolution: {integrity: sha512-iE8PPZsz5HO83n9Obc4A1oNlDGdBNrTQWESlW1M1ZF+/gk3Sbpkaozp/3yuqz+tDwKuH3MPJON2C5BT5tlBfqg==}
     engines: {node: '>=18'}
     peerDependencies:
       '@livekit/protocol': ^1.12.0
@@ -169,8 +169,8 @@ packages:
       react-dom: '>=18'
       tslib: ^2.6.2
 
-  '@livekit/components-styles@1.0.11':
-    resolution: {integrity: sha512-zRvy87VPvpSW8IjdujYaHRR5EQBPIBno5+A/WfUMWq7DjKlIR9QTQAh3wjdNfWqaV6SkB1KEAC/QxADUZb4j9g==}
+  '@livekit/components-styles@1.0.12':
+    resolution: {integrity: sha512-Hsxkfq240w0tMPtkQTHQotpkYfIY4lhP2pzegvOIIV/nYxj8LeRYypUjxJpFw3s6jQcV/WQS7oCYmFQdy98Jtw==}
     engines: {node: '>=18'}
 
   '@livekit/krisp-noise-filter@0.2.2':
@@ -178,11 +178,11 @@ packages:
     peerDependencies:
       livekit-client: ^2.0.8
 
-  '@livekit/protocol@1.13.0':
-    resolution: {integrity: sha512-M3U36VgRfb0VutWG6pnozXusL+mkYstbCctTLUyCIyye36Ztv1wA9zYpyYvz7VnsgmCn+g/g0eB2rnAkTVwcnA==}
-
   '@livekit/protocol@1.14.0':
     resolution: {integrity: sha512-Fd/xVht+ew+rEFu54Rsq8MNqCQV/ZcJFG0WU264p5yL24Ory+AV9hXt/4MUzWXvPXTLIxovJdJJynYKTBJO6qw==}
+
+  '@livekit/protocol@1.15.0':
+    resolution: {integrity: sha512-KVjM1odPzEWkXB4QQyz2qfiecHo74wLeb8YDhaX/cNnxUk0H1L35H0gVgLA8Y6fXkF3ayOHQnXO9V3GzulMyXw==}
 
   '@next/env@14.2.2':
     resolution: {integrity: sha512-sk72qRfM1Q90XZWYRoJKu/UWlTgihrASiYw/scb15u+tyzcze3bOuJ/UV6TBOQEeUaxOkRqGeuGUdiiuxc5oqw==}
@@ -1085,8 +1085,8 @@ packages:
     resolution: {integrity: sha512-+bT2uH4E5LGE7h/n3evcS/sQlJXCpIp6ym8OWJ5eV6+67Dsql/LaaT7qJBAt2rzfoa/5QBGBhxDix1dMt2kQKQ==}
     engines: {node: '>= 0.8.0'}
 
-  livekit-client@2.1.1:
-    resolution: {integrity: sha512-ffnXHQt210GPJ9sR846o7g0lCg/3TJqZxdu55mzQFS1YXGgn9PYKGzcAhKtuOsQ0NEkkn1zKQ0ABHBt7iADiqg==}
+  livekit-client@2.1.2:
+    resolution: {integrity: sha512-tgWIcfKCy7FuUhc29cVSHFFricccJpWeyaxKsKZEbrCIJW/6QzPm44IqojRMv9S6AHAGIAbL5vkWD36gpmPxGA==}
 
   livekit-server-sdk@2.3.0:
     resolution: {integrity: sha512-JYOM4YXGctd4fcjr1mINcmDDV5PvCIY5isNVB1Ej1kTrNwQcx7NVWTj79kDAOaMNt+CbMb3XcHEo5Hgub9BmAQ==}
@@ -1770,39 +1770,39 @@ snapshots:
       '@jridgewell/resolve-uri': 3.1.2
       '@jridgewell/sourcemap-codec': 1.4.15
 
-  '@livekit/components-core@0.10.0(@livekit/protocol@1.14.0)(livekit-client@2.1.1)(tslib@2.6.2)':
+  '@livekit/components-core@0.10.0(@livekit/protocol@1.15.0)(livekit-client@2.1.2)(tslib@2.6.2)':
     dependencies:
       '@floating-ui/dom': 1.6.3
-      '@livekit/protocol': 1.14.0
+      '@livekit/protocol': 1.15.0
       email-regex: 5.0.0
-      livekit-client: 2.1.1
+      livekit-client: 2.1.2
       loglevel: 1.9.1
       rxjs: 7.8.1
       tslib: 2.6.2
 
-  '@livekit/components-react@2.2.0(@livekit/protocol@1.14.0)(livekit-client@2.1.1)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(tslib@2.6.2)':
+  '@livekit/components-react@2.2.1(@livekit/protocol@1.15.0)(livekit-client@2.1.2)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(tslib@2.6.2)':
     dependencies:
-      '@livekit/components-core': 0.10.0(@livekit/protocol@1.14.0)(livekit-client@2.1.1)(tslib@2.6.2)
-      '@livekit/protocol': 1.14.0
+      '@livekit/components-core': 0.10.0(@livekit/protocol@1.15.0)(livekit-client@2.1.2)(tslib@2.6.2)
+      '@livekit/protocol': 1.15.0
       '@react-hook/latest': 1.0.3(react@18.2.0)
       clsx: 2.1.0
-      livekit-client: 2.1.1
+      livekit-client: 2.1.2
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
       tslib: 2.6.2
       usehooks-ts: 2.16.0(react@18.2.0)
 
-  '@livekit/components-styles@1.0.11': {}
+  '@livekit/components-styles@1.0.12': {}
 
-  '@livekit/krisp-noise-filter@0.2.2(livekit-client@2.1.1)':
+  '@livekit/krisp-noise-filter@0.2.2(livekit-client@2.1.2)':
     dependencies:
-      livekit-client: 2.1.1
+      livekit-client: 2.1.2
 
-  '@livekit/protocol@1.13.0':
+  '@livekit/protocol@1.14.0':
     dependencies:
       '@bufbuild/protobuf': 1.7.2
 
-  '@livekit/protocol@1.14.0':
+  '@livekit/protocol@1.15.0':
     dependencies:
       '@bufbuild/protobuf': 1.7.2
 
@@ -2873,9 +2873,9 @@ snapshots:
       prelude-ls: 1.2.1
       type-check: 0.4.0
 
-  livekit-client@2.1.1:
+  livekit-client@2.1.2:
     dependencies:
-      '@livekit/protocol': 1.13.0
+      '@livekit/protocol': 1.15.0
       events: 3.3.0
       loglevel: 1.9.1
       sdp-transform: 2.14.2
