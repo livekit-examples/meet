@@ -13,7 +13,7 @@
     "@livekit/components-react": "2.2.1",
     "@livekit/components-styles": "1.0.12",
     "@livekit/krisp-noise-filter": "^0.2.0",
-    "livekit-client": "2.1.2",
+    "livekit-client": "2.1.3",
     "livekit-server-sdk": "2.3.0",
     "next": "14.2.2",
     "next-seo": "^6.0.0",
