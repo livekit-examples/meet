@@ -12,8 +12,8 @@ importers:
         specifier: ^5.10.0
         version: 5.15.0
       '@livekit/components-react':
-        specifier: 2.2.1
-        version: 2.2.1(@livekit/protocol@1.16.0)(livekit-client@2.1.5)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(tslib@2.6.2)
+        specifier: 2.3.0
+        version: 2.3.0(@livekit/protocol@1.16.0)(livekit-client@2.1.5)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(tslib@2.6.2)
       '@livekit/components-styles':
         specifier: 1.0.12
         version: 1.0.12
@@ -109,8 +109,8 @@ packages:
   '@floating-ui/core@1.6.0':
     resolution: {integrity: sha512-PcF++MykgmTj3CIyOQbKA/hDzOAiqI3mhuoN44WRCopIs1sgoDoU4oty4Jtqaj/y3oDU6fnVSm4QG0a3t5i0+g==}
 
-  '@floating-ui/dom@1.6.3':
-    resolution: {integrity: sha512-RnDthu3mzPlQ31Ss/BTwQ1zjzIhr3lk1gZB1OC56h/1vEtaXkESrOqL5fQVMfXpwGtRwX+YsZBdyHtJMQnkArw==}
+  '@floating-ui/dom@1.6.4':
+    resolution: {integrity: sha512-0G8R+zOvQsAG1pg2Q99P21jiqxqGBW1iRe/iXHsBRBxnpXKFI8QwbB4x5KmYLggNO5m34IQgOIu9SCRfR/WWiQ==}
 
   '@floating-ui/utils@0.2.1':
     resolution: {integrity: sha512-9TANp6GPoMtYzQdt54kfAyMmz1+osLlXdg2ENroU7zzrtflTLrrC/lgrIfaSe+Wu0b89GKccT7vxXA0MoAIO+Q==}
@@ -155,20 +155,19 @@ packages:
   '@jridgewell/trace-mapping@0.3.25':
     resolution: {integrity: sha512-vNk6aEwybGtawWmy/PzwnGDOjCkLWSD2wqvjGGAgOAwCGWySYXfYoxt00IJkTF+8Lb57DwOb3Aa0o9CApepiYQ==}
 
-  '@livekit/components-core@0.10.0':
-    resolution: {integrity: sha512-TSsIG2BRLABT5FP+5sueZgkByGYyFhv3UTb8fneWchvQRBHtiU9s4FF8SIoAw9z3znhwp1tKaJyuIyKp7k0Juw==}
+  '@livekit/components-core@0.10.1':
+    resolution: {integrity: sha512-8nX0Iq6DlPuCod6PbUBPv6VbbTThS72s0rnyuJfVPIoQPd9hvefjIoXgk+zmsgv4AMqzaV5xZhNWtBVvM7Eq7w==}
     engines: {node: '>=18'}
     peerDependencies:
-      '@livekit/protocol': ^1.12.0
-      livekit-client: ^2.1.0
+      '@livekit/protocol': ^1.16.0
+      livekit-client: ^2.1.5
       tslib: ^2.6.2
 
-  '@livekit/components-react@2.2.1':
-    resolution: {integrity: sha512-iE8PPZsz5HO83n9Obc4A1oNlDGdBNrTQWESlW1M1ZF+/gk3Sbpkaozp/3yuqz+tDwKuH3MPJON2C5BT5tlBfqg==}
+  '@livekit/components-react@2.3.0':
+    resolution: {integrity: sha512-MG1LpeyPNJJePfCT6VibJQJpyD6iIO657+DljfrXgmt9qVRoJvfSRUqptl7B0CKtDfwe5Oj8Vs3UdtwC+GH24Q==}
     engines: {node: '>=18'}
     peerDependencies:
-      '@livekit/protocol': ^1.12.0
-      livekit-client: ^2.1.0
+      livekit-client: ^2.1.5
       react: '>=18'
       react-dom: '>=18'
       tslib: ^2.6.2
@@ -536,8 +535,8 @@ packages:
   client-only@0.0.1:
     resolution: {integrity: sha512-IV3Ou0jSMzZrd3pZ48nLkT9DA7Ag1pnPzaiQhpW7c3RbcqqzvzzVu+L8gfqMp/8IM2MQtSiqaCxrrcfu8I8rMA==}
 
-  clsx@2.1.0:
-    resolution: {integrity: sha512-m3iNNWpd9rl3jvvcBnu70ylMdrXt8Vlq4HYadnU5fwcOtvkSQWPmj7amUcDT2qYI7risszBjI5AUIUox9D16pg==}
+  clsx@2.1.1:
+    resolution: {integrity: sha512-eYm0QWBtUrBWZWG0d386OGAw16Z995PiOVo2B7bjWSbHedGl5e0ZWaq65kOGgUSNesEIDkB9ISbTg/JK9dhCZA==}
     engines: {node: '>=6'}
 
   color-convert@2.0.1:
@@ -1683,7 +1682,7 @@ snapshots:
     dependencies:
       '@floating-ui/utils': 0.2.1
 
-  '@floating-ui/dom@1.6.3':
+  '@floating-ui/dom@1.6.4':
     dependencies:
       '@floating-ui/core': 1.6.0
       '@floating-ui/utils': 0.2.1
@@ -1735,9 +1734,9 @@ snapshots:
       '@jridgewell/resolve-uri': 3.1.2
       '@jridgewell/sourcemap-codec': 1.4.15
 
-  '@livekit/components-core@0.10.0(@livekit/protocol@1.16.0)(livekit-client@2.1.5)(tslib@2.6.2)':
+  '@livekit/components-core@0.10.1(@livekit/protocol@1.16.0)(livekit-client@2.1.5)(tslib@2.6.2)':
     dependencies:
-      '@floating-ui/dom': 1.6.3
+      '@floating-ui/dom': 1.6.4
       '@livekit/protocol': 1.16.0
       email-regex: 5.0.0
       livekit-client: 2.1.5
@@ -1745,17 +1744,18 @@ snapshots:
       rxjs: 7.8.1
       tslib: 2.6.2
 
-  '@livekit/components-react@2.2.1(@livekit/protocol@1.16.0)(livekit-client@2.1.5)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(tslib@2.6.2)':
+  '@livekit/components-react@2.3.0(@livekit/protocol@1.16.0)(livekit-client@2.1.5)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(tslib@2.6.2)':
     dependencies:
-      '@livekit/components-core': 0.10.0(@livekit/protocol@1.16.0)(livekit-client@2.1.5)(tslib@2.6.2)
-      '@livekit/protocol': 1.16.0
+      '@livekit/components-core': 0.10.1(@livekit/protocol@1.16.0)(livekit-client@2.1.5)(tslib@2.6.2)
       '@react-hook/latest': 1.0.3(react@18.2.0)
-      clsx: 2.1.0
+      clsx: 2.1.1
       livekit-client: 2.1.5
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
       tslib: 2.6.2
       usehooks-ts: 2.16.0(react@18.2.0)
+    transitivePeerDependencies:
+      - '@livekit/protocol'
 
   '@livekit/components-styles@1.0.12': {}
 
@@ -2146,7 +2146,7 @@ snapshots:
 
   client-only@0.0.1: {}
 
-  clsx@2.1.0: {}
+  clsx@2.1.1: {}
 
   color-convert@2.0.1:
     dependencies:
