@@ -13,16 +13,16 @@ importers:
         version: 5.15.0
       '@livekit/components-react':
         specifier: 2.3.1
-        version: 2.3.1(@livekit/protocol@1.16.0)(livekit-client@2.1.5)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(tslib@2.6.2)
+        version: 2.3.1(@livekit/protocol@1.16.0)(livekit-client@2.2.0)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(tslib@2.6.2)
       '@livekit/components-styles':
         specifier: 1.0.12
         version: 1.0.12
       '@livekit/krisp-noise-filter':
         specifier: ^0.2.0
-        version: 0.2.2(livekit-client@2.1.5)
+        version: 0.2.2(livekit-client@2.2.0)
       livekit-client:
-        specifier: 2.1.5
-        version: 2.1.5
+        specifier: 2.2.0
+        version: 2.2.0
       livekit-server-sdk:
         specifier: 2.3.0
         version: 2.3.0
@@ -1066,8 +1066,8 @@ packages:
     resolution: {integrity: sha512-+bT2uH4E5LGE7h/n3evcS/sQlJXCpIp6ym8OWJ5eV6+67Dsql/LaaT7qJBAt2rzfoa/5QBGBhxDix1dMt2kQKQ==}
     engines: {node: '>= 0.8.0'}
 
-  livekit-client@2.1.5:
-    resolution: {integrity: sha512-8sc1ltfKRjy51Q/V/SaDpjptXBamm9LXhixKBYdXdQFZdew4hgqTGYlHIyee/IM9QSqAXk1W+uCtVfkmxPD1EA==}
+  livekit-client@2.2.0:
+    resolution: {integrity: sha512-Iuk17l269P7SxvE3Gs3ExwoW3+lrz3BfiXOU7gTf/GqansxPx7Y+rfkLHWSBmvmAXOt+Rld4EFEpk8ARSagfnQ==}
 
   livekit-server-sdk@2.3.0:
     resolution: {integrity: sha512-JYOM4YXGctd4fcjr1mINcmDDV5PvCIY5isNVB1Ej1kTrNwQcx7NVWTj79kDAOaMNt+CbMb3XcHEo5Hgub9BmAQ==}
@@ -1735,23 +1735,23 @@ snapshots:
       '@jridgewell/resolve-uri': 3.1.2
       '@jridgewell/sourcemap-codec': 1.4.15
 
-  '@livekit/components-core@0.10.2(@livekit/protocol@1.16.0)(livekit-client@2.1.5)(tslib@2.6.2)':
+  '@livekit/components-core@0.10.2(@livekit/protocol@1.16.0)(livekit-client@2.2.0)(tslib@2.6.2)':
     dependencies:
       '@floating-ui/dom': 1.6.4
       '@livekit/protocol': 1.16.0
       email-regex: 5.0.0
-      livekit-client: 2.1.5
+      livekit-client: 2.2.0
       loglevel: 1.9.1
       rxjs: 7.8.1
       tslib: 2.6.2
 
-  '@livekit/components-react@2.3.1(@livekit/protocol@1.16.0)(livekit-client@2.1.5)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(tslib@2.6.2)':
+  '@livekit/components-react@2.3.1(@livekit/protocol@1.16.0)(livekit-client@2.2.0)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(tslib@2.6.2)':
     dependencies:
-      '@livekit/components-core': 0.10.2(@livekit/protocol@1.16.0)(livekit-client@2.1.5)(tslib@2.6.2)
+      '@livekit/components-core': 0.10.2(@livekit/protocol@1.16.0)(livekit-client@2.2.0)(tslib@2.6.2)
       '@livekit/protocol': 1.16.0
       '@react-hook/latest': 1.0.3(react@18.2.0)
       clsx: 2.1.1
-      livekit-client: 2.1.5
+      livekit-client: 2.2.0
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
       tslib: 2.6.2
@@ -1759,9 +1759,9 @@ snapshots:
 
   '@livekit/components-styles@1.0.12': {}
 
-  '@livekit/krisp-noise-filter@0.2.2(livekit-client@2.1.5)':
+  '@livekit/krisp-noise-filter@0.2.2(livekit-client@2.2.0)':
     dependencies:
-      livekit-client: 2.1.5
+      livekit-client: 2.2.0
 
   '@livekit/protocol@1.14.0':
     dependencies:
@@ -2303,7 +2303,7 @@ snapshots:
       '@typescript-eslint/parser': 6.10.0(eslint@9.2.0)(typescript@5.4.5)
       eslint: 9.2.0
       eslint-import-resolver-node: 0.3.9
-      eslint-import-resolver-typescript: 3.6.1(@typescript-eslint/parser@6.10.0(eslint@9.2.0)(typescript@5.4.5))(eslint-import-resolver-node@0.3.9)(eslint-plugin-import@2.29.0)(eslint@9.2.0)
+      eslint-import-resolver-typescript: 3.6.1(@typescript-eslint/parser@6.10.0(eslint@9.2.0)(typescript@5.4.5))(eslint-import-resolver-node@0.3.9)(eslint-plugin-import@2.29.0(eslint@9.2.0))(eslint@9.2.0)
       eslint-plugin-import: 2.29.0(@typescript-eslint/parser@6.10.0(eslint@9.2.0)(typescript@5.4.5))(eslint-import-resolver-typescript@3.6.1)(eslint@9.2.0)
       eslint-plugin-jsx-a11y: 6.8.0(eslint@9.2.0)
       eslint-plugin-react: 7.33.2(eslint@9.2.0)
@@ -2322,12 +2322,12 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  eslint-import-resolver-typescript@3.6.1(@typescript-eslint/parser@6.10.0(eslint@9.2.0)(typescript@5.4.5))(eslint-import-resolver-node@0.3.9)(eslint-plugin-import@2.29.0)(eslint@9.2.0):
+  eslint-import-resolver-typescript@3.6.1(@typescript-eslint/parser@6.10.0(eslint@9.2.0)(typescript@5.4.5))(eslint-import-resolver-node@0.3.9)(eslint-plugin-import@2.29.0(eslint@9.2.0))(eslint@9.2.0):
     dependencies:
       debug: 4.3.4
       enhanced-resolve: 5.16.0
       eslint: 9.2.0
-      eslint-module-utils: 2.8.0(@typescript-eslint/parser@6.10.0(eslint@9.2.0)(typescript@5.4.5))(eslint-import-resolver-node@0.3.9)(eslint-import-resolver-typescript@3.6.1(@typescript-eslint/parser@6.10.0(eslint@9.2.0)(typescript@5.4.5))(eslint-import-resolver-node@0.3.9)(eslint-plugin-import@2.29.0)(eslint@9.2.0))(eslint@9.2.0)
+      eslint-module-utils: 2.8.0(@typescript-eslint/parser@6.10.0(eslint@9.2.0)(typescript@5.4.5))(eslint-import-resolver-node@0.3.9)(eslint-import-resolver-typescript@3.6.1(@typescript-eslint/parser@6.10.0(eslint@9.2.0)(typescript@5.4.5))(eslint-import-resolver-node@0.3.9)(eslint-plugin-import@2.29.0(eslint@9.2.0))(eslint@9.2.0))(eslint@9.2.0)
       eslint-plugin-import: 2.29.0(@typescript-eslint/parser@6.10.0(eslint@9.2.0)(typescript@5.4.5))(eslint-import-resolver-typescript@3.6.1)(eslint@9.2.0)
       fast-glob: 3.3.2
       get-tsconfig: 4.7.2
@@ -2339,14 +2339,14 @@ snapshots:
       - eslint-import-resolver-webpack
       - supports-color
 
-  eslint-module-utils@2.8.0(@typescript-eslint/parser@6.10.0(eslint@9.2.0)(typescript@5.4.5))(eslint-import-resolver-node@0.3.9)(eslint-import-resolver-typescript@3.6.1(@typescript-eslint/parser@6.10.0(eslint@9.2.0)(typescript@5.4.5))(eslint-import-resolver-node@0.3.9)(eslint-plugin-import@2.29.0)(eslint@9.2.0))(eslint@9.2.0):
+  eslint-module-utils@2.8.0(@typescript-eslint/parser@6.10.0(eslint@9.2.0)(typescript@5.4.5))(eslint-import-resolver-node@0.3.9)(eslint-import-resolver-typescript@3.6.1(@typescript-eslint/parser@6.10.0(eslint@9.2.0)(typescript@5.4.5))(eslint-import-resolver-node@0.3.9)(eslint-plugin-import@2.29.0(eslint@9.2.0))(eslint@9.2.0))(eslint@9.2.0):
     dependencies:
       debug: 3.2.7
     optionalDependencies:
       '@typescript-eslint/parser': 6.10.0(eslint@9.2.0)(typescript@5.4.5)
       eslint: 9.2.0
       eslint-import-resolver-node: 0.3.9
-      eslint-import-resolver-typescript: 3.6.1(@typescript-eslint/parser@6.10.0(eslint@9.2.0)(typescript@5.4.5))(eslint-import-resolver-node@0.3.9)(eslint-plugin-import@2.29.0)(eslint@9.2.0)
+      eslint-import-resolver-typescript: 3.6.1(@typescript-eslint/parser@6.10.0(eslint@9.2.0)(typescript@5.4.5))(eslint-import-resolver-node@0.3.9)(eslint-plugin-import@2.29.0(eslint@9.2.0))(eslint@9.2.0)
     transitivePeerDependencies:
       - supports-color
 
@@ -2360,7 +2360,7 @@ snapshots:
       doctrine: 2.1.0
       eslint: 9.2.0
       eslint-import-resolver-node: 0.3.9
-      eslint-module-utils: 2.8.0(@typescript-eslint/parser@6.10.0(eslint@9.2.0)(typescript@5.4.5))(eslint-import-resolver-node@0.3.9)(eslint-import-resolver-typescript@3.6.1(@typescript-eslint/parser@6.10.0(eslint@9.2.0)(typescript@5.4.5))(eslint-import-resolver-node@0.3.9)(eslint-plugin-import@2.29.0)(eslint@9.2.0))(eslint@9.2.0)
+      eslint-module-utils: 2.8.0(@typescript-eslint/parser@6.10.0(eslint@9.2.0)(typescript@5.4.5))(eslint-import-resolver-node@0.3.9)(eslint-import-resolver-typescript@3.6.1(@typescript-eslint/parser@6.10.0(eslint@9.2.0)(typescript@5.4.5))(eslint-import-resolver-node@0.3.9)(eslint-plugin-import@2.29.0(eslint@9.2.0))(eslint@9.2.0))(eslint@9.2.0)
       hasown: 2.0.0
       is-core-module: 2.13.1
       is-glob: 4.0.3
@@ -2805,7 +2805,7 @@ snapshots:
       prelude-ls: 1.2.1
       type-check: 0.4.0
 
-  livekit-client@2.1.5:
+  livekit-client@2.2.0:
     dependencies:
       '@livekit/protocol': 1.16.0
       events: 3.3.0
