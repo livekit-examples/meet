@@ -6,6 +6,7 @@ import {
   useLocalParticipant,
   MediaDeviceMenu,
   TrackToggle,
+  useRoomContext,
 } from '@livekit/components-react';
 import styles from '../styles/SettingsMenu.module.css';
 
@@ -19,10 +20,11 @@ export interface SettingsMenuProps extends React.HTMLAttributes<HTMLDivElement> 
  */
 export function SettingsMenu(props: SettingsMenuProps) {
   const layoutContext = useMaybeLayoutContext();
+  const room = useRoomContext();
 
   const settings = React.useMemo(() => {
     return {
-      media: { camera: true, microphone: true, label: 'Media Devices', speaker: false },
+      media: { camera: true, microphone: true, label: 'Media Devices', speaker: true },
       effects: { label: 'Effects' },
     };
   }, []);
@@ -108,8 +110,11 @@ export function SettingsMenu(props: SettingsMenuProps) {
             {settings.media && settings.media.speaker && (
               <>
                 <h3>Speaker & Headphones</h3>
-                <section>
-                  <MediaDeviceMenu kind="audiooutput"></MediaDeviceMenu>
+                <section className="lk-button-group">
+                  <span className="lk-button">Audio Output</span>
+                  <div className="lk-button-group-menu">
+                    <MediaDeviceMenu kind="audiooutput"></MediaDeviceMenu>
+                  </div>
                 </section>
               </>
             )}
