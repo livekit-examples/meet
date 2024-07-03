@@ -12,8 +12,8 @@ importers:
         specifier: ^5.10.0
         version: 5.15.0
       '@livekit/components-react':
-        specifier: 2.3.4
-        version: 2.3.4(@livekit/protocol@1.19.0)(livekit-client@2.3.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(tslib@2.6.2)
+        specifier: 2.3.5
+        version: 2.3.5(@livekit/protocol@1.19.0)(livekit-client@2.3.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(tslib@2.6.2)
       '@livekit/components-styles':
         specifier: 1.0.12
         version: 1.0.12
@@ -156,16 +156,16 @@ packages:
   '@jridgewell/trace-mapping@0.3.25':
     resolution: {integrity: sha512-vNk6aEwybGtawWmy/PzwnGDOjCkLWSD2wqvjGGAgOAwCGWySYXfYoxt00IJkTF+8Lb57DwOb3Aa0o9CApepiYQ==}
 
-  '@livekit/components-core@0.10.4':
-    resolution: {integrity: sha512-YbLvY4pJfnnZjCUqLUO6wPgF/kFN9bLRAERXODWfW9g4xdBCVULWIHNf5fXELRLY4vvvhd3Mthi6TeENkOaXbQ==}
+  '@livekit/components-core@0.10.5':
+    resolution: {integrity: sha512-PCX9GT96NLH5bKKO2CKMd5uIHtoy0zRuJ9FJlYoE/anrN2LM1K8LmD/ntD2RoZ1EZ4iobSef18VlOk48rTBqmQ==}
     engines: {node: '>=18'}
     peerDependencies:
       '@livekit/protocol': ^1.16.0
       livekit-client: ^2.2.0
       tslib: ^2.6.2
 
-  '@livekit/components-react@2.3.4':
-    resolution: {integrity: sha512-MqGqV8WJdxCrgJ0NVBoaDqfIfl6mrJvfybKR+X6TsaJ8q3kFSdxTL6INTawZjRitQE6EPVhaHt3rP+Bye3nfxQ==}
+  '@livekit/components-react@2.3.5':
+    resolution: {integrity: sha512-2QQCNYq+ak4/hHut/HNs08QY2Fi4bsabLrGGPz/OqNRG84znpWweAhpEgJv/uRpCw7sD5haag1SKuH63p2PbDA==}
     engines: {node: '>=18'}
     peerDependencies:
       '@livekit/protocol': ^1.16.0
@@ -1729,7 +1729,7 @@ snapshots:
       '@jridgewell/resolve-uri': 3.1.2
       '@jridgewell/sourcemap-codec': 1.4.15
 
-  '@livekit/components-core@0.10.4(@livekit/protocol@1.19.0)(livekit-client@2.3.1)(tslib@2.6.2)':
+  '@livekit/components-core@0.10.5(@livekit/protocol@1.19.0)(livekit-client@2.3.1)(tslib@2.6.2)':
     dependencies:
       '@floating-ui/dom': 1.6.7
       '@livekit/protocol': 1.19.0
@@ -1738,9 +1738,9 @@ snapshots:
       rxjs: 7.8.1
       tslib: 2.6.2
 
-  '@livekit/components-react@2.3.4(@livekit/protocol@1.19.0)(livekit-client@2.3.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(tslib@2.6.2)':
+  '@livekit/components-react@2.3.5(@livekit/protocol@1.19.0)(livekit-client@2.3.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(tslib@2.6.2)':
     dependencies:
-      '@livekit/components-core': 0.10.4(@livekit/protocol@1.19.0)(livekit-client@2.3.1)(tslib@2.6.2)
+      '@livekit/components-core': 0.10.5(@livekit/protocol@1.19.0)(livekit-client@2.3.1)(tslib@2.6.2)
       '@livekit/protocol': 1.19.0
       '@react-hook/latest': 1.0.3(react@18.3.1)
       clsx: 2.1.1
