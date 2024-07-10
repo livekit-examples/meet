@@ -12,8 +12,8 @@ importers:
         specifier: ^5.10.0
         version: 5.15.0
       '@livekit/components-react':
-        specifier: 2.3.5
-        version: 2.3.5(@livekit/protocol@1.19.0)(livekit-client@2.3.2)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(tslib@2.6.3)
+        specifier: 2.3.6
+        version: 2.3.6(@livekit/protocol@1.19.0)(livekit-client@2.3.2)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(tslib@2.6.3)
       '@livekit/components-styles':
         specifier: 1.0.12
         version: 1.0.12
@@ -164,8 +164,8 @@ packages:
       livekit-client: ^2.2.0
       tslib: ^2.6.2
 
-  '@livekit/components-react@2.3.5':
-    resolution: {integrity: sha512-2QQCNYq+ak4/hHut/HNs08QY2Fi4bsabLrGGPz/OqNRG84znpWweAhpEgJv/uRpCw7sD5haag1SKuH63p2PbDA==}
+  '@livekit/components-react@2.3.6':
+    resolution: {integrity: sha512-dmNKlXMbSxNfErX8m/tFPmKq/KP1wv83AWaTpEtu064EfsCEpBbWm/X/X4ps8pWkH1zfej2/Svhcp+tbXe9DBQ==}
     engines: {node: '>=18'}
     peerDependencies:
       '@livekit/protocol': ^1.16.0
@@ -261,11 +261,6 @@ packages:
   '@pkgjs/parseargs@0.11.0':
     resolution: {integrity: sha512-+1VkjdD0QBLPodGrJUeqarH8VAIvQODIbwh9XpP5Syisf7YoQgsJKPNFoqqLQlu+VQ/tVSshMR6loPMn8U+dPg==}
     engines: {node: '>=14'}
-
-  '@react-hook/latest@1.0.3':
-    resolution: {integrity: sha512-dy6duzl+JnAZcDbNTfmaP3xHiKtbXYOaz3G51MGVljh548Y8MWzTr+PHLOfvpypEVW9zwvl+VyKjbWKEVbV1Rg==}
-    peerDependencies:
-      react: '>=16.8'
 
   '@rushstack/eslint-patch@1.5.1':
     resolution: {integrity: sha512-6i/8UoL0P5y4leBIGzvkZdS85RDMG9y1ihZzmTZQ5LdHUYmZ7pKFoj8X0236s3lusPs1Fa5HTQUpwI+UfTcmeA==}
@@ -1738,11 +1733,10 @@ snapshots:
       rxjs: 7.8.1
       tslib: 2.6.3
 
-  '@livekit/components-react@2.3.5(@livekit/protocol@1.19.0)(livekit-client@2.3.2)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(tslib@2.6.3)':
+  '@livekit/components-react@2.3.6(@livekit/protocol@1.19.0)(livekit-client@2.3.2)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(tslib@2.6.3)':
     dependencies:
       '@livekit/components-core': 0.10.5(@livekit/protocol@1.19.0)(livekit-client@2.3.2)(tslib@2.6.3)
       '@livekit/protocol': 1.19.0
-      '@react-hook/latest': 1.0.3(react@18.3.1)
       clsx: 2.1.1
       livekit-client: 2.3.2
       react: 18.3.1
@@ -1807,10 +1801,6 @@ snapshots:
 
   '@pkgjs/parseargs@0.11.0':
     optional: true
-
-  '@react-hook/latest@1.0.3(react@18.3.1)':
-    dependencies:
-      react: 18.3.1
 
   '@rushstack/eslint-patch@1.5.1': {}
 
