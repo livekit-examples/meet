@@ -6,12 +6,14 @@ import {
   useToken,
   LocalUserChoices,
   PreJoin,
+  useRoomContext,
 } from '@livekit/components-react';
 import {
   DeviceUnsupportedError,
   ExternalE2EEKeyProvider,
   Room,
   RoomConnectOptions,
+  RoomEvent,
   RoomOptions,
   VideoCodec,
   VideoPresets,
@@ -170,6 +172,16 @@ const ActiveRoom = ({ roomName, userChoices, onLeave }: ActiveRoomProps) => {
     };
   }, []);
 
+  const recordingEndpoint = process.env.NEXT_PUBLIC_LK_RECORD_ENDPOINT;
+  const [isRecording, setIsRecording] = React.useState(room.isRecording);
+
+  React.useEffect(() => {
+    room.on(RoomEvent.RecordingStatusChanged, setIsRecording);
+    return () => {
+      room.off(RoomEvent.RecordingStatusChanged, setIsRecording);
+    };
+  });
+
   return (
     <>
       {liveKitUrl && (
@@ -189,6 +201,14 @@ const ActiveRoom = ({ roomName, userChoices, onLeave }: ActiveRoomProps) => {
             }
           />
           <DebugMode />
+          {recordingEndpoint && (
+            <div style={{ position: 'fixed', top: '0' }}>
+              Is Recording: {isRecording ? 'Yes' : 'No'}
+              <button onClick={() => fetch(recordingEndpoint + `?roomName=${roomName}`)}>
+                Record Meeting
+              </button>
+            </div>
+          )}
         </LiveKitRoom>
       )}
     </>
