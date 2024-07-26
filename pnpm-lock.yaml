@@ -12,8 +12,8 @@ importers:
         specifier: ^5.10.0
         version: 5.15.0
       '@livekit/components-react':
-        specifier: 2.4.0
-        version: 2.4.0(@livekit/protocol@1.19.1)(livekit-client@2.4.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(tslib@2.6.3)
+        specifier: 2.4.1
+        version: 2.4.1(@livekit/protocol@1.19.1)(livekit-client@2.4.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(tslib@2.6.3)
       '@livekit/components-styles':
         specifier: 1.0.12
         version: 1.0.12
@@ -117,11 +117,11 @@ packages:
   '@floating-ui/core@1.6.0':
     resolution: {integrity: sha512-PcF++MykgmTj3CIyOQbKA/hDzOAiqI3mhuoN44WRCopIs1sgoDoU4oty4Jtqaj/y3oDU6fnVSm4QG0a3t5i0+g==}
 
-  '@floating-ui/dom@1.6.7':
-    resolution: {integrity: sha512-wmVfPG5o2xnKDU4jx/m4w5qva9FWHcnZ8BvzEe90D/RpwsJaTAVYPEPdQ8sbr/N8zZTAHlZUTQdqg8ZUbzHmng==}
+  '@floating-ui/dom@1.6.8':
+    resolution: {integrity: sha512-kx62rP19VZ767Q653wsP1XZCGIirkE09E0QUGNYTM/ttbbQHqcGPdSfWFxUyyNLc/W6aoJRBajOSXhP6GXjC0Q==}
 
-  '@floating-ui/utils@0.2.4':
-    resolution: {integrity: sha512-dWO2pw8hhi+WrXq1YJy2yCuWoL20PddgGaqTgVe4cOS9Q6qklXCiA1tJEqX6BEwRNSCP84/afac9hd4MS+zEUA==}
+  '@floating-ui/utils@0.2.5':
+    resolution: {integrity: sha512-sTcG+QZ6fdEUObICavU+aB3Mp8HY4n14wYHdxK4fXjPmv3PXZZeY5RaguJmGyeH/CJQhX3fqKUtS4qc1LoHwhQ==}
 
   '@humanwhocodes/module-importer@1.0.1':
     resolution: {integrity: sha512-bxveV4V8v5Yb4ncFTT3rPSgZBOpCkjfK0y4oVVVJwIuDVBRMDXrPyXRL988i5ap9m9bnyEEjWfm5WkBmtffLfA==}
@@ -156,16 +156,16 @@ packages:
   '@jridgewell/trace-mapping@0.3.25':
     resolution: {integrity: sha512-vNk6aEwybGtawWmy/PzwnGDOjCkLWSD2wqvjGGAgOAwCGWySYXfYoxt00IJkTF+8Lb57DwOb3Aa0o9CApepiYQ==}
 
-  '@livekit/components-core@0.11.0':
-    resolution: {integrity: sha512-ujADJPjsfqNRl0aNZF+1AeO4nCXaIy1qPIOO6DiFqzgu+IT/q5iDP/zzIy8sVkJ4Xldx/04dk9lcWQwnJBeuYQ==}
+  '@livekit/components-core@0.11.1':
+    resolution: {integrity: sha512-OVaRorlSzhXf9LON80+/fFAQFGyibixydKsg5F6WgPgjwcKefpECXZqnwNHZh/K3tA1+AD4Ci32t1EmESLLKXA==}
     engines: {node: '>=18'}
     peerDependencies:
       '@livekit/protocol': ^1.16.0
       livekit-client: ^2.4.0
       tslib: ^2.6.2
 
-  '@livekit/components-react@2.4.0':
-    resolution: {integrity: sha512-b7ggAZwKxT5qCR2+w8fEie2GWr00IXCygTqxfA7oieyxHwzs0iMXEv/AvfzAqsKp+U/v+nBIufgn1v+IPUrMuA==}
+  '@livekit/components-react@2.4.1':
+    resolution: {integrity: sha512-LYNhQ2Ve0aOr28hgz2rhzi4mVBD1dX+vFMxAj1KjAs3ftiorINpqmPaPN2Cjl7qNwk67ZhiAJlWISQCvH8fh1w==}
     engines: {node: '>=18'}
     peerDependencies:
       '@livekit/protocol': ^1.16.0
@@ -1677,14 +1677,14 @@ snapshots:
 
   '@floating-ui/core@1.6.0':
     dependencies:
-      '@floating-ui/utils': 0.2.4
+      '@floating-ui/utils': 0.2.5
 
-  '@floating-ui/dom@1.6.7':
+  '@floating-ui/dom@1.6.8':
     dependencies:
       '@floating-ui/core': 1.6.0
-      '@floating-ui/utils': 0.2.4
+      '@floating-ui/utils': 0.2.5
 
-  '@floating-ui/utils@0.2.4': {}
+  '@floating-ui/utils@0.2.5': {}
 
   '@humanwhocodes/module-importer@1.0.1': {}
 
@@ -1721,18 +1721,18 @@ snapshots:
       '@jridgewell/resolve-uri': 3.1.2
       '@jridgewell/sourcemap-codec': 1.4.15
 
-  '@livekit/components-core@0.11.0(@livekit/protocol@1.19.1)(livekit-client@2.4.0)(tslib@2.6.3)':
+  '@livekit/components-core@0.11.1(@livekit/protocol@1.19.1)(livekit-client@2.4.0)(tslib@2.6.3)':
     dependencies:
-      '@floating-ui/dom': 1.6.7
+      '@floating-ui/dom': 1.6.8
       '@livekit/protocol': 1.19.1
       livekit-client: 2.4.0
       loglevel: 1.9.1
       rxjs: 7.8.1
       tslib: 2.6.3
 
-  '@livekit/components-react@2.4.0(@livekit/protocol@1.19.1)(livekit-client@2.4.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(tslib@2.6.3)':
+  '@livekit/components-react@2.4.1(@livekit/protocol@1.19.1)(livekit-client@2.4.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(tslib@2.6.3)':
     dependencies:
-      '@livekit/components-core': 0.11.0(@livekit/protocol@1.19.1)(livekit-client@2.4.0)(tslib@2.6.3)
+      '@livekit/components-core': 0.11.1(@livekit/protocol@1.19.1)(livekit-client@2.4.0)(tslib@2.6.3)
       '@livekit/protocol': 1.19.1
       clsx: 2.1.1
       livekit-client: 2.4.0
