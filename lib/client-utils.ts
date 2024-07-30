@@ -41,3 +41,8 @@ export function randomString(length: number): string {
   }
   return result;
 }
+
+export const sleep = (time: number) =>
+  new Promise((resolve) => {
+    setTimeout(resolve, time);
+  });
