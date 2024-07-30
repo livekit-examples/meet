@@ -1,7 +1,7 @@
-import { EgressClient, EgressInfo, EncodedFileOutput, S3Upload } from 'livekit-server-sdk';
+import { EgressClient, EncodedFileOutput, S3Upload } from 'livekit-server-sdk';
 import { NextApiRequest, NextApiResponse } from 'next';
 
-export default async function handleToken(req: NextApiRequest, res: NextApiResponse) {
+export default async function startRecording(req: NextApiRequest, res: NextApiResponse) {
   try {
     const { roomName } = req.query;
 

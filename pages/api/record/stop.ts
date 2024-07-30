@@ -1,7 +1,7 @@
 import { EgressClient } from 'livekit-server-sdk';
 import { NextApiRequest, NextApiResponse } from 'next';
 
-export default async function handleToken(req: NextApiRequest, res: NextApiResponse) {
+export default async function stopRecording(req: NextApiRequest, res: NextApiResponse) {
   try {
     const { roomName } = req.query;
 
