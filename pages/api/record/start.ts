@@ -1,9 +1,16 @@
-import { EgressClient, EncodedFileOutput, S3Upload } from 'livekit-server-sdk';
+import { EgressClient, EgressInfo, EncodedFileOutput, S3Upload } from 'livekit-server-sdk';
 import { NextApiRequest, NextApiResponse } from 'next';
 
 export default async function handleToken(req: NextApiRequest, res: NextApiResponse) {
   try {
     const { roomName } = req.query;
+
+    /**
+     * CAUTION:
+     * for simplicity this implementation does not authenticate users and therefore allows anyone with knowledge of a roomName
+     * to start/stop recordings for that room.
+     * DO NOT USE THIS FOR PRODUCTION PURPOSES AS IS
+     */
 
     if (typeof roomName !== 'string') {
       res.statusMessage = 'Missing roomName parameter';
@@ -26,6 +33,12 @@ export default async function handleToken(req: NextApiRequest, res: NextApiRespo
     hostURL.protocol = 'https:';
 
     const egressClient = new EgressClient(hostURL.origin, LIVEKIT_API_KEY, LIVEKIT_API_SECRET);
+
+    const existingEgresses = await egressClient.listEgress({ roomName });
+    if (existingEgresses.length > 0 && existingEgresses.some((e) => e.status < 2)) {
+      (res.statusMessage = 'Meeting is already being recorded'), res.status(409).end();
+      return;
+    }
 
     const fileOutput = new EncodedFileOutput({
       filepath: `${new Date(Date.now()).toISOString()}-${roomName}.mp4`,

@@ -9,9 +9,7 @@ export function RecordingIndicator() {
     if (isRecording !== wasRecording) {
       setWasRecording(isRecording);
       if (isRecording) {
-        window.alert('This meeting is now being recorded');
-      } else {
-        window.alert('Recording of this meeting has stopped');
+        window.alert('This meeting is being recorded');
       }
     }
   }, [isRecording]);
