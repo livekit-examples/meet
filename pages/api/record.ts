@@ -19,6 +19,7 @@ export default async function handleToken(req: NextApiRequest, res: NextApiRespo
       S3_KEY_SECRET,
       S3_BUCKET,
       S3_ENDPOINT,
+      S3_REGION,
     } = process.env;
 
     const hostURL = new URL(LIVEKIT_URL!);
@@ -34,7 +35,7 @@ export default async function handleToken(req: NextApiRequest, res: NextApiRespo
           endpoint: S3_ENDPOINT,
           accessKey: S3_KEY_ID,
           secret: S3_KEY_SECRET,
-          region: 'auto',
+          region: S3_REGION,
           bucket: S3_BUCKET,
         }),
       },
