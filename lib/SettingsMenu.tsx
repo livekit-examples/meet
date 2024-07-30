@@ -76,7 +76,6 @@ export function SettingsMenu(props: SettingsMenuProps) {
   }, [isRecording, initialRecStatus]);
 
   const toggleRoomRecording = async () => {
-    console.log('handle on recording');
     if (!recordingEndpoint) {
       throw TypeError('No recording endpoint specified');
     }
