@@ -8,26 +8,26 @@ function MyApp({ Component, pageProps }: AppProps) {
   return (
     <>
       <DefaultSeo
-        title="LiveKit Meet | Conference app build with LiveKit Open Source"
+        title="Hub Meeting | AngleQuest"
         titleTemplate="%s"
-        defaultTitle="LiveKit Meet | Conference app build with LiveKit open source"
-        description="LiveKit is an open source WebRTC project that gives you everything needed to build scalable and real-time audio and/or video experiences in your applications."
+        defaultTitle="Hub Meeting | AngleQuest"
+        description="Hub Meeting | AngleQuest"
         twitter={{
           handle: '@livekitted',
           site: '@livekitted',
           cardType: 'summary_large_image',
         }}
         openGraph={{
-          url: 'https://meet.livekit.io',
+          url: 'https://meet.anglequest.com',
           images: [
             {
-              url: 'https://meet.livekit.io/images/livekit-meet-open-graph.png',
+              url: 'https://meet.anglequest.com/images/livekit-meet-open-graph.png',
               width: 2000,
               height: 1000,
               type: 'image/png',
             },
           ],
-          site_name: 'LiveKit Meet',
+          site_name: 'AngleQuest',
         }}
         additionalMetaTags={[
           {
