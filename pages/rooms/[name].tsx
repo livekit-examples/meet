@@ -25,6 +25,7 @@ import * as React from 'react';
 import { DebugMode } from '../../lib/Debug';
 import { decodePassphrase, useServerUrl } from '../../lib/client-utils';
 import { SettingsMenu } from '../../lib/SettingsMenu';
+import { RecordingIndicator } from '../../lib/RecordingIndicator';
 
 const Home: NextPage = () => {
   const router = useRouter();
@@ -189,6 +190,7 @@ const ActiveRoom = ({ roomName, userChoices, onLeave }: ActiveRoomProps) => {
             }
           />
           <DebugMode />
+          <RecordingIndicator />
         </LiveKitRoom>
       )}
     </>
