@@ -1,4 +1,5 @@
 'use client';
+
 import { formatChatMessageLinks, LiveKitRoom, VideoConference } from '@livekit/components-react';
 import {
   ExternalE2EEKeyProvider,
@@ -9,14 +10,16 @@ import {
   VideoCodec,
   VideoPresets,
 } from 'livekit-client';
-import { useRouter } from 'next/router';
+import { useSearchParams } from 'next/navigation';
 import { useMemo } from 'react';
 import { decodePassphrase } from '../../lib/client-utils';
 import { DebugMode } from '../../lib/Debug';
 
 export default function CustomRoomConnection() {
-  const router = useRouter();
-  const { liveKitUrl, token, codec } = router.query;
+  const searchParams = useSearchParams();
+  const liveKitUrl = searchParams?.get('liveKitUrl');
+  const token = searchParams?.get('token');
+  const codec = searchParams?.get('codec');
 
   const e2eePassphrase =
     typeof window !== 'undefined' && decodePassphrase(window.location.hash.substring(1));
