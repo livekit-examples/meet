@@ -1,9 +1,11 @@
 import { EgressClient, EncodedFileOutput, S3Upload } from 'livekit-server-sdk';
-import { NextApiRequest, NextApiResponse } from 'next';
+import { NextResponse } from 'next/server';
 
-export default async function startRecording(req: NextApiRequest, res: NextApiResponse) {
+export async function GET(req: Request) {
   try {
-    const { roomName } = req.query;
+    const url = new URL(req.url);
+    const searchParams = url.searchParams;
+    const roomName = searchParams.get('roomName');
 
     /**
      * CAUTION:
@@ -13,9 +15,7 @@ export default async function startRecording(req: NextApiRequest, res: NextApiRe
      */
 
     if (typeof roomName !== 'string') {
-      res.statusMessage = 'Missing roomName parameter';
-      res.status(403).end();
-      return;
+      return new NextResponse('Missing roomName parameter', { status: 403 });
     }
 
     const {
@@ -36,8 +36,7 @@ export default async function startRecording(req: NextApiRequest, res: NextApiRe
 
     const existingEgresses = await egressClient.listEgress({ roomName });
     if (existingEgresses.length > 0 && existingEgresses.some((e) => e.status < 2)) {
-      (res.statusMessage = 'Meeting is already being recorded'), res.status(409).end();
-      return;
+      return new NextResponse('Meeting is already being recorded', { status: 409 });
     }
 
     const fileOutput = new EncodedFileOutput({
@@ -64,13 +63,10 @@ export default async function startRecording(req: NextApiRequest, res: NextApiRe
       },
     );
 
-    res.status(200).end();
-  } catch (e) {
-    if (e instanceof Error) {
-      res.statusMessage = e.name;
-      console.error(e);
-      res.status(500).end();
-      return;
+    return new NextResponse(null, { status: 200 });
+  } catch (error) {
+    if (error instanceof Error) {
+      return new NextResponse(error.message, { status: 500 });
     }
   }
 }
