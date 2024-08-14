@@ -1,11 +1,4 @@
-import { RoomServiceClient } from 'livekit-server-sdk';
-
-export function getRoomClient(): RoomServiceClient {
-  checkKeys();
-  return new RoomServiceClient(getLiveKitURL());
-}
-
-export function getLiveKitURL(region?: string | string[]): string {
+export function getLiveKitURL(region: string | null): string {
   let targetKey = 'LIVEKIT_URL';
   if (region && !Array.isArray(region)) {
     targetKey = `LIVEKIT_URL_${region}`.toUpperCase();
