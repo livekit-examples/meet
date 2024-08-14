@@ -9,12 +9,3 @@ export function getLiveKitURL(region: string | null): string {
   }
   return url;
 }
-
-function checkKeys() {
-  if (typeof process.env.LIVEKIT_API_KEY === 'undefined') {
-    throw new Error('LIVEKIT_API_KEY is not defined');
-  }
-  if (typeof process.env.LIVEKIT_API_SECRET === 'undefined') {
-    throw new Error('LIVEKIT_API_SECRET is not defined');
-  }
-}
