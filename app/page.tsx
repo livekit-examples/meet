@@ -1,5 +1,6 @@
-import type { GetServerSideProps, InferGetServerSidePropsType } from 'next';
-import { useRouter } from 'next/router';
+'use client';
+
+import { useRouter, useSearchParams } from 'next/navigation';
 import React, { ReactElement, useState } from 'react';
 import { encodePassphrase, generateRoomId, randomString } from '../lib/client-utils';
 import styles from '../styles/Home.module.css';
@@ -156,20 +157,15 @@ function CustomConnectionTab({ label }: { label: string }) {
   );
 }
 
-export const getServerSideProps: GetServerSideProps<{ tabIndex: number }> = async ({
-  query,
-  res,
-}) => {
-  res.setHeader('Cache-Control', 'public, max-age=7200');
-  const tabIndex = query.tab === 'custom' ? 1 : 0;
-  return { props: { tabIndex } };
-};
+function Page() {
+  const searchParams = useSearchParams();
+  console.log(searchParams?.get('tab'));
 
-const Home = ({ tabIndex }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
+  const tabIndex = searchParams?.get('tab') === 'custom' ? 1 : 0;
   const router = useRouter();
   function onTabSelected(index: number) {
     const tab = index === 1 ? 'custom' : 'demo';
-    router.push({ query: { tab } });
+    router.push(`/?tab=${tab}`);
   }
   return (
     <>
@@ -206,6 +202,6 @@ const Home = ({ tabIndex }: InferGetServerSidePropsType<typeof getServerSideProp
       </footer>
     </>
   );
-};
+}
 
-export default Home;
+export default Page;
