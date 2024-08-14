@@ -157,16 +157,16 @@ function CustomConnectionTab({ label }: { label: string }) {
   );
 }
 
-function Page() {
+export default function Page() {
   const searchParams = useSearchParams();
-  console.log(searchParams?.get('tab'));
-
   const tabIndex = searchParams?.get('tab') === 'custom' ? 1 : 0;
+
   const router = useRouter();
   function onTabSelected(index: number) {
     const tab = index === 1 ? 'custom' : 'demo';
     router.push(`/?tab=${tab}`);
   }
+
   return (
     <>
       <main className={styles.main} data-lk-theme="default">
@@ -203,5 +203,3 @@ function Page() {
     </>
   );
 }
-
-export default Page;
