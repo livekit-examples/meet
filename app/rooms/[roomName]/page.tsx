@@ -1,4 +1,5 @@
 'use client';
+
 import {
   LiveKitRoom,
   VideoConference,
@@ -18,18 +19,16 @@ import {
   setLogLevel,
 } from 'livekit-client';
 
-import type { NextPage } from 'next';
-import Head from 'next/head';
-import { useRouter } from 'next/router';
+import { useRouter, useSearchParams } from 'next/navigation';
 import * as React from 'react';
-import { DebugMode } from '../../lib/Debug';
-import { decodePassphrase, useServerUrl } from '../../lib/client-utils';
-import { SettingsMenu } from '../../lib/SettingsMenu';
-import { RecordingIndicator } from '../../lib/RecordingIndicator';
+import { DebugMode } from '../../../lib/Debug';
+import { decodePassphrase, useServerUrl } from '../../../lib/client-utils';
+import { SettingsMenu } from '../../../lib/SettingsMenu';
+import { RecordingIndicator } from '../../../lib/RecordingIndicator';
 
-const Home: NextPage = () => {
+export default function Page({ params }: { params: { roomName: string } }) {
   const router = useRouter();
-  const { name: roomName } = router.query;
+  const roomName = params.roomName;
 
   const [preJoinChoices, setPreJoinChoices] = React.useState<LocalUserChoices | undefined>(
     undefined,
@@ -54,34 +53,21 @@ const Home: NextPage = () => {
   const onLeave = React.useCallback(() => router.push('/'), []);
 
   return (
-    <>
-      <Head>
-        <title>LiveKit Meet</title>
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
-
-      <main data-lk-theme="default">
-        {roomName && !Array.isArray(roomName) && preJoinChoices ? (
-          <ActiveRoom
-            roomName={roomName}
-            userChoices={preJoinChoices}
-            onLeave={onLeave}
-          ></ActiveRoom>
-        ) : (
-          <div style={{ display: 'grid', placeItems: 'center', height: '100%' }}>
-            <PreJoin
-              onError={onPreJoinError}
-              defaults={preJoinDefaults}
-              onSubmit={handlePreJoinSubmit}
-            ></PreJoin>
-          </div>
-        )}
-      </main>
-    </>
+    <main data-lk-theme="default">
+      {roomName && !Array.isArray(roomName) && preJoinChoices ? (
+        <ActiveRoom roomName={roomName} userChoices={preJoinChoices} onLeave={onLeave}></ActiveRoom>
+      ) : (
+        <div style={{ display: 'grid', placeItems: 'center', height: '100%' }}>
+          <PreJoin
+            onError={onPreJoinError}
+            defaults={preJoinDefaults}
+            onSubmit={handlePreJoinSubmit}
+          ></PreJoin>
+        </div>
+      )}
+    </main>
   );
-};
-
-export default Home;
+}
 
 type ActiveRoomProps = {
   userChoices: LocalUserChoices;
@@ -89,7 +75,9 @@ type ActiveRoomProps = {
   region?: string;
   onLeave?: () => void;
 };
-const ActiveRoom = ({ roomName, userChoices, onLeave }: ActiveRoomProps) => {
+
+function ActiveRoom({ roomName, userChoices, onLeave }: ActiveRoomProps) {
+  const searchParams = useSearchParams();
   const tokenOptions = React.useMemo(() => {
     return {
       userInfo: {
@@ -100,13 +88,15 @@ const ActiveRoom = ({ roomName, userChoices, onLeave }: ActiveRoomProps) => {
   }, [userChoices.username]);
   const token = useToken(process.env.NEXT_PUBLIC_LK_TOKEN_ENDPOINT, roomName, tokenOptions);
 
-  const router = useRouter();
-  const { region, hq, codec } = router.query;
+  const region = searchParams?.get('region');
+  const hq = searchParams?.get('hq');
+  const codec = searchParams?.get('codec');
+  // const { region, hq, codec } = searchParams?.getAll();
 
   const e2eePassphrase =
     typeof window !== 'undefined' && decodePassphrase(location.hash.substring(1));
 
-  const liveKitUrl = useServerUrl(region as string | undefined);
+  const liveKitUrl = useServerUrl(typeof region === 'string' ? region : undefined);
 
   const worker =
     typeof window !== 'undefined' &&
@@ -195,4 +185,4 @@ const ActiveRoom = ({ roomName, userChoices, onLeave }: ActiveRoomProps) => {
       )}
     </>
   );
-};
+}
