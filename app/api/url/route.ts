@@ -13,6 +13,8 @@ export async function GET(req: Request) {
     const livekitUrl = getLiveKitURL(region);
     return NextResponse.json({ url: livekitUrl });
   } catch (error) {
-    return new NextResponse((error as Error).message, { status: 500 });
+    if (error instanceof Error) {
+      return new NextResponse(error.message, { status: 500 });
+    }
   }
 }
