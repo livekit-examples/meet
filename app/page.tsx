@@ -1,20 +1,18 @@
 'use client';
 
 import { useRouter, useSearchParams } from 'next/navigation';
-import React, { ReactElement, useState } from 'react';
+import React, { Suspense, useState } from 'react';
 import { encodePassphrase, generateRoomId, randomString } from '../lib/client-utils';
 import styles from '../styles/Home.module.css';
 
-interface TabsProps {
-  children: ReactElement[];
-  selectedIndex?: number;
-  onTabSelected?: (index: number) => void;
-}
+function Tabs(props: React.PropsWithChildren<{}>) {
+  const searchParams = useSearchParams();
+  const tabIndex = searchParams?.get('tab') === 'custom' ? 1 : 0;
 
-function Tabs(props: TabsProps) {
-  const activeIndex = props.selectedIndex ?? 0;
-  if (!props.children) {
-    return <></>;
+  const router = useRouter();
+  function onTabSelected(index: number) {
+    const tab = index === 1 ? 'custom' : 'demo';
+    router.push(`/?tab=${tab}`);
   }
 
   let tabs = React.Children.map(props.children, (child, index) => {
@@ -22,18 +20,23 @@ function Tabs(props: TabsProps) {
       <button
         className="lk-button"
         onClick={() => {
-          if (props.onTabSelected) props.onTabSelected(index);
+          if (onTabSelected) {
+            onTabSelected(index);
+          }
         }}
-        aria-pressed={activeIndex === index}
+        aria-pressed={tabIndex === index}
       >
+        {/* @ts-ignore */}
         {child?.props.label}
       </button>
     );
   });
+
   return (
     <div className={styles.tabContainer}>
       <div className={styles.tabSelect}>{tabs}</div>
-      {props.children[activeIndex]}
+      {/* @ts-ignore */}
+      {props.children[tabIndex]}
     </div>
   );
 }
@@ -158,15 +161,6 @@ function CustomConnectionTab({ label }: { label: string }) {
 }
 
 export default function Page() {
-  const searchParams = useSearchParams();
-  const tabIndex = searchParams?.get('tab') === 'custom' ? 1 : 0;
-
-  const router = useRouter();
-  function onTabSelected(index: number) {
-    const tab = index === 1 ? 'custom' : 'demo';
-    router.push(`/?tab=${tab}`);
-  }
-
   return (
     <>
       <main className={styles.main} data-lk-theme="default">
@@ -184,10 +178,12 @@ export default function Page() {
             and Next.js.
           </h2>
         </div>
-        <Tabs selectedIndex={tabIndex} onTabSelected={onTabSelected}>
-          <DemoMeetingTab label="Demo" />
-          <CustomConnectionTab label="Custom" />
-        </Tabs>
+        <Suspense fallback="Loading">
+          <Tabs>
+            <DemoMeetingTab label="Demo" />
+            <CustomConnectionTab label="Custom" />
+          </Tabs>
+        </Suspense>
       </main>
       <footer data-lk-theme="default">
         Hosted on{' '}
