@@ -1,7 +1,7 @@
 import '../styles/globals.css';
 import '@livekit/components-styles';
 import '@livekit/components-styles/prefabs';
-import type { Metadata } from 'next';
+import type { Metadata, Viewport } from 'next';
 
 export const metadata: Metadata = {
   title: {
@@ -27,7 +27,6 @@ export const metadata: Metadata = {
     ],
     siteName: 'LiveKit Meet',
   },
-  themeColor: '#070707',
   icons: {
     icon: {
       rel: 'icon',
@@ -42,6 +41,10 @@ export const metadata: Metadata = {
       { rel: 'mask-icon', url: '/images/livekit-safari-pinned-tab.svg', color: '#070707' },
     ],
   },
+};
+
+export const viewport: Viewport = {
+  themeColor: '#070707',
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
