@@ -1,0 +1,7 @@
+target: web
+requires:
+    - pnpm
+install:
+    - "pnpm install"
+dev:
+    - "pnpm dev"
