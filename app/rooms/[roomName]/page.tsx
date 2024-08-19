@@ -25,15 +25,14 @@ import { DebugMode } from '@/lib/Debug';
 import { decodePassphrase, useServerUrl } from '@/lib/client-utils';
 import { SettingsMenu } from '@/lib/SettingsMenu';
 import { RecordingIndicator } from '@/lib/RecordingIndicator';
+import { validateVideoCodec } from '@/lib/validate';
 
 export default function Page({ params }: { params: { roomName: string } }) {
   const router = useRouter();
   const roomName = params.roomName;
-
   const [preJoinChoices, setPreJoinChoices] = React.useState<LocalUserChoices | undefined>(
     undefined,
   );
-
   const preJoinDefaults = React.useMemo(() => {
     return {
       username: '',
@@ -41,15 +40,12 @@ export default function Page({ params }: { params: { roomName: string } }) {
       audioEnabled: true,
     };
   }, []);
-
   const handlePreJoinSubmit = React.useCallback((values: LocalUserChoices) => {
     setPreJoinChoices(values);
   }, []);
-
   const onPreJoinError = React.useCallback((e: any) => {
     console.error(e);
   }, []);
-
   const onLeave = React.useCallback(() => router.push('/'), []);
 
   return (
@@ -62,36 +58,32 @@ export default function Page({ params }: { params: { roomName: string } }) {
             onError={onPreJoinError}
             defaults={preJoinDefaults}
             onSubmit={handlePreJoinSubmit}
-          ></PreJoin>
+          />
         </div>
       )}
     </main>
   );
 }
 
-type ActiveRoomProps = {
+function ActiveRoom(props: {
   userChoices: LocalUserChoices;
   roomName: string;
-  region?: string;
-  onLeave?: () => void;
-};
-
-function ActiveRoom({ roomName, userChoices, onLeave }: ActiveRoomProps) {
+  onLeave: () => void;
+}) {
   const searchParams = useSearchParams();
+  const region = searchParams?.get('region');
+  const hq = searchParams?.get('hq');
+  const codec = validateVideoCodec(searchParams?.get('codec'));
+
   const tokenOptions = React.useMemo(() => {
     return {
       userInfo: {
-        identity: userChoices.username,
-        name: userChoices.username,
+        identity: props.userChoices.username,
+        name: props.userChoices.username,
       },
     };
-  }, [userChoices.username]);
-  const token = useToken(process.env.NEXT_PUBLIC_LK_TOKEN_ENDPOINT, roomName, tokenOptions);
-
-  const region = searchParams?.get('region');
-  const hq = searchParams?.get('hq');
-  const codec = searchParams?.get('codec');
-  // const { region, hq, codec } = searchParams?.getAll();
+  }, [props.userChoices.username]);
+  const token = useToken(process.env.NEXT_PUBLIC_LK_TOKEN_ENDPOINT, props.roomName, tokenOptions);
 
   const e2eePassphrase =
     typeof window !== 'undefined' && decodePassphrase(location.hash.substring(1));
@@ -102,19 +94,17 @@ function ActiveRoom({ roomName, userChoices, onLeave }: ActiveRoomProps) {
     typeof window !== 'undefined' &&
     e2eePassphrase &&
     new Worker(new URL('livekit-client/e2ee-worker', import.meta.url));
-
   const e2eeEnabled = !!(e2eePassphrase && worker);
   const keyProvider = new ExternalE2EEKeyProvider();
+
   const roomOptions = React.useMemo((): RoomOptions => {
-    let videoCodec: VideoCodec | undefined = (
-      Array.isArray(codec) ? codec[0] : codec ?? 'vp9'
-    ) as VideoCodec;
+    let videoCodec: VideoCodec | undefined = codec ?? 'vp9';
     if (e2eeEnabled && (videoCodec === 'av1' || videoCodec === 'vp9')) {
       videoCodec = undefined;
     }
     return {
       videoCaptureDefaults: {
-        deviceId: userChoices.videoDeviceId ?? undefined,
+        deviceId: props.userChoices.videoDeviceId ?? undefined,
         resolution: hq === 'true' ? VideoPresets.h2160 : VideoPresets.h720,
       },
       publishDefaults: {
@@ -127,7 +117,7 @@ function ActiveRoom({ roomName, userChoices, onLeave }: ActiveRoomProps) {
         videoCodec,
       },
       audioCaptureDefaults: {
-        deviceId: userChoices.audioDeviceId ?? undefined,
+        deviceId: props.userChoices.audioDeviceId ?? undefined,
       },
       adaptiveStream: { pixelDensity: 'screen' },
       dynacast: true,
@@ -140,7 +130,7 @@ function ActiveRoom({ roomName, userChoices, onLeave }: ActiveRoomProps) {
     };
     // @ts-ignore
     setLogLevel('debug', 'lk-e2ee');
-  }, [userChoices, hq, codec]);
+  }, [props.userChoices, hq, codec]);
 
   const room = React.useMemo(() => new Room(roomOptions), []);
 
@@ -169,9 +159,9 @@ function ActiveRoom({ roomName, userChoices, onLeave }: ActiveRoomProps) {
           token={token}
           serverUrl={liveKitUrl}
           connectOptions={connectOptions}
-          video={userChoices.videoEnabled}
-          audio={userChoices.audioEnabled}
-          onDisconnected={onLeave}
+          video={props.userChoices.videoEnabled}
+          audio={props.userChoices.audioEnabled}
+          onDisconnected={props.onLeave}
         >
           <VideoConference
             chatMessageFormatter={formatChatMessageLinks}

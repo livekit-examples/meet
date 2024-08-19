@@ -7,8 +7,8 @@ import {
   Room,
   RoomConnectOptions,
   RoomOptions,
-  VideoCodec,
   VideoPresets,
+  type VideoCodec,
 } from 'livekit-client';
 import { DebugMode } from '@/lib/Debug';
 import { useMemo } from 'react';
@@ -18,7 +18,7 @@ import { SettingsMenu } from '@/lib/SettingsMenu';
 export function VideoConferenceClientImpl(props: {
   liveKitUrl: string;
   token: string;
-  codec?: string;
+  codec: VideoCodec | undefined;
 }) {
   const worker =
     typeof window !== 'undefined' &&
@@ -33,7 +33,7 @@ export function VideoConferenceClientImpl(props: {
       publishDefaults: {
         videoSimulcastLayers: [VideoPresets.h540, VideoPresets.h216],
         red: !e2eeEnabled,
-        videoCodec: props.codec as VideoCodec | undefined,
+        videoCodec: props.codec,
       },
       adaptiveStream: { pixelDensity: 'screen' },
       dynacast: true,
