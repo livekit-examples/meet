@@ -60,6 +60,8 @@ export async function GET(req: Request) {
 
     return NextResponse.json(result);
   } catch (error) {
-    return new NextResponse((error as Error).message, { status: 500 });
+    if (error instanceof Error) {
+      return new NextResponse(error.message, { status: 500 });
+    }
   }
 }
