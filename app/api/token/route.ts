@@ -1,6 +1,6 @@
 import { AccessToken } from 'livekit-server-sdk';
 import type { AccessTokenOptions, VideoGrant } from 'livekit-server-sdk';
-import { TokenResult } from '../../../lib/types';
+import { TokenResult } from '@/lib/types';
 import { NextResponse } from 'next/server';
 
 const apiKey = process.env.LIVEKIT_API_KEY;

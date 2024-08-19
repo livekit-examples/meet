@@ -21,10 +21,10 @@ import {
 
 import { useRouter, useSearchParams } from 'next/navigation';
 import * as React from 'react';
-import { DebugMode } from '../../../lib/Debug';
-import { decodePassphrase, useServerUrl } from '../../../lib/client-utils';
-import { SettingsMenu } from '../../../lib/SettingsMenu';
-import { RecordingIndicator } from '../../../lib/RecordingIndicator';
+import { DebugMode } from '@/lib/Debug';
+import { decodePassphrase, useServerUrl } from '@/lib/client-utils';
+import { SettingsMenu } from '@/lib/SettingsMenu';
+import { RecordingIndicator } from '@/lib/RecordingIndicator';
 
 export default function Page({ params }: { params: { roomName: string } }) {
   const router = useRouter();
