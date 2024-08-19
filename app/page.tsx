@@ -41,7 +41,7 @@ function Tabs(props: React.PropsWithChildren<{}>) {
   );
 }
 
-function DemoMeetingTab({ label }: { label: string }) {
+function DemoMeetingTab(props: { label: string }) {
   const router = useRouter();
   const [e2ee, setE2ee] = useState(false);
   const [sharedPassphrase, setSharedPassphrase] = useState(randomString(64));
@@ -84,7 +84,7 @@ function DemoMeetingTab({ label }: { label: string }) {
   );
 }
 
-function CustomConnectionTab({ label }: { label: string }) {
+function CustomConnectionTab(props: { label: string }) {
   const router = useRouter();
 
   const [e2ee, setE2ee] = useState(false);
