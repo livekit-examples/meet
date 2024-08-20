@@ -151,28 +151,30 @@ function ActiveRoom(props: {
     };
   }, []);
 
+  if (!liveKitUrl) {
+    return null;
+  }
+
   return (
     <>
-      {liveKitUrl && (
-        <LiveKitRoom
-          room={room}
-          token={token}
-          serverUrl={liveKitUrl}
-          connectOptions={connectOptions}
-          video={props.userChoices.videoEnabled}
-          audio={props.userChoices.audioEnabled}
-          onDisconnected={props.onLeave}
-        >
-          <VideoConference
-            chatMessageFormatter={formatChatMessageLinks}
-            SettingsComponent={
-              process.env.NEXT_PUBLIC_SHOW_SETTINGS_MENU === 'true' ? SettingsMenu : undefined
-            }
-          />
-          <DebugMode />
-          <RecordingIndicator />
-        </LiveKitRoom>
-      )}
+      <LiveKitRoom
+        room={room}
+        token={token}
+        serverUrl={liveKitUrl}
+        connectOptions={connectOptions}
+        video={props.userChoices.videoEnabled}
+        audio={props.userChoices.audioEnabled}
+        onDisconnected={props.onLeave}
+      >
+        <VideoConference
+          chatMessageFormatter={formatChatMessageLinks}
+          SettingsComponent={
+            process.env.NEXT_PUBLIC_SHOW_SETTINGS_MENU === 'true' ? SettingsMenu : undefined
+          }
+        />
+        <DebugMode />
+        <RecordingIndicator />
+      </LiveKitRoom>
     </>
   );
 }
