@@ -10,3 +10,7 @@ export function validateVideoCodec(codec: string | undefined | null): VideoCodec
     return undefined;
   }
 }
+
+export function isVideoCodec(codec: string): codec is VideoCodec {
+  return ['vp8', 'vp9', 'h264', 'av1'].includes(codec);
+}

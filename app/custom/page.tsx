@@ -1,4 +1,6 @@
+import { videoCodecs } from 'livekit-client';
 import { VideoConferenceClientImpl } from './VideoConferenceClientImpl';
+import { isVideoCodec } from '@/lib/validate';
 
 export default function CustomRoomConnection(props: {
   searchParams: {
@@ -14,16 +16,8 @@ export default function CustomRoomConnection(props: {
   if (typeof token !== 'string') {
     return <h2>Missing LiveKit token</h2>;
   }
-  if (
-    !(
-      codec === 'vp8' ||
-      codec === 'vp9' ||
-      codec === 'h264' ||
-      codec === 'av1' ||
-      codec === undefined
-    )
-  ) {
-    return <h2>Invalid codec, if defined it has to be 'vp8', 'vp9', 'h264' or 'av1'.</h2>;
+  if (codec !== undefined && !isVideoCodec(codec)) {
+    return <h2>Invalid codec, if defined it has to be [{videoCodecs.join(', ')}].</h2>;
   }
 
   return (
