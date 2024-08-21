@@ -1,15 +1,9 @@
-import { getLiveKitURL } from '../../../lib/server-utils';
-import { NextResponse } from 'next/server';
+import { getLiveKitURL } from '@/lib/server-utils';
+import { NextRequest, NextResponse } from 'next/server';
 
-export async function GET(req: Request) {
+export async function GET(req: NextRequest) {
   try {
-    const url = new URL(req.url);
-    const searchParams = url.searchParams;
-    const region = searchParams.get('region');
-
-    if (Array.isArray(region)) {
-      throw Error('provide max one region string');
-    }
+    const region = req.nextUrl.searchParams.get('region');
     const livekitUrl = getLiveKitURL(region);
     return NextResponse.json({ url: livekitUrl });
   } catch (error) {
