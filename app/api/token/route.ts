@@ -1,8 +1,7 @@
-import { NextApiRequest, NextApiResponse } from 'next';
-
 import { AccessToken } from 'livekit-server-sdk';
 import type { AccessTokenOptions, VideoGrant } from 'livekit-server-sdk';
-import { TokenResult } from '../../lib/types';
+import { TokenResult } from '@/lib/types';
+import { NextResponse } from 'next/server';
 
 const apiKey = process.env.LIVEKIT_API_KEY;
 const apiSecret = process.env.LIVEKIT_API_SECRET;
@@ -16,34 +15,34 @@ const createToken = (userInfo: AccessTokenOptions, grant: VideoGrant) => {
 
 const roomPattern = /\w{4}\-\w{4}/;
 
-export default async function handleToken(req: NextApiRequest, res: NextApiResponse) {
+export async function GET(req: Request) {
   try {
-    const { roomName, identity, name, metadata } = req.query;
+    const url = new URL(req.url);
+    const searchParams = url.searchParams;
+    const roomName = searchParams.get('roomName');
+    const identity = searchParams.get('identity');
+    const name = searchParams.get('name');
+    const metadata = searchParams.get('metadata') ?? '';
 
     if (typeof identity !== 'string' || typeof roomName !== 'string') {
-      res.status(403).end();
-      return;
+      return new NextResponse('Forbidden', { status: 401 });
     }
-
+    if (name === null) {
+      return new NextResponse('Provide a name.', { status: 400 });
+    }
     if (Array.isArray(name)) {
-      throw Error('provide max one name');
+      return new NextResponse('Provide only one room name.', { status: 400 });
     }
     if (Array.isArray(metadata)) {
-      throw Error('provide max one metadata string');
+      return new NextResponse('Provide only one metadata string.', { status: 400 });
     }
 
     // enforce room name to be xxxx-xxxx
     // this is simple & naive way to prevent user from guessing room names
     // please use your own authentication mechanisms in your own app
     if (!roomName.match(roomPattern)) {
-      res.status(400).end();
-      return;
+      return new NextResponse('Invalid room name format.', { status: 400 });
     }
-
-    // if (!userSession.isAuthenticated) {
-    //   res.status(403).end();
-    //   return;
-    // }
 
     const grant: VideoGrant = {
       room: roomName,
@@ -59,9 +58,10 @@ export default async function handleToken(req: NextApiRequest, res: NextApiRespo
       accessToken: token,
     };
 
-    res.status(200).json(result);
-  } catch (e) {
-    res.statusMessage = (e as Error).message;
-    res.status(500).end();
+    return NextResponse.json(result);
+  } catch (error) {
+    if (error instanceof Error) {
+      return new NextResponse(error.message, { status: 500 });
+    }
   }
 }

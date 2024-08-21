@@ -1,19 +1,18 @@
-import type { GetServerSideProps, InferGetServerSidePropsType } from 'next';
-import { useRouter } from 'next/router';
-import React, { ReactElement, useState } from 'react';
-import { encodePassphrase, generateRoomId, randomString } from '../lib/client-utils';
+'use client';
+
+import { useRouter, useSearchParams } from 'next/navigation';
+import React, { Suspense, useState } from 'react';
+import { encodePassphrase, generateRoomId, randomString } from '@/lib/client-utils';
 import styles from '../styles/Home.module.css';
 
-interface TabsProps {
-  children: ReactElement[];
-  selectedIndex?: number;
-  onTabSelected?: (index: number) => void;
-}
+function Tabs(props: React.PropsWithChildren<{}>) {
+  const searchParams = useSearchParams();
+  const tabIndex = searchParams?.get('tab') === 'custom' ? 1 : 0;
 
-function Tabs(props: TabsProps) {
-  const activeIndex = props.selectedIndex ?? 0;
-  if (!props.children) {
-    return <></>;
+  const router = useRouter();
+  function onTabSelected(index: number) {
+    const tab = index === 1 ? 'custom' : 'demo';
+    router.push(`/?tab=${tab}`);
   }
 
   let tabs = React.Children.map(props.children, (child, index) => {
@@ -21,23 +20,28 @@ function Tabs(props: TabsProps) {
       <button
         className="lk-button"
         onClick={() => {
-          if (props.onTabSelected) props.onTabSelected(index);
+          if (onTabSelected) {
+            onTabSelected(index);
+          }
         }}
-        aria-pressed={activeIndex === index}
+        aria-pressed={tabIndex === index}
       >
+        {/* @ts-ignore */}
         {child?.props.label}
       </button>
     );
   });
+
   return (
     <div className={styles.tabContainer}>
       <div className={styles.tabSelect}>{tabs}</div>
-      {props.children[activeIndex]}
+      {/* @ts-ignore */}
+      {props.children[tabIndex]}
     </div>
   );
 }
 
-function DemoMeetingTab({ label }: { label: string }) {
+function DemoMeetingTab(props: { label: string }) {
   const router = useRouter();
   const [e2ee, setE2ee] = useState(false);
   const [sharedPassphrase, setSharedPassphrase] = useState(randomString(64));
@@ -80,7 +84,7 @@ function DemoMeetingTab({ label }: { label: string }) {
   );
 }
 
-function CustomConnectionTab({ label }: { label: string }) {
+function CustomConnectionTab(props: { label: string }) {
   const router = useRouter();
 
   const [e2ee, setE2ee] = useState(false);
@@ -156,21 +160,7 @@ function CustomConnectionTab({ label }: { label: string }) {
   );
 }
 
-export const getServerSideProps: GetServerSideProps<{ tabIndex: number }> = async ({
-  query,
-  res,
-}) => {
-  res.setHeader('Cache-Control', 'public, max-age=7200');
-  const tabIndex = query.tab === 'custom' ? 1 : 0;
-  return { props: { tabIndex } };
-};
-
-const Home = ({ tabIndex }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
-  const router = useRouter();
-  function onTabSelected(index: number) {
-    const tab = index === 1 ? 'custom' : 'demo';
-    router.push({ query: { tab } });
-  }
+export default function Page() {
   return (
     <>
       <main className={styles.main} data-lk-theme="default">
@@ -188,10 +178,12 @@ const Home = ({ tabIndex }: InferGetServerSidePropsType<typeof getServerSideProp
             and Next.js.
           </h2>
         </div>
-        <Tabs selectedIndex={tabIndex} onTabSelected={onTabSelected}>
-          <DemoMeetingTab label="Demo" />
-          <CustomConnectionTab label="Custom" />
-        </Tabs>
+        <Suspense fallback="Loading">
+          <Tabs>
+            <DemoMeetingTab label="Demo" />
+            <CustomConnectionTab label="Custom" />
+          </Tabs>
+        </Suspense>
       </main>
       <footer data-lk-theme="default">
         Hosted on{' '}
@@ -206,6 +198,4 @@ const Home = ({ tabIndex }: InferGetServerSidePropsType<typeof getServerSideProp
       </footer>
     </>
   );
-};
-
-export default Home;
+}

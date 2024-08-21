@@ -1,4 +1,5 @@
 'use client';
+
 import { formatChatMessageLinks, LiveKitRoom, VideoConference } from '@livekit/components-react';
 import {
   ExternalE2EEKeyProvider,
@@ -6,33 +7,33 @@ import {
   Room,
   RoomConnectOptions,
   RoomOptions,
-  VideoCodec,
   VideoPresets,
+  type VideoCodec,
 } from 'livekit-client';
-import { useRouter } from 'next/router';
+import { DebugMode } from '@/lib/Debug';
 import { useMemo } from 'react';
-import { decodePassphrase } from '../../lib/client-utils';
-import { DebugMode } from '../../lib/Debug';
+import { decodePassphrase } from '@/lib/client-utils';
+import { SettingsMenu } from '@/lib/SettingsMenu';
 
-export default function CustomRoomConnection() {
-  const router = useRouter();
-  const { liveKitUrl, token, codec } = router.query;
-
-  const e2eePassphrase =
-    typeof window !== 'undefined' && decodePassphrase(window.location.hash.substring(1));
+export function VideoConferenceClientImpl(props: {
+  liveKitUrl: string;
+  token: string;
+  codec: VideoCodec | undefined;
+}) {
   const worker =
     typeof window !== 'undefined' &&
     new Worker(new URL('livekit-client/e2ee-worker', import.meta.url));
   const keyProvider = new ExternalE2EEKeyProvider();
 
+  const e2eePassphrase =
+    typeof window !== 'undefined' ? decodePassphrase(window.location.hash.substring(1)) : undefined;
   const e2eeEnabled = !!(e2eePassphrase && worker);
-
   const roomOptions = useMemo((): RoomOptions => {
     return {
       publishDefaults: {
         videoSimulcastLayers: [VideoPresets.h540, VideoPresets.h216],
         red: !e2eeEnabled,
-        videoCodec: codec as VideoCodec | undefined,
+        videoCodec: props.codec,
       },
       adaptiveStream: { pixelDensity: 'screen' },
       dynacast: true,
@@ -56,28 +57,22 @@ export default function CustomRoomConnection() {
     };
   }, []);
 
-  if (typeof liveKitUrl !== 'string') {
-    return <h2>Missing LiveKit URL</h2>;
-  }
-  if (typeof token !== 'string') {
-    return <h2>Missing LiveKit token</h2>;
-  }
-
   return (
-    <main data-lk-theme="default">
-      {liveKitUrl && (
-        <LiveKitRoom
-          room={room}
-          token={token}
-          connectOptions={connectOptions}
-          serverUrl={liveKitUrl}
-          audio={true}
-          video={true}
-        >
-          <VideoConference chatMessageFormatter={formatChatMessageLinks} />
-          <DebugMode logLevel={LogLevel.debug} />
-        </LiveKitRoom>
-      )}
-    </main>
+    <LiveKitRoom
+      room={room}
+      token={props.token}
+      connectOptions={connectOptions}
+      serverUrl={props.liveKitUrl}
+      audio={true}
+      video={true}
+    >
+      <VideoConference
+        chatMessageFormatter={formatChatMessageLinks}
+        SettingsComponent={
+          process.env.NEXT_PUBLIC_SHOW_SETTINGS_MENU === 'true' ? SettingsMenu : undefined
+        }
+      />
+      <DebugMode logLevel={LogLevel.debug} />
+    </LiveKitRoom>
   );
 }

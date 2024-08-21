@@ -1,9 +1,11 @@
 import { EgressClient } from 'livekit-server-sdk';
-import { NextApiRequest, NextApiResponse } from 'next';
+import { NextResponse } from 'next/server';
 
-export default async function stopRecording(req: NextApiRequest, res: NextApiResponse) {
+export async function GET(req: Request) {
   try {
-    const { roomName } = req.query;
+    const url = new URL(req.url);
+    const searchParams = url.searchParams;
+    const roomName = searchParams.get('roomName');
 
     /**
      * CAUTION:
@@ -13,9 +15,7 @@ export default async function stopRecording(req: NextApiRequest, res: NextApiRes
      */
 
     if (typeof roomName !== 'string') {
-      res.statusMessage = 'Missing roomName parameter';
-      res.status(403).end();
-      return;
+      return new NextResponse('Missing roomName parameter', { status: 403 });
     }
 
     const { LIVEKIT_API_KEY, LIVEKIT_API_SECRET, LIVEKIT_URL } = process.env;
@@ -28,19 +28,14 @@ export default async function stopRecording(req: NextApiRequest, res: NextApiRes
       (info) => info.status < 2,
     );
     if (activeEgresses.length === 0) {
-      res.statusMessage = 'No active recording found';
-      res.status(404).end();
-      return;
+      return new NextResponse('No active recording found', { status: 404 });
     }
     await Promise.all(activeEgresses.map((info) => egressClient.stopEgress(info.egressId)));
 
-    res.status(200).end();
-  } catch (e) {
-    if (e instanceof Error) {
-      res.statusMessage = e.name;
-      console.error(e);
-      res.status(500).end();
-      return;
+    return new NextResponse(null, { status: 200 });
+  } catch (error) {
+    if (error instanceof Error) {
+      return new NextResponse(error.message, { status: 500 });
     }
   }
 }
