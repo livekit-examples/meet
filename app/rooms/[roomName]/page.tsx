@@ -25,7 +25,7 @@ import { DebugMode } from '@/lib/Debug';
 import { decodePassphrase, useServerUrl } from '@/lib/client-utils';
 import { SettingsMenu } from '@/lib/SettingsMenu';
 import { RecordingIndicator } from '@/lib/RecordingIndicator';
-import { validateVideoCodec } from '@/lib/validate';
+import { isVideoCodec } from '@/lib/types';
 
 export default function Page({ params }: { params: { roomName: string } }) {
   const router = useRouter();
@@ -73,7 +73,7 @@ function ActiveRoom(props: {
   const searchParams = useSearchParams();
   const region = searchParams?.get('region');
   const hq = searchParams?.get('hq');
-  const codec = validateVideoCodec(searchParams?.get('codec'));
+  const codec = searchParams?.get('codec');
 
   const tokenOptions = React.useMemo(() => {
     return {
@@ -98,7 +98,7 @@ function ActiveRoom(props: {
   const keyProvider = new ExternalE2EEKeyProvider();
 
   const roomOptions = React.useMemo((): RoomOptions => {
-    let videoCodec: VideoCodec | undefined = codec ?? 'vp9';
+    let videoCodec: VideoCodec | undefined = codec && isVideoCodec(codec) ? codec : 'vp9';
     if (e2eeEnabled && (videoCodec === 'av1' || videoCodec === 'vp9')) {
       videoCodec = undefined;
     }

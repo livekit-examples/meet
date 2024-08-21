@@ -1,6 +1,6 @@
 import { videoCodecs } from 'livekit-client';
 import { VideoConferenceClientImpl } from './VideoConferenceClientImpl';
-import { isVideoCodec } from '@/lib/validate';
+import { isVideoCodec } from '@/lib/types';
 
 export default function CustomRoomConnection(props: {
   searchParams: {
