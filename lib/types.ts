@@ -1,4 +1,4 @@
-import { LocalAudioTrack, LocalVideoTrack } from 'livekit-client';
+import { LocalAudioTrack, LocalVideoTrack, videoCodecs } from 'livekit-client';
 import { VideoCodec } from 'livekit-client';
 
 export interface SessionProps {
@@ -17,5 +17,5 @@ export interface TokenResult {
 }
 
 export function isVideoCodec(codec: string): codec is VideoCodec {
-  return ['vp8', 'vp9', 'h264', 'av1'].includes(codec);
+  return videoCodecs.includes(codec as VideoCodec);
 }
