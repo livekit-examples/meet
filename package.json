@@ -6,7 +6,9 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "pages:build": "pnpm dlx @cloudflare/next-on-pages",
+    "preview": "pnpm pages:build && pnpm --package=wrangler dlx wrangler pages dev"
   },
   "dependencies": {
     "@datadog/browser-logs": "^5.10.0",
