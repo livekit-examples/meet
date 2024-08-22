@@ -5,6 +5,8 @@ import React, { Suspense, useState } from 'react';
 import { encodePassphrase, generateRoomId, randomString } from '@/lib/client-utils';
 import styles from '../styles/Home.module.css';
 
+export const runtime = 'edge';
+
 function Tabs(props: React.PropsWithChildren<{}>) {
   const searchParams = useSearchParams();
   const tabIndex = searchParams?.get('tab') === 'custom' ? 1 : 0;

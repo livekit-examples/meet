@@ -3,6 +3,8 @@ import type { AccessTokenOptions, VideoGrant } from 'livekit-server-sdk';
 import { TokenResult } from '@/lib/types';
 import { NextResponse } from 'next/server';
 
+export const runtime = 'edge';
+
 const apiKey = process.env.LIVEKIT_API_KEY;
 const apiSecret = process.env.LIVEKIT_API_SECRET;
 

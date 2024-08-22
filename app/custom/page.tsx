@@ -2,6 +2,8 @@ import { videoCodecs } from 'livekit-client';
 import { VideoConferenceClientImpl } from './VideoConferenceClientImpl';
 import { isVideoCodec } from '@/lib/types';
 
+export const runtime = 'edge';
+
 export default function CustomRoomConnection(props: {
   searchParams: {
     liveKitUrl?: string;

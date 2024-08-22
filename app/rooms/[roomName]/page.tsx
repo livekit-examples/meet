@@ -27,6 +27,8 @@ import { SettingsMenu } from '@/lib/SettingsMenu';
 import { RecordingIndicator } from '@/lib/RecordingIndicator';
 import { isVideoCodec } from '@/lib/types';
 
+export const runtime = 'edge';
+
 export default function Page({ params }: { params: { roomName: string } }) {
   const router = useRouter();
   const roomName = params.roomName;

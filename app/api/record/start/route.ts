@@ -1,6 +1,8 @@
 import { EgressClient, EncodedFileOutput, S3Upload } from 'livekit-server-sdk';
 import { NextResponse } from 'next/server';
 
+export const runtime = 'edge';
+
 export async function GET(req: Request) {
   try {
     const url = new URL(req.url);
