@@ -50,9 +50,14 @@ export function PageClientImpl(props: {
 
   const handlePreJoinSubmit = React.useCallback(async (values: LocalUserChoices) => {
     setPreJoinChoices(values);
-    const connectionDetailsResp = await fetch(
-      `${CONN_DETAILS_ENDPOINT}?roomName=${props.roomName}&participantName=${values.username}`,
-    );
+    const url = new URL('/', window.location.origin);
+    url.pathname = CONN_DETAILS_ENDPOINT;
+    url.searchParams.append('roomName', props.roomName);
+    url.searchParams.append('participantName', values.username);
+    if (props.region) {
+      url.searchParams.append('region', props.region);
+    }
+    const connectionDetailsResp = await fetch(url.toString());
     const connectionDetailsData = await connectionDetailsResp.json();
     setConnectionDetails(connectionDetailsData);
   }, []);
