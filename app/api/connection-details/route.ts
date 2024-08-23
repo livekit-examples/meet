@@ -33,10 +33,10 @@ export async function GET(request: NextRequest) {
 
     // Return connection details
     const data: ConnectionDetails = {
-      server_url: LIVEKIT_URL!,
-      room_name: roomName,
-      participant_token: participantToken,
-      participant_name: participantName,
+      serverUrl: LIVEKIT_URL!,
+      roomName: roomName,
+      participantToken: participantToken,
+      participantName: participantName,
     };
     return NextResponse.json(data);
   } catch (error) {

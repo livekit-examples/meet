@@ -21,10 +21,8 @@ export function isVideoCodec(codec: string): codec is VideoCodec {
 }
 
 export type ConnectionDetails = {
-  server_url: string;
-  room_name: string;
-  participant_name: string;
-  participant_token: string;
+  serverUrl: string;
+  roomName: string;
+  participantName: string;
+  participantToken: string;
 };
-
-

@@ -157,8 +157,8 @@ function VideoConferenceComponent(props: {
     <>
       <LiveKitRoom
         room={room}
-        token={props.connectionDetails.participant_token}
-        serverUrl={props.connectionDetails.server_url}
+        token={props.connectionDetails.participantToken}
+        serverUrl={props.connectionDetails.serverUrl}
         connectOptions={connectOptions}
         video={props.userChoices.videoEnabled}
         audio={props.userChoices.audioEnabled}
