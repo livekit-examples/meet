@@ -1,5 +1,4 @@
 import { ConnectionDetails } from '@/lib/types';
-import { randomUUID } from 'crypto';
 import { AccessToken, AccessTokenOptions, VideoGrant } from 'livekit-server-sdk';
 import { NextRequest, NextResponse } from 'next/server';
 
@@ -26,7 +25,7 @@ export async function GET(request: NextRequest) {
     // Generate participant token
     const participantToken = await createParticipantToken(
       {
-        identity: `${participantName}__${randomUUID()}`,
+        identity: pseudoRandomParticipantId(participantName),
         name: participantName,
         metadata,
       },
@@ -60,4 +59,13 @@ function createParticipantToken(userInfo: AccessTokenOptions, roomName: string) 
   };
   at.addGrant(grant);
   return at.toJwt();
+}
+
+function pseudoRandomParticipantId(participantName: string): string {
+  const randomPart = 'xxxx-xxxx-xxxx'.replace(/[x]/g, function (c) {
+    const r = (Math.random() * 16) | 0;
+    const v = c === 'x' ? r : (r & 0x3) | 0x8;
+    return `${v.toString(16)}`;
+  });
+  return `${participantName}_${randomPart}`;
 }
