@@ -1,11 +1,9 @@
 import { EgressClient } from 'livekit-server-sdk';
-import { NextResponse } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
 
-export async function GET(req: Request) {
+export async function GET(req: NextRequest) {
   try {
-    const url = new URL(req.url);
-    const searchParams = url.searchParams;
-    const roomName = searchParams.get('roomName');
+    const roomName = req.nextUrl.searchParams.get('roomName');
 
     /**
      * CAUTION:
@@ -14,7 +12,7 @@ export async function GET(req: Request) {
      * DO NOT USE THIS FOR PRODUCTION PURPOSES AS IS
      */
 
-    if (typeof roomName !== 'string') {
+    if (roomName === null) {
       return new NextResponse('Missing roomName parameter', { status: 403 });
     }
 
