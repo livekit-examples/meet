@@ -1,8 +1,6 @@
 import { EgressClient, EncodedFileOutput, S3Upload } from 'livekit-server-sdk';
 import { NextRequest, NextResponse } from 'next/server';
 
-export const runtime = 'edge';
-
 export async function GET(req: NextRequest) {
   try {
     const roomName = req.nextUrl.searchParams.get('roomName');
@@ -70,3 +68,5 @@ export async function GET(req: NextRequest) {
     }
   }
 }
+
+export const runtime = 'edge'; // Can be removed if not deploying to Edge Runtime. See https://nextjs.org/docs/app/building-your-application/rendering/edge-and-nodejs-runtimes

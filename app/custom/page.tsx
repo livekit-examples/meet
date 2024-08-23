@@ -2,8 +2,6 @@ import { videoCodecs } from 'livekit-client';
 import { VideoConferenceClientImpl } from './VideoConferenceClientImpl';
 import { isVideoCodec } from '@/lib/types';
 
-export const runtime = 'edge';
-
 export default function CustomRoomConnection(props: {
   searchParams: {
     liveKitUrl?: string;
@@ -28,3 +26,5 @@ export default function CustomRoomConnection(props: {
     </main>
   );
 }
+
+export const runtime = 'edge'; // Can be removed if not deploying to Edge Runtime. See https://nextjs.org/docs/app/building-your-application/rendering/edge-and-nodejs-runtimes

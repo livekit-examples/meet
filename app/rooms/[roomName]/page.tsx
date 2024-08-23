@@ -2,8 +2,6 @@ import * as React from 'react';
 import { PageClientImpl } from './PageClientImpl';
 import { isVideoCodec } from '@/lib/types';
 
-export const runtime = 'edge';
-
 export default function Page({
   params,
   searchParams,
@@ -26,3 +24,5 @@ export default function Page({
     <PageClientImpl roomName={params.roomName} region={searchParams.region} hq={hq} codec={codec} />
   );
 }
+
+export const runtime = 'edge'; // Can be removed if not deploying to Edge Runtime. See https://nextjs.org/docs/app/building-your-application/rendering/edge-and-nodejs-runtimes

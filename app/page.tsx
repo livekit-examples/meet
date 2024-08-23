@@ -5,8 +5,6 @@ import React, { Suspense, useState } from 'react';
 import { encodePassphrase, generateRoomId, randomString } from '@/lib/client-utils';
 import styles from '../styles/Home.module.css';
 
-export const runtime = 'edge';
-
 function Tabs(props: React.PropsWithChildren<{}>) {
   const searchParams = useSearchParams();
   const tabIndex = searchParams?.get('tab') === 'custom' ? 1 : 0;
@@ -201,3 +199,5 @@ export default function Page() {
     </>
   );
 }
+
+export const runtime = 'edge'; // Can be removed if not deploying to Edge Runtime. See https://nextjs.org/docs/app/building-your-application/rendering/edge-and-nodejs-runtimes
