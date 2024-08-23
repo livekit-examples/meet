@@ -34,9 +34,9 @@ export async function GET(request: NextRequest) {
     // Return connection details
     const data: ConnectionDetails = {
       server_url: LIVEKIT_URL!,
-      room_name: roomName ? roomName : 'playground_hello-world',
+      room_name: roomName,
       participant_token: participantToken,
-      participant_name: participantName ? participantName : 'playground-default-participant',
+      participant_name: participantName,
     };
     return NextResponse.json(data);
   } catch (error) {
