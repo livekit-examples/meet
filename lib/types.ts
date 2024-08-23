@@ -19,3 +19,10 @@ export interface TokenResult {
 export function isVideoCodec(codec: string): codec is VideoCodec {
   return videoCodecs.includes(codec as VideoCodec);
 }
+
+export type ConnectionDetails = {
+  serverUrl: string;
+  roomName: string;
+  participantName: string;
+  participantToken: string;
+};
