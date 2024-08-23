@@ -68,7 +68,7 @@ function createParticipantToken(userInfo: AccessTokenOptions, roomName: string) 
 /**
  * Get the LiveKit server URL for the given region.
  */
-export function getLiveKitURL(region: string | null): string {
+function getLiveKitURL(region: string | null): string {
   let targetKey = 'LIVEKIT_URL';
   if (region) {
     targetKey = `LIVEKIT_URL_${region}`.toUpperCase();
