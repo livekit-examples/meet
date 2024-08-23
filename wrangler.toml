@@ -6,5 +6,4 @@ compatibility_flags = [ "nodejs_compat" ]
 send_metrics = false
 
 [vars]
-NEXT_PUBLIC_LK_TOKEN_ENDPOINT = "/api/token"
 NEXT_PUBLIC_SHOW_SETTINGS_MENU = "true"
