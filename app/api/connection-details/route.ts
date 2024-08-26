@@ -1,5 +1,5 @@
+import { randomString } from '@/lib/client-utils';
 import { ConnectionDetails } from '@/lib/types';
-import { randomUUID } from 'crypto';
 import { AccessToken, AccessTokenOptions, VideoGrant } from 'livekit-server-sdk';
 import { NextRequest, NextResponse } from 'next/server';
 
@@ -29,7 +29,7 @@ export async function GET(request: NextRequest) {
     // Generate participant token
     const participantToken = await createParticipantToken(
       {
-        identity: `${participantName}__${randomUUID()}`,
+        identity: `${participantName}__${randomString(4)}`,
         name: participantName,
         metadata,
       },
