@@ -12,6 +12,11 @@ export async function GET(request: NextRequest) {
     const roomName = request.nextUrl.searchParams.get('roomName');
     const participantName = request.nextUrl.searchParams.get('participantName');
     const metadata = request.nextUrl.searchParams.get('metadata') ?? '';
+    const region = request.nextUrl.searchParams.get('region');
+    const livekitServerUrl = region ? getLiveKitURL(region) : LIVEKIT_URL;
+    if (livekitServerUrl === undefined) {
+      throw new Error('Invalid region');
+    }
 
     if (typeof roomName !== 'string') {
       return new NextResponse('Missing required query parameter: roomName', { status: 400 });
@@ -32,7 +37,7 @@ export async function GET(request: NextRequest) {
 
     // Return connection details
     const data: ConnectionDetails = {
-      serverUrl: LIVEKIT_URL!,
+      serverUrl: livekitServerUrl,
       roomName: roomName,
       participantToken: participantToken,
       participantName: participantName,
@@ -66,6 +71,21 @@ function pseudoRandomParticipantId(participantName: string): string {
     return `${v.toString(16)}`;
   });
   return `${participantName}_${randomPart}`;
+}
+
+/**
+ * Get the LiveKit server URL for the given region.
+ */
+function getLiveKitURL(region: string | null): string {
+  let targetKey = 'LIVEKIT_URL';
+  if (region) {
+    targetKey = `LIVEKIT_URL_${region}`.toUpperCase();
+  }
+  const url = process.env[targetKey];
+  if (!url) {
+    throw new Error(`${targetKey} is not defined`);
+  }
+  return url;
 }
 
 export const runtime = 'edge'; // Can be removed if not deploying to Edge Runtime. See https://nextjs.org/docs/app/building-your-application/rendering/edge-and-nodejs-runtimes
