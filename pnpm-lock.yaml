@@ -18,8 +18,8 @@ importers:
         specifier: 1.0.12
         version: 1.0.12
       '@livekit/krisp-noise-filter':
-        specifier: ^0.2.5
-        version: 0.2.5(livekit-client@2.5.0)
+        specifier: ^0.2.7
+        version: 0.2.7(livekit-client@2.5.0)
       livekit-client:
         specifier: 2.5.0
         version: 2.5.0
@@ -167,8 +167,8 @@ packages:
     resolution: {integrity: sha512-Hsxkfq240w0tMPtkQTHQotpkYfIY4lhP2pzegvOIIV/nYxj8LeRYypUjxJpFw3s6jQcV/WQS7oCYmFQdy98Jtw==}
     engines: {node: '>=18'}
 
-  '@livekit/krisp-noise-filter@0.2.5':
-    resolution: {integrity: sha512-/lY0geizAGp34qbTqp6WUZsNuIM5c2B8UV0WePNUyCntmku9WbkGJiJSUeXnunpf0a7tVPDUK6QFCXBw7dub5w==}
+  '@livekit/krisp-noise-filter@0.2.7':
+    resolution: {integrity: sha512-8OIp+h1F722jVz5gyuKvuiNj/5LxH3CoFL+MdZycWLyxxrFjWZGKOPjBItO9xl+w3yRlhX+ZCfOQvsw5Vh+OYQ==}
     peerDependencies:
       livekit-client: ^2.0.8
 
@@ -1797,7 +1797,7 @@ snapshots:
 
   '@livekit/components-styles@1.0.12': {}
 
-  '@livekit/krisp-noise-filter@0.2.5(livekit-client@2.5.0)':
+  '@livekit/krisp-noise-filter@0.2.7(livekit-client@2.5.0)':
     dependencies:
       livekit-client: 2.5.0
 
