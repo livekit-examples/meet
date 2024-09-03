@@ -10,7 +10,7 @@ importers:
     dependencies:
       '@datadog/browser-logs':
         specifier: ^5.23.3
-        version: 5.23.3
+        version: 5.24.0
       '@livekit/components-react':
         specifier: 2.4.3
         version: 2.4.3(@livekit/protocol@1.20.1)(livekit-client@2.5.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(tslib@2.7.0)
@@ -66,13 +66,13 @@ packages:
   '@bufbuild/protobuf@1.10.0':
     resolution: {integrity: sha512-QDdVFLoN93Zjg36NoQPZfsVH9tZew7wKDKyV5qRdj8ntT4wQCOradQjRaTdwMhWUYsgKsvCINKKm87FdEk96Ag==}
 
-  '@datadog/browser-core@5.23.3':
-    resolution: {integrity: sha512-WaVJfTIHqU1m6voRlxVOEPXBBjHzr/ygE8tYTQRIVCWo7w/3yGOpc6dqlclHM/dpAHBVJ/L8/rQZLp0FoOAmOA==}
+  '@datadog/browser-core@5.24.0':
+    resolution: {integrity: sha512-NKKXdFTSOQ2a8Y9Y5rgu6MLghfN3l7Mnera95YYNECh8jqHB2IXb2BRpir0lqOzgkBKGI7SF6kqjNV7nWL1NzQ==}
 
-  '@datadog/browser-logs@5.23.3':
-    resolution: {integrity: sha512-OGUDn0KVnfWwIv8gK8q6D7Z1U2XFekKVYcqrq8UXnHM+mznn/j31I3Z/FAUuBNsk/Xr3U70OZw1QtFQTB69fng==}
+  '@datadog/browser-logs@5.24.0':
+    resolution: {integrity: sha512-63Hxtc7GlY1U+D+08Rg8g3WhSMxhTSamcwefAvkjoHHuEQEfpm/IcO9paUeIIEue88BR8J+kbLVaRgpxKC4W3g==}
     peerDependencies:
-      '@datadog/browser-rum': 5.23.3
+      '@datadog/browser-rum': 5.24.0
     peerDependenciesMeta:
       '@datadog/browser-rum':
         optional: true
@@ -1698,11 +1698,11 @@ snapshots:
 
   '@bufbuild/protobuf@1.10.0': {}
 
-  '@datadog/browser-core@5.23.3': {}
+  '@datadog/browser-core@5.24.0': {}
 
-  '@datadog/browser-logs@5.23.3':
+  '@datadog/browser-logs@5.24.0':
     dependencies:
-      '@datadog/browser-core': 5.23.3
+      '@datadog/browser-core': 5.24.0
 
   '@eslint-community/eslint-utils@4.4.0(eslint@9.9.1)':
     dependencies:
