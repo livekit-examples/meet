@@ -10,7 +10,7 @@ importers:
     dependencies:
       '@datadog/browser-logs':
         specifier: ^5.23.3
-        version: 5.25.0
+        version: 5.26.0
       '@livekit/components-react':
         specifier: 2.5.1
         version: 2.5.1(@livekit/protocol@1.20.1)(livekit-client@2.5.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(tslib@2.7.0)
@@ -66,13 +66,13 @@ packages:
   '@bufbuild/protobuf@1.10.0':
     resolution: {integrity: sha512-QDdVFLoN93Zjg36NoQPZfsVH9tZew7wKDKyV5qRdj8ntT4wQCOradQjRaTdwMhWUYsgKsvCINKKm87FdEk96Ag==}
 
-  '@datadog/browser-core@5.25.0':
-    resolution: {integrity: sha512-y34T+YGomm2qRSZeOhwW8p62yXGRUQ1H72YUfSPKQkvo342XnFhmXfYaelmXVkQVFKf9aWzhYLv26ljk2Rb8LQ==}
+  '@datadog/browser-core@5.26.0':
+    resolution: {integrity: sha512-/UAS6q7xkc9bsjn5ziPC6PDs3B0Fyd+4PM/hxmXIvOxMFkJa1KmgWcqlkxq3i7TW/i2k2tOgtgTFUtjp4SyEmg==}
 
-  '@datadog/browser-logs@5.25.0':
-    resolution: {integrity: sha512-RcCgA2WIW89HTkveK32hbZdM06jSmW2k0+SkSo3NqfdvixhPRJTUXOjdnzRLx6CI/xXjDJ4QWE+swxnK0SUTMg==}
+  '@datadog/browser-logs@5.26.0':
+    resolution: {integrity: sha512-udyBI3+XoqN2zbTEGZjig1rfk5phwwkvb3W2Fqd4JWZiTrlct/bJ2BNV6yrzaSLtTHabOaoebaQCQ87jcq+XpA==}
     peerDependencies:
-      '@datadog/browser-rum': 5.25.0
+      '@datadog/browser-rum': 5.26.0
     peerDependenciesMeta:
       '@datadog/browser-rum':
         optional: true
@@ -509,6 +509,9 @@ packages:
   caniuse-lite@1.0.30001655:
     resolution: {integrity: sha512-jRGVy3iSGO5Uutn2owlb5gR6qsGngTw9ZTb4ali9f3glshcNmJ2noam4Mo9zia5P9Dk3jNNydy7vQjuE5dQmfg==}
 
+  caniuse-lite@1.0.30001660:
+    resolution: {integrity: sha512-GacvNTTuATm26qC74pt+ad1fW15mlQ/zuTzzY1ZoIzECTP8HURDfF43kNxPgf7H1jmelCBQTTbBNxdSXOA7Bqg==}
+
   chalk@4.1.2:
     resolution: {integrity: sha512-oKnbhFyRIXpUuez8iBMmyEa4nbj4IOQyuhc/wy9kY7/WVPcwIO9VA668Pu8RkO7+0G76SLROeyw9CpQ061i4mA==}
     engines: {node: '>=10'}
@@ -602,8 +605,8 @@ packages:
   eastasianwidth@0.2.0:
     resolution: {integrity: sha512-I88TYZWc9XiYHRQ4/3c5rjjfgkjhLyW2luGIheGERbNQ6OY7yTybanSpDXZa8y7VUP9YmDcYa+eyq4ca7iLqWA==}
 
-  electron-to-chromium@1.5.13:
-    resolution: {integrity: sha512-lbBcvtIJ4J6sS4tb5TLp1b4LyfCdMkwStzXPyAgVgTRAsep4bvrAGaBOP7ZJtQMNJpSQ9SqG4brWOroNaQtm7Q==}
+  electron-to-chromium@1.5.19:
+    resolution: {integrity: sha512-kpLJJi3zxTR1U828P+LIUDZ5ohixyo68/IcYOHLqnbTPr/wdgn4i1ECvmALN9E16JPA6cvCG5UG79gVwVdEK5w==}
 
   emoji-regex@8.0.0:
     resolution: {integrity: sha512-MSjYzcWNOA0ewAHpz0MxpYFvwg6yjy1NG3xteoqz644VCo/RPgnr1/GGt+ic3iJTzQ8Eu3TdM14SawnVUmGE6A==}
@@ -1550,8 +1553,8 @@ packages:
       uglify-js:
         optional: true
 
-  terser@5.31.6:
-    resolution: {integrity: sha512-PQ4DAriWzKj+qgehQ7LK5bQqCFNMmlhjR2PFFLuqGCpuCAauxemVBWwWOxo3UIwWQx8+Pr61Df++r76wDmkQBg==}
+  terser@5.32.0:
+    resolution: {integrity: sha512-v3Gtw3IzpBJ0ugkxEX8U0W6+TnPKRRCWGh1jC/iM/e3Ki5+qvO1L1EAZ56bZasc64aXHwRHNIQEzm6//i5cemQ==}
     engines: {node: '>=10'}
     hasBin: true
 
@@ -1698,11 +1701,11 @@ snapshots:
 
   '@bufbuild/protobuf@1.10.0': {}
 
-  '@datadog/browser-core@5.25.0': {}
+  '@datadog/browser-core@5.26.0': {}
 
-  '@datadog/browser-logs@5.25.0':
+  '@datadog/browser-logs@5.26.0':
     dependencies:
-      '@datadog/browser-core': 5.25.0
+      '@datadog/browser-core': 5.26.0
 
   '@eslint-community/eslint-utils@4.4.0(eslint@9.9.1)':
     dependencies:
@@ -2150,8 +2153,8 @@ snapshots:
 
   browserslist@4.23.3:
     dependencies:
-      caniuse-lite: 1.0.30001655
-      electron-to-chromium: 1.5.13
+      caniuse-lite: 1.0.30001660
+      electron-to-chromium: 1.5.19
       node-releases: 2.0.18
       update-browserslist-db: 1.1.0(browserslist@4.23.3)
 
@@ -2181,6 +2184,8 @@ snapshots:
   camelcase@8.0.0: {}
 
   caniuse-lite@1.0.30001655: {}
+
+  caniuse-lite@1.0.30001660: {}
 
   chalk@4.1.2:
     dependencies:
@@ -2284,7 +2289,7 @@ snapshots:
 
   eastasianwidth@0.2.0: {}
 
-  electron-to-chromium@1.5.13: {}
+  electron-to-chromium@1.5.19: {}
 
   emoji-regex@8.0.0: {}
 
@@ -3385,10 +3390,10 @@ snapshots:
       jest-worker: 27.5.1
       schema-utils: 3.3.0
       serialize-javascript: 6.0.2
-      terser: 5.31.6
+      terser: 5.32.0
       webpack: 5.94.0
 
-  terser@5.31.6:
+  terser@5.32.0:
     dependencies:
       '@jridgewell/source-map': 0.3.6
       acorn: 8.12.1
