@@ -15,7 +15,7 @@
     "@livekit/krisp-noise-filter": "^0.2.7",
     "livekit-client": "2.5.1",
     "livekit-server-sdk": "2.6.1",
-    "next": "14.2.7",
+    "next": "14.2.9",
     "react": "18.3.1",
     "react-dom": "18.3.1",
     "tinykeys": "^2.1.0"
