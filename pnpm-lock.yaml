@@ -15,8 +15,8 @@ importers:
         specifier: 2.5.0
         version: 2.5.0(@livekit/protocol@1.20.1)(livekit-client@2.5.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(tslib@2.7.0)
       '@livekit/components-styles':
-        specifier: 1.0.12
-        version: 1.0.12
+        specifier: 1.1.0
+        version: 1.1.0
       '@livekit/krisp-noise-filter':
         specifier: ^0.2.7
         version: 0.2.7(livekit-client@2.5.1)
@@ -163,8 +163,8 @@ packages:
       react-dom: '>=18'
       tslib: ^2.6.2
 
-  '@livekit/components-styles@1.0.12':
-    resolution: {integrity: sha512-Hsxkfq240w0tMPtkQTHQotpkYfIY4lhP2pzegvOIIV/nYxj8LeRYypUjxJpFw3s6jQcV/WQS7oCYmFQdy98Jtw==}
+  '@livekit/components-styles@1.1.0':
+    resolution: {integrity: sha512-qTyRDLcRh+1KyhMqOrNu9MziqUf4qtlW3zBPkRoHfYZKgP3dEVU/D3UfHOEfGI6a/8nm15mET2IBfPoKFg/u/w==}
     engines: {node: '>=18'}
 
   '@livekit/krisp-noise-filter@0.2.7':
@@ -1809,7 +1809,7 @@ snapshots:
       tslib: 2.7.0
       usehooks-ts: 3.1.0(react@18.3.1)
 
-  '@livekit/components-styles@1.0.12': {}
+  '@livekit/components-styles@1.1.0': {}
 
   '@livekit/krisp-noise-filter@0.2.7(livekit-client@2.5.1)':
     dependencies:
