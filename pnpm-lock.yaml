@@ -18,8 +18,8 @@ importers:
         specifier: 1.1.1
         version: 1.1.1
       '@livekit/krisp-noise-filter':
-        specifier: ^0.2.7
-        version: 0.2.7(livekit-client@2.5.1)
+        specifier: ^0.2.8
+        version: 0.2.8(livekit-client@2.5.1)
       livekit-client:
         specifier: 2.5.1
         version: 2.5.1
@@ -167,8 +167,8 @@ packages:
     resolution: {integrity: sha512-lCug8KtF/uaBMqG3nq0puytTibglmQKQICnDTnRqNZpNyOJLJ4texBmfIV/eV/EYI/7SKxC/xJmiGrXFdES09Q==}
     engines: {node: '>=18'}
 
-  '@livekit/krisp-noise-filter@0.2.7':
-    resolution: {integrity: sha512-8OIp+h1F722jVz5gyuKvuiNj/5LxH3CoFL+MdZycWLyxxrFjWZGKOPjBItO9xl+w3yRlhX+ZCfOQvsw5Vh+OYQ==}
+  '@livekit/krisp-noise-filter@0.2.8':
+    resolution: {integrity: sha512-WPlQOwm4bC3jxtCFxlc+l0Ai44NbfeSXwQ0MGnv4gC3TVam+imHU5agFHdc+6TFRsQAaq7wRtLjAbt7shrpzaw==}
     peerDependencies:
       livekit-client: ^2.0.8
 
@@ -1808,7 +1808,7 @@ snapshots:
 
   '@livekit/components-styles@1.1.1': {}
 
-  '@livekit/krisp-noise-filter@0.2.7(livekit-client@2.5.1)':
+  '@livekit/krisp-noise-filter@0.2.8(livekit-client@2.5.1)':
     dependencies:
       livekit-client: 2.5.1
 
@@ -2418,7 +2418,7 @@ snapshots:
       eslint: 9.9.1
       eslint-import-resolver-node: 0.3.9
       eslint-import-resolver-typescript: 3.6.3(@typescript-eslint/parser@7.2.0(eslint@9.9.1)(typescript@5.5.4))(eslint-import-resolver-node@0.3.9)(eslint-plugin-import@2.29.1(eslint@9.9.1))(eslint@9.9.1)
-      eslint-plugin-import: 2.29.1(@typescript-eslint/parser@7.2.0(eslint@9.9.1)(typescript@5.5.4))(eslint-import-resolver-typescript@3.6.3)(eslint@9.9.1)
+      eslint-plugin-import: 2.29.1(@typescript-eslint/parser@7.2.0(eslint@9.9.1)(typescript@5.5.4))(eslint-import-resolver-typescript@3.6.3(@typescript-eslint/parser@7.2.0(eslint@9.9.1)(typescript@5.5.4))(eslint-import-resolver-node@0.3.9)(eslint-plugin-import@2.29.1(eslint@9.9.1))(eslint@9.9.1))(eslint@9.9.1)
       eslint-plugin-jsx-a11y: 6.9.0(eslint@9.9.1)
       eslint-plugin-react: 7.35.0(eslint@9.9.1)
       eslint-plugin-react-hooks: 4.6.2(eslint@9.9.1)
@@ -2449,7 +2449,7 @@ snapshots:
       is-bun-module: 1.1.0
       is-glob: 4.0.3
     optionalDependencies:
-      eslint-plugin-import: 2.29.1(@typescript-eslint/parser@7.2.0(eslint@9.9.1)(typescript@5.5.4))(eslint-import-resolver-typescript@3.6.3)(eslint@9.9.1)
+      eslint-plugin-import: 2.29.1(@typescript-eslint/parser@7.2.0(eslint@9.9.1)(typescript@5.5.4))(eslint-import-resolver-typescript@3.6.3(@typescript-eslint/parser@7.2.0(eslint@9.9.1)(typescript@5.5.4))(eslint-import-resolver-node@0.3.9)(eslint-plugin-import@2.29.1(eslint@9.9.1))(eslint@9.9.1))(eslint@9.9.1)
     transitivePeerDependencies:
       - '@typescript-eslint/parser'
       - eslint-import-resolver-node
@@ -2467,7 +2467,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  eslint-plugin-import@2.29.1(@typescript-eslint/parser@7.2.0(eslint@9.9.1)(typescript@5.5.4))(eslint-import-resolver-typescript@3.6.3)(eslint@9.9.1):
+  eslint-plugin-import@2.29.1(@typescript-eslint/parser@7.2.0(eslint@9.9.1)(typescript@5.5.4))(eslint-import-resolver-typescript@3.6.3(@typescript-eslint/parser@7.2.0(eslint@9.9.1)(typescript@5.5.4))(eslint-import-resolver-node@0.3.9)(eslint-plugin-import@2.29.1(eslint@9.9.1))(eslint@9.9.1))(eslint@9.9.1):
     dependencies:
       array-includes: 3.1.8
       array.prototype.findlastindex: 1.2.5
