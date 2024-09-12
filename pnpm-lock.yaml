@@ -12,11 +12,11 @@ importers:
         specifier: ^5.23.3
         version: 5.26.0
       '@livekit/components-react':
-        specifier: 2.5.2
-        version: 2.5.2(@livekit/protocol@1.20.1)(livekit-client@2.5.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(tslib@2.7.0)
+        specifier: 2.5.3
+        version: 2.5.3(@livekit/protocol@1.20.1)(livekit-client@2.5.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(tslib@2.7.0)
       '@livekit/components-styles':
-        specifier: 1.1.1
-        version: 1.1.1
+        specifier: 1.1.2
+        version: 1.1.2
       '@livekit/krisp-noise-filter':
         specifier: ^0.2.8
         version: 0.2.8(livekit-client@2.5.1)
@@ -145,16 +145,16 @@ packages:
   '@jridgewell/trace-mapping@0.3.25':
     resolution: {integrity: sha512-vNk6aEwybGtawWmy/PzwnGDOjCkLWSD2wqvjGGAgOAwCGWySYXfYoxt00IJkTF+8Lb57DwOb3Aa0o9CApepiYQ==}
 
-  '@livekit/components-core@0.11.3':
-    resolution: {integrity: sha512-fGHDmZyW2A1p4z8AGdR5lFFMHKyXwvLT0DPYfKi3VhRodNzlm4ORMEZyHqioWrorjIJ453PU1nBDmv44ZqzgUg==}
+  '@livekit/components-core@0.11.4':
+    resolution: {integrity: sha512-8Dr/9WCEov5AW42KrTnLTuoEIK1yWHcdvvJl8znxx59uUVlE8o6IvsFnofNlfRJ2fCADSnw0K2yEpLQjwLel2Q==}
     engines: {node: '>=18'}
     peerDependencies:
       '@livekit/protocol': ^1.16.0
       livekit-client: ^2.4.0
       tslib: ^2.6.2
 
-  '@livekit/components-react@2.5.2':
-    resolution: {integrity: sha512-N4cNWiXliJa69em9HzDQxCYolW8lXYgwuY2ilWxMLbSPzkqEVb5FTVFIputrmX+k3VhXL5635CejaW36NRpb9Q==}
+  '@livekit/components-react@2.5.3':
+    resolution: {integrity: sha512-RKqi2KDltsqTdw5xx0ahEfHtuFvQoTjmJ/M1pukqU7Eczcuwga4AuEESxWkq6ct7Zenabru4eYjFbScc60L3og==}
     engines: {node: '>=18'}
     peerDependencies:
       '@livekit/protocol': ^1.16.0
@@ -163,8 +163,8 @@ packages:
       react-dom: '>=18'
       tslib: ^2.6.2
 
-  '@livekit/components-styles@1.1.1':
-    resolution: {integrity: sha512-lCug8KtF/uaBMqG3nq0puytTibglmQKQICnDTnRqNZpNyOJLJ4texBmfIV/eV/EYI/7SKxC/xJmiGrXFdES09Q==}
+  '@livekit/components-styles@1.1.2':
+    resolution: {integrity: sha512-6ghL+JQWPnD3AYK+Zfcd100Kvh5YrrG2z23REyXUjtHpQjPRgg7F/lmHNa7Jz55afCv0L0BQFYpfo5Z4Kdc+tw==}
     engines: {node: '>=18'}
 
   '@livekit/krisp-noise-filter@0.2.8':
@@ -1786,7 +1786,7 @@ snapshots:
       '@jridgewell/resolve-uri': 3.1.2
       '@jridgewell/sourcemap-codec': 1.5.0
 
-  '@livekit/components-core@0.11.3(@livekit/protocol@1.20.1)(livekit-client@2.5.1)(tslib@2.7.0)':
+  '@livekit/components-core@0.11.4(@livekit/protocol@1.20.1)(livekit-client@2.5.1)(tslib@2.7.0)':
     dependencies:
       '@floating-ui/dom': 1.6.8
       '@livekit/protocol': 1.20.1
@@ -1795,9 +1795,9 @@ snapshots:
       rxjs: 7.8.1
       tslib: 2.7.0
 
-  '@livekit/components-react@2.5.2(@livekit/protocol@1.20.1)(livekit-client@2.5.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(tslib@2.7.0)':
+  '@livekit/components-react@2.5.3(@livekit/protocol@1.20.1)(livekit-client@2.5.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(tslib@2.7.0)':
     dependencies:
-      '@livekit/components-core': 0.11.3(@livekit/protocol@1.20.1)(livekit-client@2.5.1)(tslib@2.7.0)
+      '@livekit/components-core': 0.11.4(@livekit/protocol@1.20.1)(livekit-client@2.5.1)(tslib@2.7.0)
       '@livekit/protocol': 1.20.1
       clsx: 2.1.1
       livekit-client: 2.5.1
@@ -1806,7 +1806,7 @@ snapshots:
       tslib: 2.7.0
       usehooks-ts: 3.1.0(react@18.3.1)
 
-  '@livekit/components-styles@1.1.1': {}
+  '@livekit/components-styles@1.1.2': {}
 
   '@livekit/krisp-noise-filter@0.2.8(livekit-client@2.5.1)':
     dependencies:
@@ -2418,7 +2418,7 @@ snapshots:
       eslint: 9.9.1
       eslint-import-resolver-node: 0.3.9
       eslint-import-resolver-typescript: 3.6.3(@typescript-eslint/parser@7.2.0(eslint@9.9.1)(typescript@5.5.4))(eslint-import-resolver-node@0.3.9)(eslint-plugin-import@2.29.1(eslint@9.9.1))(eslint@9.9.1)
-      eslint-plugin-import: 2.29.1(@typescript-eslint/parser@7.2.0(eslint@9.9.1)(typescript@5.5.4))(eslint-import-resolver-typescript@3.6.3(@typescript-eslint/parser@7.2.0(eslint@9.9.1)(typescript@5.5.4))(eslint-import-resolver-node@0.3.9)(eslint-plugin-import@2.29.1(eslint@9.9.1))(eslint@9.9.1))(eslint@9.9.1)
+      eslint-plugin-import: 2.29.1(@typescript-eslint/parser@7.2.0(eslint@9.9.1)(typescript@5.5.4))(eslint-import-resolver-typescript@3.6.3)(eslint@9.9.1)
       eslint-plugin-jsx-a11y: 6.9.0(eslint@9.9.1)
       eslint-plugin-react: 7.35.0(eslint@9.9.1)
       eslint-plugin-react-hooks: 4.6.2(eslint@9.9.1)
@@ -2449,7 +2449,7 @@ snapshots:
       is-bun-module: 1.1.0
       is-glob: 4.0.3
     optionalDependencies:
-      eslint-plugin-import: 2.29.1(@typescript-eslint/parser@7.2.0(eslint@9.9.1)(typescript@5.5.4))(eslint-import-resolver-typescript@3.6.3(@typescript-eslint/parser@7.2.0(eslint@9.9.1)(typescript@5.5.4))(eslint-import-resolver-node@0.3.9)(eslint-plugin-import@2.29.1(eslint@9.9.1))(eslint@9.9.1))(eslint@9.9.1)
+      eslint-plugin-import: 2.29.1(@typescript-eslint/parser@7.2.0(eslint@9.9.1)(typescript@5.5.4))(eslint-import-resolver-typescript@3.6.3)(eslint@9.9.1)
     transitivePeerDependencies:
       - '@typescript-eslint/parser'
       - eslint-import-resolver-node
@@ -2467,7 +2467,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  eslint-plugin-import@2.29.1(@typescript-eslint/parser@7.2.0(eslint@9.9.1)(typescript@5.5.4))(eslint-import-resolver-typescript@3.6.3(@typescript-eslint/parser@7.2.0(eslint@9.9.1)(typescript@5.5.4))(eslint-import-resolver-node@0.3.9)(eslint-plugin-import@2.29.1(eslint@9.9.1))(eslint@9.9.1))(eslint@9.9.1):
+  eslint-plugin-import@2.29.1(@typescript-eslint/parser@7.2.0(eslint@9.9.1)(typescript@5.5.4))(eslint-import-resolver-typescript@3.6.3)(eslint@9.9.1):
     dependencies:
       array-includes: 3.1.8
       array.prototype.findlastindex: 1.2.5
