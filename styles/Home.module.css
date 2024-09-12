@@ -1,11 +1,12 @@
 .main {
+  position: relative;
   display: grid;
   gap: 1rem;
   justify-content: center;
   place-content: center;
   justify-items: center;
-  padding-bottom: 100px;
   overflow: auto;
+  flex-grow: 1;
 }
 
 .tabContainer {
