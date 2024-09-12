@@ -10,6 +10,7 @@ import {
   useIsRecording,
 } from '@livekit/components-react';
 import styles from '../styles/SettingsMenu.module.css';
+import type { KrispNoiseFilterProcessor } from '@livekit/krisp-noise-filter';
 
 /**
  * @alpha
@@ -40,14 +41,19 @@ export function SettingsMenu(props: SettingsMenuProps) {
 
   const [activeTab, setActiveTab] = React.useState(tabs[0]);
   const [isNoiseFilterEnabled, setIsNoiseFilterEnabled] = React.useState(true);
+  const [isNoiseFilterPending, setIsNoiseFilterPending] = React.useState(false);
 
   React.useEffect(() => {
     const micPublication = microphoneTrack;
     if (micPublication && micPublication.track instanceof LocalAudioTrack) {
       const currentProcessor = micPublication.track.getProcessor();
-      if (currentProcessor && !isNoiseFilterEnabled) {
-        micPublication.track.stopProcessor();
+      if (currentProcessor && currentProcessor.name === 'livekit-noise-filter') {
+        setIsNoiseFilterPending(true);
+        (currentProcessor as KrispNoiseFilterProcessor)
+          .setEnabled(isNoiseFilterEnabled)
+          .finally(() => setIsNoiseFilterPending(false));
       } else if (!currentProcessor && isNoiseFilterEnabled) {
+        setIsNoiseFilterPending(true);
         import('@livekit/krisp-noise-filter')
           .then(({ KrispNoiseFilter, isKrispNoiseFilterSupported }) => {
             if (!isKrispNoiseFilterSupported()) {
@@ -60,7 +66,8 @@ export function SettingsMenu(props: SettingsMenuProps) {
               ?.setProcessor(KrispNoiseFilter())
               .then(() => console.log('successfully set noise filter'));
           })
-          .catch((e) => console.error('Failed to load noise filter', e));
+          .catch((e) => console.error('Failed to load noise filter', e))
+          .finally(() => setIsNoiseFilterPending(false));
       }
     }
   }, [isNoiseFilterEnabled, microphoneTrack]);
@@ -169,6 +176,7 @@ export function SettingsMenu(props: SettingsMenuProps) {
                 id="noise-filter"
                 onChange={(ev) => setIsNoiseFilterEnabled(ev.target.checked)}
                 checked={isNoiseFilterEnabled}
+                disabled={isNoiseFilterPending}
               ></input>
             </section>
           </>
