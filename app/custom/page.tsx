@@ -21,7 +21,7 @@ export default function CustomRoomConnection(props: {
   }
 
   return (
-    <main data-lk-theme="default">
+    <main data-lk-theme="default" style={{ height: '100%' }}>
       <VideoConferenceClientImpl liveKitUrl={liveKitUrl} token={token} codec={codec} />
     </main>
   );
