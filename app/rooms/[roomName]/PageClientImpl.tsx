@@ -24,9 +24,20 @@ import {
 import { useRouter } from 'next/navigation';
 import React from 'react';
 
+const DEFAULT_CONN_DETAILS_ENDPOINT = '/api/connection-details';
 const CONN_DETAILS_ENDPOINT =
-  process.env.NEXT_PUBLIC_CONN_DETAILS_ENDPOINT ?? '/api/connection-details';
+  process.env.NEXT_PUBLIC_CONN_DETAILS_ENDPOINT ?? DEFAULT_CONN_DETAILS_ENDPOINT;
 const SHOW_SETTINGS_MENU = process.env.NEXT_PUBLIC_SHOW_SETTINGS_MENU == 'true';
+
+function getConnectionDetailsHeaders(): HeadersInit | undefined {
+  const hostnameRegex = /^(?<sandbox_id>[a-z0-9][a-z0-9-]*[a-z0-9])(\.sandbox\.livekit\.io|\.sandbox\.staging\.livekit\.io)$/;
+  const match = window.location.hostname.match(hostnameRegex);
+  const sandbox_id = match?.groups?.sandbox_id;
+  if (!sandbox_id) {
+    return;
+  }
+  return { 'X-Sandbox-ID': sandbox_id };
+}
 
 export function PageClientImpl(props: {
   roomName: string;
@@ -56,7 +67,10 @@ export function PageClientImpl(props: {
     if (props.region) {
       url.searchParams.append('region', props.region);
     }
-    const connectionDetailsResp = await fetch(url.toString());
+    const connectionDetailsResp = await fetch(
+      url.toString(),
+      { headers: getConnectionDetailsHeaders() },
+    );
     const connectionDetailsData = await connectionDetailsResp.json();
     setConnectionDetails(connectionDetailsData);
   }, []);
@@ -126,9 +140,9 @@ function VideoConferenceComponent(props: {
       dynacast: true,
       e2ee: e2eeEnabled
         ? {
-            keyProvider,
-            worker,
-          }
+          keyProvider,
+          worker,
+        }
         : undefined,
     };
     // @ts-ignore
