@@ -156,6 +156,16 @@ function VideoConferenceComponent(props: {
 
   const router = useRouter();
   const handleOnLeave = React.useCallback(() => router.push('/'), [router]);
+  const handleError = React.useCallback((error: Error) => {
+    console.error(error);
+    alert(`Encountered an unexpected error, check the console logs for details: ${error.message}`);
+  }, []);
+  const handleEncryptionError = React.useCallback((error: Error) => {
+    console.error(error);
+    alert(
+      `Encountered an unexpected encryption error, check the console logs for details: ${error.message}`,
+    );
+  }, []);
 
   return (
     <>
@@ -167,6 +177,8 @@ function VideoConferenceComponent(props: {
         video={props.userChoices.videoEnabled}
         audio={props.userChoices.audioEnabled}
         onDisconnected={handleOnLeave}
+        onEncryptionError={handleEncryptionError}
+        onError={handleError}
       >
         <VideoConference
           chatMessageFormatter={formatChatMessageLinks}
