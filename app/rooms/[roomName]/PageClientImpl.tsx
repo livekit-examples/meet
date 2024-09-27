@@ -148,7 +148,7 @@ function VideoConferenceComponent(props: {
         });
       });
     }
-  }, [e2eeEnabled, room]);
+  }, [e2eeEnabled, room, e2eePassphrase]);
 
   const connectOptions = React.useMemo((): RoomConnectOptions => {
     return {
