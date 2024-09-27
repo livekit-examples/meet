@@ -144,6 +144,8 @@ function VideoConferenceComponent(props: {
               `You're trying to join an encrypted meeting, but your browser does not support it. Please update it to the latest version and try again.`,
             );
             console.error(e);
+          } else {
+            throw e;
           }
         });
       });
