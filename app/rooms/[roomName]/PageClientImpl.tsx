@@ -100,6 +100,7 @@ function VideoConferenceComponent(props: {
     new Worker(new URL('livekit-client/e2ee-worker', import.meta.url));
   const e2eeEnabled = !!(e2eePassphrase && worker);
   const keyProvider = new ExternalE2EEKeyProvider();
+  const [e2eeSetupComplete, setE2eeSetupComplete] = React.useState(false);
 
   const roomOptions = React.useMemo((): RoomOptions => {
     let videoCodec: VideoCodec | undefined = props.options.codec ? props.options.codec : 'vp9';
@@ -131,23 +132,32 @@ function VideoConferenceComponent(props: {
           }
         : undefined,
     };
-    // @ts-ignore
-    setLogLevel('debug', 'lk-e2ee');
   }, [props.userChoices, props.options.hq, props.options.codec]);
 
   const room = React.useMemo(() => new Room(roomOptions), []);
 
-  if (e2eeEnabled) {
-    keyProvider.setKey(decodePassphrase(e2eePassphrase));
-    room.setE2EEEnabled(true).catch((e) => {
-      if (e instanceof DeviceUnsupportedError) {
-        alert(
-          `You're trying to join an encrypted meeting, but your browser does not support it. Please update it to the latest version and try again.`,
-        );
-        console.error(e);
-      }
-    });
-  }
+  React.useEffect(() => {
+    if (e2eeEnabled) {
+      keyProvider
+        .setKey(decodePassphrase(e2eePassphrase))
+        .then(() => {
+          room.setE2EEEnabled(true).catch((e) => {
+            if (e instanceof DeviceUnsupportedError) {
+              alert(
+                `You're trying to join an encrypted meeting, but your browser does not support it. Please update it to the latest version and try again.`,
+              );
+              console.error(e);
+            } else {
+              throw e;
+            }
+          });
+        })
+        .then(() => setE2eeSetupComplete(true));
+    } else {
+      setE2eeSetupComplete(true);
+    }
+  }, [e2eeEnabled, room, e2eePassphrase]);
+
   const connectOptions = React.useMemo((): RoomConnectOptions => {
     return {
       autoSubscribe: true,
@@ -170,6 +180,7 @@ function VideoConferenceComponent(props: {
   return (
     <>
       <LiveKitRoom
+        connect={e2eeSetupComplete}
         room={room}
         token={props.connectionDetails.participantToken}
         serverUrl={props.connectionDetails.serverUrl}
