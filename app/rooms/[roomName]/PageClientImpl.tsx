@@ -131,23 +131,25 @@ function VideoConferenceComponent(props: {
           }
         : undefined,
     };
-    // @ts-ignore
-    setLogLevel('debug', 'lk-e2ee');
   }, [props.userChoices, props.options.hq, props.options.codec]);
 
   const room = React.useMemo(() => new Room(roomOptions), []);
 
-  if (e2eeEnabled) {
-    keyProvider.setKey(decodePassphrase(e2eePassphrase));
-    room.setE2EEEnabled(true).catch((e) => {
-      if (e instanceof DeviceUnsupportedError) {
-        alert(
-          `You're trying to join an encrypted meeting, but your browser does not support it. Please update it to the latest version and try again.`,
-        );
-        console.error(e);
-      }
-    });
-  }
+  React.useEffect(() => {
+    if (e2eeEnabled) {
+      keyProvider.setKey(decodePassphrase(e2eePassphrase)).then(() => {
+        room.setE2EEEnabled(true).catch((e) => {
+          if (e instanceof DeviceUnsupportedError) {
+            alert(
+              `You're trying to join an encrypted meeting, but your browser does not support it. Please update it to the latest version and try again.`,
+            );
+            console.error(e);
+          }
+        });
+      });
+    }
+  }, [e2eeEnabled, room]);
+
   const connectOptions = React.useMemo((): RoomConnectOptions => {
     return {
       autoSubscribe: true,
