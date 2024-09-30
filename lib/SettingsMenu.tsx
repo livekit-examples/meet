@@ -1,16 +1,15 @@
 'use client';
 import * as React from 'react';
-import { LocalAudioTrack, Track } from 'livekit-client';
+import { Track } from 'livekit-client';
 import {
   useMaybeLayoutContext,
-  useLocalParticipant,
   MediaDeviceMenu,
   TrackToggle,
   useRoomContext,
   useIsRecording,
+  useKrispNoiseFilter,
 } from '@livekit/components-react';
 import styles from '../styles/SettingsMenu.module.css';
-import type { KrispNoiseFilterProcessor } from '@livekit/krisp-noise-filter';
 
 /**
  * @alpha
@@ -37,40 +36,15 @@ export function SettingsMenu(props: SettingsMenuProps) {
     () => Object.keys(settings).filter((t) => t !== undefined) as Array<keyof typeof settings>,
     [settings],
   );
-  const { microphoneTrack } = useLocalParticipant();
-
   const [activeTab, setActiveTab] = React.useState(tabs[0]);
-  const [isNoiseFilterEnabled, setIsNoiseFilterEnabled] = React.useState(true);
-  const [isNoiseFilterPending, setIsNoiseFilterPending] = React.useState(false);
+
+  const { isNoiseFilterEnabled, setNoiseFilterEnabled, isNoiseFilterPending } =
+    useKrispNoiseFilter();
 
   React.useEffect(() => {
-    const micPublication = microphoneTrack;
-    if (micPublication && micPublication.track instanceof LocalAudioTrack) {
-      const currentProcessor = micPublication.track.getProcessor();
-      if (currentProcessor && currentProcessor.name === 'livekit-noise-filter') {
-        setIsNoiseFilterPending(true);
-        (currentProcessor as KrispNoiseFilterProcessor)
-          .setEnabled(isNoiseFilterEnabled)
-          .finally(() => setIsNoiseFilterPending(false));
-      } else if (!currentProcessor && isNoiseFilterEnabled) {
-        setIsNoiseFilterPending(true);
-        import('@livekit/krisp-noise-filter')
-          .then(({ KrispNoiseFilter, isKrispNoiseFilterSupported }) => {
-            if (!isKrispNoiseFilterSupported()) {
-              console.error('Enhanced noise filter is not supported for this browser');
-              setIsNoiseFilterEnabled(false);
-              return;
-            }
-            micPublication?.track
-              // @ts-ignore
-              ?.setProcessor(KrispNoiseFilter())
-              .then(() => console.log('successfully set noise filter'));
-          })
-          .catch((e) => console.error('Failed to load noise filter', e))
-          .finally(() => setIsNoiseFilterPending(false));
-      }
-    }
-  }, [isNoiseFilterEnabled, microphoneTrack]);
+    // enable Krisp by default
+    setNoiseFilterEnabled(true);
+  }, []);
 
   const isRecording = useIsRecording();
   const [initialRecStatus, setInitialRecStatus] = React.useState(isRecording);
@@ -174,7 +148,7 @@ export function SettingsMenu(props: SettingsMenuProps) {
               <input
                 type="checkbox"
                 id="noise-filter"
-                onChange={(ev) => setIsNoiseFilterEnabled(ev.target.checked)}
+                onChange={(ev) => setNoiseFilterEnabled(ev.target.checked)}
                 checked={isNoiseFilterEnabled}
                 disabled={isNoiseFilterPending}
               ></input>
