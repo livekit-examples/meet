@@ -7,8 +7,8 @@ import {
   TrackToggle,
   useRoomContext,
   useIsRecording,
-  useKrispNoiseFilter,
 } from '@livekit/components-react';
+import { useKrispNoiseFilter } from '@livekit/components-react/krisp';
 import styles from '../styles/SettingsMenu.module.css';
 
 /**
