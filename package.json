@@ -21,13 +21,13 @@
     "tinykeys": "^3.0.0"
   },
   "devDependencies": {
-    "@types/node": "20.16.3",
-    "@types/react": "18.3.5",
+    "@types/node": "20.16.10",
+    "@types/react": "18.3.10",
     "@types/react-dom": "18.3.0",
-    "eslint": "9.9.1",
-    "eslint-config-next": "14.2.7",
+    "eslint": "9.11.1",
+    "eslint-config-next": "14.2.14",
     "source-map-loader": "^5.0.0",
-    "typescript": "5.5.4"
+    "typescript": "5.6.2"
   },
   "engines": {
     "node": ">=18"
