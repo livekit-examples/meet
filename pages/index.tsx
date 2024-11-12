@@ -48,6 +48,8 @@ function DemoMeetingTab({ label }: { label: string }) {
       router.push(`/rooms/${generateRoomId()}`);
     }
   };
+
+  
   return (
     <div className={styles.tabContent}>
       <p style={{ margin: 0 }}>Try LiveKit Meet for free with our live demo project.</p>

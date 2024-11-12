@@ -32,7 +32,7 @@ function MyApp({ Component, pageProps }: AppProps) {
         additionalMetaTags={[
           {
             property: 'theme-color',
-            content: '#070707',
+            content: '#006400',
           },
         ]}
         additionalLinkTags={[

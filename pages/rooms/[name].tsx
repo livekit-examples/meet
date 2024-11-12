@@ -21,6 +21,7 @@ import {
 import type { NextPage } from 'next';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
+import { useState, useCallback } from 'react';
 import * as React from 'react';
 import { DebugMode } from '../../lib/Debug';
 import { decodePassphrase, useServerUrl } from '../../lib/client-utils';
@@ -88,7 +89,10 @@ type ActiveRoomProps = {
   region?: string;
   onLeave?: () => void;
 };
+
 const ActiveRoom = ({ roomName, userChoices, onLeave }: ActiveRoomProps) => {
+  const [isRecording, setIsRecording] = useState(false); // State to track recording status
+
   const tokenOptions = React.useMemo(() => {
     return {
       userInfo: {
@@ -97,6 +101,7 @@ const ActiveRoom = ({ roomName, userChoices, onLeave }: ActiveRoomProps) => {
       },
     };
   }, [userChoices.username]);
+
   const token = useToken(process.env.NEXT_PUBLIC_LK_TOKEN_ENDPOINT, roomName, tokenOptions);
 
   const router = useRouter();
@@ -164,11 +169,66 @@ const ActiveRoom = ({ roomName, userChoices, onLeave }: ActiveRoomProps) => {
       }
     });
   }
+  
   const connectOptions = React.useMemo((): RoomConnectOptions => {
     return {
       autoSubscribe: true,
     };
   }, []);
+
+  // Function to handle start/stop recording
+  const handleRecordingToggle = async () => {
+    const roomId = roomName; // Or any identifier for the room
+    const token = "your_token"; // Provide the valid token for the room
+
+    if (!isRecording) {
+      // Start recording
+      try {
+        const response = await fetch(`http://localhost:7880/rooms/${roomId}/start_recording`, {
+          method: 'POST',
+          headers: {
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            url: 'http://localhost:8080/recording', // Adjust URL for your recording service
+            format: 'mp4', // or another format you prefer
+          }),
+        });
+
+        if (response.ok) {
+          setIsRecording(true);
+          alert('Recording started');
+        } else {
+          alert('Failed to start recording');
+        }
+      } catch (error) {
+        console.error("Error starting recording", error);
+        alert('Error starting recording');
+      }
+    } else {
+      // Stop recording
+      try {
+        const response = await fetch(`http://localhost:7880/rooms/${roomId}/stop_recording`, {
+          method: 'POST',
+          headers: {
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json',
+          },
+        });
+
+        if (response.ok) {
+          setIsRecording(false);
+          alert('Recording stopped');
+        } else {
+          alert('Failed to stop recording');
+        }
+      } catch (error) {
+        console.error("Error stopping recording", error);
+        alert('Error stopping recording');
+      }
+    }
+  };
 
   return (
     <>
@@ -188,6 +248,18 @@ const ActiveRoom = ({ roomName, userChoices, onLeave }: ActiveRoomProps) => {
               process.env.NEXT_PUBLIC_SHOW_SETTINGS_MENU === 'true' ? SettingsMenu : undefined
             }
           />
+          <button
+            onClick={handleRecordingToggle}
+            style={{
+              backgroundColor: isRecording ? '#FF0000' : '#006400', // Green for stop, Red for start
+              color: 'white',
+              padding: '10px 20px',
+              borderRadius: '5px',
+              marginTop: '20px',
+            }}
+          >
+            {isRecording ? 'Stop Recording' : 'Start Recording'}
+          </button>
           <DebugMode />
         </LiveKitRoom>
       )}
