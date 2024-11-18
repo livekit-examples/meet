@@ -10,7 +10,7 @@ importers:
     dependencies:
       '@datadog/browser-logs':
         specifier: ^5.23.3
-        version: 5.30.0
+        version: 5.30.1
       '@livekit/components-react':
         specifier: 2.6.7
         version: 2.6.7(@livekit/krisp-noise-filter@0.2.13(livekit-client@2.6.0))(livekit-client@2.6.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(tslib@2.7.0)
@@ -66,13 +66,13 @@ packages:
   '@bufbuild/protobuf@1.10.0':
     resolution: {integrity: sha512-QDdVFLoN93Zjg36NoQPZfsVH9tZew7wKDKyV5qRdj8ntT4wQCOradQjRaTdwMhWUYsgKsvCINKKm87FdEk96Ag==}
 
-  '@datadog/browser-core@5.30.0':
-    resolution: {integrity: sha512-iE6aF6cBsv3NtJS02zfJTI/bzjK7WB5DQgfqbTuKyW5EIqINGqDchGfIch2KXTlGmFme+tF+noWdzb8ztWLZKw==}
+  '@datadog/browser-core@5.30.1':
+    resolution: {integrity: sha512-PE0evgMjGY+jogkzkkQUxkPl3kynoT0GCqOAT+sf8+A9tqGIvD8jFOE7FVAO6Y2Cf6HXT6SxrFcAiBWqNmKq5w==}
 
-  '@datadog/browser-logs@5.30.0':
-    resolution: {integrity: sha512-UMbiKoG8RwtS7VV44lMZronRQhTMXJeHHhb8ZK21TgYbr1Vs0n/lmyynTux4sXSjBHZImMRl6ZiK9YTVU/7c2w==}
+  '@datadog/browser-logs@5.30.1':
+    resolution: {integrity: sha512-1sbfcq8LWHi4d9k4Xs/Dl+/GZB5zWCvRJxN8Ov5GxDpZHF7XsL89Vfn5heJkuZ54QtcofzEeUfctY1sMWmN+Mw==}
     peerDependencies:
-      '@datadog/browser-rum': 5.30.0
+      '@datadog/browser-rum': 5.30.1
     peerDependenciesMeta:
       '@datadog/browser-rum':
         optional: true
@@ -656,8 +656,8 @@ packages:
   eastasianwidth@0.2.0:
     resolution: {integrity: sha512-I88TYZWc9XiYHRQ4/3c5rjjfgkjhLyW2luGIheGERbNQ6OY7yTybanSpDXZa8y7VUP9YmDcYa+eyq4ca7iLqWA==}
 
-  electron-to-chromium@1.5.60:
-    resolution: {integrity: sha512-HcraRUkTKJ+8yA3b10i9qvhUlPBRDlKjn1XGek1zDGVfAKcvi8TsUnImGqLiEm9j6ZulxXIWWIo9BmbkbCTGgA==}
+  electron-to-chromium@1.5.62:
+    resolution: {integrity: sha512-t8c+zLmJHa9dJy96yBZRXGQYoiCEnHYgFwn1asvSPZSUdVxnB62A4RASd7k41ytG3ErFBA0TpHlKg9D9SQBmLg==}
 
   emoji-regex@8.0.0:
     resolution: {integrity: sha512-MSjYzcWNOA0ewAHpz0MxpYFvwg6yjy1NG3xteoqz644VCo/RPgnr1/GGt+ic3iJTzQ8Eu3TdM14SawnVUmGE6A==}
@@ -1736,11 +1736,11 @@ snapshots:
 
   '@bufbuild/protobuf@1.10.0': {}
 
-  '@datadog/browser-core@5.30.0': {}
+  '@datadog/browser-core@5.30.1': {}
 
-  '@datadog/browser-logs@5.30.0':
+  '@datadog/browser-logs@5.30.1':
     dependencies:
-      '@datadog/browser-core': 5.30.0
+      '@datadog/browser-core': 5.30.1
 
   '@eslint-community/eslint-utils@4.4.0(eslint@9.14.0)':
     dependencies:
@@ -2247,7 +2247,7 @@ snapshots:
   browserslist@4.24.2:
     dependencies:
       caniuse-lite: 1.0.30001680
-      electron-to-chromium: 1.5.60
+      electron-to-chromium: 1.5.62
       node-releases: 2.0.18
       update-browserslist-db: 1.1.1(browserslist@4.24.2)
 
@@ -2378,7 +2378,7 @@ snapshots:
 
   eastasianwidth@0.2.0: {}
 
-  electron-to-chromium@1.5.60: {}
+  electron-to-chromium@1.5.62: {}
 
   emoji-regex@8.0.0: {}
 
