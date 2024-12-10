@@ -10,7 +10,7 @@ importers:
     dependencies:
       '@datadog/browser-logs':
         specifier: ^5.23.3
-        version: 5.32.0
+        version: 5.33.0
       '@livekit/components-react':
         specifier: 2.6.9
         version: 2.6.9(@livekit/krisp-noise-filter@0.2.13(livekit-client@2.7.3))(livekit-client@2.7.3)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(tslib@2.7.0)
@@ -66,13 +66,13 @@ packages:
   '@bufbuild/protobuf@1.10.0':
     resolution: {integrity: sha512-QDdVFLoN93Zjg36NoQPZfsVH9tZew7wKDKyV5qRdj8ntT4wQCOradQjRaTdwMhWUYsgKsvCINKKm87FdEk96Ag==}
 
-  '@datadog/browser-core@5.32.0':
-    resolution: {integrity: sha512-+RnQZRda/XwjP2v8TZHIIbZItS1xlRYVs7OmueaA+/MItj0DiL8hZ4uIj7eLsNUXGS0qsiGHXWkaBZE2HfWuvQ==}
+  '@datadog/browser-core@5.33.0':
+    resolution: {integrity: sha512-JsYGgp4FMN2gzjaeayd4VQK9kx7bsPYOXbzFTe1XtbKiIjhYnG3nmG0/HHl7kIPQgqZ5Z2DFxj3r39YK2F2V6Q==}
 
-  '@datadog/browser-logs@5.32.0':
-    resolution: {integrity: sha512-z6LNKUVOI81+0U1XRXMaqs25LqKwwZWg+1PjXbpM0dScQ+4jahPBNFub07L8YaHcmOoF+CEHwzmMIBWs+vWNng==}
+  '@datadog/browser-logs@5.33.0':
+    resolution: {integrity: sha512-0nxCb69aTdxEvp+DRXUdCByPmd5sn1zPr9CBCcUMEC2nEI+90yit/c0QzRR6VtRDrLM1ptNytqp0umzDX44dhw==}
     peerDependencies:
-      '@datadog/browser-rum': 5.32.0
+      '@datadog/browser-rum': 5.33.0
     peerDependenciesMeta:
       '@datadog/browser-rum':
         optional: true
@@ -561,8 +561,8 @@ packages:
   caniuse-lite@1.0.30001667:
     resolution: {integrity: sha512-7LTwJjcRkzKFmtqGsibMeuXmvFDfZq/nzIjnmgCGzKKRVzjD72selLDK1oPF/Oxzmt4fNcPvTDvGqSDG4tCALw==}
 
-  caniuse-lite@1.0.30001684:
-    resolution: {integrity: sha512-G1LRwLIQjBQoyq0ZJGqGIJUXzJ8irpbjHLpVRXDvBEScFJ9b17sgK6vlx0GAJFE21okD7zXl08rRRUfq6HdoEQ==}
+  caniuse-lite@1.0.30001687:
+    resolution: {integrity: sha512-0S/FDhf4ZiqrTUiQ39dKeUjYRjkv7lOZU1Dgif2rIqrTzX/1wV2hfKu9TOm1IHkdSijfLswxTFzl/cvir+SLSQ==}
 
   chalk@4.1.2:
     resolution: {integrity: sha512-oKnbhFyRIXpUuez8iBMmyEa4nbj4IOQyuhc/wy9kY7/WVPcwIO9VA668Pu8RkO7+0G76SLROeyw9CpQ061i4mA==}
@@ -653,8 +653,8 @@ packages:
   eastasianwidth@0.2.0:
     resolution: {integrity: sha512-I88TYZWc9XiYHRQ4/3c5rjjfgkjhLyW2luGIheGERbNQ6OY7yTybanSpDXZa8y7VUP9YmDcYa+eyq4ca7iLqWA==}
 
-  electron-to-chromium@1.5.65:
-    resolution: {integrity: sha512-PWVzBjghx7/wop6n22vS2MLU8tKGd4Q91aCEGhG/TYmW6PP5OcSXcdnxTe1NNt0T66N8D6jxh4kC8UsdzOGaIw==}
+  electron-to-chromium@1.5.72:
+    resolution: {integrity: sha512-ZpSAUOZ2Izby7qnZluSrAlGgGQzucmFbN0n64dYzocYxnxV5ufurpj3VgEe4cUp7ir9LmeLxNYo8bVnlM8bQHw==}
 
   emoji-regex@8.0.0:
     resolution: {integrity: sha512-MSjYzcWNOA0ewAHpz0MxpYFvwg6yjy1NG3xteoqz644VCo/RPgnr1/GGt+ic3iJTzQ8Eu3TdM14SawnVUmGE6A==}
@@ -1255,8 +1255,8 @@ packages:
       sass:
         optional: true
 
-  node-releases@2.0.18:
-    resolution: {integrity: sha512-d9VeXT4SJ7ZeOqGX6R5EM022wpL+eWPooLI+5UpWn2jCT1aosUQEhQP214x33Wkwx3JQMvIm+tIoVOdodFS40g==}
+  node-releases@2.0.19:
+    resolution: {integrity: sha512-xxOWJsBKtzAq7DY0J+DTzuz58K8e7sJbdgwkbMWQe8UYB6ekmsQ45q0M/tJDsGaZmbC+l7n57UV8Hl5tHxO9uw==}
 
   object-assign@4.1.1:
     resolution: {integrity: sha512-rJgTQnkUnH1sFw8yT6VSU3zD3sWmu6sZhIseY8VX+GRu3P6F7Fu+JNDoXfklElbLJSnc3FUQHVe4cU5hj+BcUg==}
@@ -1588,8 +1588,8 @@ packages:
       uglify-js:
         optional: true
 
-  terser@5.36.0:
-    resolution: {integrity: sha512-IYV9eNMuFAV4THUspIRXkLakHnV6XO7FEdtKjf/mDyrnqUg9LnlOn6/RwRvM9SZjR4GUq8Nk8zj67FzVARr74w==}
+  terser@5.37.0:
+    resolution: {integrity: sha512-B8wRRkmre4ERucLM/uXx4MOV5cbnOlVAqUst+1+iLKPI0dOgFO28f84ptoQt9HEI537PMzfYa/d+GEPKTRXmYA==}
     engines: {node: '>=10'}
     hasBin: true
 
@@ -1733,11 +1733,11 @@ snapshots:
 
   '@bufbuild/protobuf@1.10.0': {}
 
-  '@datadog/browser-core@5.32.0': {}
+  '@datadog/browser-core@5.33.0': {}
 
-  '@datadog/browser-logs@5.32.0':
+  '@datadog/browser-logs@5.33.0':
     dependencies:
-      '@datadog/browser-core': 5.32.0
+      '@datadog/browser-core': 5.33.0
 
   '@eslint-community/eslint-utils@4.4.0(eslint@9.14.0)':
     dependencies:
@@ -2239,9 +2239,9 @@ snapshots:
 
   browserslist@4.24.2:
     dependencies:
-      caniuse-lite: 1.0.30001684
-      electron-to-chromium: 1.5.65
-      node-releases: 2.0.18
+      caniuse-lite: 1.0.30001687
+      electron-to-chromium: 1.5.72
+      node-releases: 2.0.19
       update-browserslist-db: 1.1.1(browserslist@4.24.2)
 
   buffer-from@1.1.2: {}
@@ -2271,7 +2271,7 @@ snapshots:
 
   caniuse-lite@1.0.30001667: {}
 
-  caniuse-lite@1.0.30001684: {}
+  caniuse-lite@1.0.30001687: {}
 
   chalk@4.1.2:
     dependencies:
@@ -2371,7 +2371,7 @@ snapshots:
 
   eastasianwidth@0.2.0: {}
 
-  electron-to-chromium@1.5.65: {}
+  electron-to-chromium@1.5.72: {}
 
   emoji-regex@8.0.0: {}
 
@@ -3116,7 +3116,7 @@ snapshots:
       - '@babel/core'
       - babel-plugin-macros
 
-  node-releases@2.0.18: {}
+  node-releases@2.0.19: {}
 
   object-assign@4.1.1: {}
 
@@ -3462,10 +3462,10 @@ snapshots:
       jest-worker: 27.5.1
       schema-utils: 3.3.0
       serialize-javascript: 6.0.2
-      terser: 5.36.0
+      terser: 5.37.0
       webpack: 5.95.0
 
-  terser@5.36.0:
+  terser@5.37.0:
     dependencies:
       '@jridgewell/source-map': 0.3.6
       acorn: 8.14.0
