@@ -10,10 +10,10 @@
   },
   "dependencies": {
     "@datadog/browser-logs": "^5.23.3",
-    "@livekit/components-react": "2.6.11",
+    "@livekit/components-react": "2.7.0",
     "@livekit/components-styles": "1.1.4",
     "@livekit/krisp-noise-filter": "0.2.13",
-    "livekit-client": "2.7.5",
+    "livekit-client": "2.8.0",
     "livekit-server-sdk": "2.9.5",
     "next": "14.2.22",
     "react": "18.3.1",
@@ -31,5 +31,6 @@
   },
   "engines": {
     "node": ">=18"
-  }
+  },
+  "pnpm": {}
 }

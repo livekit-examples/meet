@@ -12,17 +12,17 @@ importers:
         specifier: ^5.23.3
         version: 5.32.0
       '@livekit/components-react':
-        specifier: 2.6.11
-        version: 2.6.11(@livekit/krisp-noise-filter@0.2.13(livekit-client@2.7.5))(livekit-client@2.7.5)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(tslib@2.7.0)
+        specifier: 2.7.0
+        version: 2.7.0(@livekit/krisp-noise-filter@0.2.13(livekit-client@2.8.0))(livekit-client@2.8.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(tslib@2.8.1)
       '@livekit/components-styles':
         specifier: 1.1.4
         version: 1.1.4
       '@livekit/krisp-noise-filter':
         specifier: 0.2.13
-        version: 0.2.13(livekit-client@2.7.5)
+        version: 0.2.13(livekit-client@2.8.0)
       livekit-client:
-        specifier: 2.7.5
-        version: 2.7.5
+        specifier: 2.8.0
+        version: 2.8.0
       livekit-server-sdk:
         specifier: 2.9.5
         version: 2.9.5
@@ -169,19 +169,19 @@ packages:
   '@jridgewell/trace-mapping@0.3.25':
     resolution: {integrity: sha512-vNk6aEwybGtawWmy/PzwnGDOjCkLWSD2wqvjGGAgOAwCGWySYXfYoxt00IJkTF+8Lb57DwOb3Aa0o9CApepiYQ==}
 
-  '@livekit/components-core@0.11.11':
-    resolution: {integrity: sha512-r6VgeS7zq9lMKiNJHSKUHMbmuirksEvHXEGsUvecsHTkZD9nhbhCB/01qCVaCVHVnLXvAYycNXVD4qcepPOpFQ==}
+  '@livekit/components-core@0.12.0':
+    resolution: {integrity: sha512-nF3yd0R9NYUb85/VGJoAYV4GrydTWifrRUvZ4l9vDGJtRsI5yxNjlLM8p9tq2Qe1CU7bgv/Idb6lbKyIWNKT0w==}
     engines: {node: '>=18'}
     peerDependencies:
-      livekit-client: ^2.5.7
+      livekit-client: ^2.8.0
       tslib: ^2.6.2
 
-  '@livekit/components-react@2.6.11':
-    resolution: {integrity: sha512-33V5D2yyt4p9qqjHSMFeu0mUl0S0Qd3zl+x4in9jNl3ZMZBwds9aFx+BtgAGymlAbjbxWPWmHn/SDI3R5/hJRQ==}
+  '@livekit/components-react@2.7.0':
+    resolution: {integrity: sha512-My7FktLPo+TQGutkrC3nyAWECO+MUrUdW4qpfgOOdAeBLjhULgoxMY34Dmw676frFvtPZavDdt33Kn3lf8Ub1Q==}
     engines: {node: '>=18'}
     peerDependencies:
       '@livekit/krisp-noise-filter': ^0.2.12
-      livekit-client: ^2.5.7
+      livekit-client: ^2.8.0
       react: '>=18'
       react-dom: '>=18'
       tslib: ^2.6.2
@@ -198,11 +198,8 @@ packages:
     peerDependencies:
       livekit-client: ^2.0.8
 
-  '@livekit/mutex@1.0.0':
-    resolution: {integrity: sha512-aiUhoThBNF9UyGTxEURFzJLhhPLIVTnQiEVMjRhPnfHNKLfo2JY9xovHKIus7B78UD5hsP6DlgpmAsjrz4U0Iw==}
-
-  '@livekit/protocol@1.29.4':
-    resolution: {integrity: sha512-dsqxvABHilrMA0BU5m1w8cMWSVeDjV2ZUIUDClNQZju3c30DLMfEYDHU5nmXDfaaHjNIgoRbYR7upJMozG8JJg==}
+  '@livekit/mutex@1.1.1':
+    resolution: {integrity: sha512-EsshAucklmpuUAfkABPxJNhzj9v2sG7JuzFDL4ML1oJQSV14sqrpTYnsaOudMAw9yOaW53NU3QQTlUQoRs4czw==}
 
   '@livekit/protocol@1.30.0':
     resolution: {integrity: sha512-SDI9ShVKj8N3oOSinr8inaxD3FXgmgoJlqN35uU/Yx1sdoDeQbzAuBFox7bYjM+VhnZ1V22ivIDjAsKr00H+XQ==}
@@ -1150,8 +1147,8 @@ packages:
     resolution: {integrity: sha512-+bT2uH4E5LGE7h/n3evcS/sQlJXCpIp6ym8OWJ5eV6+67Dsql/LaaT7qJBAt2rzfoa/5QBGBhxDix1dMt2kQKQ==}
     engines: {node: '>= 0.8.0'}
 
-  livekit-client@2.7.5:
-    resolution: {integrity: sha512-sPhHYwXvG75y1LDC50dDC9k6Z49L2vc/HcMRhzhi7yBca6ofPEebpB0bmPOry4ovrnFA+a8TL1pFR2mko1/clw==}
+  livekit-client@2.8.0:
+    resolution: {integrity: sha512-8/IXhacAFYdXMU1wFyc8/MSGCzHr02Hn9T5o3MX19TR03RHSaBKBF2xK8fQFINBmpcYkiMAnQL0P6K3nfcifQA==}
 
   livekit-server-sdk@2.9.5:
     resolution: {integrity: sha512-vx93zG9r0EdAbeK3/+XuoO6w2lHeOOo1RRgL49ZGT2gihLtWQlYP6YFcVNr2ere9NtYT0mfLoGQtDcktXKdYOQ==}
@@ -1615,6 +1612,9 @@ packages:
   tslib@2.7.0:
     resolution: {integrity: sha512-gLXCKdN1/j47AiHiOkJN69hJmcbGTHI0ImLmbYLHykhgeN0jVGola9yVjFgzCUklsZQMW55o+dW7IXv3RCXDzA==}
 
+  tslib@2.8.1:
+    resolution: {integrity: sha512-oJFu94HQb+KVduSUQL7wnpmqnfmLsOA/nAh6b6EH0wCEoK0/mPeXU6c3wKDV83MkOuHPRHtSXKKU99IBazS/2w==}
+
   type-check@0.4.0:
     resolution: {integrity: sha512-XleUoc9uwGXqjWwXaUTZAmzMcFZ5858QA2vvx1Ur5xIcixXIP+8LnFDgRplU30us6teqdlskFfu+ae4K79Ooew==}
     engines: {node: '>= 0.8.0'}
@@ -1832,37 +1832,33 @@ snapshots:
       '@jridgewell/resolve-uri': 3.1.2
       '@jridgewell/sourcemap-codec': 1.5.0
 
-  '@livekit/components-core@0.11.11(livekit-client@2.7.5)(tslib@2.7.0)':
+  '@livekit/components-core@0.12.0(livekit-client@2.8.0)(tslib@2.8.1)':
     dependencies:
       '@floating-ui/dom': 1.6.11
-      livekit-client: 2.7.5
+      livekit-client: 2.8.0
       loglevel: 1.9.1
       rxjs: 7.8.1
-      tslib: 2.7.0
+      tslib: 2.8.1
 
-  '@livekit/components-react@2.6.11(@livekit/krisp-noise-filter@0.2.13(livekit-client@2.7.5))(livekit-client@2.7.5)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(tslib@2.7.0)':
+  '@livekit/components-react@2.7.0(@livekit/krisp-noise-filter@0.2.13(livekit-client@2.8.0))(livekit-client@2.8.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(tslib@2.8.1)':
     dependencies:
-      '@livekit/components-core': 0.11.11(livekit-client@2.7.5)(tslib@2.7.0)
+      '@livekit/components-core': 0.12.0(livekit-client@2.8.0)(tslib@2.8.1)
       clsx: 2.1.1
-      livekit-client: 2.7.5
+      livekit-client: 2.8.0
       react: 18.3.1
       react-dom: 18.3.1(react@18.3.1)
-      tslib: 2.7.0
+      tslib: 2.8.1
       usehooks-ts: 3.1.0(react@18.3.1)
     optionalDependencies:
-      '@livekit/krisp-noise-filter': 0.2.13(livekit-client@2.7.5)
+      '@livekit/krisp-noise-filter': 0.2.13(livekit-client@2.8.0)
 
   '@livekit/components-styles@1.1.4': {}
 
-  '@livekit/krisp-noise-filter@0.2.13(livekit-client@2.7.5)':
+  '@livekit/krisp-noise-filter@0.2.13(livekit-client@2.8.0)':
     dependencies:
-      livekit-client: 2.7.5
+      livekit-client: 2.8.0
 
-  '@livekit/mutex@1.0.0': {}
-
-  '@livekit/protocol@1.29.4':
-    dependencies:
-      '@bufbuild/protobuf': 1.10.0
+  '@livekit/mutex@1.1.1': {}
 
   '@livekit/protocol@1.30.0':
     dependencies:
@@ -3015,15 +3011,15 @@ snapshots:
       prelude-ls: 1.2.1
       type-check: 0.4.0
 
-  livekit-client@2.7.5:
+  livekit-client@2.8.0:
     dependencies:
-      '@livekit/mutex': 1.0.0
-      '@livekit/protocol': 1.29.4
+      '@livekit/mutex': 1.1.1
+      '@livekit/protocol': 1.30.0
       events: 3.3.0
       loglevel: 1.9.2
       sdp-transform: 2.14.2
       ts-debounce: 4.0.0
-      tslib: 2.7.0
+      tslib: 2.8.1
       typed-emitter: 2.1.0
       webrtc-adapter: 9.0.1
 
@@ -3491,6 +3487,8 @@ snapshots:
       strip-bom: 3.0.0
 
   tslib@2.7.0: {}
+
+  tslib@2.8.1: {}
 
   type-check@0.4.0:
     dependencies:
