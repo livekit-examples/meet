@@ -9,7 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@datadog/browser-logs": "^5.23.3",
+    "@datadog/browser-logs": "^6.0.0",
     "@livekit/components-react": "2.7.0",
     "@livekit/components-styles": "1.1.4",
     "@livekit/krisp-noise-filter": "0.2.14",

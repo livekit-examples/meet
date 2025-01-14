@@ -9,8 +9,8 @@ importers:
   .:
     dependencies:
       '@datadog/browser-logs':
-        specifier: ^5.23.3
-        version: 5.35.0
+        specifier: ^6.0.0
+        version: 6.0.0
       '@livekit/components-react':
         specifier: 2.7.0
         version: 2.7.0(@livekit/krisp-noise-filter@0.2.14(livekit-client@2.8.0))(livekit-client@2.8.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(tslib@2.8.1)
@@ -66,13 +66,13 @@ packages:
   '@bufbuild/protobuf@1.10.0':
     resolution: {integrity: sha512-QDdVFLoN93Zjg36NoQPZfsVH9tZew7wKDKyV5qRdj8ntT4wQCOradQjRaTdwMhWUYsgKsvCINKKm87FdEk96Ag==}
 
-  '@datadog/browser-core@5.35.0':
-    resolution: {integrity: sha512-m4KxWufXsQ7nFiMumMZjlub4jJdvXQXrQcTR6Dg2MFER82rIl3npPfups3n4RaAbekFYtgKpo/JMnaxZJSq96g==}
+  '@datadog/browser-core@6.0.0':
+    resolution: {integrity: sha512-aSENUO9FiLoVrrykPP5+8cPMunYzWvyh4237G3wv59vi3bVDzBrQAln7CF0lR/CtvPmUs4tx1Ibgf43IZYVQqg==}
 
-  '@datadog/browser-logs@5.35.0':
-    resolution: {integrity: sha512-TNcqTk1TP4pYzeHFNsA4Fn/JmY54hxsbjBQaiuYmLBBWiVzwEIs64CybHecRlflPzvjOV955wEs7VU+2MTg/zw==}
+  '@datadog/browser-logs@6.0.0':
+    resolution: {integrity: sha512-/KB/D5h7SnO01Zhe5SZqyav4h+TMvy0opXP+nqnT7ZCc+WWVAkE7D4stjC/7Cl8oVJRIl3DyV57Oppy4Bbd+PA==}
     peerDependencies:
-      '@datadog/browser-rum': 5.35.0
+      '@datadog/browser-rum': 6.0.0
     peerDependenciesMeta:
       '@datadog/browser-rum':
         optional: true
@@ -1764,11 +1764,11 @@ snapshots:
 
   '@bufbuild/protobuf@1.10.0': {}
 
-  '@datadog/browser-core@5.35.0': {}
+  '@datadog/browser-core@6.0.0': {}
 
-  '@datadog/browser-logs@5.35.0':
+  '@datadog/browser-logs@6.0.0':
     dependencies:
-      '@datadog/browser-core': 5.35.0
+      '@datadog/browser-core': 6.0.0
 
   '@eslint-community/eslint-utils@4.4.0(eslint@9.14.0)':
     dependencies:
