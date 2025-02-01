@@ -18,7 +18,7 @@
 
 <br>
 
-LiveKit Meet is an open source video conferencing app built on [LiveKit Components](https://github.com/livekit/components-js), [LiveKit Cloud](https://livekit.io/cloud), and Next.js. It's been completely redesigned from the ground up using our new components library.
+LiveKit Meet is an open source video conferencing app built on [LiveKit Components](https://github.com/livekit/components-js), [LiveKit](https://livekit.io/) Cloud, and Next.js. It's been completely redesigned from the ground up using our new components library.
 
 ![LiveKit Meet screenshot](./.github/assets/livekit-meet.jpg)
 
