@@ -27,6 +27,7 @@ import { setLazyProp } from 'next/dist/server/api-utils';
 import { useRouter } from 'next/navigation';
 import React from 'react';
 
+import { CustomVideoLayout } from '@/lib/CustomVideoLayout';
 const CONN_DETAILS_ENDPOINT =
   process.env.NEXT_PUBLIC_CONN_DETAILS_ENDPOINT ?? '/api/connection-details';
 const SHOW_SETTINGS_MENU = process.env.NEXT_PUBLIC_SHOW_SETTINGS_MENU == 'true';
@@ -203,13 +204,12 @@ function VideoConferenceComponent(props: {
         audio={props.userChoices.audioEnabled}
         onDisconnected={handleOnLeave}
       >
-        <VideoConference
-          chatMessageFormatter={formatChatMessageLinks}
-          SettingsComponent={SHOW_SETTINGS_MENU ? SettingsMenu : undefined}
-        />
-        {/* <DebugMode /> */}
-        <RecordingIndicator />
-        <Transcript latestText={latestText} />
+        <div style={{ backgroundColor: '#151E27', height: '100%', width: '100%' }}>
+          <CustomVideoLayout />
+          {/* <DebugMode /> */}
+          <RecordingIndicator />
+          <Transcript latestText={latestText} />
+        </div>
       </LiveKitRoom>
     </>
   );

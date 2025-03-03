@@ -1,0 +1,103 @@
+.participant-tile {
+  position: relative;
+  background-color: #1a242e;
+  border-radius: 5px;
+  overflow: hidden;
+  width: 100%;
+  height: 100%;
+}
+
+.participant-tile.speaking {
+  border: 2px solid #618aff;
+}
+
+.participant-info {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  display: flex;
+  align-items: center;
+  padding: 8px;
+  z-index: 10;
+}
+
+.participant-name {
+  font-family: 'Roboto', sans-serif;
+  font-weight: 500;
+  font-size: 14px;
+  color: white;
+  margin-left: 5px;
+}
+
+.mic-icon {
+  font-family: 'Material Symbols Outlined';
+  font-size: 18px;
+}
+
+.mic-on {
+  color: #ffffff;
+}
+
+.mic-off {
+  color: #ff5252;
+}
+
+.speaking-indicator {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background-color: #618aff;
+  border-radius: 50%;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+}
+
+.speaking-icon {
+  font-family: 'Material Symbols Outlined';
+  color: white;
+  font-size: 16px;
+}
+
+.avatar-container {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 5;
+}
+
+.avatar-initials {
+  font-family: 'Roboto', sans-serif;
+  font-weight: 500;
+  font-size: 50px;
+  color: white;
+}
+
+.avatar-image {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.video-container {
+  width: 100%;
+  height: 100%;
+}
+
+.custom-control-bar.lk-control-bar {
+  padding: 6px !important;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  margin-right: -10px;
+  width: calc(100% + 10px);
+}
