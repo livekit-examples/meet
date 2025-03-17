@@ -1,0 +1,25 @@
+.main-container {
+    height: 100%;
+  }
+  
+  .pre-join-container {
+    display: grid;
+    place-items: center;
+    height: 100%;
+  }
+  
+  .video-grid {
+    height: calc(100vh - 60px) !important;
+  }
+  
+  .video-container {
+    position: relative;
+    width: 100%;
+    height: 100%;
+  }
+  
+  .empty-video-container {
+    height: calc(100vh - 60px);
+    display: grid;
+    place-items: center;
+  }
