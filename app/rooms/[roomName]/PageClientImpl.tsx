@@ -30,6 +30,7 @@ import { VideoTrack } from '@/app/custom/VideoTrack';
 import { CustomControlBar } from '@/app/custom/CustomControlBar';
 import '../../../styles/PageClientImpl.css';
 
+import { CustomVideoLayout } from '@/lib/CustomVideoLayout';
 const CONN_DETAILS_ENDPOINT =
   process.env.NEXT_PUBLIC_CONN_DETAILS_ENDPOINT ?? '/api/connection-details';
 
@@ -203,7 +204,8 @@ function VideoConferenceComponent(props: {
       )}
       <RoomAudioRenderer />
       <CustomControlBar room={room} roomName={props.connectionDetails.roomName} />
-      <Transcript latestText={''} />
+      <Transcript latestText={latestText} />
+      <RecordingIndicator />
     </LiveKitRoom>
   );
 }
