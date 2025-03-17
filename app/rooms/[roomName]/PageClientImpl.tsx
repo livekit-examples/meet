@@ -1,18 +1,12 @@
-
-
 'use client';
 
 import React, { useEffect, useState, useMemo } from 'react';
 import { decodePassphrase } from '@/lib/client-utils';
-import Transcript from '@/lib/Transcript';
 import { ConnectionDetails } from '@/lib/types';
 import {
   LocalUserChoices,
   PreJoin,
   LiveKitRoom,
-  useTracks,
-  TrackReferenceOrPlaceholder,
-  GridLayout,
   RoomAudioRenderer,
 } from '@livekit/components-react';
 import {
@@ -23,14 +17,13 @@ import {
   Room,
   DeviceUnsupportedError,
   RoomConnectOptions,
-  Track,
+  E2EEOptions,
 } from 'livekit-client';
 import { useRouter } from 'next/navigation';
-import { VideoTrack } from '@/app/custom/VideoTrack';
-import { CustomControlBar } from '@/app/custom/CustomControlBar';
 import '../../../styles/PageClientImpl.css';
 
 import { CustomVideoLayout } from '@/lib/CustomVideoLayout';
+import { RecordingIndicator } from '@/lib/RecordingIndicator';
 const CONN_DETAILS_ENDPOINT =
   process.env.NEXT_PUBLIC_CONN_DETAILS_ENDPOINT ?? '/api/connection-details';
 
@@ -41,8 +34,10 @@ export function PageClientImpl(props: {
   codec: VideoCodec;
 }) {
   const [preJoinChoices, setPreJoinChoices] = useState<LocalUserChoices | undefined>(undefined);
-  const [connectionDetails, setConnectionDetails] = useState<ConnectionDetails | undefined>(undefined);
-  
+  const [connectionDetails, setConnectionDetails] = useState<ConnectionDetails | undefined>(
+    undefined,
+  );
+
   const preJoinDefaults = useMemo(() => {
     return {
       username: '',
@@ -92,26 +87,28 @@ function VideoConferenceComponent(props: {
   connectionDetails: ConnectionDetails;
   options: { hq: boolean; codec: VideoCodec };
 }) {
-
   const [isClient, setIsClient] = useState(false);
-  
+
   useEffect(() => {
     setIsClient(true);
   }, []);
 
-
   const getE2EEConfig = () => {
-    if (typeof window === 'undefined') return { enabled: false };
+    if (typeof window === 'undefined')
+      return {
+        enabled: false,
+        passphrase: undefined,
+        worker: undefined,
+      };
 
     const e2eePassphrase = decodePassphrase(location.hash.substring(1));
-    const worker = e2eePassphrase && 
-      new Worker(new URL('livekit-client/e2ee-worker', import.meta.url));
+    const worker = new Worker(new URL('livekit-client/e2ee-worker', import.meta.url));
     const e2eeEnabled = !!(e2eePassphrase && worker);
-    
+
     return {
       enabled: e2eeEnabled,
       passphrase: e2eePassphrase,
-      worker
+      worker,
     };
   };
 
@@ -141,7 +138,9 @@ function VideoConferenceComponent(props: {
       },
       adaptiveStream: { pixelDensity: 'screen' },
       dynacast: true,
-      e2ee: e2eeConfig.enabled ? { keyProvider, worker: e2eeConfig.worker } : undefined,
+      ...(e2eeConfig.enabled && e2eeConfig.worker
+        ? { e2ee: { keyProvider, worker: e2eeConfig.worker } }
+        : null),
     };
   }, [props.userChoices, props.options.hq, props.options.codec, e2eeConfig]);
 
@@ -168,9 +167,6 @@ function VideoConferenceComponent(props: {
   const router = useRouter();
   const handleOnLeave = () => router.push('/');
 
-  const tracks = useTracks([{ source: Track.Source.Camera, withPlaceholder: true }], { room });
-
-  // Return null during SSR to prevent hydration errors
   if (!isClient) return null;
 
   return (
@@ -183,28 +179,8 @@ function VideoConferenceComponent(props: {
       audio={props.userChoices.audioEnabled}
       onDisconnected={handleOnLeave}
     >
-      {tracks.length > 0 ? (
-        <GridLayout tracks={tracks} className="video-grid">
-          {(trackRef: TrackReferenceOrPlaceholder) => (
-            <div
-              key={
-                trackRef.publication?.trackSid ||
-                `${trackRef.participant.identity}-${trackRef.source}`
-              }
-              className="video-container"
-            >
-              <VideoTrack ref={trackRef} />
-            </div>
-          )}
-        </GridLayout>
-      ) : (
-        <div className="empty-video-container">
-          <p>No participants with video yet</p>
-        </div>
-      )}
+      <CustomVideoLayout room={room} roomName={props.connectionDetails.roomName} />
       <RoomAudioRenderer />
-      <CustomControlBar room={room} roomName={props.connectionDetails.roomName} />
-      <Transcript latestText={latestText} />
       <RecordingIndicator />
     </LiveKitRoom>
   );

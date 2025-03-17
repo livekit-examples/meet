@@ -1,5 +1,4 @@
 services:
-
   caddy:
     image: caddy:2.8.4-alpine
     restart: unless-stopped
@@ -16,7 +15,7 @@ services:
   livekit:
     image: sphinxlightning/sphinx-livekit:latest
     restart: on-failure
-    command: ["node", "server.js"]
+    command: ['node', 'server.js']
     container_name: livekit.sphinx
     environment:
       - HOSTNAME=0.0.0.0
@@ -25,9 +24,3 @@ services:
 
 volumes:
   caddy:
-
-  
-
-
-
-

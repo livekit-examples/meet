@@ -1,2 +1,32 @@
-[{"relation": ["delegate_permission/common.handle_all_urls"],"target": {"namespace": "android_app","package_name": "chat.sphinx.v2","sha256_cert_fingerprints":["26:10:D3:CB:C0:BF:28:0D:8C:CB:07:74:85:46:5D:44:58:03:B6:09:87:1D:11:CE:95:41:FB:AD:47:39:EE:4B"]}},{"relation": ["delegate_permission/common.handle_all_urls"],"target": {"namespace": "android_app","package_name": "chat.sphinx.v2","sha256_cert_fingerprints":["64:CF:11:B5:30:12:2F:C3:00:58:28:65:4F:24:41:97:98:EA:C1:74:51:39:CE:92:1E:86:A9:B5:64:FE:E1:DC"]}},{"relation": ["delegate_permission/common.handle_all_urls"],"target": {"namespace": "android_app","package_name": "chat.sphinx.v2.debug","sha256_cert_fingerprints":
-	        ["B8:FE:7D:3A:D5:E4:46:CF:54:A6:45:15:17:D7:1D:06:0A:78:D1:27:68:FC:D8:7D:94:58:DD:17:DE:A4:8B:9F"]}}]
+[
+  {
+    "relation": ["delegate_permission/common.handle_all_urls"],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "chat.sphinx.v2",
+      "sha256_cert_fingerprints": [
+        "26:10:D3:CB:C0:BF:28:0D:8C:CB:07:74:85:46:5D:44:58:03:B6:09:87:1D:11:CE:95:41:FB:AD:47:39:EE:4B"
+      ]
+    }
+  },
+  {
+    "relation": ["delegate_permission/common.handle_all_urls"],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "chat.sphinx.v2",
+      "sha256_cert_fingerprints": [
+        "64:CF:11:B5:30:12:2F:C3:00:58:28:65:4F:24:41:97:98:EA:C1:74:51:39:CE:92:1E:86:A9:B5:64:FE:E1:DC"
+      ]
+    }
+  },
+  {
+    "relation": ["delegate_permission/common.handle_all_urls"],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "chat.sphinx.v2.debug",
+      "sha256_cert_fingerprints": [
+        "B8:FE:7D:3A:D5:E4:46:CF:54:A6:45:15:17:D7:1D:06:0A:78:D1:27:68:FC:D8:7D:94:58:DD:17:DE:A4:8B:9F"
+      ]
+    }
+  }
+]

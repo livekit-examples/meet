@@ -1,16 +1,21 @@
 import React from 'react';
 import {
   GridLayout,
-  ControlBar,
   useTracks,
   RoomAudioRenderer,
   LayoutContextProvider,
   Chat,
 } from '@livekit/components-react';
-import { Track } from 'livekit-client';
+import { Track, Room } from 'livekit-client';
 import { ParticipantTile } from './ParticipantTile';
+import { CustomControlBar } from '@/app/custom/CustomControlBar';
 
-export const CustomVideoLayout: React.FC = () => {
+interface CustomVideoLayoutProps {
+  room: Room;
+  roomName: string;
+}
+
+export const CustomVideoLayout: React.FC<CustomVideoLayoutProps> = ({ room, roomName }) => {
   const [showChat, setShowChat] = React.useState(false);
 
   const tracks = useTracks(
@@ -55,7 +60,6 @@ export const CustomVideoLayout: React.FC = () => {
           style={{
             flex: 1,
             minHeight: 0,
-            padding: '10px',
             display: 'flex',
             flexDirection: 'column',
           }}
@@ -64,25 +68,12 @@ export const CustomVideoLayout: React.FC = () => {
             <GridLayout
               tracks={tracks}
               style={{
-                height: '100%',
                 width: '100%',
               }}
             >
               <ParticipantTile />
             </GridLayout>
           </div>
-
-          <ControlBar
-            className="custom-control-bar"
-            variation="verbose"
-            controls={{
-              chat: true,
-              microphone: true,
-              camera: true,
-              screenShare: true,
-              leave: true,
-            }}
-          />
         </div>
 
         {showChat && (
@@ -100,7 +91,7 @@ export const CustomVideoLayout: React.FC = () => {
             />
           </div>
         )}
-
+        <CustomControlBar room={room} roomName={roomName} />
         <RoomAudioRenderer />
       </div>
     </LayoutContextProvider>

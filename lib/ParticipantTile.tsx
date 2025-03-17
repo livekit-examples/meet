@@ -111,25 +111,13 @@ export const ParticipantTile: React.FC<ParticipantTileProps> = ({
 
       <div className="participant-info">
         {isMicrophoneEnabled ? (
-          isSpeaking ? (
-            <span
-              className="mic-icon speaking-icon"
-              style={{
-                backgroundColor: '#618AFF',
-                borderRadius: '50%',
-                width: '22px',
-                height: '22px',
-                display: 'inline-flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                color: 'white',
-              }}
-            >
-              graphic_eq
-            </span>
-          ) : (
-            <span className="mic-icon mic-on">mic</span>
-          )
+          <>
+            {isSpeaking ? (
+              <span className="mic-icon speaking-icon">graphic_eq</span>
+            ) : (
+              <span className="mic-icon mic-on">mic</span>
+            )}
+          </>
         ) : (
           <span className="mic-icon mic-off">mic_off</span>
         )}
