@@ -120,6 +120,10 @@ h2 a {
   height: 2.4rem;
 }
 
+.custom-control-bar .control-btn:hover {
+  background-color: #1f242b;
+}
+
 .custom-control-bar .room-leave-btn {
   background-color: var(--danger-dark);
   color: var(--danger-light);
@@ -130,13 +134,13 @@ h2 a {
   background-color: var(--danger-dark);
 }
 
+.custom-control-bar [data-lk-active='true']:hover {
+  background-color: #2d1e22;
+}
+
 .control-link {
   display: flex;
   color: #909baa;
-}
-
-.custom-control-bar span {
-  font-size: 1.3rem;
 }
 
 .left,

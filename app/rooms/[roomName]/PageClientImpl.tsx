@@ -8,6 +8,7 @@ import {
   PreJoin,
   LiveKitRoom,
   RoomAudioRenderer,
+  VideoConference,
 } from '@livekit/components-react';
 import {
   ExternalE2EEKeyProvider,
@@ -17,13 +18,12 @@ import {
   Room,
   DeviceUnsupportedError,
   RoomConnectOptions,
-  E2EEOptions,
 } from 'livekit-client';
 import { useRouter } from 'next/navigation';
 import '../../../styles/PageClientImpl.css';
-
 import { CustomVideoLayout } from '@/lib/CustomVideoLayout';
 import { RecordingIndicator } from '@/lib/RecordingIndicator';
+
 const CONN_DETAILS_ENDPOINT =
   process.env.NEXT_PUBLIC_CONN_DETAILS_ENDPOINT ?? '/api/connection-details';
 

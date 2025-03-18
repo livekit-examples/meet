@@ -1,11 +1,14 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import { DisconnectButton, useRoomContext } from '@livekit/components-react';
+import { DisconnectButton, useLayoutContext, useRoomContext } from '@livekit/components-react';
 import { Room, RoomEvent, Track } from 'livekit-client';
 import { mergeClasses } from '@/lib/client-utils';
 import { ToggleSource } from '@livekit/components-core';
 import '../../styles/CustomControlBar.css';
+import { CameraOffSVG, CameraOnSVG } from '../svg/camera';
+import { MicOffSVG, MicOnSVG } from '../svg/mic';
+import { ScreenShareOnSVG } from '../svg/screen-share';
 
 interface CustomControlBarProps {
   room: Room;
@@ -15,6 +18,7 @@ interface CustomControlBarProps {
 export function CustomControlBar({ room, roomName }: CustomControlBarProps) {
   const [recording, setRecording] = useState(false);
   const [participantCount, setParticipantCount] = useState(1);
+  const { dispatch } = useLayoutContext().widget;
 
   useEffect(() => {
     if (room) {
@@ -22,10 +26,6 @@ export function CustomControlBar({ room, roomName }: CustomControlBarProps) {
       const updateParticipantCount = () => {
         setParticipantCount(room.numParticipants);
       };
-
-      if (room.state === 'connected') {
-        updateParticipantCount();
-      }
 
       room.on(RoomEvent.Connected, updateParticipantCount);
       room.on(RoomEvent.ParticipantConnected, updateParticipantCount);
@@ -62,12 +62,12 @@ export function CustomControlBar({ room, roomName }: CustomControlBarProps) {
         <TrackToggle source={Track.Source.Microphone} />
         <TrackToggle source={Track.Source.Camera} />
 
-        <div className={`control-button record-sign ${recording ? '' : 'disabled'}`}>
+        <div className={`control-btn ${recording ? '' : 'disabled'}`}>
           <span className="material-symbols-outlined">radio_button_checked</span>
         </div>
 
         <TrackToggle source={Track.Source.ScreenShare} />
-        <DisconnectButton className="control-button end-call-button">
+        <DisconnectButton className="end-call-button">
           <span className="material-symbols-outlined">call_end</span>
         </DisconnectButton>
       </div>
@@ -79,7 +79,12 @@ export function CustomControlBar({ room, roomName }: CustomControlBarProps) {
           <span className="participant-count">{participantCount}</span>
         </div>
 
-        <div className="settings-box">
+        <div
+          className="settings-box"
+          onClick={() => {
+            if (dispatch) dispatch({ msg: 'toggle_settings' });
+          }}
+        >
           <span className="material-symbols-outlined">settings</span>
         </div>
       </div>
@@ -127,32 +132,12 @@ interface TrackIconProps {
 function TrackIcon({ trackSource, enabled }: TrackIconProps) {
   switch (trackSource) {
     case Track.Source.Camera:
-      return enabled ? (
-        <span className="material-symbols-outlined">videocam</span>
-      ) : (
-        <span
-          button-state="inactive"
-          data-lk-video-enabled="false"
-          className="material-symbols-outlined"
-        >
-          videocam_off
-        </span>
-      );
+      return enabled ? <CameraOnSVG /> : <CameraOffSVG />;
     case Track.Source.Microphone:
-      return enabled ? (
-        <span className="material-symbols-outlined">mic</span>
-      ) : (
-        <span
-          button-state="inactive"
-          data-lk-audio-enabled="false"
-          className="material-symbols-outlined"
-        >
-          mic_off
-        </span>
-      );
+      return enabled ? <MicOnSVG /> : <MicOffSVG />;
     case Track.Source.ScreenShare:
       return enabled ? (
-        <span className="material-symbols-outlined">screen_share</span>
+        <ScreenShareOnSVG />
       ) : (
         <span
           button-state="inactive"

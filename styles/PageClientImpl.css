@@ -23,3 +23,44 @@
   display: grid;
   place-items: center;
 }
+
+.settings-menu {
+  display: flex;
+  width: 45vw;
+  height: 50vh;
+  flex-direction: column;
+  align-items: left;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  translate: -50% -50%;
+  background: var(--background-primary);
+  border-radius: 0.4rem;
+  padding: 1rem;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  z-index: 100;
+}
+
+.settingsCloseButton {
+  position: absolute;
+  right: var(--lk-grid-gap);
+  bottom: var(--lk-grid-gap);
+}
+
+.tabs {
+  position: relative;
+  display: flex;
+  align-content: space-between;
+}
+
+.tabs > .tab {
+  padding: 0.5rem;
+  border-radius: 0;
+  padding-bottom: 0.5rem;
+  border-bottom: 3px solid;
+  border-color: var(--bg5);
+}
+
+.tabs > .tab[aria-pressed='true'] {
+  border-color: var(--lk-accent-bg);
+}

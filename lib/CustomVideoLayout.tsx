@@ -1,14 +1,9 @@
 import React from 'react';
-import {
-  GridLayout,
-  useTracks,
-  RoomAudioRenderer,
-  LayoutContextProvider,
-  Chat,
-} from '@livekit/components-react';
+import { GridLayout, useTracks, LayoutContextProvider, Chat } from '@livekit/components-react';
 import { Track, Room } from 'livekit-client';
 import { ParticipantTile } from './ParticipantTile';
 import { CustomControlBar } from '@/app/custom/CustomControlBar';
+import { SettingsMenu } from './SettingsMenu';
 
 interface CustomVideoLayoutProps {
   room: Room;
@@ -17,6 +12,7 @@ interface CustomVideoLayoutProps {
 
 export const CustomVideoLayout: React.FC<CustomVideoLayoutProps> = ({ room, roomName }) => {
   const [showChat, setShowChat] = React.useState(false);
+  const [showSettings, setShowSettings] = React.useState(false);
 
   const tracks = useTracks(
     [
@@ -36,11 +32,15 @@ export const CustomVideoLayout: React.FC<CustomVideoLayoutProps> = ({ room, room
         widget: {
           state: {
             showChat,
+            showSettings,
             unreadMessages: 0,
           },
           dispatch: (action: any) => {
             if ('msg' in action && action.msg === 'toggle_chat') {
               setShowChat((prev) => !prev);
+            }
+            if ('msg' in action && action.msg === 'toggle_settings') {
+              setShowSettings((prev) => !prev);
             }
           },
         },
@@ -51,7 +51,7 @@ export const CustomVideoLayout: React.FC<CustomVideoLayoutProps> = ({ room, room
           display: 'flex',
           flexDirection: 'row',
           height: '100vh',
-          width: '100%',
+          width: '100vw',
           position: 'relative',
           backgroundColor: '#070707',
         }}
@@ -69,6 +69,7 @@ export const CustomVideoLayout: React.FC<CustomVideoLayoutProps> = ({ room, room
               tracks={tracks}
               style={{
                 width: '100%',
+                padding: '1rem 1rem 0.5rem 1rem',
               }}
             >
               <ParticipantTile />
@@ -92,7 +93,7 @@ export const CustomVideoLayout: React.FC<CustomVideoLayoutProps> = ({ room, room
           </div>
         )}
         <CustomControlBar room={room} roomName={roomName} />
-        <RoomAudioRenderer />
+        <SettingsMenu showSettings={showSettings} />
       </div>
     </LayoutContextProvider>
   );

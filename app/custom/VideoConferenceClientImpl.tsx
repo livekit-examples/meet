@@ -15,7 +15,6 @@ import {
 import { DebugMode } from '@/lib/Debug';
 import { useMemo, useEffect, useState } from 'react';
 import { decodePassphrase } from '@/lib/client-utils';
-import { SettingsMenu } from '@/lib/SettingsMenu';
 
 export function VideoConferenceClientImpl(props: {
   liveKitUrl: string;
@@ -65,11 +64,7 @@ export function VideoConferenceClientImpl(props: {
       return;
     }
     console.log('ROOM!!!');
-    const updateTranscriptions = (
-      segments: TranscriptionSegment[],
-      participant: any,
-      publication: any,
-    ) => {
+    const updateTranscriptions = (segments: TranscriptionSegment[]) => {
       console.log('received transcriptions', segments);
       setTranscriptions((prev) => {
         const newTranscriptions = { ...prev };
@@ -95,12 +90,7 @@ export function VideoConferenceClientImpl(props: {
       audio={true}
       video={true}
     >
-      <VideoConference
-        chatMessageFormatter={formatChatMessageLinks}
-        SettingsComponent={
-          process.env.NEXT_PUBLIC_SHOW_SETTINGS_MENU === 'true' ? SettingsMenu : undefined
-        }
-      />
+      <VideoConference chatMessageFormatter={formatChatMessageLinks} />
       <DebugMode logLevel={LogLevel.debug} />
     </LiveKitRoom>
   );

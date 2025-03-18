@@ -1,6 +1,14 @@
 import React, { useEffect, useState } from 'react';
-import { AudioTrack, useTracks, VideoTrack, useTrackRefContext } from '@livekit/components-react';
+import {
+  AudioTrack,
+  useTracks,
+  VideoTrack,
+  useTrackRefContext,
+  useEnsureTrackRef,
+  TrackRefContextIfNeeded,
+} from '@livekit/components-react';
 import { Track, Participant } from 'livekit-client';
+import { isTrackReference } from '@livekit/components-core';
 
 function getAvatarColor(identity: string): string {
   const colors = [
@@ -49,21 +57,12 @@ export const ParticipantTile: React.FC<ParticipantTileProps> = ({
   participant: propParticipant,
 }) => {
   const trackRef = useTrackRefContext();
+  const trackReference = useEnsureTrackRef(trackRef);
   const participant = propParticipant || trackRef?.participant;
 
   if (!participant) return null;
 
   const [profilePictureUrl, setProfilePictureUrl] = useState<string | null>(null);
-
-  const isValidTrackRef =
-    trackRef && 'publication' in trackRef && trackRef.publication !== undefined;
-
-  const cameraTrack =
-    isValidTrackRef && trackRef.source === Track.Source.Camera
-      ? trackRef
-      : useTracks([Track.Source.Camera], { onlySubscribed: false }).filter(
-          (track) => track.participant.identity === participant.identity,
-        )[0];
 
   const microphoneTrack = useTracks([Track.Source.Microphone], { onlySubscribed: false }).filter(
     (track) => track.participant.identity === participant.identity,
@@ -84,8 +83,9 @@ export const ParticipantTile: React.FC<ParticipantTileProps> = ({
     }
   }, [participant.metadata]);
 
-  const hasCamera = !!cameraTrack;
-  const isCameraEnabled = hasCamera && !cameraTrack.publication?.isMuted;
+  const isCameraEnabled =
+    (trackReference.source === Track.Source.Camera && !trackReference.publication?.isMuted) ||
+    trackReference.source === Track.Source.ScreenShare;
 
   const hasMicrophone = !!microphoneTrack;
   const isMicrophoneEnabled = hasMicrophone && !microphoneTrack.publication?.isMuted;
@@ -95,9 +95,9 @@ export const ParticipantTile: React.FC<ParticipantTileProps> = ({
 
   return (
     <div className={`participant-tile ${isSpeaking ? 'speaking' : ''}`}>
-      {isCameraEnabled ? (
+      {isTrackReference(trackReference) && isCameraEnabled ? (
         <div className="video-container">
-          <VideoTrack trackRef={cameraTrack} />
+          <VideoTrack trackRef={trackReference} />
         </div>
       ) : (
         <div className="avatar-container" style={{ backgroundColor: avatarColor }}>
