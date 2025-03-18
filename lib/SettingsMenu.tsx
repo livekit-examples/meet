@@ -9,13 +9,14 @@ import {
   useRoomContext,
   useIsRecording,
 } from '@livekit/components-react';
-import styles from '../styles/SettingsMenu.module.css';
 import type { KrispNoiseFilterProcessor } from '@livekit/krisp-noise-filter';
 
 /**
  * @alpha
  */
-export interface SettingsMenuProps extends React.HTMLAttributes<HTMLDivElement> {}
+export interface SettingsMenuProps extends React.HTMLAttributes<HTMLDivElement> {
+  showSettings: boolean;
+}
 
 /**
  * @alpha
@@ -111,14 +112,16 @@ export function SettingsMenu(props: SettingsMenuProps) {
     }
   };
 
+  if (!props.showSettings) return null;
+
   return (
-    <div className="settings-menu" style={{ width: '100%' }} {...props}>
-      <div className={styles.tabs}>
+    <div className="settings-menu" {...props}>
+      <div className="tabs">
         {tabs.map(
           (tab) =>
             settings[tab] && (
               <button
-                className={`${styles.tab} lk-button`}
+                className={`tab lk-button`}
                 key={tab}
                 onClick={() => setActiveTab(tab)}
                 aria-pressed={tab === activeTab}
@@ -131,11 +134,11 @@ export function SettingsMenu(props: SettingsMenuProps) {
             ),
         )}
       </div>
-      <div className="tab-content">
+      <div className="tab-content" style={{ padding: '1rem' }}>
         {activeTab === 'media' && (
           <>
             {settings.media && settings.media.camera && (
-              <>
+              <div>
                 <h3>Camera</h3>
                 <section className="lk-button-group">
                   <TrackToggle source={Track.Source.Camera}>Camera</TrackToggle>
@@ -143,10 +146,10 @@ export function SettingsMenu(props: SettingsMenuProps) {
                     <MediaDeviceMenu kind="videoinput" />
                   </div>
                 </section>
-              </>
+              </div>
             )}
             {settings.media && settings.media.microphone && (
-              <>
+              <div>
                 <h3>Microphone</h3>
                 <section className="lk-button-group">
                   <TrackToggle source={Track.Source.Microphone}>Microphone</TrackToggle>
@@ -154,10 +157,10 @@ export function SettingsMenu(props: SettingsMenuProps) {
                     <MediaDeviceMenu kind="audioinput" />
                   </div>
                 </section>
-              </>
+              </div>
             )}
             {settings.media && settings.media.speaker && (
-              <>
+              <div>
                 <h3>Speaker & Headphones</h3>
                 <section className="lk-button-group">
                   <span className="lk-button">Audio Output</span>
@@ -165,7 +168,7 @@ export function SettingsMenu(props: SettingsMenuProps) {
                     <MediaDeviceMenu kind="audiooutput"></MediaDeviceMenu>
                   </div>
                 </section>
-              </>
+              </div>
             )}
           </>
         )}
@@ -201,7 +204,7 @@ export function SettingsMenu(props: SettingsMenuProps) {
         )}
       </div>
       <button
-        className={`lk-button ${styles.settingsCloseButton}`}
+        className={`lk-button settingsCloseButton`}
         onClick={() => layoutContext?.widget.dispatch?.({ msg: 'toggle_settings' })}
       >
         Close

@@ -1,17 +1,18 @@
 import React from 'react';
-import {
-  GridLayout,
-  ControlBar,
-  useTracks,
-  RoomAudioRenderer,
-  LayoutContextProvider,
-  Chat,
-} from '@livekit/components-react';
-import { Track } from 'livekit-client';
+import { GridLayout, useTracks, LayoutContextProvider, Chat } from '@livekit/components-react';
+import { Track, Room } from 'livekit-client';
 import { ParticipantTile } from './ParticipantTile';
+import { CustomControlBar } from '@/app/custom/CustomControlBar';
+import { SettingsMenu } from './SettingsMenu';
 
-export const CustomVideoLayout: React.FC = () => {
+interface CustomVideoLayoutProps {
+  room: Room;
+  roomName: string;
+}
+
+export const CustomVideoLayout: React.FC<CustomVideoLayoutProps> = ({ room, roomName }) => {
   const [showChat, setShowChat] = React.useState(false);
+  const [showSettings, setShowSettings] = React.useState(false);
 
   const tracks = useTracks(
     [
@@ -31,11 +32,15 @@ export const CustomVideoLayout: React.FC = () => {
         widget: {
           state: {
             showChat,
+            showSettings,
             unreadMessages: 0,
           },
           dispatch: (action: any) => {
             if ('msg' in action && action.msg === 'toggle_chat') {
               setShowChat((prev) => !prev);
+            }
+            if ('msg' in action && action.msg === 'toggle_settings') {
+              setShowSettings((prev) => !prev);
             }
           },
         },
@@ -46,7 +51,7 @@ export const CustomVideoLayout: React.FC = () => {
           display: 'flex',
           flexDirection: 'row',
           height: '100vh',
-          width: '100%',
+          width: '100vw',
           position: 'relative',
           backgroundColor: '#070707',
         }}
@@ -55,7 +60,6 @@ export const CustomVideoLayout: React.FC = () => {
           style={{
             flex: 1,
             minHeight: 0,
-            padding: '10px',
             display: 'flex',
             flexDirection: 'column',
           }}
@@ -64,25 +68,13 @@ export const CustomVideoLayout: React.FC = () => {
             <GridLayout
               tracks={tracks}
               style={{
-                height: '100%',
                 width: '100%',
+                padding: '1rem 1rem 0.5rem 1rem',
               }}
             >
               <ParticipantTile />
             </GridLayout>
           </div>
-
-          <ControlBar
-            className="custom-control-bar"
-            variation="verbose"
-            controls={{
-              chat: true,
-              microphone: true,
-              camera: true,
-              screenShare: true,
-              leave: true,
-            }}
-          />
         </div>
 
         {showChat && (
@@ -100,8 +92,8 @@ export const CustomVideoLayout: React.FC = () => {
             />
           </div>
         )}
-
-        <RoomAudioRenderer />
+        <CustomControlBar room={room} roomName={roomName} />
+        <SettingsMenu showSettings={showSettings} />
       </div>
     </LayoutContextProvider>
   );

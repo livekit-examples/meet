@@ -1,17 +1,14 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import { 
-  TrackToggle, 
-  DisconnectButton 
-} from '@livekit/components-react';
-import { 
-  Room, 
-  RoomEvent, 
-  Track 
-} from 'livekit-client';
+import { DisconnectButton, useLayoutContext, useRoomContext } from '@livekit/components-react';
+import { Room, RoomEvent, Track } from 'livekit-client';
+import { mergeClasses } from '@/lib/client-utils';
+import { ToggleSource } from '@livekit/components-core';
 import '../../styles/CustomControlBar.css';
-
+import { CameraOffSVG, CameraOnSVG } from '../svg/camera';
+import { MicOffSVG, MicOnSVG } from '../svg/mic';
+import { ScreenShareOnSVG } from '../svg/screen-share';
 
 interface CustomControlBarProps {
   room: Room;
@@ -20,30 +17,21 @@ interface CustomControlBarProps {
 
 export function CustomControlBar({ room, roomName }: CustomControlBarProps) {
   const [recording, setRecording] = useState(false);
-  const [participantCount, setParticipantCount] = useState(1); 
+  const [participantCount, setParticipantCount] = useState(1);
+  const { dispatch } = useLayoutContext().widget;
 
   useEffect(() => {
     if (room) {
-
       const updateRecordingStatus = () => setRecording(room.isRecording);
-      
-
       const updateParticipantCount = () => {
-        if (room && room.participants) {
-          setParticipantCount(room.participants.size + 1); 
-        }
+        setParticipantCount(room.numParticipants);
       };
-      
 
-      if (room.state === 'connected') {
-        updateParticipantCount(); 
-      }
-      
       room.on(RoomEvent.Connected, updateParticipantCount);
       room.on(RoomEvent.ParticipantConnected, updateParticipantCount);
       room.on(RoomEvent.ParticipantDisconnected, updateParticipantCount);
       room.on(RoomEvent.RecordingStatusChanged, updateRecordingStatus);
-      
+
       return () => {
         room.off(RoomEvent.Connected, updateParticipantCount);
         room.off(RoomEvent.ParticipantConnected, updateParticipantCount);
@@ -54,14 +42,14 @@ export function CustomControlBar({ room, roomName }: CustomControlBarProps) {
   }, [room]);
 
   const handleCopyLink = () => {
-    navigator.clipboard.writeText(window.location.href)
+    navigator.clipboard
+      .writeText(window.location.href)
       .then(() => alert('Link copied to clipboard!'))
       .catch((err) => console.error('Failed to copy link:', err));
   };
 
   return (
     <div className="custom-control-bar">
-
       <div className="room-name-box">
         <span className="room-name">{roomName}</span>
         <button className="copy-link-button" onClick={handleCopyLink}>
@@ -70,27 +58,16 @@ export function CustomControlBar({ room, roomName }: CustomControlBarProps) {
       </div>
 
       {/* Center: Control Buttons */}
-      <div className="control-buttons">
-        <TrackToggle source={Track.Source.Microphone} className="control-button mic-button">
-          {/* <span className="material-symbols-outlined">mic</span>
-          <span data-lk-audio-enabled="false" className="material-symbols-outlined">mic_off</span> */}
-        </TrackToggle>
-        
-        <TrackToggle source={Track.Source.Camera} className="control-button camera-button">
-          {/* <span className="material-symbols-outlined">videocam</span>
-          <span data-lk-video-enabled="false" className="material-symbols-outlined">videocam_off</span> */}
-        </TrackToggle>
-        
-        <div className={`control-button record-sign ${recording ? '' : 'disabled'}`}>
+      <div className="control-bar control-buttons">
+        <TrackToggle source={Track.Source.Microphone} />
+        <TrackToggle source={Track.Source.Camera} />
+
+        <div className={`control-btn ${recording ? '' : 'disabled'}`}>
           <span className="material-symbols-outlined">radio_button_checked</span>
         </div>
-        
-        <TrackToggle source={Track.Source.ScreenShare} className="control-button screen-share-button">
-          {/* <span className="material-symbols-outlined">screen_share</span>
-          <span data-lk-screen-share-enabled="true" className="material-symbols-outlined">screen_share</span> */}
-        </TrackToggle>
-        
-        <DisconnectButton className="control-button end-call-button">
+
+        <TrackToggle source={Track.Source.ScreenShare} />
+        <DisconnectButton className="end-call-button">
           <span className="material-symbols-outlined">call_end</span>
         </DisconnectButton>
       </div>
@@ -101,11 +78,103 @@ export function CustomControlBar({ room, roomName }: CustomControlBarProps) {
           <span className="material-symbols-outlined">people</span>
           <span className="participant-count">{participantCount}</span>
         </div>
-        
-        <div className="settings-box">
+
+        <div
+          className="settings-box"
+          onClick={() => {
+            if (dispatch) dispatch({ msg: 'toggle_settings' });
+          }}
+        >
           <span className="material-symbols-outlined">settings</span>
         </div>
       </div>
     </div>
   );
+}
+
+interface ControlButtonProps {
+  enabled?: boolean;
+  icon: React.ReactNode;
+  className?: string;
+  onClick?: () => void;
+}
+
+function ControlButton({ enabled = true, icon, className, onClick }: ControlButtonProps) {
+  return (
+    <button
+      className={mergeClasses('control-btn', className)}
+      data-lk-active={!enabled}
+      onClick={onClick}
+    >
+      {icon}
+    </button>
+  );
+}
+
+function TrackToggle({ source }: { source: ToggleSource }) {
+  const { enabled, toggle } = useTrackToggle({ source });
+  const isScreenShare = source === Track.Source.ScreenShare;
+
+  return (
+    <ControlButton
+      onClick={toggle}
+      enabled={isScreenShare ? !enabled : enabled}
+      icon={<TrackIcon trackSource={source} enabled={isScreenShare ? !enabled : enabled} />}
+    />
+  );
+}
+
+interface TrackIconProps {
+  trackSource: ToggleSource;
+  enabled: boolean;
+}
+
+function TrackIcon({ trackSource, enabled }: TrackIconProps) {
+  switch (trackSource) {
+    case Track.Source.Camera:
+      return enabled ? <CameraOnSVG /> : <CameraOffSVG />;
+    case Track.Source.Microphone:
+      return enabled ? <MicOnSVG /> : <MicOffSVG />;
+    case Track.Source.ScreenShare:
+      return enabled ? (
+        <ScreenShareOnSVG />
+      ) : (
+        <span
+          button-state="inactive"
+          data-lk-screen-share-enabled="true"
+          className="material-symbols-outlined"
+        >
+          stop_screen_share
+        </span>
+      );
+  }
+}
+
+// Custom hook for track toggle
+function useTrackToggle({ source }: { source: ToggleSource }) {
+  const { localParticipant } = useRoomContext();
+
+  const toggle = () => {
+    switch (source) {
+      case Track.Source.Camera:
+        return localParticipant.setCameraEnabled(!enabled);
+      case Track.Source.Microphone:
+        return localParticipant.setMicrophoneEnabled(!enabled);
+      case Track.Source.ScreenShare:
+        return localParticipant.setScreenShareEnabled(!enabled);
+    }
+  };
+
+  const enabled = (() => {
+    switch (source) {
+      case Track.Source.Camera:
+        return localParticipant.isCameraEnabled;
+      case Track.Source.Microphone:
+        return localParticipant.isMicrophoneEnabled;
+      case Track.Source.ScreenShare:
+        return localParticipant.isScreenShareEnabled;
+    }
+  })();
+
+  return { enabled, toggle };
 }

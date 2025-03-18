@@ -32,7 +32,6 @@
 .mic-icon {
   font-family: 'Material Symbols Outlined';
   font-size: 18px;
-  padding: 0.1rem 0.3rem;
 }
 
 .mic-on {
@@ -43,9 +42,18 @@
   color: #ff5252;
 }
 
-.speaking-icon {
+.speaking-indicator {
+  position: absolute;
+  top: 10px;
+  right: 10px;
   background-color: #618aff;
   border-radius: 50%;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
 }
 
 .speaking-icon {

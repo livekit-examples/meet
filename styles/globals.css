@@ -65,3 +65,89 @@ h2 a {
 h2 a {
   text-decoration: none;
 }
+
+:root {
+  /* Primary Colors */
+  --background-primary: #0b0f13;
+  --background-secondary: #181d23;
+  --background-tertiary: #1a232d;
+
+  /* Danger Colors */
+  --danger-dark: #3d1d20;
+  --danger-primary: #ff5252;
+  --danger-light: #fe6f6f;
+
+  /* Success Colors */
+  --success-dark: #1b5e20;
+  --success-primary: #4caf50;
+  --success-light: #66bb6a;
+
+  /* Info Colors */
+  --info-dark: #0d47a1;
+  --info-primary: #2196f3;
+  --info-light: #64b5f6;
+
+  /* Warning Colors */
+  --warning-dark: #ff6f00;
+  --warning-primary: #ffc107;
+  --warning-light: #ffd54f;
+}
+
+.custom-control-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5rem;
+}
+
+.custom-control-bar .left {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.custom-control-bar .control-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  background-color: var(--background-secondary);
+  border: none;
+  padding: 0.5rem;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  width: 2.4rem;
+  height: 2.4rem;
+}
+
+.custom-control-bar .control-btn:hover {
+  background-color: #1f242b;
+}
+
+.custom-control-bar .room-leave-btn {
+  background-color: var(--danger-dark);
+  color: var(--danger-light);
+  padding-inline: 1.2rem;
+}
+
+.custom-control-bar [data-lk-active='true'] {
+  background-color: var(--danger-dark);
+}
+
+.custom-control-bar [data-lk-active='true']:hover {
+  background-color: #2d1e22;
+}
+
+.control-link {
+  display: flex;
+  color: #909baa;
+}
+
+.left,
+.center,
+.right {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+}

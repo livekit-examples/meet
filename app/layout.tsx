@@ -1,7 +1,7 @@
-import '../styles/globals.css';
 import '@livekit/components-styles';
 import '@livekit/components-styles/prefabs';
 import '../styles/participant-tile.css';
+import '../styles/globals.css';
 import type { Metadata, Viewport } from 'next';
 
 export const metadata: Metadata = {

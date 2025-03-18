@@ -5,33 +5,42 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 10px;
+  padding: 0.8rem 1rem;
   position: fixed;
   bottom: 0;
   left: 0;
   right: 0;
-  background: rgba(0, 0, 0, 0.8); 
+  background: rgba(0, 0, 0, 0.8);
   z-index: 1000;
   backdrop-filter: blur(5px);
-  -webkit-backdrop-filter: blur(5px); /* Added for Safari compatibility */
+  -webkit-backdrop-filter: blur(5px);
+  /* Added for Safari compatibility */
 }
 
 .room-name-box {
-  background: rgba(144, 155, 170, 0.1); 
+  background-color: #181d23;
   border-radius: 8px;
-  padding: 5px 10px;
+  padding: 0.4rem 1rem;
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: 5px;
+}
+
+.room-name-box:hover {
+  background-color: #1f242b;
 }
 
 .room-name {
   font-family: 'Roboto', sans-serif;
-  font-size: 14px;
-  color: #909baa; 
+  font-size: 1rem;
+  color: #909baa;
 }
 
 .copy-link-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   background: none;
   border: none;
   cursor: pointer;
@@ -51,51 +60,48 @@
   flex-grow: 1;
 }
 
-.control-button {
-  width: 40px;
-  height: 40px;
-  background: rgba(144, 155, 170, 0.1); 
-  border-radius: 8px;
-  border: none;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+/* Status Disabled */
+.material-symbols-outlined[button-state='inactive'] {
+  color: #ed7473;
 }
 
 /* Mic button */
-.mic-button[data-lk-audio-enabled="false"] {
+.mic-button[data-lk-audio-enabled='false'] {
   background: rgba(255, 82, 82, 0.2);
 }
 
-.mic-button[data-lk-audio-enabled="true"] .material-symbols-outlined {
+.mic-button[data-lk-audio-enabled='true'] .material-symbols-outlined {
   color: #ffffff;
 }
 
-.mic-button[data-lk-audio-enabled="false"] .material-symbols-outlined {
+.mic-button[data-lk-audio-enabled='false'] .material-symbols-outlined {
   color: #ff6f6f;
 }
 
 /* Camera btn */
-.camera-button[data-lk-video-enabled="false"] {
+.camera-button[data-lk-video-enabled='false'] {
   background: rgba(255, 82, 82, 0.2);
 }
 
-.camera-button[data-lk-video-enabled="true"] .material-symbols-outlined {
+.camera-button[data-lk-video-enabled='true'] .material-symbols-outlined {
   color: #ffffff;
 }
 
-.camera-button[data-lk-video-enabled="false"] .material-symbols-outlined {
+.camera-button[data-lk-video-enabled='false'] .material-symbols-outlined {
   color: #ff6f6f;
 }
 
 /* Screen share btn */
-.screen-share-button[data-lk-screen-share-enabled="true"] .material-symbols-outlined {
+.screen-share-button[data-lk-screen-share-enabled='true'] .material-symbols-outlined {
   color: #49c998;
 }
 
-.screen-share-button[data-lk-screen-share-enabled="false"] .material-symbols-outlined {
+.screen-share-button[data-lk-screen-share-enabled='false'] .material-symbols-outlined {
   color: #ffffff;
+}
+
+.screen-share-button[data-lk-screen-share-enabled='true']:hover {
+  background-color: #3d1d20;
 }
 
 /* Record */
@@ -110,15 +116,23 @@
 }
 
 @keyframes pulse {
-  0% { opacity: 1; }
-  50% { opacity: 0.5; }
-  100% { opacity: 1; }
+  0% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0.5;
+  }
+
+  100% {
+    opacity: 1;
+  }
 }
 
 /* End call */
 .end-call-button {
-  width: 64px;
-  height: 40px;
+  width: 5rem;
+  height: 2.4rem;
   background: #ff5252;
   border-radius: 8px;
   display: flex;
@@ -130,7 +144,6 @@
   color: #ffffff;
 }
 
-
 .top-right-controls {
   display: flex;
   gap: 10px;
@@ -138,17 +151,22 @@
 }
 
 .participant-box {
-  background-color: rgba(144, 155, 170, 0.1);
+  background-color: #181d23;
   border-radius: 8px;
   display: flex;
   align-items: center;
   padding: 5px 10px;
-  gap: 8px;
+  gap: 4px;
+}
+
+.participant-box:hover {
+  background-color: #1f242b;
 }
 
 .participant-box .material-symbols-outlined {
   font-size: 20px;
   color: white;
+  padding: 0.3rem;
 }
 
 .participant-count {
@@ -159,14 +177,17 @@
 }
 
 .settings-box {
-  background-color: rgba(144, 155, 170, 0.1);
+  background-color: #181d23;
   border-radius: 8px;
-  width: 40px;
-  height: 40px;
+  padding: 0.6rem;
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
+}
+
+.settings-box:hover {
+  background-color: #1f242b;
 }
 
 .settings-box .material-symbols-outlined {
