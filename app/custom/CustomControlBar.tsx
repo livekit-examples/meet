@@ -9,6 +9,7 @@ import '../../styles/CustomControlBar.css';
 import { CameraOffSVG, CameraOnSVG } from '../svg/camera';
 import { MicOffSVG, MicOnSVG } from '../svg/mic';
 import { ScreenShareOnSVG } from '../svg/screen-share';
+import { useCustomLayoutContext } from '../contexts/layout-context';
 
 interface CustomControlBarProps {
   room: Room;
@@ -19,6 +20,12 @@ export function CustomControlBar({ room, roomName }: CustomControlBarProps) {
   const [recording, setRecording] = useState(false);
   const [participantCount, setParticipantCount] = useState(1);
   const { dispatch } = useLayoutContext().widget;
+  const { isParticipantsListOpen } = useCustomLayoutContext();
+
+  function ToggleParticipantsList() {
+    if (isParticipantsListOpen.dispatch)
+      isParticipantsListOpen.dispatch({ msg: 'toggle_participants_list' });
+  }
 
   useEffect(() => {
     if (room) {
@@ -74,7 +81,7 @@ export function CustomControlBar({ room, roomName }: CustomControlBarProps) {
 
       {/* Participants, Settings btn */}
       <div className="top-right-controls">
-        <div className="participant-box">
+        <div className="participant-box" onClick={ToggleParticipantsList}>
           <span className="material-symbols-outlined">people</span>
           <span className="participant-count">{participantCount}</span>
         </div>

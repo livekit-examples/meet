@@ -11,7 +11,7 @@ const MicOnSVG = () => {
 
 const MicOffSVG = () => {
   return (
-    <svg width="45" height="45" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <svg width="25" height="25" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
       <mask
         id="mask0_5659_3520"
         style={{ maskType: 'alpha' }}

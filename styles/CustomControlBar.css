@@ -157,6 +157,7 @@
   align-items: center;
   padding: 5px 10px;
   gap: 4px;
+  cursor: pointer;
 }
 
 .participant-box:hover {

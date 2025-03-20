@@ -8,7 +8,6 @@ import {
   PreJoin,
   LiveKitRoom,
   RoomAudioRenderer,
-  VideoConference,
 } from '@livekit/components-react';
 import {
   ExternalE2EEKeyProvider,
