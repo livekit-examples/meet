@@ -1,9 +1,11 @@
-import React from 'react';
-import { GridLayout, useTracks, LayoutContextProvider, Chat } from '@livekit/components-react';
+import React, { useState } from 'react';
+import { GridLayout, useTracks, LayoutContextProvider } from '@livekit/components-react';
 import { Track, Room } from 'livekit-client';
 import { ParticipantTile } from './ParticipantTile';
 import { CustomControlBar } from '@/app/custom/CustomControlBar';
 import { SettingsMenu } from './SettingsMenu';
+import ParticipantList from '@/app/custom/ParticipantList';
+import { CustomLayoutContextProvider } from '@/app/contexts/layout-context';
 
 interface CustomVideoLayoutProps {
   room: Room;
@@ -11,8 +13,9 @@ interface CustomVideoLayoutProps {
 }
 
 export const CustomVideoLayout: React.FC<CustomVideoLayoutProps> = ({ room, roomName }) => {
-  const [showChat, setShowChat] = React.useState(false);
-  const [showSettings, setShowSettings] = React.useState(false);
+  const showChat = false;
+  const [showSettings, setShowSettings] = useState(false);
+  const [showParticipantsList, setShowParticipantsList] = useState(false);
 
   const tracks = useTracks(
     [
@@ -23,79 +26,73 @@ export const CustomVideoLayout: React.FC<CustomVideoLayoutProps> = ({ room, room
   );
 
   return (
-    <LayoutContextProvider
-      value={{
-        pin: {
-          state: [],
-          dispatch: () => {},
-        },
-        widget: {
-          state: {
-            showChat,
-            showSettings,
-            unreadMessages: 0,
-          },
-          dispatch: (action: any) => {
-            if ('msg' in action && action.msg === 'toggle_chat') {
-              setShowChat((prev) => !prev);
-            }
-            if ('msg' in action && action.msg === 'toggle_settings') {
-              setShowSettings((prev) => !prev);
-            }
-          },
+    <CustomLayoutContextProvider
+      layoutContextValue={{
+        isParticipantsListOpen: {
+          state: showParticipantsList,
+          dispatch: () => setShowParticipantsList((prev) => !prev),
         },
       }}
     >
-      <div
-        style={{
-          display: 'flex',
-          flexDirection: 'row',
-          height: '100vh',
-          width: '100vw',
-          position: 'relative',
-          backgroundColor: '#070707',
+      <LayoutContextProvider
+        value={{
+          pin: {
+            state: [],
+            dispatch: () => {},
+          },
+          widget: {
+            state: {
+              showChat,
+              showSettings,
+              unreadMessages: 0,
+            },
+            dispatch: (action: any) => {
+              if ('msg' in action && action.msg === 'toggle_settings') {
+                setShowSettings((prev) => !prev);
+              }
+              if ('msg' in action && action.msg === 'toggle_participants_list') {
+                setShowParticipantsList((prev) => !prev);
+              }
+            },
+          },
         }}
       >
         <div
           style={{
-            flex: 1,
-            minHeight: 0,
             display: 'flex',
-            flexDirection: 'column',
+            flexDirection: 'row',
+            height: '100vh',
+            width: '100vw',
+            position: 'relative',
+            backgroundColor: '#070707',
           }}
         >
-          <div style={{ flex: 1, minHeight: 0 }}>
-            <GridLayout
-              tracks={tracks}
-              style={{
-                width: '100%',
-                padding: '1rem 1rem 0.5rem 1rem',
-              }}
-            >
-              <ParticipantTile />
-            </GridLayout>
-          </div>
-        </div>
-
-        {showChat && (
           <div
-            className="lk-chat-container"
             style={{
-              width: '470px',
-              borderLeft: '1px solid rgba(255, 255, 255, 0.1)',
+              flex: 1,
+              minHeight: 0,
+              display: 'flex',
+              flexDirection: 'column',
             }}
           >
-            <Chat
-              style={{
-                height: '100%',
-              }}
-            />
+            <div style={{ flex: 1, minHeight: 0 }}>
+              <GridLayout
+                tracks={tracks}
+                style={{
+                  width: '100%',
+                  padding: '1rem 1rem 0.5rem 1rem',
+                }}
+              >
+                <ParticipantTile />
+              </GridLayout>
+              <CustomControlBar room={room} roomName={roomName} />
+            </div>
           </div>
-        )}
-        <CustomControlBar room={room} roomName={roomName} />
-        <SettingsMenu showSettings={showSettings} />
-      </div>
-    </LayoutContextProvider>
+          {showParticipantsList && <ParticipantList />}
+          <SettingsMenu showSettings={showSettings} />
+        </div>
+      </LayoutContextProvider>
+    </CustomLayoutContextProvider>
   );
 };
 
