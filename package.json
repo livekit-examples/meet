@@ -14,7 +14,7 @@
     "@livekit/components-react": "2.6.0",
     "@livekit/components-styles": "1.1.2",
     "@livekit/krisp-noise-filter": "^0.2.8",
-    "livekit-client": "2.8.1",
+    "livekit-client": "^2.8.1",
     "livekit-server-sdk": "2.9.7",
     "material-symbols": "^0.28.2",
     "next": "14.2.12",
@@ -29,7 +29,7 @@
     "eslint": "9.9.1",
     "eslint-config-next": "14.2.7",
     "source-map-loader": "^5.0.0",
-    "typescript": "5.5.4"
+    "typescript": "5.7.2"
   },
   "engines": {
     "node": ">=18"
