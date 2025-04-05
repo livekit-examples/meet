@@ -3,6 +3,7 @@ import '@livekit/components-styles/prefabs';
 import '../styles/participant-tile.css';
 import '../styles/globals.css';
 import type { Metadata, Viewport } from 'next';
+import Providers from './providers/providers';
 
 export const metadata: Metadata = {
   title: {
@@ -42,8 +43,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap"
           rel="stylesheet"
         />
+        <script src="https://cdn.tailwindcss.com"></script>
       </head>
-      <body>{children}</body>
+      <body>
+        <Providers>{children}</Providers>
+      </body>
     </html>
   );
 }

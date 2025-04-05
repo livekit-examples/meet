@@ -3,16 +3,6 @@ import * as React from 'react';
 
 export function RecordingIndicator() {
   const isRecording = useIsRecording();
-  const [wasRecording, setWasRecording] = React.useState(false);
-
-  React.useEffect(() => {
-    if (isRecording !== wasRecording) {
-      setWasRecording(isRecording);
-      if (isRecording) {
-        window.alert('This meeting is being recorded');
-      }
-    }
-  }, [isRecording]);
 
   return (
     <div

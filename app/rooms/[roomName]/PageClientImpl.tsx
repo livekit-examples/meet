@@ -22,6 +22,7 @@ import { useRouter } from 'next/navigation';
 import '../../../styles/PageClientImpl.css';
 import { CustomVideoLayout } from '@/lib/CustomVideoLayout';
 import { RecordingIndicator } from '@/lib/RecordingIndicator';
+import { useToast } from '@/app/custom/toast/use-toast';
 
 const CONN_DETAILS_ENDPOINT =
   process.env.NEXT_PUBLIC_CONN_DETAILS_ENDPOINT ?? '/api/connection-details';

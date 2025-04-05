@@ -76,6 +76,7 @@ export async function GET(req: NextRequest) {
     return new NextResponse(null, { status: 200 });
   } catch (error) {
     if (error instanceof Error) {
+      console.log({ error });
       return new NextResponse(error.message, { status: 500 });
     }
   }
