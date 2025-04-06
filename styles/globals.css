@@ -155,14 +155,14 @@ h2 a {
 @keyframes blink {
   0%,
   100% {
-    background-color: #382327;
+    color: #ed7473;
   }
 
   50% {
-    background-color: #2d1e22;
+    color: #714144;
   }
 }
 
 .blinking {
-  animation: blink 1s infinite;
+  animation: blink 1.5s infinite;
 }

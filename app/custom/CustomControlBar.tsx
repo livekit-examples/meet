@@ -159,12 +159,10 @@ export function CustomControlBar({ room, roomName }: CustomControlBarProps) {
         <TrackToggle source={Track.Source.Camera} />
 
         <div
-          className={`control-btn ${isRecording ? '' : 'disabled'} ${isRecordingRequestPending || !isSelfRecord ? 'blinking' : ''}`}
+          className={`control-btn ${isRecording ? '' : 'disabled'} ${isRecordingRequestPending || isRecording ? 'blinking' : ''}`}
           onClick={toggleRoomRecording}
-          data-lk-active={isRecording}
           style={{
             cursor: isRecordingRequestPending ? 'not-allowed' : 'pointer',
-            color: isRecording || isRecordingRequestPending ? '#ED7473' : 'white',
           }}
         >
           {isRecording ? (
