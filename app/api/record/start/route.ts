@@ -1,10 +1,11 @@
-import { EgressClient, EncodedFileOutput, S3Upload } from 'livekit-server-sdk';
+import { EgressClient, EncodedFileOutput, RoomServiceClient, S3Upload } from 'livekit-server-sdk';
 import { NextRequest, NextResponse } from 'next/server';
 
 export async function GET(req: NextRequest) {
   try {
     const roomName = req.nextUrl.searchParams.get('roomName');
     const now = req.nextUrl.searchParams.get('now');
+    const identity = req.nextUrl.searchParams.get('identity');
 
     // new Date(Date.now()).toISOString();
     /**
@@ -67,6 +68,11 @@ export async function GET(req: NextRequest) {
       {
         layout: 'speaker',
       },
+    );
+    const roomClient = new RoomServiceClient(hostURL.origin, LIVEKIT_API_KEY, LIVEKIT_API_SECRET);
+    await roomClient.updateRoomMetadata(
+      roomName,
+      JSON.stringify({ recording: { isRecording: true, recorder: identity } }),
     );
 
     if (RUNNER_URL && RUNNER_SECRET) {

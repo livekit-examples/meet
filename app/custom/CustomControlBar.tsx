@@ -1,10 +1,11 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import {
   DisconnectButton,
   useIsRecording,
   useLayoutContext,
+  useLocalParticipant,
   useRoomContext,
 } from '@livekit/components-react';
 import { Room, RoomEvent, Track } from 'livekit-client';
@@ -24,22 +25,35 @@ interface CustomControlBarProps {
 
 export function CustomControlBar({ room, roomName }: CustomControlBarProps) {
   const recordingEndpoint = process.env.NEXT_PUBLIC_LK_RECORD_ENDPOINT;
-  const isRecording = useIsRecording();
+  const { localParticipant } = useLocalParticipant();
   const [isRecordingRequestPending, setIsRecordingRequestPending] = useState(false);
   const [participantCount, setParticipantCount] = useState(1);
   const { dispatch } = useLayoutContext().widget;
   const { isParticipantsListOpen } = useCustomLayoutContext();
   const { toast } = useToast();
+  const [recordingState, setRecordingState] = useState({
+    recording: { isRecording: false, recorder: '' },
+  });
+  const isRecording = useMemo(() => {
+    return recordingState.recording.isRecording;
+  }, [recordingState]);
+  const isSelfRecord = useMemo(() => {
+    return recordingState.recording.recorder === localParticipant.identity;
+  }, [recordingState]);
+
   const [isFirstMount, setIsFirstMount] = useState(true);
 
   useEffect(() => {
-    if (isFirstMount) return setIsFirstMount(false);
-    setIsRecordingRequestPending(false);
+    setIsFirstMount(false);
+  }, []);
+
+  useEffect(() => {
     if (isRecording) {
       toast({
         title: 'Recording in progress. Please be aware this call is being recorded.',
       });
     } else {
+      if (isFirstMount) return;
       toast({
         title: 'Recorded ended. This call is no longer being recorded.',
       });
@@ -52,7 +66,7 @@ export function CustomControlBar({ room, roomName }: CustomControlBarProps) {
   }
 
   const toggleRoomRecording = async () => {
-    if (isRecordingRequestPending) return;
+    if (isRecordingRequestPending || (isRecording && !isSelfRecord)) return;
     setIsRecordingRequestPending(true);
     if (!isRecording)
       toast({
@@ -73,9 +87,14 @@ export function CustomControlBar({ room, roomName }: CustomControlBarProps) {
     const now = new Date(Date.now()).toISOString();
     // const fileName = `${now}-${room.name}.mp4`;
     if (isRecording) {
-      response = await fetch(recordingEndpoint + `/stop?roomName=${room.name}`);
+      response = await fetch(
+        recordingEndpoint + `/stop?roomName=${room.name}&identity=${localParticipant.identity}`,
+      );
     } else {
-      response = await fetch(recordingEndpoint + `/start?roomName=${room.name}&now=${now}`);
+      response = await fetch(
+        recordingEndpoint +
+          `/start?roomName=${room.name}&now=${now}&identity=${localParticipant.identity}`,
+      );
     }
     if (response.ok) {
     } else {
@@ -87,6 +106,17 @@ export function CustomControlBar({ room, roomName }: CustomControlBarProps) {
     }
   };
 
+  const updateRoomMetadata = (metadata: string) => {
+    const parsedMetadata = JSON.parse(metadata === '' ? '{}' : metadata);
+    setIsRecordingRequestPending(false);
+    setRecordingState({
+      recording: {
+        isRecording: parsedMetadata.recording.isRecording,
+        recorder: parsedMetadata.recording.recorder,
+      },
+    });
+  };
+
   useEffect(() => {
     if (room) {
       const updateParticipantCount = () => {
@@ -96,11 +126,13 @@ export function CustomControlBar({ room, roomName }: CustomControlBarProps) {
       room.on(RoomEvent.Connected, updateParticipantCount);
       room.on(RoomEvent.ParticipantConnected, updateParticipantCount);
       room.on(RoomEvent.ParticipantDisconnected, updateParticipantCount);
+      room.on(RoomEvent.RoomMetadataChanged, updateRoomMetadata);
 
       return () => {
         room.off(RoomEvent.Connected, updateParticipantCount);
         room.off(RoomEvent.ParticipantConnected, updateParticipantCount);
         room.off(RoomEvent.ParticipantDisconnected, updateParticipantCount);
+        room.off(RoomEvent.RoomMetadataChanged, updateRoomMetadata);
       };
     }
   }, [room]);
@@ -127,18 +159,16 @@ export function CustomControlBar({ room, roomName }: CustomControlBarProps) {
         <TrackToggle source={Track.Source.Camera} />
 
         <div
-          className={`control-btn ${isRecording ? '' : 'disabled'}`}
+          className={`control-btn ${isRecording ? '' : 'disabled'} ${isRecordingRequestPending || !isSelfRecord ? 'blinking' : ''}`}
           onClick={toggleRoomRecording}
           data-lk-active={isRecording}
           style={{
             cursor: isRecordingRequestPending ? 'not-allowed' : 'pointer',
-            color: isRecordingRequestPending ? 'gray' : isRecording ? '#ED7473' : 'white',
+            color: isRecording || isRecordingRequestPending ? '#ED7473' : 'white',
           }}
         >
           {isRecording ? (
-            <span className="material-symbols-outlined" style={{}}>
-              stop_circle
-            </span>
+            <span className="material-symbols-outlined">stop_circle</span>
           ) : (
             <span className="material-symbols-outlined">radio_button_checked</span>
           )}
