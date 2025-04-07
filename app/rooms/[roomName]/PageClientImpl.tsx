@@ -20,7 +20,8 @@ import {
 } from 'livekit-client';
 import { useRouter } from 'next/navigation';
 import '../../../styles/PageClientImpl.css';
-import { CustomVideoLayout } from '@/lib/CustomVideoLayout';
+import { CustomVideoLayoutContextProvider } from '@/app/custom/layout/LayoutContextProvider';
+import CustomVideoLayout from '@/app/custom/layout/CustomVideoLayout';
 
 const CONN_DETAILS_ENDPOINT =
   process.env.NEXT_PUBLIC_CONN_DETAILS_ENDPOINT ?? '/api/connection-details';
@@ -177,8 +178,10 @@ function VideoConferenceComponent(props: {
       audio={props.userChoices.audioEnabled}
       onDisconnected={handleOnLeave}
     >
-      <CustomVideoLayout room={room} roomName={props.connectionDetails.roomName} />
-      <RoomAudioRenderer />
+      <CustomVideoLayoutContextProvider>
+        <CustomVideoLayout room={room} roomName={props.connectionDetails.roomName} />
+        <RoomAudioRenderer />
+      </CustomVideoLayoutContextProvider>
     </LiveKitRoom>
   );
 }

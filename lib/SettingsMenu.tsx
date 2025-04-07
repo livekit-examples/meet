@@ -6,7 +6,6 @@ import {
   useLocalParticipant,
   MediaDeviceMenu,
   TrackToggle,
-  useRoomContext,
 } from '@livekit/components-react';
 import type { KrispNoiseFilterProcessor } from '@livekit/krisp-noise-filter';
 
