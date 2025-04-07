@@ -35,7 +35,6 @@ export const CustomVideoLayout: React.FC<CustomVideoLayoutProps> = ({ room, room
   );
 
   const focusTrack = usePinnedTracks()[0];
-  const carouselTracks = tracks.filter((track) => !isEqualTrackRef(track, focusTrack));
   const test = usePinnedTracks();
 
   useEffect(() => {
@@ -80,7 +79,7 @@ export const CustomVideoLayout: React.FC<CustomVideoLayoutProps> = ({ room, room
                 padding: '1rem 1rem 0.5rem 1rem',
               }}
             >
-              <CarouselLayout tracks={carouselTracks}>
+              <CarouselLayout tracks={tracks}>
                 <ParticipantTile />
               </CarouselLayout>
               {focusTrack && <FocusLayout style={{ width: '100%' }} trackRef={focusTrack} />}{' '}

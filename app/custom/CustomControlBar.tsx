@@ -162,9 +162,6 @@ export function CustomControlBar({ room, roomName }: CustomControlBarProps) {
       <div className="control-bar control-buttons">
         <TrackToggle source={Track.Source.Microphone} />
         <TrackToggle source={Track.Source.Camera} />
-        <div className={`control-btn`} onClick={toggleChat}>
-          <span className="material-symbols-outlined">chat</span>
-        </div>
         <div
           className={`control-btn ${isRecording ? '' : 'disabled'} ${isRecordingRequestPending || isRecording ? 'blinking' : ''}`}
           onClick={toggleRoomRecording}
@@ -191,7 +188,9 @@ export function CustomControlBar({ room, roomName }: CustomControlBarProps) {
           <span className="material-symbols-outlined">people</span>
           <span className="participant-count">{participantCount}</span>
         </div>
-
+        <div className={`control-btn`} onClick={toggleChat}>
+          <span className="material-symbols-outlined">chat</span>
+        </div>
         <div
           className="settings-box"
           onClick={() => {
