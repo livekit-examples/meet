@@ -56,6 +56,15 @@
   border-radius: 50%;
 }
 
+.lk-carousel .avatar-container {
+  width: 60px;
+  height: 60px;
+}
+
+.lk-carousel .avatar-initials {
+  font-size: 35px;
+}
+
 .avatar-container {
   position: absolute;
   top: 50%;

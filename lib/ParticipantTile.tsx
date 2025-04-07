@@ -176,7 +176,12 @@ export const ParticipantTile: (
                       ) : (
                         <span className="mic-icon mic-off">mic_off</span>
                       )}
-                      <span className="participant-name">{name || identity}</span>
+                      <span className="participant-name">
+                        {name || identity}
+                        {trackReference.source === Track.Source.ScreenShare
+                          ? ' (Screen Share)'
+                          : ''}
+                      </span>
                     </div>
                   </div>
                   <ConnectionQualityIndicator className="lk-participant-metadata-item" />
