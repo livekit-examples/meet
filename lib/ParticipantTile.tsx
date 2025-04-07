@@ -10,21 +10,12 @@ import {
   TrackRefContext,
   useEnsureTrackRef,
   useFeatureContext,
-  useIsEncrypted,
   useMaybeLayoutContext,
   useMaybeParticipantContext,
   useMaybeTrackRefContext,
   useParticipantTile,
-  ParticipantPlaceholder,
-  LockLockedIcon,
-  TrackMutedIndicator,
-  ParticipantName,
   ConnectionQualityIndicator,
   FocusToggle,
-  useIsSpeaking,
-  useIsMuted,
-  useTrackByName,
-  useTracks,
 } from '@livekit/components-react';
 import { getAvatarColor, getInitials } from './client-utils';
 
@@ -137,9 +128,9 @@ export const ParticipantTile: (
             {children ?? (
               <>
                 {isTrackReference(trackReference) &&
-                (trackReference.publication?.kind === 'video' ||
-                  trackReference.source === Track.Source.Camera ||
-                  trackReference.source === Track.Source.ScreenShare) ? (
+                  (trackReference.publication?.kind === 'video' ||
+                    trackReference.source === Track.Source.Camera ||
+                    trackReference.source === Track.Source.ScreenShare) ? (
                   <VideoTrack
                     trackRef={trackReference}
                     onSubscriptionStatusChanged={handleSubscribe}

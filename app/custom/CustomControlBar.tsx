@@ -3,7 +3,6 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import {
   DisconnectButton,
-  useIsRecording,
   useLayoutContext,
   useLocalParticipant,
   useRoomContext,
@@ -97,7 +96,7 @@ export function CustomControlBar({ room, roomName }: CustomControlBarProps) {
     } else {
       response = await fetch(
         recordingEndpoint +
-          `/start?roomName=${room.name}&now=${now}&identity=${localParticipant.identity}`,
+        `/start?roomName=${room.name}&now=${now}&identity=${localParticipant.identity}`,
       );
     }
     if (response.ok) {

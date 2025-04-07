@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { LayoutContextProvider, TrackReferenceOrPlaceholder } from '@livekit/components-react';
 import { CustomLayoutContextProvider } from '@/app/contexts/layout-context';
 import { PinAction } from '@livekit/components-react/dist/context/pin-context';
-import { PanelTopInactive, Pi } from 'lucide-react';
 
 interface CustomVideoLayoutContextProviderProps {
   children: React.ReactNode;

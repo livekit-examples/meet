@@ -7,7 +7,6 @@ import {
   usePinnedTracks,
   useLayoutContext,
 } from '@livekit/components-react';
-import { isEqualTrackRef } from '@livekit/components-core';
 import { Track, Room } from 'livekit-client';
 import { CustomControlBar } from '@/app/custom/CustomControlBar';
 import ParticipantList from '@/app/custom/ParticipantList';
