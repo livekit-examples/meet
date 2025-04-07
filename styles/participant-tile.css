@@ -33,6 +33,12 @@
   font-family: 'Material Symbols Outlined';
   font-size: 18px;
   padding: 0.1rem 0.3rem;
+  width: 1.5rem;
+  height: 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 0.25rem;
 }
 
 .mic-on {
@@ -44,14 +50,10 @@
 }
 
 .speaking-icon {
-  background-color: #618aff;
-  border-radius: 50%;
-}
-
-.speaking-icon {
   font-family: 'Material Symbols Outlined';
   color: white;
-  font-size: 16px;
+  background-color: #618aff;
+  border-radius: 50%;
 }
 
 .avatar-container {
@@ -92,4 +94,27 @@
   border-top: 1px solid rgba(255, 255, 255, 0.1);
   margin-right: -10px;
   width: calc(100% + 10px);
+}
+
+.focus-toggle {
+  width: 2rem;
+  background-color: #151e27;
+  position: absolute;
+  right: 0.5rem;
+  top: 0.5rem;
+  z-index: 10;
+}
+
+.lk-participant-tile .lk-participant-placeholder {
+  background-color: #1a242e;
+}
+
+.lk-participant-metadata-item,
+.lk-participant-tile .lk-focus-toggle-button,
+.lk-participant-tile .lk-focus-toggle-button:hover {
+  background-color: #151e27;
+}
+
+.data-lk-quality {
+  top: 0;
 }
