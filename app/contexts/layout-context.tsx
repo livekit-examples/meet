@@ -2,7 +2,7 @@ import { createContext, useContext } from 'react';
 
 type LayoutContextType = {
   // isSettingsOpen: SettingsContextType,
-  // isChatOpen: ChatContextType,
+  isChatOpen: ChatContextType;
   isParticipantsListOpen: ParticipantsListContextType;
 };
 

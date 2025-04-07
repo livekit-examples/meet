@@ -14,12 +14,17 @@
     "@livekit/components-react": "2.6.0",
     "@livekit/components-styles": "1.1.2",
     "@livekit/krisp-noise-filter": "^0.2.8",
+    "@radix-ui/react-toast": "^1.2.6",
+    "class-variance-authority": "^0.7.1",
+    "clsx": "^2.1.1",
     "livekit-client": "^2.8.1",
     "livekit-server-sdk": "2.9.7",
+    "lucide-react": "^0.487.0",
     "material-symbols": "^0.28.2",
     "next": "14.2.12",
     "react": "18.3.1",
     "react-dom": "18.3.1",
+    "tailwind-merge": "^3.1.0",
     "tinykeys": "^2.1.0"
   },
   "devDependencies": {

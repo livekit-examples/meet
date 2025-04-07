@@ -1,7 +1,13 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
-import { DisconnectButton, useLayoutContext, useRoomContext } from '@livekit/components-react';
+import React, { useState, useEffect, useMemo } from 'react';
+import {
+  DisconnectButton,
+  useIsRecording,
+  useLayoutContext,
+  useLocalParticipant,
+  useRoomContext,
+} from '@livekit/components-react';
 import { Room, RoomEvent, Track } from 'livekit-client';
 import { mergeClasses } from '@/lib/client-utils';
 import { ToggleSource } from '@livekit/components-core';
@@ -10,6 +16,7 @@ import { CameraOffSVG, CameraOnSVG } from '../svg/camera';
 import { MicOffSVG, MicOnSVG } from '../svg/mic';
 import { ScreenShareOnSVG } from '../svg/screen-share';
 import { useCustomLayoutContext } from '../contexts/layout-context';
+import { useToast } from './toast/use-toast';
 
 interface CustomControlBarProps {
   room: Room;
@@ -17,19 +24,101 @@ interface CustomControlBarProps {
 }
 
 export function CustomControlBar({ room, roomName }: CustomControlBarProps) {
-  const [recording, setRecording] = useState(false);
+  const recordingEndpoint = process.env.NEXT_PUBLIC_LK_RECORD_ENDPOINT;
+  const { localParticipant } = useLocalParticipant();
+  const [isRecordingRequestPending, setIsRecordingRequestPending] = useState(false);
   const [participantCount, setParticipantCount] = useState(1);
   const { dispatch } = useLayoutContext().widget;
   const { isParticipantsListOpen } = useCustomLayoutContext();
+  const { toast } = useToast();
+  const [recordingState, setRecordingState] = useState({
+    recording: { isRecording: false, recorder: '' },
+  });
+  const isRecording = useMemo(() => {
+    return recordingState.recording.isRecording;
+  }, [recordingState]);
+  const isSelfRecord = useMemo(() => {
+    return recordingState.recording.recorder === localParticipant.identity;
+  }, [recordingState]);
+
+  const [isFirstMount, setIsFirstMount] = useState(true);
+
+  useEffect(() => {
+    setIsFirstMount(false);
+  }, []);
+
+  useEffect(() => {
+    if (isRecording) {
+      toast({
+        title: 'Recording in progress. Please be aware this call is being recorded.',
+      });
+    } else {
+      if (isFirstMount) return;
+      toast({
+        title: 'Recorded ended. This call is no longer being recorded.',
+      });
+    }
+  }, [isRecording]);
 
   function ToggleParticipantsList() {
     if (isParticipantsListOpen.dispatch)
       isParticipantsListOpen.dispatch({ msg: 'toggle_participants_list' });
   }
 
+  const toggleRoomRecording = async () => {
+    if (isRecordingRequestPending || (isRecording && !isSelfRecord)) return;
+    setIsRecordingRequestPending(true);
+    if (!isRecording)
+      toast({
+        title: 'Starting call recording. Please wait...',
+      });
+    else
+      toast({
+        title: 'Stopping call recording. Please wait...',
+      });
+
+    if (!recordingEndpoint) {
+      throw TypeError('No recording endpoint specified');
+    }
+    if (room.isE2EEEnabled) {
+      throw Error('Recording of encrypted meetings is currently not supported');
+    }
+    let response: Response;
+    const now = new Date(Date.now()).toISOString();
+    // const fileName = `${now}-${room.name}.mp4`;
+    if (isRecording) {
+      response = await fetch(
+        recordingEndpoint + `/stop?roomName=${room.name}&identity=${localParticipant.identity}`,
+      );
+    } else {
+      response = await fetch(
+        recordingEndpoint +
+          `/start?roomName=${room.name}&now=${now}&identity=${localParticipant.identity}`,
+      );
+    }
+    if (response.ok) {
+    } else {
+      console.error(
+        'Error handling recording request, check server logs:',
+        response.status,
+        response.statusText,
+      );
+    }
+  };
+
+  const updateRoomMetadata = (metadata: string) => {
+    const parsedMetadata = JSON.parse(metadata === '' ? '{}' : metadata);
+    setIsRecordingRequestPending(false);
+    setRecordingState({
+      recording: {
+        isRecording: parsedMetadata.recording.isRecording,
+        recorder: parsedMetadata.recording.recorder,
+      },
+    });
+  };
+
   useEffect(() => {
     if (room) {
-      const updateRecordingStatus = () => setRecording(room.isRecording);
       const updateParticipantCount = () => {
         setParticipantCount(room.numParticipants);
       };
@@ -37,13 +126,13 @@ export function CustomControlBar({ room, roomName }: CustomControlBarProps) {
       room.on(RoomEvent.Connected, updateParticipantCount);
       room.on(RoomEvent.ParticipantConnected, updateParticipantCount);
       room.on(RoomEvent.ParticipantDisconnected, updateParticipantCount);
-      room.on(RoomEvent.RecordingStatusChanged, updateRecordingStatus);
+      room.on(RoomEvent.RoomMetadataChanged, updateRoomMetadata);
 
       return () => {
         room.off(RoomEvent.Connected, updateParticipantCount);
         room.off(RoomEvent.ParticipantConnected, updateParticipantCount);
         room.off(RoomEvent.ParticipantDisconnected, updateParticipantCount);
-        room.off(RoomEvent.RecordingStatusChanged, updateRecordingStatus);
+        room.off(RoomEvent.RoomMetadataChanged, updateRoomMetadata);
       };
     }
   }, [room]);
@@ -69,8 +158,18 @@ export function CustomControlBar({ room, roomName }: CustomControlBarProps) {
         <TrackToggle source={Track.Source.Microphone} />
         <TrackToggle source={Track.Source.Camera} />
 
-        <div className={`control-btn ${recording ? '' : 'disabled'}`}>
-          <span className="material-symbols-outlined">radio_button_checked</span>
+        <div
+          className={`control-btn ${isRecording ? '' : 'disabled'} ${isRecordingRequestPending || isRecording ? 'blinking' : ''}`}
+          onClick={toggleRoomRecording}
+          style={{
+            cursor: isRecordingRequestPending ? 'not-allowed' : 'pointer',
+          }}
+        >
+          {isRecording ? (
+            <span className="material-symbols-outlined">stop_circle</span>
+          ) : (
+            <span className="material-symbols-outlined">radio_button_checked</span>
+          )}
         </div>
 
         <TrackToggle source={Track.Source.ScreenShare} />

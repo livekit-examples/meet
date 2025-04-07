@@ -151,3 +151,18 @@ h2 a {
   justify-content: space-between;
   gap: 0.5rem;
 }
+
+@keyframes blink {
+  0%,
+  100% {
+    color: #ed7473;
+  }
+
+  50% {
+    color: #714144;
+  }
+}
+
+.blinking {
+  animation: blink 1.5s infinite;
+}

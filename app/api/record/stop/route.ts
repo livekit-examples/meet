@@ -1,9 +1,10 @@
-import { EgressClient } from 'livekit-server-sdk';
+import { EgressClient, RoomServiceClient } from 'livekit-server-sdk';
 import { NextRequest, NextResponse } from 'next/server';
 
 export async function GET(req: NextRequest) {
   try {
     const roomName = req.nextUrl.searchParams.get('roomName');
+    const identity = req.nextUrl.searchParams.get('identity');
 
     /**
      * CAUTION:
@@ -22,6 +23,7 @@ export async function GET(req: NextRequest) {
     hostURL.protocol = 'https:';
 
     const egressClient = new EgressClient(hostURL.origin, LIVEKIT_API_KEY, LIVEKIT_API_SECRET);
+    const roomClient = new RoomServiceClient(hostURL.origin, LIVEKIT_API_KEY, LIVEKIT_API_SECRET);
     const activeEgresses = (await egressClient.listEgress({ roomName })).filter(
       (info) => info.status < 2,
     );
@@ -29,6 +31,10 @@ export async function GET(req: NextRequest) {
       return new NextResponse('No active recording found', { status: 404 });
     }
     await Promise.all(activeEgresses.map((info) => egressClient.stopEgress(info.egressId)));
+    await roomClient.updateRoomMetadata(
+      roomName,
+      JSON.stringify({ recording: { isRecording: false, recorder: identity } }),
+    );
 
     return new NextResponse(null, { status: 200 });
   } catch (error) {
