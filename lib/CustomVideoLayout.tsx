@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
-import { GridLayout, useTracks, LayoutContextProvider } from '@livekit/components-react';
+import { GridLayout, useTracks, LayoutContextProvider, Chat } from '@livekit/components-react';
 import { Track, Room } from 'livekit-client';
 import { ParticipantTile } from './ParticipantTile';
 import { CustomControlBar } from '@/app/custom/CustomControlBar';
 import { SettingsMenu } from './SettingsMenu';
 import ParticipantList from '@/app/custom/ParticipantList';
 import { CustomLayoutContextProvider } from '@/app/contexts/layout-context';
+import '../styles/Chat.css';
 
 interface CustomVideoLayoutProps {
   room: Room;
@@ -13,7 +14,7 @@ interface CustomVideoLayoutProps {
 }
 
 export const CustomVideoLayout: React.FC<CustomVideoLayoutProps> = ({ room, roomName }) => {
-  const showChat = false;
+  const [showChat, setShowChat] = useState(false);
   const [showSettings, setShowSettings] = useState(false);
   const [showParticipantsList, setShowParticipantsList] = useState(false);
 
@@ -30,7 +31,17 @@ export const CustomVideoLayout: React.FC<CustomVideoLayoutProps> = ({ room, room
       layoutContextValue={{
         isParticipantsListOpen: {
           state: showParticipantsList,
-          dispatch: () => setShowParticipantsList((prev) => !prev),
+          dispatch: () => {
+            if (showChat) setShowChat(false);
+            setShowParticipantsList((prev) => !prev);
+          },
+        },
+        isChatOpen: {
+          state: showChat,
+          dispatch: () => {
+            if (showParticipantsList) setShowParticipantsList(false);
+            setShowChat((prev) => !prev);
+          },
         },
       }}
     >
@@ -50,7 +61,12 @@ export const CustomVideoLayout: React.FC<CustomVideoLayoutProps> = ({ room, room
               if ('msg' in action && action.msg === 'toggle_settings') {
                 setShowSettings((prev) => !prev);
               }
+              if ('msg' in action && action.msg === 'toggle_chat') {
+                if (showParticipantsList) setShowParticipantsList(false);
+                setShowChat((prev) => !prev);
+              }
               if ('msg' in action && action.msg === 'toggle_participants_list') {
+                if (showChat) setShowChat(false);
                 setShowParticipantsList((prev) => !prev);
               }
             },
@@ -85,10 +101,11 @@ export const CustomVideoLayout: React.FC<CustomVideoLayoutProps> = ({ room, room
               >
                 <ParticipantTile />
               </GridLayout>
-              <CustomControlBar room={room} roomName={roomName} />
+              <CustomControlBar room={room} roomName={roomName} />{' '}
             </div>
           </div>
           {showParticipantsList && <ParticipantList />}
+          {showChat && <Chat />}
           <SettingsMenu showSettings={showSettings} />
         </div>
       </LayoutContextProvider>

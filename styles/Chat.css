@@ -1,0 +1,76 @@
+.lk-chat {
+  display: flex;
+  width: 25vw;
+  flex-direction: column;
+  background-color: #151e27;
+  margin: 1rem 1rem 4.1rem 0;
+  background-color: #151e27;
+  border-radius: 0.5rem;
+  border: 0px;
+}
+
+.lk-chat-header {
+  display: flex;
+  width: 100%;
+  padding: 1.25rem 1.75rem;
+  height: auto;
+  justify-content: start;
+  align-items: center;
+  font-weight: bold;
+  font-size: 1.05rem;
+}
+
+.lk-close-button.lk-button.lk-chat-toggle {
+  color: #556171;
+  cursor: pointer;
+  background-color: transparent;
+  padding: 0.5rem;
+}
+
+.lk-close-button.lk-button.lk-chat-toggle > svg {
+  width: 1.3rem;
+  height: 1.3rem;
+}
+
+.lk-close-button.lk-button.lk-chat-toggle > svg > path {
+  fill: #556171;
+}
+
+.lk-close-button.lk-button.lk-chat-toggle:hover {
+  background-color: transparent;
+}
+
+.lk-list.lk-chat-messages {
+  margin-bottom: auto;
+  padding-inline: 1rem;
+}
+
+.lk-form-control.lk-chat-form-input {
+  background-color: #151e27;
+}
+
+.lk-form-control.lk-chat-form-input:focus-visible {
+  outline: none;
+}
+
+.lk-button.lk-chat-form-button {
+  background-color: #151e27;
+  border: 1px solid var(--lk-border-color);
+}
+
+.lk-button.lk-chat-form-button:hover {
+  background-color: #212e3a;
+}
+
+.lk-chat-form {
+  display: flex;
+  width: 100%;
+}
+
+.lk-chat-entry[data-lk-message-origin='local'] .lk-message-body {
+  background-color: #212e3a;
+}
+
+.lk-chat-entry[data-lk-message-origin='remote'] .lk-message-body {
+  background-color: #3e6189;
+}

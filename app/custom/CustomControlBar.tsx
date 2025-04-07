@@ -29,7 +29,7 @@ export function CustomControlBar({ room, roomName }: CustomControlBarProps) {
   const [isRecordingRequestPending, setIsRecordingRequestPending] = useState(false);
   const [participantCount, setParticipantCount] = useState(1);
   const { dispatch } = useLayoutContext().widget;
-  const { isParticipantsListOpen } = useCustomLayoutContext();
+  const { isParticipantsListOpen, isChatOpen } = useCustomLayoutContext();
   const { toast } = useToast();
   const [recordingState, setRecordingState] = useState({
     recording: { isRecording: false, recorder: '' },
@@ -64,6 +64,10 @@ export function CustomControlBar({ room, roomName }: CustomControlBarProps) {
     if (isParticipantsListOpen.dispatch)
       isParticipantsListOpen.dispatch({ msg: 'toggle_participants_list' });
   }
+
+  const toggleChat = () => {
+    if (isChatOpen.dispatch) isChatOpen.dispatch({ msg: 'toggle_chat' });
+  };
 
   const toggleRoomRecording = async () => {
     if (isRecordingRequestPending || (isRecording && !isSelfRecord)) return;
@@ -149,6 +153,7 @@ export function CustomControlBar({ room, roomName }: CustomControlBarProps) {
       <div className="room-name-box">
         <span className="room-name">{roomName}</span>
         <button className="copy-link-button" onClick={handleCopyLink}>
+          {' '}
           <span className="material-symbols-outlined">content_copy</span>
         </button>
       </div>
@@ -157,7 +162,9 @@ export function CustomControlBar({ room, roomName }: CustomControlBarProps) {
       <div className="control-bar control-buttons">
         <TrackToggle source={Track.Source.Microphone} />
         <TrackToggle source={Track.Source.Camera} />
-
+        <div className={`control-btn`} onClick={toggleChat}>
+          <span className="material-symbols-outlined">chat</span>
+        </div>
         <div
           className={`control-btn ${isRecording ? '' : 'disabled'} ${isRecordingRequestPending || isRecording ? 'blinking' : ''}`}
           onClick={toggleRoomRecording}
