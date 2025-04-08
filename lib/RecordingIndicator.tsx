@@ -32,7 +32,7 @@ export function RecordingIndicator() {
         left: '0',
         width: '100%',
         height: '100%',
-        boxShadow: isRecording ? 'red 0px 0px 0px 3px inset' : 'none',
+        boxShadow: isRecording ? 'var(--lk-danger3) 0px 0px 0px 3px inset' : 'none',
         pointerEvents: 'none',
       }}
     ></div>
