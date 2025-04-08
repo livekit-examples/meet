@@ -7,12 +7,12 @@ export default async function Page({
   searchParams,
 }: {
   params: Promise<{ roomName: string }>;
-  searchParams: {
+  searchParams: Promise<{
     // FIXME: We should not allow values for regions if in playground mode.
     region?: string;
     hq?: string;
     codec?: string;
-  };
+  }>;
 }) {
   const _params = await params;
   const _searchParams = await searchParams;
@@ -20,7 +20,7 @@ export default async function Page({
     typeof _searchParams.codec === 'string' && isVideoCodec(_searchParams.codec)
       ? _searchParams.codec
       : 'vp9';
-  const hq = searchParams.hq === 'true' ? true : false;
+  const hq = _searchParams.hq === 'true' ? true : false;
 
   return (
     <PageClientImpl
