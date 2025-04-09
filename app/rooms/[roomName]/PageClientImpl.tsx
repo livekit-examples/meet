@@ -179,7 +179,7 @@ function VideoConferenceComponent(props: {
       onDisconnected={handleOnLeave}
     >
       <CustomVideoLayoutContextProvider>
-        <CustomVideoLayout room={room} roomName={props.connectionDetails.roomName} />
+        <CustomVideoLayout />
         <RoomAudioRenderer />
       </CustomVideoLayoutContextProvider>
     </LiveKitRoom>

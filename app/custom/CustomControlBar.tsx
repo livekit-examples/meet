@@ -17,16 +17,12 @@ import { ScreenShareOnSVG } from '../svg/screen-share';
 import { useCustomLayoutContext } from '../contexts/layout-context';
 import { useToast } from './toast/use-toast';
 
-interface CustomControlBarProps {
-  room: Room;
-  roomName: string;
-}
-
-export function CustomControlBar({ room, roomName }: CustomControlBarProps) {
+export function CustomControlBar() {
+  const room = useRoomContext();
   const recordingEndpoint = process.env.NEXT_PUBLIC_LK_RECORD_ENDPOINT;
   const { localParticipant } = useLocalParticipant();
   const [isRecordingRequestPending, setIsRecordingRequestPending] = useState(false);
-  const [participantCount, setParticipantCount] = useState(1);
+  const [participantCount, setParticipantCount] = useState(room.numParticipants);
   const { dispatch } = useLayoutContext().widget;
   const { isParticipantsListOpen, isChatOpen } = useCustomLayoutContext();
   const { toast } = useToast();
@@ -96,7 +92,7 @@ export function CustomControlBar({ room, roomName }: CustomControlBarProps) {
     } else {
       response = await fetch(
         recordingEndpoint +
-        `/start?roomName=${room.name}&now=${now}&identity=${localParticipant.identity}`,
+          `/start?roomName=${room.name}&now=${now}&identity=${localParticipant.identity}`,
       );
     }
     if (response.ok) {
@@ -150,7 +146,7 @@ export function CustomControlBar({ room, roomName }: CustomControlBarProps) {
   return (
     <div className="custom-control-bar">
       <div className="room-name-box">
-        <span className="room-name">{roomName}</span>
+        <span className="room-name">{room.name}</span>
         <button className="copy-link-button" onClick={handleCopyLink}>
           {' '}
           <span className="material-symbols-outlined">content_copy</span>

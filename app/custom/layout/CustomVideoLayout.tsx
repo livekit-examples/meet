@@ -7,7 +7,7 @@ import {
   usePinnedTracks,
   useLayoutContext,
 } from '@livekit/components-react';
-import { Track, Room } from 'livekit-client';
+import { Track } from 'livekit-client';
 import { CustomControlBar } from '@/app/custom/CustomControlBar';
 import ParticipantList from '@/app/custom/ParticipantList';
 import { ParticipantTile } from '@/lib/ParticipantTile';
@@ -16,12 +16,7 @@ import { useCustomLayoutContext } from '@/app/contexts/layout-context';
 import '@/styles/Chat.css';
 import { FocusLayout, FocusLayoutContainer } from './FocusLayout';
 
-interface CustomVideoLayoutProps {
-  room: Room;
-  roomName: string;
-}
-
-export const CustomVideoLayout: React.FC<CustomVideoLayoutProps> = ({ room, roomName }) => {
+export const CustomVideoLayout: React.FC = () => {
   const { isChatOpen, isParticipantsListOpen } = useCustomLayoutContext();
   const layoutContext = useLayoutContext();
 
@@ -34,11 +29,6 @@ export const CustomVideoLayout: React.FC<CustomVideoLayoutProps> = ({ room, room
   );
 
   const focusTrack = usePinnedTracks()[0];
-  const test = usePinnedTracks();
-
-  useEffect(() => {
-    console.log({ test });
-  }, [test]);
 
   return (
     <div
@@ -84,7 +74,7 @@ export const CustomVideoLayout: React.FC<CustomVideoLayoutProps> = ({ room, room
               {focusTrack && <FocusLayout style={{ width: '100%' }} trackRef={focusTrack} />}{' '}
             </FocusLayoutContainer>
           )}
-          <CustomControlBar room={room} roomName={roomName} />{' '}
+          <CustomControlBar />
         </div>
       </div>
       {isParticipantsListOpen.state && <ParticipantList />}

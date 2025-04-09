@@ -79,7 +79,15 @@ const ParticipantItem: React.FC<ParticipantItemProps> = ({ participant }) => {
       <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginRight: 'auto' }}>
         <div>
           {profilePictureUrl ? (
-            <img src={profilePictureUrl} alt={participant.name} className="avatar-image" />
+            <img
+              src={profilePictureUrl}
+              alt={participant.name}
+              className="avatar-image"
+              style={{
+                maxWidth: '2rem',
+                maxHeight: '2rem',
+              }}
+            />
           ) : (
             <div
               style={{
