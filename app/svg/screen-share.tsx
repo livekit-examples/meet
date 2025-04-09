@@ -20,9 +20,9 @@ const ScreenShareOnSVG = () => {
         <path
           d="M7 21H17"
           stroke="white"
-          stroke-width="1.5"
-          stroke-linecap="round"
-          stroke-linejoin="round"
+          strokeWidth="1.5"
+          strokeLinecap="round"
+          strokeLinejoin="round"
         />
       </g>
     </svg>
