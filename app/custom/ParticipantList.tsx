@@ -84,8 +84,8 @@ const ParticipantItem: React.FC<ParticipantItemProps> = ({ participant }) => {
               alt={participant.name}
               className="avatar-image"
               style={{
-                maxWidth: '2rem',
-                maxHeight: '2rem',
+                width: '2rem',
+                height: '2rem',
               }}
             />
           ) : (

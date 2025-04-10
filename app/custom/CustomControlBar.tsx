@@ -164,7 +164,7 @@ export function CustomControlBar() {
             cursor: isRecordingRequestPending ? 'not-allowed' : 'pointer',
           }}
         >
-          {isRecording ? (
+          {isRecording && isSelfRecord ? (
             <span className="material-symbols-outlined">stop_circle</span>
           ) : (
             <span className="material-symbols-outlined">radio_button_checked</span>
