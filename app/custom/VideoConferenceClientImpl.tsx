@@ -1,6 +1,6 @@
 'use client';
 
-import { formatChatMessageLinks, LiveKitRoom, VideoConference } from '@livekit/components-react';
+import { formatChatMessageLinks, RoomContext, VideoConference } from '@livekit/components-react';
 import {
   ExternalE2EEKeyProvider,
   LogLevel,
@@ -11,7 +11,7 @@ import {
   type VideoCodec,
 } from 'livekit-client';
 import { DebugMode } from '@/lib/Debug';
-import { useMemo } from 'react';
+import { useEffect, useMemo } from 'react';
 import { decodePassphrase } from '@/lib/client-utils';
 import { SettingsMenu } from '@/lib/SettingsMenu';
 
@@ -57,15 +57,17 @@ export function VideoConferenceClientImpl(props: {
     };
   }, []);
 
+  useEffect(() => {
+    room.connect(props.liveKitUrl, props.token, connectOptions).catch((error) => {
+      console.error(error);
+    });
+    room.localParticipant.enableCameraAndMicrophone().catch((error) => {
+      console.error(error);
+    });
+  }, [room, props.liveKitUrl, props.token, connectOptions]);
+
   return (
-    <LiveKitRoom
-      room={room}
-      token={props.token}
-      connectOptions={connectOptions}
-      serverUrl={props.liveKitUrl}
-      audio={true}
-      video={true}
-    >
+    <RoomContext.Provider value={room}>
       <VideoConference
         chatMessageFormatter={formatChatMessageLinks}
         SettingsComponent={
@@ -73,6 +75,6 @@ export function VideoConferenceClientImpl(props: {
         }
       />
       <DebugMode logLevel={LogLevel.debug} />
-    </LiveKitRoom>
+    </RoomContext.Provider>
   );
 }
