@@ -2,6 +2,9 @@
 const nextConfig = {
   reactStrictMode: false,
   productionBrowserSourceMaps: true,
+  images: {
+    formats: ['image/webp'],
+  },
   webpack: (config, { buildId, dev, isServer, defaultLoaders, nextRuntime, webpack }) => {
     // Important: return the modified config
     config.module.rules.push({
@@ -9,6 +12,7 @@ const nextConfig = {
       enforce: 'pre',
       use: ['source-map-loader'],
     });
+
     return config;
   },
 };
