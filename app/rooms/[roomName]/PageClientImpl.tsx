@@ -7,9 +7,9 @@ import { SettingsMenu } from '@/lib/SettingsMenu';
 import { ConnectionDetails } from '@/lib/types';
 import {
   formatChatMessageLinks,
-  LiveKitRoom,
   LocalUserChoices,
   PreJoin,
+  RoomContext,
   VideoConference,
 } from '@livekit/components-react';
 import {
@@ -20,6 +20,7 @@ import {
   Room,
   DeviceUnsupportedError,
   RoomConnectOptions,
+  RoomEvent,
 } from 'livekit-client';
 import { useRouter } from 'next/navigation';
 import React from 'react';
@@ -164,6 +165,38 @@ function VideoConferenceComponent(props: {
     };
   }, []);
 
+  React.useEffect(() => {
+    room.on(RoomEvent.Disconnected, handleOnLeave);
+    room.on(RoomEvent.EncryptionError, handleEncryptionError);
+    room.on(RoomEvent.MediaDevicesError, handleError);
+    if (e2eeSetupComplete) {
+      room
+        .connect(
+          props.connectionDetails.serverUrl,
+          props.connectionDetails.participantToken,
+          connectOptions,
+        )
+        .catch((error) => {
+          handleError(error);
+        });
+      if (props.userChoices.videoEnabled) {
+        room.localParticipant.setCameraEnabled(true).catch((error) => {
+          handleError(error);
+        });
+      }
+      if (props.userChoices.audioEnabled) {
+        room.localParticipant.setMicrophoneEnabled(true).catch((error) => {
+          handleError(error);
+        });
+      }
+    }
+    return () => {
+      room.off(RoomEvent.Disconnected, handleOnLeave);
+      room.off(RoomEvent.EncryptionError, handleEncryptionError);
+      room.off(RoomEvent.MediaDevicesError, handleError);
+    };
+  }, [e2eeSetupComplete, room, props.connectionDetails, props.userChoices]);
+
   const router = useRouter();
   const handleOnLeave = React.useCallback(() => router.push('/'), [router]);
   const handleError = React.useCallback((error: Error) => {
@@ -178,26 +211,15 @@ function VideoConferenceComponent(props: {
   }, []);
 
   return (
-    <>
-      <LiveKitRoom
-        connect={e2eeSetupComplete}
-        room={room}
-        token={props.connectionDetails.participantToken}
-        serverUrl={props.connectionDetails.serverUrl}
-        connectOptions={connectOptions}
-        video={props.userChoices.videoEnabled}
-        audio={props.userChoices.audioEnabled}
-        onDisconnected={handleOnLeave}
-        onEncryptionError={handleEncryptionError}
-        onError={handleError}
-      >
+    <div className="lk-room-container">
+      <RoomContext.Provider value={room}>
         <VideoConference
           chatMessageFormatter={formatChatMessageLinks}
           SettingsComponent={SHOW_SETTINGS_MENU ? SettingsMenu : undefined}
         />
         <DebugMode />
         <RecordingIndicator />
-      </LiveKitRoom>
-    </>
+      </RoomContext.Provider>
+    </div>
   );
 }
