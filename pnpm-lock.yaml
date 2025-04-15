@@ -21,8 +21,8 @@ importers:
         specifier: 0.2.16
         version: 0.2.16(livekit-client@2.11.2)
       '@livekit/track-processors':
-        specifier: ^0.5.0
-        version: 0.5.0(livekit-client@2.11.2)
+        specifier: ^0.5.2
+        version: 0.5.2(livekit-client@2.11.2)
       livekit-client:
         specifier: 2.11.2
         version: 2.11.2
@@ -318,8 +318,8 @@ packages:
   '@livekit/protocol@1.36.1':
     resolution: {integrity: sha512-nN3QnITAQ5yXk7UKfotH7CRWIlEozNWeKVyFJ0/+dtSzvWP/ib+10l1DDnRYi3A1yICJOGAKFgJ5d6kmi1HCUA==}
 
-  '@livekit/track-processors@0.5.0':
-    resolution: {integrity: sha512-za7BjUyk5iSwv2DSsHhHbxu0lVSv8bc1Uy/pzr2yEFqmQMBC/s6k+sHrFsKTMQDO/eHjapCgVBfSGSqD+cqwlw==}
+  '@livekit/track-processors@0.5.2':
+    resolution: {integrity: sha512-hnAD8PyCE3OPOohFYkPCEGGLeY4/oUa1gu3VCJ4sfelvrbZUKi0vEbUhbnnNcP9V7YiYzplktUz2w6EtYVPRLA==}
     peerDependencies:
       livekit-client: ^1.12.0 || ^2.1.0
 
@@ -2054,7 +2054,7 @@ snapshots:
     dependencies:
       '@bufbuild/protobuf': 1.10.0
 
-  '@livekit/track-processors@0.5.0(livekit-client@2.11.2)':
+  '@livekit/track-processors@0.5.2(livekit-client@2.11.2)':
     dependencies:
       '@mediapipe/tasks-vision': 0.10.22-rc.20250304
       livekit-client: 2.11.2
