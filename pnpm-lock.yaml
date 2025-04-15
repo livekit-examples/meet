@@ -20,6 +20,9 @@ importers:
       '@livekit/krisp-noise-filter':
         specifier: 0.2.16
         version: 0.2.16(livekit-client@2.11.2)
+      '@livekit/track-processors':
+        specifier: ^0.5.0
+        version: 0.5.0(livekit-client@2.11.2)
       livekit-client:
         specifier: 2.11.2
         version: 2.11.2
@@ -314,6 +317,14 @@ packages:
 
   '@livekit/protocol@1.36.1':
     resolution: {integrity: sha512-nN3QnITAQ5yXk7UKfotH7CRWIlEozNWeKVyFJ0/+dtSzvWP/ib+10l1DDnRYi3A1yICJOGAKFgJ5d6kmi1HCUA==}
+
+  '@livekit/track-processors@0.5.0':
+    resolution: {integrity: sha512-za7BjUyk5iSwv2DSsHhHbxu0lVSv8bc1Uy/pzr2yEFqmQMBC/s6k+sHrFsKTMQDO/eHjapCgVBfSGSqD+cqwlw==}
+    peerDependencies:
+      livekit-client: ^1.12.0 || ^2.1.0
+
+  '@mediapipe/tasks-vision@0.10.22-rc.20250304':
+    resolution: {integrity: sha512-dElxVXMFGthshfIj+qAVm8KE2jmNo2p8oXFib8WzEjb7GNaX/ClWBc8UJfoSZwjEMVrdHJ4YUfa7P3ifl6MIWw==}
 
   '@next/env@15.2.4':
     resolution: {integrity: sha512-+SFtMgoiYP3WoSswuNmxJOCwi06TdWE733D+WPjpXIe4LXGULwEaofiiAy6kbS0+XjM5xF5n3lKuBwN2SnqD9g==}
@@ -2042,6 +2053,13 @@ snapshots:
   '@livekit/protocol@1.36.1':
     dependencies:
       '@bufbuild/protobuf': 1.10.0
+
+  '@livekit/track-processors@0.5.0(livekit-client@2.11.2)':
+    dependencies:
+      '@mediapipe/tasks-vision': 0.10.22-rc.20250304
+      livekit-client: 2.11.2
+
+  '@mediapipe/tasks-vision@0.10.22-rc.20250304': {}
 
   '@next/env@15.2.4': {}
 

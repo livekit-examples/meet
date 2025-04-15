@@ -8,9 +8,9 @@ import {
   useRoomContext,
   useIsRecording,
 } from '@livekit/components-react';
-import { useKrispNoiseFilter } from '@livekit/components-react/krisp';
 import styles from '../styles/SettingsMenu.module.css';
-
+import { CameraSettings } from './CameraSettings';
+import { MicrophoneSettings } from './MicrophoneSettings';
 /**
  * @alpha
  */
@@ -27,7 +27,6 @@ export function SettingsMenu(props: SettingsMenuProps) {
   const settings = React.useMemo(() => {
     return {
       media: { camera: true, microphone: true, label: 'Media Devices', speaker: true },
-      effects: { label: 'Effects' },
       recording: recordingEndpoint ? { label: 'Recording' } : undefined,
     };
   }, []);
@@ -37,14 +36,6 @@ export function SettingsMenu(props: SettingsMenuProps) {
     [settings],
   );
   const [activeTab, setActiveTab] = React.useState(tabs[0]);
-
-  const { isNoiseFilterEnabled, setNoiseFilterEnabled, isNoiseFilterPending } =
-    useKrispNoiseFilter();
-
-  React.useEffect(() => {
-    // enable Krisp by default
-    setNoiseFilterEnabled(true);
-  }, []);
 
   const isRecording = useIsRecording();
   const [initialRecStatus, setInitialRecStatus] = React.useState(isRecording);
@@ -108,22 +99,16 @@ export function SettingsMenu(props: SettingsMenuProps) {
             {settings.media && settings.media.camera && (
               <>
                 <h3>Camera</h3>
-                <section className="lk-button-group">
-                  <TrackToggle source={Track.Source.Camera}>Camera</TrackToggle>
-                  <div className="lk-button-group-menu">
-                    <MediaDeviceMenu kind="videoinput" />
-                  </div>
+                <section>
+                  <CameraSettings />
                 </section>
               </>
             )}
             {settings.media && settings.media.microphone && (
               <>
                 <h3>Microphone</h3>
-                <section className="lk-button-group">
-                  <TrackToggle source={Track.Source.Microphone}>Microphone</TrackToggle>
-                  <div className="lk-button-group-menu">
-                    <MediaDeviceMenu kind="audioinput" />
-                  </div>
+                <section>
+                  <MicrophoneSettings />
                 </section>
               </>
             )}
@@ -138,21 +123,6 @@ export function SettingsMenu(props: SettingsMenuProps) {
                 </section>
               </>
             )}
-          </>
-        )}
-        {activeTab === 'effects' && (
-          <>
-            <h3>Audio</h3>
-            <section>
-              <label htmlFor="noise-filter"> Enhanced Noise Cancellation</label>
-              <input
-                type="checkbox"
-                id="noise-filter"
-                onChange={(ev) => setNoiseFilterEnabled(ev.target.checked)}
-                checked={isNoiseFilterEnabled}
-                disabled={isNoiseFilterPending}
-              ></input>
-            </section>
           </>
         )}
         {activeTab === 'recording' && (
