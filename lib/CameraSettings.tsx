@@ -7,11 +7,13 @@ import {
 } from '@livekit/components-react';
 import { BackgroundBlur, VirtualBackground } from '@livekit/track-processors';
 import { isLocalTrack, LocalTrackPublication, Track } from 'livekit-client';
+import Nature from '../public/background-images/samantha-gades-BlIhVfXbi9s-unsplash.jpg';
+import Abstract from '../public/background-images/ali-kazal-tbw_KQE3Cbg-unsplash.jpg';
 
 // Background image paths
 const BACKGROUND_IMAGES = [
-  { name: 'Nature', path: '/background-images/samantha-gades-BlIhVfXbi9s-unsplash.jpg' },
-  { name: 'Abstract', path: '/background-images/ali-kazal-tbw_KQE3Cbg-unsplash.jpg' },
+  { name: 'Nature', path: Nature },
+  { name: 'Abstract', path: Abstract },
 ];
 
 // Background options
@@ -131,18 +133,20 @@ export function CameraSettings() {
 
           {BACKGROUND_IMAGES.map((image) => (
             <button
-              key={image.path}
-              onClick={() => selectBackground('image', image.path)}
+              key={image.path.src}
+              onClick={() => selectBackground('image', image.path.src)}
               className="lk-button"
-              aria-pressed={backgroundType === 'image' && virtualBackgroundImagePath === image.path}
+              aria-pressed={
+                backgroundType === 'image' && virtualBackgroundImagePath === image.path.src
+              }
               style={{
-                backgroundImage: `url(${image.path})`,
+                backgroundImage: `url(${image.path.src})`,
                 backgroundSize: 'cover',
                 backgroundPosition: 'center',
                 width: '80px',
                 height: '60px',
                 border:
-                  backgroundType === 'image' && virtualBackgroundImagePath === image.path
+                  backgroundType === 'image' && virtualBackgroundImagePath === image.path.src
                     ? '2px solid #0090ff'
                     : '1px solid #d1d1d1',
               }}
