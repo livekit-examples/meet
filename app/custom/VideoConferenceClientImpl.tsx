@@ -67,14 +67,16 @@ export function VideoConferenceClientImpl(props: {
   }, [room, props.liveKitUrl, props.token, connectOptions]);
 
   return (
-    <RoomContext.Provider value={room}>
-      <VideoConference
-        chatMessageFormatter={formatChatMessageLinks}
-        SettingsComponent={
-          process.env.NEXT_PUBLIC_SHOW_SETTINGS_MENU === 'true' ? SettingsMenu : undefined
-        }
-      />
-      <DebugMode logLevel={LogLevel.debug} />
-    </RoomContext.Provider>
+    <div className="lk-room-container">
+      <RoomContext.Provider value={room}>
+        <VideoConference
+          chatMessageFormatter={formatChatMessageLinks}
+          SettingsComponent={
+            process.env.NEXT_PUBLIC_SHOW_SETTINGS_MENU === 'true' ? SettingsMenu : undefined
+          }
+        />
+        <DebugMode logLevel={LogLevel.debug} />
+      </RoomContext.Provider>
+    </div>
   );
 }
