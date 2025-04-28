@@ -12,20 +12,20 @@ importers:
         specifier: ^5.23.3
         version: 5.35.1
       '@livekit/components-react':
-        specifier: 2.9.2
-        version: 2.9.2(@livekit/krisp-noise-filter@0.2.16(livekit-client@2.11.2))(livekit-client@2.11.2)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(tslib@2.8.1)
+        specifier: 2.9.3
+        version: 2.9.3(@livekit/krisp-noise-filter@0.2.16(livekit-client@2.11.4))(livekit-client@2.11.4)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(tslib@2.8.1)
       '@livekit/components-styles':
         specifier: 1.1.5
         version: 1.1.5
       '@livekit/krisp-noise-filter':
         specifier: 0.2.16
-        version: 0.2.16(livekit-client@2.11.2)
+        version: 0.2.16(livekit-client@2.11.4)
       '@livekit/track-processors':
         specifier: ^0.5.4
-        version: 0.5.4(livekit-client@2.11.2)
+        version: 0.5.4(livekit-client@2.11.4)
       livekit-client:
-        specifier: 2.11.2
-        version: 2.11.2
+        specifier: 2.11.4
+        version: 2.11.4
       livekit-server-sdk:
         specifier: 2.12.0
         version: 2.12.0
@@ -290,8 +290,8 @@ packages:
       livekit-client: ^2.11.1
       tslib: ^2.6.2
 
-  '@livekit/components-react@2.9.2':
-    resolution: {integrity: sha512-VYeR1BLt0UOYj/o9FM+lAjC3q/DeyYyNFSC0d+3UCbuH6woW1l25UPN5MF4kAXSTqAjxpPWZ9hvuds2FQCyNdw==}
+  '@livekit/components-react@2.9.3':
+    resolution: {integrity: sha512-gE1sEE57BkBz3+TQHrOXVDVwVMwV5wtIYokdrfd7vshh22/PtWWj3vON9wzYLFRKx98L6QyAzyh7W9EWu3Lj9Q==}
     engines: {node: '>=18'}
     peerDependencies:
       '@livekit/krisp-noise-filter': ^0.2.12
@@ -1279,8 +1279,8 @@ packages:
     resolution: {integrity: sha512-+bT2uH4E5LGE7h/n3evcS/sQlJXCpIp6ym8OWJ5eV6+67Dsql/LaaT7qJBAt2rzfoa/5QBGBhxDix1dMt2kQKQ==}
     engines: {node: '>= 0.8.0'}
 
-  livekit-client@2.11.2:
-    resolution: {integrity: sha512-VndcZvUC37/tTHT8sK15pUMk7TdRfQ2mzXeVxIwkpLZRfFF9EM57h084+JEpiQg7EUzRWevN8YEBMvHFGx25TA==}
+  livekit-client@2.11.4:
+    resolution: {integrity: sha512-V82NdyhHo3iBxxQmPTk95Fe2+VZMABWZL56t9oZmMgycoF8li8gs/KG7yyDsKki50EeKLgwOmlwqx/Xf0pc0+Q==}
 
   livekit-server-sdk@2.12.0:
     resolution: {integrity: sha512-6i2l0Ja1yhYvCXqU9wZ3SlWPEm1pYXpSJbpmT3sN0UWS61+jF6qkVY4AeSRQ53w5zrgzLBIyDwooBEMxz7XyMw==}
@@ -2022,31 +2022,31 @@ snapshots:
       '@jridgewell/resolve-uri': 3.1.2
       '@jridgewell/sourcemap-codec': 1.5.0
 
-  '@livekit/components-core@0.12.4(livekit-client@2.11.2)(tslib@2.8.1)':
+  '@livekit/components-core@0.12.4(livekit-client@2.11.4)(tslib@2.8.1)':
     dependencies:
       '@floating-ui/dom': 1.6.13
-      livekit-client: 2.11.2
+      livekit-client: 2.11.4
       loglevel: 1.9.1
       rxjs: 7.8.2
       tslib: 2.8.1
 
-  '@livekit/components-react@2.9.2(@livekit/krisp-noise-filter@0.2.16(livekit-client@2.11.2))(livekit-client@2.11.2)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(tslib@2.8.1)':
+  '@livekit/components-react@2.9.3(@livekit/krisp-noise-filter@0.2.16(livekit-client@2.11.4))(livekit-client@2.11.4)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(tslib@2.8.1)':
     dependencies:
-      '@livekit/components-core': 0.12.4(livekit-client@2.11.2)(tslib@2.8.1)
+      '@livekit/components-core': 0.12.4(livekit-client@2.11.4)(tslib@2.8.1)
       clsx: 2.1.1
-      livekit-client: 2.11.2
+      livekit-client: 2.11.4
       react: 18.3.1
       react-dom: 18.3.1(react@18.3.1)
       tslib: 2.8.1
       usehooks-ts: 3.1.1(react@18.3.1)
     optionalDependencies:
-      '@livekit/krisp-noise-filter': 0.2.16(livekit-client@2.11.2)
+      '@livekit/krisp-noise-filter': 0.2.16(livekit-client@2.11.4)
 
   '@livekit/components-styles@1.1.5': {}
 
-  '@livekit/krisp-noise-filter@0.2.16(livekit-client@2.11.2)':
+  '@livekit/krisp-noise-filter@0.2.16(livekit-client@2.11.4)':
     dependencies:
-      livekit-client: 2.11.2
+      livekit-client: 2.11.4
 
   '@livekit/mutex@1.1.1': {}
 
@@ -2054,10 +2054,10 @@ snapshots:
     dependencies:
       '@bufbuild/protobuf': 1.10.0
 
-  '@livekit/track-processors@0.5.4(livekit-client@2.11.2)':
+  '@livekit/track-processors@0.5.4(livekit-client@2.11.4)':
     dependencies:
       '@mediapipe/tasks-vision': 0.10.14
-      livekit-client: 2.11.2
+      livekit-client: 2.11.4
 
   '@mediapipe/tasks-vision@0.10.14': {}
 
@@ -3224,7 +3224,7 @@ snapshots:
       prelude-ls: 1.2.1
       type-check: 0.4.0
 
-  livekit-client@2.11.2:
+  livekit-client@2.11.4:
     dependencies:
       '@livekit/mutex': 1.1.1
       '@livekit/protocol': 1.36.1
