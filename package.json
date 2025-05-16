@@ -14,7 +14,7 @@
     "@livekit/components-styles": "1.1.5",
     "@livekit/krisp-noise-filter": "0.3.0",
     "@livekit/track-processors": "^0.5.4",
-    "livekit-client": "2.12.0",
+    "livekit-client": "2.13.0",
     "livekit-server-sdk": "2.13.0",
     "next": "15.2.4",
     "react": "18.3.1",
