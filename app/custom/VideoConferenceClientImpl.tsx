@@ -13,6 +13,7 @@ import {
 import { DebugMode } from '@/lib/Debug';
 import { useEffect, useMemo } from 'react';
 import { decodePassphrase } from '@/lib/client-utils';
+import { KeyboardShortcuts } from '@/lib/KeyboardShortcuts';
 import { SettingsMenu } from '@/lib/SettingsMenu';
 
 export function VideoConferenceClientImpl(props: {
@@ -69,6 +70,7 @@ export function VideoConferenceClientImpl(props: {
   return (
     <div className="lk-room-container">
       <RoomContext.Provider value={room}>
+        <KeyboardShortcuts />
         <VideoConference
           chatMessageFormatter={formatChatMessageLinks}
           SettingsComponent={

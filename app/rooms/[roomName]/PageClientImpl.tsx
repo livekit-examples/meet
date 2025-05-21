@@ -1,7 +1,9 @@
 'use client';
 
+import React from 'react';
 import { decodePassphrase } from '@/lib/client-utils';
 import { DebugMode } from '@/lib/Debug';
+import { KeyboardShortcuts } from '@/lib/KeyboardShortcuts';
 import { RecordingIndicator } from '@/lib/RecordingIndicator';
 import { SettingsMenu } from '@/lib/SettingsMenu';
 import { ConnectionDetails } from '@/lib/types';
@@ -23,7 +25,6 @@ import {
   RoomEvent,
 } from 'livekit-client';
 import { useRouter } from 'next/navigation';
-import React from 'react';
 
 const CONN_DETAILS_ENDPOINT =
   process.env.NEXT_PUBLIC_CONN_DETAILS_ENDPOINT ?? '/api/connection-details';
@@ -213,6 +214,7 @@ function VideoConferenceComponent(props: {
   return (
     <div className="lk-room-container">
       <RoomContext.Provider value={room}>
+        <KeyboardShortcuts />
         <VideoConference
           chatMessageFormatter={formatChatMessageLinks}
           SettingsComponent={SHOW_SETTINGS_MENU ? SettingsMenu : undefined}
