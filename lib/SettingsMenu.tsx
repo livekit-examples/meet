@@ -74,7 +74,7 @@ export function SettingsMenu(props: SettingsMenuProps) {
   };
 
   return (
-    <div className="settings-menu" style={{ width: '100%' }} {...props}>
+    <div className="settings-menu" style={{ width: '100%', position: 'relative' }} {...props}>
       <div className={styles.tabs}>
         {tabs.map(
           (tab) =>
@@ -141,12 +141,14 @@ export function SettingsMenu(props: SettingsMenuProps) {
           </>
         )}
       </div>
-      <button
-        className={`lk-button ${styles.settingsCloseButton}`}
-        onClick={() => layoutContext?.widget.dispatch?.({ msg: 'toggle_settings' })}
-      >
-        Close
-      </button>
+      <div style={{ display: 'flex', justifyContent: 'flex-end', width: '100%' }}>
+        <button
+          className={`lk-button`}
+          onClick={() => layoutContext?.widget.dispatch?.({ msg: 'toggle_settings' })}
+        >
+          Close
+        </button>
+      </div>
     </div>
   );
 }
