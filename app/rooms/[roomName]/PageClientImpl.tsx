@@ -129,9 +129,9 @@ function VideoConferenceComponent(props: {
       dynacast: true,
       e2ee: e2eeEnabled
         ? {
-          keyProvider,
-          worker,
-        }
+            keyProvider,
+            worker,
+          }
         : undefined,
     };
   }, [props.userChoices, props.options.hq, props.options.codec]);
