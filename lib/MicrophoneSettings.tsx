@@ -5,8 +5,13 @@ import { MediaDeviceMenu } from '@livekit/components-react';
 import { Track } from 'livekit-client';
 
 export function MicrophoneSettings() {
-  const { isNoiseFilterEnabled, setNoiseFilterEnabled, isNoiseFilterPending } =
-    useKrispNoiseFilter();
+  const { isNoiseFilterEnabled, setNoiseFilterEnabled, isNoiseFilterPending } = useKrispNoiseFilter(
+    {
+      filterOptions: {
+        quality: 'high',
+      },
+    },
+  );
 
   React.useEffect(() => {
     // enable Krisp by default

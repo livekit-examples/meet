@@ -1,6 +1,7 @@
 import React from 'react';
 import {
   MediaDeviceMenu,
+  TrackReference,
   TrackToggle,
   useLocalParticipant,
   VideoTrack,
@@ -25,16 +26,18 @@ export function CameraSettings() {
     (cameraTrack as LocalTrackPublication)?.track?.getProcessor()?.name === 'background-blur'
       ? 'blur'
       : (cameraTrack as LocalTrackPublication)?.track?.getProcessor()?.name === 'virtual-background'
-        ? 'image'
-        : 'none',
+      ? 'image'
+      : 'none',
   );
 
   const [virtualBackgroundImagePath, setVirtualBackgroundImagePath] = React.useState<string | null>(
     null,
   );
 
-  const camTrackRef = React.useMemo(() => {
-    return { participant: localParticipant, publication: cameraTrack, source: Track.Source.Camera };
+  const camTrackRef: TrackReference | undefined = React.useMemo(() => {
+    return cameraTrack
+      ? { participant: localParticipant, publication: cameraTrack, source: Track.Source.Camera }
+      : undefined;
   }, [localParticipant, cameraTrack]);
 
   const selectBackground = (type: BackgroundType, imagePath?: string) => {
@@ -60,15 +63,17 @@ export function CameraSettings() {
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-      <VideoTrack
-        style={{
-          maxHeight: '280px',
-          objectFit: 'contain',
-          objectPosition: 'right',
-          transform: 'scaleX(-1)',
-        }}
-        trackRef={camTrackRef}
-      />
+      {camTrackRef && (
+        <VideoTrack
+          style={{
+            maxHeight: '280px',
+            objectFit: 'contain',
+            objectPosition: 'right',
+            transform: 'scaleX(-1)',
+          }}
+          trackRef={camTrackRef}
+        />
+      )}
 
       <section className="lk-button-group">
         <TrackToggle source={Track.Source.Camera}>Camera</TrackToggle>
