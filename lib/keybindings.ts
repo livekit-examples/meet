@@ -1,6 +1,6 @@
 import { type KeyBinding, KeyBindings, KeyCommand } from './types';
 
-export function isControlElement(event: Event) {
+export function isInteractiveElement(event: Event) {
   return (
     event.target instanceof HTMLButtonElement ||
     event.target instanceof HTMLInputElement ||
@@ -23,44 +23,44 @@ export const commonKeyBindings: Record<
   spacebar: [
     {
       eventName: 'keydown',
-      discriminator: (event) => {
-        return event.code === 'Space' && !isControlElement(event);
+      guard: (event) => {
+        return event.code === 'Space' && !isInteractiveElement(event);
       },
     },
     {
       eventName: 'keyup',
-      discriminator: (event) => event.code === 'Space',
+      guard: (event) => event.code === 'Space',
     },
   ],
   leftMouse: [
     {
       eventName: 'mousedown',
-      discriminator: (event) => {
-        return isMouseButton(0, event) && !isControlElement(event);
+      guard: (event) => {
+        return isMouseButton(0, event) && !isInteractiveElement(event);
       },
     },
     {
       eventName: 'mouseup',
-      discriminator: (event) => isMouseButton(0, event),
+      guard: (event) => isMouseButton(0, event),
     },
   ],
   middleMouse: [
     {
       eventName: 'mousedown',
-      discriminator: (event) => isMouseButton(1, event),
+      guard: (event) => isMouseButton(1, event),
     },
     {
       eventName: 'mouseup',
-      discriminator: (event) => isMouseButton(1, event),
+      guard: (event) => isMouseButton(1, event),
     },
   ],
   metaShiftA: {
     eventName: 'keydown',
-    discriminator: (event) => event.key === 'A' && (event.ctrlKey || event.metaKey),
+    guard: (event) => event.key === 'A' && (event.ctrlKey || event.metaKey),
   },
   metaShiftV: {
     eventName: 'keydown',
-    discriminator: (event) => event.key === 'V' && (event.ctrlKey || event.metaKey),
+    guard: (event) => event.key === 'V' && (event.ctrlKey || event.metaKey),
   },
 } as const;
 

@@ -24,7 +24,7 @@ export function KeyboardShortcuts() {
             if (!t) return null;
 
             const on = async (event: KeyboardEvent) => {
-              if (enable.discriminator(event)) {
+              if (enable.guard(event)) {
                 event.preventDefault();
                 if (!isMicrophoneEnabled) {
                   pttHeldRef.current = true;
@@ -34,7 +34,7 @@ export function KeyboardShortcuts() {
             };
 
             const off = async (event: KeyboardEvent) => {
-              if (disable.discriminator(event)) {
+              if (disable.guard(event)) {
                 event.preventDefault();
                 if (pttHeldRef.current && isMicrophoneEnabled) {
                   pttHeldRef.current = false;
@@ -55,7 +55,7 @@ export function KeyboardShortcuts() {
               if (!t) return null;
 
               const handler = async (event: KeyboardEvent) => {
-                if (binding.discriminator(event) && !pendingMicChange) {
+                if (binding.guard(event) && !pendingMicChange) {
                   event.preventDefault();
                   toggleMic?.().catch(console.error);
                 }
@@ -69,7 +69,7 @@ export function KeyboardShortcuts() {
               if (!t) return null;
 
               const handler = async (event: KeyboardEvent) => {
-                if (binding.discriminator(event) && !pendingCameraChange) {
+                if (binding.guard(event) && !pendingCameraChange) {
                   event.preventDefault();
                   toggleCamera?.().catch(console.error);
                 }

@@ -30,7 +30,7 @@ export type ConnectionDetails = {
 
 export type KeyBinding = {
   eventName: keyof GlobalEventHandlersEventMap;
-  discriminator: (event: KeyboardEvent) => boolean;
+  guard: (event: KeyboardEvent) => boolean;
   target?: Window | Document | HTMLElement | string;
 };
 
