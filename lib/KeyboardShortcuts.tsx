@@ -1,44 +1,44 @@
 import React from 'react';
 import { Track } from 'livekit-client';
-import { useTrackToggle } from '@livekit/components-react';
+import { useLocalParticipant, useTrackToggle } from '@livekit/components-react';
 import { useSettingsState } from './SettingsContext';
 import { KeyCommand } from './types';
 
 export function KeyboardShortcuts() {
-  const { state } = useSettingsState() ?? {};
-  const { toggle: toggleMic, enabled: micEnabled } = useTrackToggle({
-    source: Track.Source.Microphone,
-  });
-  const { toggle: toggleCamera } = useTrackToggle({ source: Track.Source.Camera });
-  const [pttHeld, setPttHeld] = React.useState(false);
+  const { state } = useSettingsState();
+  const { localParticipant, isMicrophoneEnabled } = useLocalParticipant();
+  const { toggle: toggleMic, pending: pendingMicChange } = useTrackToggle({ source: Track.Source.Microphone });
+  const { toggle: toggleCamera, pending: pendingCameraChange } = useTrackToggle({ source: Track.Source.Camera });
+
+  const pttHeldRef = React.useRef(false);
 
   React.useEffect(() => {
     const handlers = Object.entries(state.keybindings)
-      .flatMap(([command, bind]) => {
+      .flatMap(([command, binding]) => {
         switch (command) {
           case KeyCommand.PTT:
-            if (!state.enablePTT || !Array.isArray(bind)) return [];
+            if (!state.enablePTT || !Array.isArray(binding)) return [];
 
-            const [enable, disable] = bind;
+            const [enable, disable] = binding;
             const t = getEventTarget(enable.target);
             if (!t) return null;
 
-            const on = (event: KeyboardEvent) => {
+            const on = async (event: KeyboardEvent) => {
               if (enable.discriminator(event)) {
                 event.preventDefault();
-                if (!micEnabled) {
-                  setPttHeld(true);
-                  toggleMic?.(true);
+                if (!isMicrophoneEnabled) {
+                  pttHeldRef.current = true;
+                  localParticipant?.setMicrophoneEnabled(true);
                 }
               }
             };
 
-            const off = (event: KeyboardEvent) => {
+            const off = async (event: KeyboardEvent) => {
               if (disable.discriminator(event)) {
                 event.preventDefault();
-                if (pttHeld && micEnabled) {
-                  setPttHeld(false);
-                  toggleMic?.(false);
+                if (pttHeldRef.current && isMicrophoneEnabled) {
+                  pttHeldRef.current = false;
+                  localParticipant?.setMicrophoneEnabled(false);
                 }
               }
             };
@@ -50,49 +50,49 @@ export function KeyboardShortcuts() {
               { eventName: disable.eventName, target: t, handler: off },
             ];
           case KeyCommand.ToggleMic:
-            if (!Array.isArray(bind)) {
-              const t = getEventTarget(bind.target);
+            if (!Array.isArray(binding)) {
+              const t = getEventTarget(binding.target);
               if (!t) return null;
 
-              const handler = (event: KeyboardEvent) => {
-                if (bind.discriminator(event)) {
+              const handler = async (event: KeyboardEvent) => {
+                if (binding.discriminator(event) && !pendingMicChange) {
                   event.preventDefault();
-                  toggleMic?.();
+                  toggleMic?.().catch(console.error);
                 }
               };
-              t.addEventListener(bind.eventName, handler as any);
-              return { eventName: bind.eventName, target: t, handler };
+              t.addEventListener(binding.eventName, handler as any);
+              return { eventName: binding.eventName, target: t, handler };
             }
           case KeyCommand.ToggleCamera:
-            if (!Array.isArray(bind)) {
-              const t = getEventTarget(bind.target);
+            if (!Array.isArray(binding)) {
+              const t = getEventTarget(binding.target);
               if (!t) return null;
 
-              const handler = (event: KeyboardEvent) => {
-                if (bind.discriminator(event)) {
+              const handler = async (event: KeyboardEvent) => {
+                if (binding.discriminator(event) && !pendingCameraChange) {
                   event.preventDefault();
-                  toggleCamera?.();
+                  toggleCamera?.().catch(console.error);
                 }
               };
-              t.addEventListener(bind.eventName, handler as any);
-              return { eventName: bind.eventName, target: t, handler };
+              t.addEventListener(binding.eventName, handler as any);
+              return { eventName: binding.eventName, target: t, handler };
             }
           default:
             return [];
         }
       })
       .filter(Boolean) as Array<{
-      target: EventTarget;
-      eventName: string;
-      handler: (event: KeyboardEvent) => void;
-    }>;
+        target: EventTarget;
+        eventName: string;
+        handler: (event: KeyboardEvent) => void;
+      }>;
 
     return () => {
       handlers.forEach(({ target, eventName, handler }) => {
         target.removeEventListener(eventName, handler as any);
       });
     };
-  }, [state, pttHeld, micEnabled, toggleMic]);
+  }, [state, toggleCamera, pendingCameraChange, toggleMic, pendingMicChange, localParticipant, isMicrophoneEnabled]);
 
   return null;
 }
