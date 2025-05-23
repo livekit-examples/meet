@@ -52,7 +52,7 @@ function deserializeSettingsState(state: SerializedSettingsState): SettingsState
 
 const SettingsStateContext = createContext<SettingsStateContextType>({
   state: initialState,
-  set: () => {},
+  set: () => { },
 });
 
 const SettingsStateProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
@@ -62,8 +62,6 @@ const SettingsStateProvider: React.FC<{ children: React.ReactNode }> = ({ childr
   );
 
   const deserializedState = useMemo(() => deserializeSettingsState(state), [state]);
-
-  console.info({ deserializedState });
 
   const setSettingsState = useCallback(
     (dispatch: SetStateAction<SettingsState>) => {

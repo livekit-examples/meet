@@ -2,12 +2,7 @@
 
 import { Dispatch, SetStateAction, useState } from 'react';
 
-type JsonPrimitive = string | number | boolean | null;
-type JsonArray = JsonValue[];
-type JsonObject = { [key: string]: JsonValue };
-type JsonValue = JsonPrimitive | JsonArray | JsonObject;
-
-function saveToLocalStorage<T extends JsonValue>(key: string, value: T): void {
+function saveToLocalStorage<T extends object>(key: string, value: T): void {
   if (typeof localStorage === 'undefined') {
     console.error('Local storage is not available.');
     return;
@@ -25,7 +20,7 @@ function saveToLocalStorage<T extends JsonValue>(key: string, value: T): void {
   }
 }
 
-function loadFromLocalStorage<T extends JsonValue>(key: string): T | undefined {
+function loadFromLocalStorage<T extends object>(key: string): T | undefined {
   if (typeof localStorage === 'undefined') {
     console.error('Local storage is not available.');
     return undefined;
@@ -44,7 +39,7 @@ function loadFromLocalStorage<T extends JsonValue>(key: string): T | undefined {
   }
 }
 
-export function createLocalStorageInterface<T extends JsonValue>(
+export function createLocalStorageInterface<T extends object>(
   key: string,
 ): { load: () => T | undefined; save: (value: T) => void } {
   return {
@@ -53,7 +48,7 @@ export function createLocalStorageInterface<T extends JsonValue>(
   };
 }
 
-export function usePersistToLocalStorage<T extends JsonValue>(
+export function usePersistToLocalStorage<T extends object>(
   key: string,
   initialValue: T,
 ): [T, Dispatch<SetStateAction<T>>] {
