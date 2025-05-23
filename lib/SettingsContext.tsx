@@ -6,7 +6,6 @@ import type {
   SettingsStateContextType,
   SerializedSettingsState,
   KeyBindings,
-  KeyCommand,
 } from './types';
 import { defaultKeyBindings, commonKeyBindings } from './keybindings';
 import { usePersistToLocalStorage } from './persistence';
@@ -21,7 +20,7 @@ const initialState: SettingsState = {
 function serializeSettingsState(state: SettingsState): SerializedSettingsState {
   return {
     ...state,
-    keybindings: Object.entries(state.keybindings).reduce(
+    keybindings: Object.entries(state.keybindings).reduce<Record<string, string>>(
       (acc, [key, value]) => {
         const commonName = Object.entries(commonKeyBindings).find(([_, v]) => v === value)?.[0];
         if (commonName) {
@@ -29,7 +28,7 @@ function serializeSettingsState(state: SettingsState): SerializedSettingsState {
         }
         return acc;
       },
-      {} as Record<string, string>,
+      {},
     ),
   };
 }
@@ -39,13 +38,13 @@ function deserializeSettingsState(state: SerializedSettingsState): SettingsState
     ...state,
     keybindings: {
       ...defaultKeyBindings,
-      ...Object.entries(state.keybindings).reduce((acc, [key, commonName]) => {
+      ...Object.entries(state.keybindings).reduce<KeyBindings>((acc, [key, commonName]) => {
         const commonBinding = commonKeyBindings[commonName as keyof typeof commonKeyBindings];
         if (commonBinding) {
           acc[key as keyof typeof defaultKeyBindings] = commonBinding;
         }
         return acc;
-      }, {} as KeyBindings),
+      }, {}),
     },
   };
 }

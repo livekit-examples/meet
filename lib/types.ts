@@ -55,5 +55,5 @@ export type SettingsStateContextType = {
 };
 
 export type SerializedSettingsState = Omit<SettingsState, 'keybindings'> & {
-  keybindings: Record<string, string | undefined>;
+  keybindings: Record<string, string>;
 };
