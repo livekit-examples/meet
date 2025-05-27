@@ -45,7 +45,7 @@ export function VideoConferenceClientImpl(props: {
           }
         : undefined,
     };
-  }, []);
+  }, [e2eeEnabled, props.codec]);
 
   const room = useMemo(() => new Room(roomOptions), []);
   if (e2eeEnabled) {
