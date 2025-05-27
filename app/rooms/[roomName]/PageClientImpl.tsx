@@ -25,6 +25,7 @@ import {
   RoomEvent,
 } from 'livekit-client';
 import { useRouter } from 'next/navigation';
+import { useSetupE2EE } from '@/lib/useSetupE2EE';
 
 const CONN_DETAILS_ENDPOINT =
   process.env.NEXT_PUBLIC_CONN_DETAILS_ENDPOINT ?? '/api/connection-details';
@@ -93,15 +94,10 @@ function VideoConferenceComponent(props: {
     codec: VideoCodec;
   };
 }) {
-  const e2eePassphrase =
-    typeof window !== 'undefined' && decodePassphrase(location.hash.substring(1));
-
-  const worker =
-    typeof window !== 'undefined' &&
-    e2eePassphrase &&
-    new Worker(new URL('livekit-client/e2ee-worker', import.meta.url));
-  const e2eeEnabled = !!(e2eePassphrase && worker);
   const keyProvider = new ExternalE2EEKeyProvider();
+  const { worker, e2eePassphrase } = useSetupE2EE();
+  const e2eeEnabled = !!(e2eePassphrase && worker);
+
   const [e2eeSetupComplete, setE2eeSetupComplete] = React.useState(false);
 
   const roomOptions = React.useMemo((): RoomOptions => {
@@ -127,12 +123,7 @@ function VideoConferenceComponent(props: {
       },
       adaptiveStream: { pixelDensity: 'screen' },
       dynacast: true,
-      e2ee: e2eeEnabled
-        ? {
-            keyProvider,
-            worker,
-          }
-        : undefined,
+      e2ee: keyProvider && worker && e2eeEnabled ? { keyProvider, worker } : undefined,
     };
   }, [props.userChoices, props.options.hq, props.options.codec]);
 
