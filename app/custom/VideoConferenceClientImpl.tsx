@@ -11,24 +11,22 @@ import {
   type VideoCodec,
 } from 'livekit-client';
 import { DebugMode } from '@/lib/Debug';
-import { useEffect, useMemo } from 'react';
-import { decodePassphrase } from '@/lib/client-utils';
+import { useEffect, useMemo, useState } from 'react';
 import { KeyboardShortcuts } from '@/lib/KeyboardShortcuts';
 import { SettingsMenu } from '@/lib/SettingsMenu';
+import { useSetupE2EE } from '@/lib/useSetupE2EE';
 
 export function VideoConferenceClientImpl(props: {
   liveKitUrl: string;
   token: string;
   codec: VideoCodec | undefined;
 }) {
-  const worker =
-    typeof window !== 'undefined' &&
-    new Worker(new URL('livekit-client/e2ee-worker', import.meta.url));
   const keyProvider = new ExternalE2EEKeyProvider();
-
-  const e2eePassphrase =
-    typeof window !== 'undefined' ? decodePassphrase(window.location.hash.substring(1)) : undefined;
+  const { worker, e2eePassphrase } = useSetupE2EE();
   const e2eeEnabled = !!(e2eePassphrase && worker);
+
+  const [e2eeSetupComplete, setE2eeSetupComplete] = useState(false);
+
   const roomOptions = useMemo((): RoomOptions => {
     return {
       publishDefaults: {
@@ -45,13 +43,10 @@ export function VideoConferenceClientImpl(props: {
           }
         : undefined,
     };
-  }, [e2eeEnabled, props.codec]);
+  }, [e2eeEnabled, props.codec, keyProvider, worker]);
 
-  const room = useMemo(() => new Room(roomOptions), []);
-  if (e2eeEnabled) {
-    keyProvider.setKey(e2eePassphrase);
-    room.setE2EEEnabled(true);
-  }
+  const room = useMemo(() => new Room(roomOptions), [roomOptions]);
+
   const connectOptions = useMemo((): RoomConnectOptions => {
     return {
       autoSubscribe: true,
@@ -59,13 +54,27 @@ export function VideoConferenceClientImpl(props: {
   }, []);
 
   useEffect(() => {
-    room.connect(props.liveKitUrl, props.token, connectOptions).catch((error) => {
-      console.error(error);
-    });
-    room.localParticipant.enableCameraAndMicrophone().catch((error) => {
-      console.error(error);
-    });
-  }, [room, props.liveKitUrl, props.token, connectOptions]);
+    if (e2eeEnabled) {
+      keyProvider.setKey(e2eePassphrase).then(() => {
+        room.setE2EEEnabled(true).then(() => {
+          setE2eeSetupComplete(true);
+        });
+      });
+    } else {
+      setE2eeSetupComplete(true);
+    }
+  }, [e2eeEnabled, e2eePassphrase, keyProvider, room, setE2eeSetupComplete]);
+
+  useEffect(() => {
+    if (e2eeSetupComplete) {
+      room.connect(props.liveKitUrl, props.token, connectOptions).catch((error) => {
+        console.error(error);
+      });
+      room.localParticipant.enableCameraAndMicrophone().catch((error) => {
+        console.error(error);
+      });
+    }
+  }, [room, props.liveKitUrl, props.token, connectOptions, e2eeSetupComplete]);
 
   return (
     <div className="lk-room-container">
