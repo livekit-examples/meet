@@ -5,10 +5,14 @@ import { MediaDeviceMenu } from '@livekit/components-react';
 import { Track } from 'livekit-client';
 
 export function MicrophoneSettings() {
+  const isLowPowerDevice = navigator.hardwareConcurrency < 4;
   const { isNoiseFilterEnabled, setNoiseFilterEnabled, isNoiseFilterPending } = useKrispNoiseFilter(
     {
       filterOptions: {
-        quality: 'high',
+        quality: isLowPowerDevice ? 'low' : 'medium',
+        onBufferDrop: () => {
+          console.warn('krisp buffer dropped, either disable or reduce quality');
+        },
       },
     },
   );
