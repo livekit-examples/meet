@@ -24,6 +24,7 @@ import {
   RoomConnectOptions,
   RoomEvent,
   TrackPublishDefaults,
+  VideoCaptureOptions,
 } from 'livekit-client';
 import { useRouter } from 'next/navigation';
 import { useSetupE2EE } from '@/lib/useSetupE2EE';
@@ -106,7 +107,7 @@ function VideoConferenceComponent(props: {
     if (e2eeEnabled && (videoCodec === 'av1' || videoCodec === 'vp9')) {
       videoCodec = undefined;
     }
-    const videoCaptureDefaults: VideoCaptureDefaults = {
+    const videoCaptureDefaults: VideoCaptureOptions = {
       deviceId: props.userChoices.videoDeviceId ?? undefined,
       resolution: props.options.hq ? VideoPresets.h2160 : VideoPresets.h720,
     };
