@@ -5,7 +5,7 @@ import { MediaDeviceMenu } from '@livekit/components-react';
 import { Track } from 'livekit-client';
 
 export function MicrophoneSettings() {
-  const isLowPowerDevice = navigator.hardwareConcurrency < 4;
+  const isLowPowerDevice = navigator.hardwareConcurrency < 6;
   const { isNoiseFilterEnabled, setNoiseFilterEnabled, isNoiseFilterPending } = useKrispNoiseFilter(
     {
       filterOptions: {
