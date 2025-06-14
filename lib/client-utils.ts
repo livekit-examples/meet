@@ -19,3 +19,7 @@ export function randomString(length: number): string {
   }
   return result;
 }
+
+export function isLowPowerDevice() {
+  return navigator.hardwareConcurrency < 6;
+}

@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { decodePassphrase } from '@/lib/client-utils';
+import { decodePassphrase, isLowPowerDevice } from '@/lib/client-utils';
 import { DebugMode } from '@/lib/Debug';
 import { KeyboardShortcuts } from '@/lib/KeyboardShortcuts';
 import { RecordingIndicator } from '@/lib/RecordingIndicator';
@@ -23,6 +23,7 @@ import {
   DeviceUnsupportedError,
   RoomConnectOptions,
   RoomEvent,
+  TrackPublishDefaults,
 } from 'livekit-client';
 import { useRouter } from 'next/navigation';
 import { useSetupE2EE } from '@/lib/useSetupE2EE';
@@ -105,19 +106,26 @@ function VideoConferenceComponent(props: {
     if (e2eeEnabled && (videoCodec === 'av1' || videoCodec === 'vp9')) {
       videoCodec = undefined;
     }
+    const videoCaptureDefaults: VideoCaptureDefaults = {
+      deviceId: props.userChoices.videoDeviceId ?? undefined,
+      resolution: props.options.hq ? VideoPresets.h2160 : VideoPresets.h720,
+    };
+    const publishDefaults: TrackPublishDefaults = {
+      dtx: false,
+      videoSimulcastLayers: props.options.hq
+        ? [VideoPresets.h1080, VideoPresets.h720]
+        : [VideoPresets.h540, VideoPresets.h216],
+      red: !e2eeEnabled,
+      videoCodec,
+    };
+    if (isLowPowerDevice()) {
+      videoCaptureDefaults.resolution = VideoPresets.h360;
+      publishDefaults.simulcast = false;
+      publishDefaults.scalabilityMode = 'L1T3';
+    }
     return {
-      videoCaptureDefaults: {
-        deviceId: props.userChoices.videoDeviceId ?? undefined,
-        resolution: props.options.hq ? VideoPresets.h2160 : VideoPresets.h720,
-      },
-      publishDefaults: {
-        dtx: false,
-        videoSimulcastLayers: props.options.hq
-          ? [VideoPresets.h1080, VideoPresets.h720]
-          : [VideoPresets.h540, VideoPresets.h216],
-        red: !e2eeEnabled,
-        videoCodec,
-      },
+      videoCaptureDefaults: videoCaptureDefaults,
+      publishDefaults: publishDefaults,
       audioCaptureDefaults: {
         deviceId: props.userChoices.audioDeviceId ?? undefined,
       },
