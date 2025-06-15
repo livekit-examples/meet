@@ -120,6 +120,8 @@ function VideoConferenceComponent(props: {
       videoCodec,
     };
     if (isLowPowerDevice()) {
+      // on lower end devices, publish at a lower resolution, and disable spatial layers
+      // encoding spatial layers adds to CPU overhead
       videoCaptureDefaults.resolution = VideoPresets.h360;
       publishDefaults.simulcast = false;
       publishDefaults.scalabilityMode = 'L1T3';
