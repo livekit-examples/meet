@@ -1,5 +1,5 @@
 import React, { ChangeEvent, useCallback, useEffect, useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useSearchParams } from 'react-router-dom'
 import { AuthIdentity } from '@dcl/crypto'
 import { t } from 'decentraland-dapps/dist/modules/translation/utils'
 import { Button, Loader, SelectField, Field, DropdownProps, Form } from 'decentraland-ui'
@@ -19,6 +19,7 @@ function ConnectToWorld(props: Props) {
   const [error, setError] = useState<string>('')
   const [availableServers, setAvailableServers] = useState<string[]>([])
   const [isConnectingToServer, setIsConnectingToServer] = useState(false)
+  const [searchParams] = useSearchParams()
 
   const { isLoading, loggedInAddress, identity, previouslyLoadedServers, worldsContentServerUrl, onSubmitConnectForm } = props
 
@@ -42,14 +43,19 @@ function ConnectToWorld(props: Props) {
     [availableServers, setAvailableServers, setSelectedServer]
   )
 
-  async function livekitConnect(identity: AuthIdentity, worldServer: string, worldName: string) {
+  async function livekitConnect(identity: AuthIdentity, worldServer: string, worldName: string, ea: string | null) {
     const aboutResponse = await flatFetch(`${worldServer}/world/${worldName}/about`)
-    console.log(aboutResponse.text)
+    
     if (aboutResponse.status === 200) {
-      const url = JSON.parse(aboutResponse.text!)
+      let url = JSON.parse(aboutResponse.text!)
         ['comms']['adapter'].replace('fixed-adapter:', '')
         .replace('signed-login:', '')
-        .replace('get-comms-adapter', 'cast-adapter')
+        .replace('get-comms-adapter', 'cast-adapter')      
+    
+      if (ea === 'true') {
+        url = `${url}?ea=true`    
+      }
+
       const response = await signedFetch(
         url,
         identity,
@@ -90,7 +96,8 @@ function ConnectToWorld(props: Props) {
       try {
         if (!identity) return
 
-        const response: { url: string; token: string } = await livekitConnect(identity, worldsContentServerUrl, selectedServer)
+        const ea = searchParams.get('ea')
+        const response: { url: string; token: string } = await livekitConnect(identity, worldsContentServerUrl, selectedServer, ea)
         onSubmitConnectForm(response.url, response.token, worldsContentServerUrl, selectedServer)
         addServerToPreviouslyLoaded(selectedServer)
         navigate(`/meet/${encodeURIComponent(response.url)}?token=${encodeURIComponent(response.token)}`)
