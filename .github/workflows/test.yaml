@@ -1,29 +1,29 @@
 name: Test
-
 on:
   push:
-    branches:
-      - main
+    branches: [ main ]
   pull_request:
 
 jobs:
   test:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
+    - uses: actions/checkout@v4
+    - uses: pnpm/action-setup@v4
+    - name: Use Node.js 20
+      uses: actions/setup-node@v4
+      with:
+        node-version: 20
+        cache: 'pnpm'
 
-      - name: Set up Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: '22'
-          cache: 'pnpm'
+    - name: Install dependencies
+      run: pnpm install
 
-      - name: Install pnpm
-        uses: pnpm/action-setup@v4
+    - name: ESLint
+      run: pnpm lint
+    
+    - name: Prettier
+      run: pnpm format:check
 
-      - name: Install dependencies
-        run: pnpm install
-
-      - name: Run tests
-        run: pnpm test
+    - name: Run Tests
+      run: pnpm test
