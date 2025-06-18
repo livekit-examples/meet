@@ -6,6 +6,7 @@ import { NextRequest, NextResponse } from 'next/server';
 const API_KEY = process.env.LIVEKIT_API_KEY;
 const API_SECRET = process.env.LIVEKIT_API_SECRET;
 const LIVEKIT_URL = process.env.LIVEKIT_URL;
+
 const COOKIE_KEY = 'random-participant-postfix';
 
 export async function GET(request: NextRequest) {
@@ -15,7 +16,10 @@ export async function GET(request: NextRequest) {
     const participantName = request.nextUrl.searchParams.get('participantName');
     const metadata = request.nextUrl.searchParams.get('metadata') ?? '';
     const region = request.nextUrl.searchParams.get('region');
-    const livekitServerUrl = region ? getLiveKitURL(region) : LIVEKIT_URL;
+    if (!LIVEKIT_URL) {
+      throw new Error('LIVEKIT_URL is not defined');
+    }
+    const livekitServerUrl = region ? getLiveKitURL(LIVEKIT_URL, region) : LIVEKIT_URL;
     let randomParticipantPostfix = request.cookies.get(COOKIE_KEY)?.value;
     if (livekitServerUrl === undefined) {
       throw new Error('Invalid region');
@@ -78,16 +82,14 @@ function createParticipantToken(userInfo: AccessTokenOptions, roomName: string) 
 /**
  * Get the LiveKit server URL for the given region.
  */
-function getLiveKitURL(region: string | null): string {
-  let targetKey = 'LIVEKIT_URL';
-  if (region) {
-    targetKey = `LIVEKIT_URL_${region}`.toUpperCase();
+function getLiveKitURL(projectUrl: string, region: string | null): string {
+  const url = new URL(projectUrl);
+  if (region && url.hostname.includes('livekit.cloud')) {
+    const hostParts = url.hostname.split('.');
+    const regionURL = [hostParts[0], region, ...hostParts].join('.');
+    url.hostname = regionURL;
   }
-  const url = process.env[targetKey];
-  if (!url) {
-    throw new Error(`${targetKey} is not defined`);
-  }
-  return url;
+  return url.toString();
 }
 
 function getCookieExpirationTime(): string {
