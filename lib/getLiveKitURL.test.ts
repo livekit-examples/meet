@@ -10,7 +10,7 @@ describe('getLiveKitURL', () => {
   it('inserts the region into livekit.cloud URLs', () => {
     const url = 'https://myproject.livekit.cloud';
     const region = 'eu';
-    expect(getLiveKitURL(url, region)).toBe('https://myproject.eu.myproject.livekit.cloud/');
+    expect(getLiveKitURL(url, region)).toBe('https://myproject.eu.livekit.cloud/');
   });
 
   it('returns the original URL for non-livekit.cloud hosts, even with region', () => {
@@ -22,8 +22,6 @@ describe('getLiveKitURL', () => {
   it('handles URLs with paths and query params', () => {
     const url = 'https://myproject.livekit.cloud/room?foo=bar';
     const region = 'ap';
-    expect(getLiveKitURL(url, region)).toBe(
-      'https://myproject.ap.myproject.livekit.cloud/room?foo=bar',
-    );
+    expect(getLiveKitURL(url, region)).toBe('https://myproject.ap.livekit.cloud/room?foo=bar');
   });
 });
