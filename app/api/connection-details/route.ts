@@ -1,4 +1,5 @@
 import { randomString } from '@/lib/client-utils';
+import { getLiveKitURL } from '@/lib/getLiveKitURL';
 import { ConnectionDetails } from '@/lib/types';
 import { AccessToken, AccessTokenOptions, VideoGrant } from 'livekit-server-sdk';
 import { NextRequest, NextResponse } from 'next/server';
@@ -77,19 +78,6 @@ function createParticipantToken(userInfo: AccessTokenOptions, roomName: string) 
   };
   at.addGrant(grant);
   return at.toJwt();
-}
-
-/**
- * Get the LiveKit server URL for the given region.
- */
-function getLiveKitURL(projectUrl: string, region: string | null): string {
-  const url = new URL(projectUrl);
-  if (region && url.hostname.includes('livekit.cloud')) {
-    const hostParts = url.hostname.split('.');
-    const regionURL = [hostParts[0], region, ...hostParts].join('.');
-    url.hostname = regionURL;
-  }
-  return url.toString();
 }
 
 function getCookieExpirationTime(): string {
