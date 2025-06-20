@@ -6,7 +6,7 @@ import { Toaster } from 'react-hot-toast';
 
 export const metadata: Metadata = {
   title: {
-    default: 'LiveKit Meet | Conference app build with LiveKit open source',
+    default: 'JW Nexus | Conference app build with LiveKit open source',
     template: '%s',
   },
   description:
@@ -26,7 +26,7 @@ export const metadata: Metadata = {
         type: 'image/png',
       },
     ],
-    siteName: 'LiveKit Meet',
+    siteName: 'JW Nexus',
   },
   icons: {
     icon: {
