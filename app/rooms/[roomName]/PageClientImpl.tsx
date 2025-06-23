@@ -26,6 +26,7 @@ import {
   TrackPublishDefaults,
   VideoCaptureOptions,
   ParticipantEvent,
+  VideoQuality,
 } from 'livekit-client';
 import { useRouter } from 'next/navigation';
 import { useSetupE2EE } from '@/lib/useSetupE2EE';
@@ -173,9 +174,14 @@ function VideoConferenceComponent(props: {
     room.on(RoomEvent.Disconnected, handleOnLeave);
     room.on(RoomEvent.EncryptionError, handleEncryptionError);
     room.on(RoomEvent.MediaDevicesError, handleError);
-    room.localParticipant.on(ParticipantEvent.LocalTrackCpuConstrained, (track) => {
+    room.localParticipant.on(ParticipantEvent.LocalTrackCpuConstrained, async (track) => {
       console.warn('Local track CPU constrained', track);
       track.prioritizePerformance();
+      room.remoteParticipants.forEach((participant) => {
+        participant.videoTrackPublications.forEach((publication) => {
+          publication.setVideoQuality(VideoQuality.LOW);
+        });
+      });
     });
     if (e2eeSetupComplete) {
       room

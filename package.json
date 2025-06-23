@@ -16,7 +16,7 @@
     "@datadog/browser-logs": "^5.23.3",
     "@livekit/components-react": "2.9.10",
     "@livekit/components-styles": "1.1.6",
-    "@livekit/krisp-noise-filter": "0.3.0",
+    "@livekit/krisp-noise-filter": "0.3.1",
     "@livekit/track-processors": "^0.5.4",
     "livekit-client": "0.0.0-20250623162608",
     "livekit-server-sdk": "2.13.0",
