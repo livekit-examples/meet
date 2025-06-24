@@ -137,7 +137,7 @@ function VideoConferenceComponent(props: {
       audioCaptureDefaults: {
         deviceId: props.userChoices.audioDeviceId ?? undefined,
       },
-      adaptiveStream: { pixelDensity: 'screen' },
+      adaptiveStream: false,
       dynacast: true,
       e2ee: keyProvider && worker && e2eeEnabled ? { keyProvider, worker } : undefined,
     };
