@@ -27,6 +27,9 @@ import {
   VideoCaptureOptions,
   ParticipantEvent,
   VideoQuality,
+  isVideoTrack,
+  RemoteTrackPublication,
+  RemoteTrack,
 } from 'livekit-client';
 import { useRouter } from 'next/navigation';
 import { useSetupE2EE } from '@/lib/useSetupE2EE';
@@ -142,6 +145,8 @@ function VideoConferenceComponent(props: {
 
   const room = React.useMemo(() => new Room(roomOptions), []);
 
+  const [lowPowerMode, setLowPowerMode] = React.useState(false);
+
   React.useEffect(() => {
     if (e2eeEnabled) {
       keyProvider
@@ -175,6 +180,7 @@ function VideoConferenceComponent(props: {
     room.on(RoomEvent.EncryptionError, handleEncryptionError);
     room.on(RoomEvent.MediaDevicesError, handleError);
     room.localParticipant.on(ParticipantEvent.LocalTrackCpuConstrained, async (track) => {
+      setLowPowerMode(true);
       console.warn('Local track CPU constrained', track);
       track.prioritizePerformance();
       room.remoteParticipants.forEach((participant) => {
@@ -210,6 +216,19 @@ function VideoConferenceComponent(props: {
       room.off(RoomEvent.MediaDevicesError, handleError);
     };
   }, [e2eeSetupComplete, room, props.connectionDetails, props.userChoices]);
+
+  React.useEffect(() => {
+    const lowerQuality = (_: RemoteTrack, publication: RemoteTrackPublication) => {
+      publication.setVideoQuality(VideoQuality.LOW);
+    };
+    if (lowPowerMode) {
+      room.on(RoomEvent.TrackSubscribed, lowerQuality);
+    }
+
+    return () => {
+      room.off(RoomEvent.TrackSubscribed, lowerQuality);
+    };
+  }, [lowPowerMode, room]);
 
   const router = useRouter();
   const handleOnLeave = React.useCallback(() => router.push('/'), [router]);
