@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { decodePassphrase, isLowPowerDevice } from '@/lib/client-utils';
+import { decodePassphrase } from '@/lib/client-utils';
 import { DebugMode } from '@/lib/Debug';
 import { KeyboardShortcuts } from '@/lib/KeyboardShortcuts';
 import { RecordingIndicator } from '@/lib/RecordingIndicator';
@@ -124,13 +124,6 @@ function VideoConferenceComponent(props: {
       red: !e2eeEnabled,
       videoCodec,
     };
-    if (isLowPowerDevice()) {
-      // on lower end devices, publish at a lower resolution, and disable spatial layers
-      // encoding spatial layers adds to CPU overhead
-      videoCaptureDefaults.resolution = VideoPresets.h360;
-      publishDefaults.simulcast = false;
-      publishDefaults.scalabilityMode = 'L1T3';
-    }
     return {
       videoCaptureDefaults: videoCaptureDefaults,
       publishDefaults: publishDefaults,
