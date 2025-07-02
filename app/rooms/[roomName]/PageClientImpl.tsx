@@ -33,6 +33,7 @@ import {
 } from 'livekit-client';
 import { useRouter } from 'next/navigation';
 import { useSetupE2EE } from '@/lib/useSetupE2EE';
+import { useLowCPUOptimiser, useLowCPUOptimizer } from '@/lib/usePerfomanceOptimiser';
 
 const CONN_DETAILS_ENDPOINT =
   process.env.NEXT_PUBLIC_CONN_DETAILS_ENDPOINT ?? '/api/connection-details';
@@ -130,15 +131,13 @@ function VideoConferenceComponent(props: {
       audioCaptureDefaults: {
         deviceId: props.userChoices.audioDeviceId ?? undefined,
       },
-      adaptiveStream: false,
+      adaptiveStream: true,
       dynacast: true,
       e2ee: keyProvider && worker && e2eeEnabled ? { keyProvider, worker } : undefined,
     };
   }, [props.userChoices, props.options.hq, props.options.codec]);
 
   const room = React.useMemo(() => new Room(roomOptions), []);
-
-  const [lowPowerMode, setLowPowerMode] = React.useState(false);
 
   React.useEffect(() => {
     if (e2eeEnabled) {
@@ -172,16 +171,7 @@ function VideoConferenceComponent(props: {
     room.on(RoomEvent.Disconnected, handleOnLeave);
     room.on(RoomEvent.EncryptionError, handleEncryptionError);
     room.on(RoomEvent.MediaDevicesError, handleError);
-    room.localParticipant.on(ParticipantEvent.LocalTrackCpuConstrained, async (track) => {
-      setLowPowerMode(true);
-      console.warn('Local track CPU constrained', track);
-      track.prioritizePerformance();
-      room.remoteParticipants.forEach((participant) => {
-        participant.videoTrackPublications.forEach((publication) => {
-          publication.setVideoQuality(VideoQuality.LOW);
-        });
-      });
-    });
+
     if (e2eeSetupComplete) {
       room
         .connect(
@@ -210,18 +200,7 @@ function VideoConferenceComponent(props: {
     };
   }, [e2eeSetupComplete, room, props.connectionDetails, props.userChoices]);
 
-  React.useEffect(() => {
-    const lowerQuality = (_: RemoteTrack, publication: RemoteTrackPublication) => {
-      publication.setVideoQuality(VideoQuality.LOW);
-    };
-    if (lowPowerMode) {
-      room.on(RoomEvent.TrackSubscribed, lowerQuality);
-    }
-
-    return () => {
-      room.off(RoomEvent.TrackSubscribed, lowerQuality);
-    };
-  }, [lowPowerMode, room]);
+  const lowPowerMode = useLowCPUOptimizer(room);
 
   const router = useRouter();
   const handleOnLeave = React.useCallback(() => router.push('/'), [router]);
@@ -235,6 +214,12 @@ function VideoConferenceComponent(props: {
       `Encountered an unexpected encryption error, check the console logs for details: ${error.message}`,
     );
   }, []);
+
+  React.useEffect(() => {
+    if (lowPowerMode) {
+      console.warn('Low power mode enabled');
+    }
+  }, [lowPowerMode]);
 
   return (
     <div className="lk-room-container">

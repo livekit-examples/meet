@@ -15,6 +15,7 @@ import { useEffect, useMemo, useState } from 'react';
 import { KeyboardShortcuts } from '@/lib/KeyboardShortcuts';
 import { SettingsMenu } from '@/lib/SettingsMenu';
 import { useSetupE2EE } from '@/lib/useSetupE2EE';
+import { useLowCPUOptimizer } from '@/lib/usePerfomanceOptimiser';
 
 export function VideoConferenceClientImpl(props: {
   liveKitUrl: string;
@@ -75,6 +76,8 @@ export function VideoConferenceClientImpl(props: {
       });
     }
   }, [room, props.liveKitUrl, props.token, connectOptions, e2eeSetupComplete]);
+
+  useLowCPUOptimizer(room);
 
   return (
     <div className="lk-room-container">
