@@ -21,6 +21,5 @@ export function randomString(length: number): string {
 }
 
 export function isLowPowerDevice() {
-  return false;
   return navigator.hardwareConcurrency < 6;
 }
