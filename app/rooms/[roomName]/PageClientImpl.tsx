@@ -25,15 +25,10 @@ import {
   RoomEvent,
   TrackPublishDefaults,
   VideoCaptureOptions,
-  ParticipantEvent,
-  VideoQuality,
-  isVideoTrack,
-  RemoteTrackPublication,
-  RemoteTrack,
 } from 'livekit-client';
 import { useRouter } from 'next/navigation';
 import { useSetupE2EE } from '@/lib/useSetupE2EE';
-import { useLowCPUOptimiser, useLowCPUOptimizer } from '@/lib/usePerfomanceOptimiser';
+import { useLowCPUOptimizer } from '@/lib/usePerfomanceOptimiser';
 
 const CONN_DETAILS_ENDPOINT =
   process.env.NEXT_PUBLIC_CONN_DETAILS_ENDPOINT ?? '/api/connection-details';
