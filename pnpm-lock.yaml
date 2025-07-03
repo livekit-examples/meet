@@ -13,19 +13,19 @@ importers:
         version: 5.35.1
       '@livekit/components-react':
         specifier: 2.9.12
-        version: 2.9.12(@livekit/krisp-noise-filter@0.3.2(livekit-client@2.15.0(@types/dom-mediacapture-record@1.0.22)))(livekit-client@2.15.0(@types/dom-mediacapture-record@1.0.22))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(tslib@2.8.1)
+        version: 2.9.12(@livekit/krisp-noise-filter@0.3.4(livekit-client@2.15.2(@types/dom-mediacapture-record@1.0.22)))(livekit-client@2.15.2(@types/dom-mediacapture-record@1.0.22))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(tslib@2.8.1)
       '@livekit/components-styles':
         specifier: 1.1.6
         version: 1.1.6
       '@livekit/krisp-noise-filter':
-        specifier: 0.3.2
-        version: 0.3.2(livekit-client@2.15.0(@types/dom-mediacapture-record@1.0.22))
+        specifier: 0.3.4
+        version: 0.3.4(livekit-client@2.15.2(@types/dom-mediacapture-record@1.0.22))
       '@livekit/track-processors':
         specifier: ^0.5.4
-        version: 0.5.4(livekit-client@2.15.0(@types/dom-mediacapture-record@1.0.22))
+        version: 0.5.4(livekit-client@2.15.2(@types/dom-mediacapture-record@1.0.22))
       livekit-client:
-        specifier: 2.15.0
-        version: 2.15.0(@types/dom-mediacapture-record@1.0.22)
+        specifier: 2.15.2
+        version: 2.15.2(@types/dom-mediacapture-record@1.0.22)
       livekit-server-sdk:
         specifier: 2.13.1
         version: 2.13.1
@@ -459,8 +459,8 @@ packages:
     resolution: {integrity: sha512-V6zfuREC2ksW8z6T6WSbEvdLB5ICVikGz1GtLr59UcxHDyAsKDbuDHAyl3bF3xBqPKYmY3GWF3Qk39rnScyOtA==}
     engines: {node: '>=18'}
 
-  '@livekit/krisp-noise-filter@0.3.2':
-    resolution: {integrity: sha512-h4kUhFQoKGnJWbw6+3XTQib4/v8boPawetID7Ckzt4jxrFXFIY0dkGra6izVFVdaqb8p9zqXJLAP0utKuSROlA==}
+  '@livekit/krisp-noise-filter@0.3.4':
+    resolution: {integrity: sha512-gvC0OevzIPBAr8f2S4P/BdUxVJYp7rvDoORHAmU6yppK6NKn+GNbkMosz0NpsI+Te18etBBOjaKmhoD7/PoXVA==}
     peerDependencies:
       livekit-client: ^2.0.8
 
@@ -1621,8 +1621,8 @@ packages:
     resolution: {integrity: sha512-+bT2uH4E5LGE7h/n3evcS/sQlJXCpIp6ym8OWJ5eV6+67Dsql/LaaT7qJBAt2rzfoa/5QBGBhxDix1dMt2kQKQ==}
     engines: {node: '>= 0.8.0'}
 
-  livekit-client@2.15.0:
-    resolution: {integrity: sha512-ATHg7642unMRdcB4y9N3LmV0jLVfkbUc1PJaKeXQO96nHbRfW/sNLjiaOgaMbL7zomDiAMb8fG2atNfMPztH2w==}
+  livekit-client@2.15.2:
+    resolution: {integrity: sha512-hf0A0JFN7M0iVGZxMfTk6a3cW7TNTVdqxkykjKBweORlqhQX1ITVloh6aLvplLZOxpkUE5ZVLz1DeS3+ERglog==}
     peerDependencies:
       '@types/dom-mediacapture-record': ^1
 
@@ -2585,32 +2585,32 @@ snapshots:
       '@jridgewell/resolve-uri': 3.1.2
       '@jridgewell/sourcemap-codec': 1.5.0
 
-  '@livekit/components-core@0.12.8(livekit-client@2.15.0(@types/dom-mediacapture-record@1.0.22))(tslib@2.8.1)':
+  '@livekit/components-core@0.12.8(livekit-client@2.15.2(@types/dom-mediacapture-record@1.0.22))(tslib@2.8.1)':
     dependencies:
       '@floating-ui/dom': 1.6.13
-      livekit-client: 2.15.0(@types/dom-mediacapture-record@1.0.22)
+      livekit-client: 2.15.2(@types/dom-mediacapture-record@1.0.22)
       loglevel: 1.9.1
       rxjs: 7.8.2
       tslib: 2.8.1
 
-  '@livekit/components-react@2.9.12(@livekit/krisp-noise-filter@0.3.2(livekit-client@2.15.0(@types/dom-mediacapture-record@1.0.22)))(livekit-client@2.15.0(@types/dom-mediacapture-record@1.0.22))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(tslib@2.8.1)':
+  '@livekit/components-react@2.9.12(@livekit/krisp-noise-filter@0.3.4(livekit-client@2.15.2(@types/dom-mediacapture-record@1.0.22)))(livekit-client@2.15.2(@types/dom-mediacapture-record@1.0.22))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(tslib@2.8.1)':
     dependencies:
-      '@livekit/components-core': 0.12.8(livekit-client@2.15.0(@types/dom-mediacapture-record@1.0.22))(tslib@2.8.1)
+      '@livekit/components-core': 0.12.8(livekit-client@2.15.2(@types/dom-mediacapture-record@1.0.22))(tslib@2.8.1)
       clsx: 2.1.1
-      livekit-client: 2.15.0(@types/dom-mediacapture-record@1.0.22)
+      livekit-client: 2.15.2(@types/dom-mediacapture-record@1.0.22)
       react: 18.3.1
       react-dom: 18.3.1(react@18.3.1)
       tslib: 2.8.1
       usehooks-ts: 3.1.1(react@18.3.1)
     optionalDependencies:
-      '@livekit/krisp-noise-filter': 0.3.2(livekit-client@2.15.0(@types/dom-mediacapture-record@1.0.22))
+      '@livekit/krisp-noise-filter': 0.3.4(livekit-client@2.15.2(@types/dom-mediacapture-record@1.0.22))
 
   '@livekit/components-styles@1.1.6': {}
 
-  '@livekit/krisp-noise-filter@0.3.2(livekit-client@2.15.0(@types/dom-mediacapture-record@1.0.22))':
+  '@livekit/krisp-noise-filter@0.3.4(livekit-client@2.15.2(@types/dom-mediacapture-record@1.0.22))':
     dependencies:
       '@livekit/mutex': 1.1.1
-      livekit-client: 2.15.0(@types/dom-mediacapture-record@1.0.22)
+      livekit-client: 2.15.2(@types/dom-mediacapture-record@1.0.22)
 
   '@livekit/mutex@1.1.1': {}
 
@@ -2622,10 +2622,10 @@ snapshots:
     dependencies:
       '@bufbuild/protobuf': 1.10.0
 
-  '@livekit/track-processors@0.5.4(livekit-client@2.15.0(@types/dom-mediacapture-record@1.0.22))':
+  '@livekit/track-processors@0.5.4(livekit-client@2.15.2(@types/dom-mediacapture-record@1.0.22))':
     dependencies:
       '@mediapipe/tasks-vision': 0.10.14
-      livekit-client: 2.15.0(@types/dom-mediacapture-record@1.0.22)
+      livekit-client: 2.15.2(@types/dom-mediacapture-record@1.0.22)
 
   '@mediapipe/tasks-vision@0.10.14': {}
 
@@ -3961,7 +3961,7 @@ snapshots:
       prelude-ls: 1.2.1
       type-check: 0.4.0
 
-  livekit-client@2.15.0(@types/dom-mediacapture-record@1.0.22):
+  livekit-client@2.15.2(@types/dom-mediacapture-record@1.0.22):
     dependencies:
       '@livekit/mutex': 1.1.1
       '@livekit/protocol': 1.39.3
