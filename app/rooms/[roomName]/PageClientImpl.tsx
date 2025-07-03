@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { decodePassphrase, isLowPowerDevice } from '@/lib/client-utils';
+import { decodePassphrase } from '@/lib/client-utils';
 import { DebugMode } from '@/lib/Debug';
 import { KeyboardShortcuts } from '@/lib/KeyboardShortcuts';
 import { RecordingIndicator } from '@/lib/RecordingIndicator';
@@ -28,6 +28,7 @@ import {
 } from 'livekit-client';
 import { useRouter } from 'next/navigation';
 import { useSetupE2EE } from '@/lib/useSetupE2EE';
+import { useLowCPUOptimizer } from '@/lib/usePerfomanceOptimiser';
 
 const CONN_DETAILS_ENDPOINT =
   process.env.NEXT_PUBLIC_CONN_DETAILS_ENDPOINT ?? '/api/connection-details';
@@ -119,20 +120,13 @@ function VideoConferenceComponent(props: {
       red: !e2eeEnabled,
       videoCodec,
     };
-    if (isLowPowerDevice()) {
-      // on lower end devices, publish at a lower resolution, and disable spatial layers
-      // encoding spatial layers adds to CPU overhead
-      videoCaptureDefaults.resolution = VideoPresets.h360;
-      publishDefaults.simulcast = false;
-      publishDefaults.scalabilityMode = 'L1T3';
-    }
     return {
       videoCaptureDefaults: videoCaptureDefaults,
       publishDefaults: publishDefaults,
       audioCaptureDefaults: {
         deviceId: props.userChoices.audioDeviceId ?? undefined,
       },
-      adaptiveStream: { pixelDensity: 'screen' },
+      adaptiveStream: true,
       dynacast: true,
       e2ee: keyProvider && worker && e2eeEnabled ? { keyProvider, worker } : undefined,
     };
@@ -172,6 +166,7 @@ function VideoConferenceComponent(props: {
     room.on(RoomEvent.Disconnected, handleOnLeave);
     room.on(RoomEvent.EncryptionError, handleEncryptionError);
     room.on(RoomEvent.MediaDevicesError, handleError);
+
     if (e2eeSetupComplete) {
       room
         .connect(
@@ -200,6 +195,8 @@ function VideoConferenceComponent(props: {
     };
   }, [e2eeSetupComplete, room, props.connectionDetails, props.userChoices]);
 
+  const lowPowerMode = useLowCPUOptimizer(room);
+
   const router = useRouter();
   const handleOnLeave = React.useCallback(() => router.push('/'), [router]);
   const handleError = React.useCallback((error: Error) => {
@@ -212,6 +209,12 @@ function VideoConferenceComponent(props: {
       `Encountered an unexpected encryption error, check the console logs for details: ${error.message}`,
     );
   }, []);
+
+  React.useEffect(() => {
+    if (lowPowerMode) {
+      console.warn('Low power mode enabled');
+    }
+  }, [lowPowerMode]);
 
   return (
     <div className="lk-room-container">
