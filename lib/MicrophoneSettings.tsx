@@ -9,6 +9,8 @@ export function MicrophoneSettings() {
   const { isNoiseFilterEnabled, setNoiseFilterEnabled, isNoiseFilterPending } = useKrispNoiseFilter(
     {
       filterOptions: {
+        bufferOverflowMs: 100,
+        bufferDropMs: 200,
         quality: isLowPowerDevice() ? 'low' : 'medium',
         onBufferDrop: () => {
           console.warn(
@@ -20,8 +22,8 @@ export function MicrophoneSettings() {
   );
 
   React.useEffect(() => {
-    // enable Krisp by default
-    setNoiseFilterEnabled(true);
+    // enable Krisp by default on non-low power devices
+    setNoiseFilterEnabled(!isLowPowerDevice());
   }, []);
   return (
     <div
