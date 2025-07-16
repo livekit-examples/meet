@@ -4,6 +4,7 @@ import { useRouter, useSearchParams } from 'next/navigation';
 import React, { Suspense, useState } from 'react';
 import { encodePassphrase, generateRoomId, randomString } from '@/lib/client-utils';
 import styles from '../styles/Home.module.css';
+import ApiController from '@/app/ApiController';
 
 function Tabs(props: React.PropsWithChildren<{}>) {
   const searchParams = useSearchParams();
@@ -183,6 +184,7 @@ export default function Page() {
             <DemoMeetingTab label="Demo" />
             <CustomConnectionTab label="Custom" />
           </Tabs>
+          <ApiController></ApiController>
         </Suspense>
       </main>
       <footer data-lk-theme="default">
