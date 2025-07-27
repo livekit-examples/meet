@@ -2,6 +2,7 @@ import { randomString } from '@/lib/client-utils';
 import { getLiveKitURL } from '@/lib/getLiveKitURL';
 import { ConnectionDetails } from '@/lib/types';
 import { AccessToken, AccessTokenOptions, VideoGrant } from 'livekit-server-sdk';
+import { RoomAgentDispatch, RoomConfiguration } from '@livekit/protocol';
 import { NextRequest, NextResponse } from 'next/server';
 
 const API_KEY = process.env.LIVEKIT_API_KEY;
@@ -17,9 +18,11 @@ export async function GET(request: NextRequest) {
     const participantName = request.nextUrl.searchParams.get('participantName');
     const metadata = request.nextUrl.searchParams.get('metadata') ?? '';
     const region = request.nextUrl.searchParams.get('region');
+    const language = request.nextUrl.searchParams.get('language') ?? 'en';
     if (!LIVEKIT_URL) {
       throw new Error('LIVEKIT_URL is not defined');
     }
+
     const livekitServerUrl = region ? getLiveKitURL(LIVEKIT_URL, region) : LIVEKIT_URL;
     let randomParticipantPostfix = request.cookies.get(COOKIE_KEY)?.value;
     if (livekitServerUrl === undefined) {
@@ -33,7 +36,6 @@ export async function GET(request: NextRequest) {
       return new NextResponse('Missing required query parameter: participantName', { status: 400 });
     }
 
-    // Generate participant token
     if (!randomParticipantPostfix) {
       randomParticipantPostfix = randomString(4);
     }
@@ -42,9 +44,14 @@ export async function GET(request: NextRequest) {
         identity: `${participantName}__${randomParticipantPostfix}`,
         name: participantName,
         metadata,
+        attributes: {
+          language,
+        }
       },
       roomName,
     );
+
+    console.info("token:", participantToken);
 
     // Return connection details
     const data: ConnectionDetails = {
@@ -75,8 +82,14 @@ function createParticipantToken(userInfo: AccessTokenOptions, roomName: string) 
     canPublish: true,
     canPublishData: true,
     canSubscribe: true,
+    canUpdateOwnMetadata: true,
   };
   at.addGrant(grant);
+  at.roomConfig = new RoomConfiguration({
+    agents: [new RoomAgentDispatch({
+      agentName: "translator",
+    })],
+  })
   return at.toJwt();
 }
 
