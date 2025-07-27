@@ -51,7 +51,7 @@ export function RoomAudioRenderer() {
         <AudioTrack
           key={getTrackReferenceId(trackRef)}
           trackRef={trackRef}
-          volume={0.4}
+          volume={0.5}
           muted={false}
         />
       ))}

@@ -68,9 +68,9 @@ export function TranscriptDisplay() {
         const isTranslation = info.attributes?.translated === "true";
 
         // ignore translations for other languages
-        // if (isTranslation && info.attributes?.language !== currentLanguage) {
-        //   return;
-        // }
+        if (isTranslation && info.attributes?.language !== currentLanguage) {
+          return;
+        }
 
         const id = info.id;
         const participantId = participantInfo?.identity;
