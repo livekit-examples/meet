@@ -6,13 +6,12 @@ import { DebugMode } from '@/lib/Debug';
 import { KeyboardShortcuts } from '@/lib/KeyboardShortcuts';
 import { RecordingIndicator } from '@/lib/RecordingIndicator';
 import { SettingsMenu } from '@/lib/SettingsMenu';
-import { ConnectionDetails } from '@/lib/types';
+import { ConnectionDetails, LocalUserChoices } from '@/lib/types';
+import { VideoConference } from './VideoConference';
+import { PreJoin } from './PreJoin';
 import {
   formatChatMessageLinks,
-  LocalUserChoices,
-  PreJoin,
   RoomContext,
-  VideoConference,
 } from '@livekit/components-react';
 import {
   ExternalE2EEKeyProvider,
@@ -43,6 +42,7 @@ export function PageClientImpl(props: {
   const [preJoinChoices, setPreJoinChoices] = React.useState<LocalUserChoices | undefined>(
     undefined,
   );
+  
   const preJoinDefaults = React.useMemo(() => {
     return {
       username: '',
@@ -50,6 +50,7 @@ export function PageClientImpl(props: {
       audioEnabled: true,
     };
   }, []);
+  
   const [connectionDetails, setConnectionDetails] = React.useState<ConnectionDetails | undefined>(
     undefined,
   );
@@ -59,6 +60,9 @@ export function PageClientImpl(props: {
     const url = new URL(CONN_DETAILS_ENDPOINT, window.location.origin);
     url.searchParams.append('roomName', props.roomName);
     url.searchParams.append('participantName', values.username);
+    if (values.language) {
+      url.searchParams.append('language', values.language);
+    }
     if (props.region) {
       url.searchParams.append('region', props.region);
     }

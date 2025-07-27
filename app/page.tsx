@@ -44,6 +44,8 @@ function Tabs(props: React.PropsWithChildren<{}>) {
 function DemoMeetingTab(props: { label: string }) {
   const router = useRouter();
   const [e2ee, setE2ee] = useState(false);
+  // TODO(dz): we need to set this to the default language of the browser
+  const [language, setLanguage] = useState("en")
   const [sharedPassphrase, setSharedPassphrase] = useState(randomString(64));
   const startMeeting = () => {
     if (e2ee) {
@@ -60,6 +62,12 @@ function DemoMeetingTab(props: { label: string }) {
       </button>
       <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
         <div style={{ display: 'flex', flexDirection: 'row', gap: '1rem' }}>
+          <select
+            id="language"
+            onChange={(ev) => setLanguage(ev.target.value)}
+          >
+
+          </select>
           <input
             id="use-e2ee"
             type="checkbox"

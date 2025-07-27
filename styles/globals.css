@@ -65,3 +65,15 @@ h2 a {
 h2 a {
   text-decoration: none;
 }
+
+.lk-form-control-wrapper {
+  margin-top: 10px;
+  width: 100%;
+}
+
+.lk-form-label {
+  display: block;
+  margin-bottom: 5px;
+  font-size: 0.9rem;
+  color: #666;
+}

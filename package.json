@@ -14,9 +14,11 @@
   },
   "dependencies": {
     "@datadog/browser-logs": "^5.23.3",
+    "@livekit/components-core": "^0.12.9",
     "@livekit/components-react": "2.9.13",
     "@livekit/components-styles": "1.1.6",
     "@livekit/krisp-noise-filter": "0.3.4",
+    "@livekit/protocol": "^1.39.3",
     "@livekit/track-processors": "^0.5.4",
     "livekit-client": "2.15.2",
     "livekit-server-sdk": "2.13.1",
