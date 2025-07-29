@@ -25,13 +25,13 @@ body {
   padding-inline: 2rem;
 }
 
-.header > img {
+.header>img {
   display: block;
   margin: auto;
   max-width: 100%;
 }
 
-.header > h2 {
+.header>h2 {
   font-family: 'TWK Everett', sans-serif;
   font-style: normal;
   font-weight: 400;
@@ -64,4 +64,51 @@ h2 a {
 
 h2 a {
   text-decoration: none;
+}
+
+/* Override LiveKit video conference layout to fix control bar positioning */
+.lk-video-conference {
+  position: relative;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: stretch;
+  height: 100%;
+}
+
+.lk-video-conference-content {
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+  width: 100%;
+  flex: 1;
+  min-height: 0;
+}
+
+.lk-video-conference-inner {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  width: 100%;
+  flex: 1;
+  min-height: 0;
+}
+
+.lk-grid-layout-wrapper,
+.lk-focus-layout-wrapper {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  height: 100% !important;
+  flex: 1;
+  min-height: 0;
+}
+
+.lk-grid-layout-wrapper {
+  flex-direction: column;
+  align-items: center;
+}
+
+.lk-focus-layout-wrapper {
+  align-items: stretch;
 }
