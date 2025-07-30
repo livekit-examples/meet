@@ -39,9 +39,9 @@ export function VideoConferenceClientImpl(props: {
       dynacast: true,
       e2ee: e2eeEnabled
         ? {
-            keyProvider,
-            worker,
-          }
+          keyProvider,
+          worker,
+        }
         : undefined,
     };
   }, [e2eeEnabled, props.codec, keyProvider, worker]);

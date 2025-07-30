@@ -112,3 +112,45 @@ h2 a {
 .lk-focus-layout-wrapper {
   align-items: stretch;
 }
+
+/* Emoji Reaction Styles */
+.lk-emoji-reactions {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  pointer-events: none;
+  z-index: 10;
+}
+
+.lk-emoji-reaction {
+  font-size: 3rem;
+  animation: emojiReaction 3s ease-out forwards;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+@keyframes emojiReaction {
+  0% {
+    opacity: 0;
+    transform: scale(0.5) translateY(20px);
+  }
+
+  20% {
+    opacity: 1;
+    transform: scale(1.2) translateY(0);
+  }
+
+  80% {
+    opacity: 1;
+    transform: scale(1) translateY(-10px);
+  }
+
+  100% {
+    opacity: 0;
+    transform: scale(0.8) translateY(-20px);
+  }
+}
