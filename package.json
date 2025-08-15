@@ -27,14 +27,14 @@
     "tinykeys": "^3.0.0"
   },
   "devDependencies": {
-    "@types/node": "22.15.31",
+    "@types/node": "22.17.2",
     "@types/react": "18.3.23",
     "@types/react-dom": "18.3.7",
-    "eslint": "9.29.0",
-    "eslint-config-next": "15.3.3",
-    "prettier": "3.5.3",
+    "eslint": "9.33.0",
+    "eslint-config-next": "15.4.6",
+    "prettier": "3.6.2",
     "source-map-loader": "^5.0.0",
-    "typescript": "5.8.3",
+    "typescript": "5.9.2",
     "vitest": "^3.2.4"
   },
   "engines": {
