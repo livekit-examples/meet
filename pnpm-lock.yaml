@@ -21,8 +21,8 @@ importers:
         specifier: 0.3.4
         version: 0.3.4(livekit-client@2.15.6(@types/dom-mediacapture-record@1.0.22))
       '@livekit/track-processors':
-        specifier: ^0.5.4
-        version: 0.5.4(livekit-client@2.15.6(@types/dom-mediacapture-record@1.0.22))
+        specifier: ^0.6.0
+        version: 0.6.0(@types/dom-mediacapture-transform@0.1.11)(livekit-client@2.15.6(@types/dom-mediacapture-record@1.0.22))
       livekit-client:
         specifier: 2.15.6
         version: 2.15.6(@types/dom-mediacapture-record@1.0.22)
@@ -473,9 +473,10 @@ packages:
   '@livekit/protocol@1.39.3':
     resolution: {integrity: sha512-hfOnbwPCeZBEvMRdRhU2sr46mjGXavQcrb3BFRfG+Gm0Z7WUSeFdy5WLstXJzEepz17Iwp/lkGwJ4ZgOOYfPuA==}
 
-  '@livekit/track-processors@0.5.4':
-    resolution: {integrity: sha512-vsr4kwx2n4L5CaXqITYbZAEgCrLJJevXGpYnPqIoxeJJF5vC2excJQaE67E4xVOeC4hCSo2Y9E1/ra2ORv796w==}
+  '@livekit/track-processors@0.6.0':
+    resolution: {integrity: sha512-h0Ewdp2/u44QnfLsmhL/IBCkFJsl10eyodErOedP9yWTS4c8m8ibqBWaNH0bHDeqg4Ue+OzzUb7dogUb2nJ0Ow==}
     peerDependencies:
+      '@types/dom-mediacapture-transform': ^0.1.9
       livekit-client: ^1.12.0 || ^2.1.0
 
   '@mediapipe/tasks-vision@0.10.14':
@@ -671,6 +672,12 @@ packages:
 
   '@types/dom-mediacapture-record@1.0.22':
     resolution: {integrity: sha512-mUMZLK3NvwRLcAAT9qmcK+9p7tpU2FHdDsntR3YI4+GY88XrgG4XiE7u1Q2LAN2/FZOz/tdMDC3GQCR4T8nFuw==}
+
+  '@types/dom-mediacapture-transform@0.1.11':
+    resolution: {integrity: sha512-Y2p+nGf1bF2XMttBnsVPHUWzRRZzqUoJAKmiP10b5umnO6DDrWI0BrGDJy1pOHoOULVmGSfFNkQrAlC5dcj6nQ==}
+
+  '@types/dom-webcodecs@0.1.16':
+    resolution: {integrity: sha512-gRNWaC3YW5EzhPRjVYy7BnxCbtLGqsgu+uTkmV/IxOF1bllFD+FAJ1KBdsDFsuJB+F+CE+nWmMlWt8vaZ3yYXA==}
 
   '@types/estree@1.0.7':
     resolution: {integrity: sha512-w28IoSUCJpidD/TGviZwwMJckNESJZXFu7NBZ5YJ4mEUnNraUn9Pm8HSZm/jDF1pDWYKspWE7oVphigUPRakIQ==}
@@ -2611,9 +2618,10 @@ snapshots:
     dependencies:
       '@bufbuild/protobuf': 1.10.0
 
-  '@livekit/track-processors@0.5.4(livekit-client@2.15.6(@types/dom-mediacapture-record@1.0.22))':
+  '@livekit/track-processors@0.6.0(@types/dom-mediacapture-transform@0.1.11)(livekit-client@2.15.6(@types/dom-mediacapture-record@1.0.22))':
     dependencies:
       '@mediapipe/tasks-vision': 0.10.14
+      '@types/dom-mediacapture-transform': 0.1.11
       livekit-client: 2.15.6(@types/dom-mediacapture-record@1.0.22)
 
   '@mediapipe/tasks-vision@0.10.14': {}
@@ -2739,6 +2747,12 @@ snapshots:
   '@types/deep-eql@4.0.2': {}
 
   '@types/dom-mediacapture-record@1.0.22': {}
+
+  '@types/dom-mediacapture-transform@0.1.11':
+    dependencies:
+      '@types/dom-webcodecs': 0.1.16
+
+  '@types/dom-webcodecs@0.1.16': {}
 
   '@types/estree@1.0.7': {}
 
