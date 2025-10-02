@@ -20,7 +20,7 @@
     "@livekit/track-processors": "^0.6.0",
     "livekit-client": "2.15.8",
     "livekit-server-sdk": "2.14.0",
-    "next": "15.2.4",
+    "next": "15.4.7",
     "react": "18.3.1",
     "react-dom": "18.3.1",
     "react-hot-toast": "^2.5.2",
