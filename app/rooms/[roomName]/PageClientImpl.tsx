@@ -104,7 +104,7 @@ function VideoConferenceComponent(props: {
   const [e2eeSetupComplete, setE2eeSetupComplete] = React.useState(false);
 
   const roomOptions = React.useMemo((): RoomOptions => {
-    let videoCodec: VideoCodec | undefined = props.options.codec ? props.options.codec : 'vp9';
+    let videoCodec: VideoCodec | undefined = props.options.codec ? props.options.codec : 'vp8';
     if (e2eeEnabled && (videoCodec === 'av1' || videoCodec === 'vp9')) {
       videoCodec = undefined;
     }
@@ -129,6 +129,7 @@ function VideoConferenceComponent(props: {
       adaptiveStream: true,
       dynacast: true,
       e2ee: keyProvider && worker && e2eeEnabled ? { keyProvider, worker } : undefined,
+      singlePeerConnection: location.origin.includes('meet.staging.livekit.io'),
     };
   }, [props.userChoices, props.options.hq, props.options.codec]);
 

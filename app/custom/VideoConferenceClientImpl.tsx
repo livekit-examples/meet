@@ -43,6 +43,7 @@ export function VideoConferenceClientImpl(props: {
             worker,
           }
         : undefined,
+      singlePeerConnection: location.origin.includes('meet.staging.livekit.io'),
     };
   }, [e2eeEnabled, props.codec, keyProvider, worker]);
 
