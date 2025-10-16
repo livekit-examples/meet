@@ -16,6 +16,7 @@ import { KeyboardShortcuts } from '@/lib/KeyboardShortcuts';
 import { SettingsMenu } from '@/lib/SettingsMenu';
 import { useSetupE2EE } from '@/lib/useSetupE2EE';
 import { useLowCPUOptimizer } from '@/lib/usePerfomanceOptimiser';
+import { isMeetStaging } from '@/lib/client-utils';
 
 export function VideoConferenceClientImpl(props: {
   liveKitUrl: string;
@@ -43,6 +44,7 @@ export function VideoConferenceClientImpl(props: {
             worker,
           }
         : undefined,
+      singlePeerConnection: isMeetStaging(),
     };
   }, [e2eeEnabled, props.codec, keyProvider, worker]);
 
