@@ -129,7 +129,7 @@ function VideoConferenceComponent(props: {
       adaptiveStream: true,
       dynacast: true,
       e2ee: keyProvider && worker && e2eeEnabled ? { keyProvider, worker } : undefined,
-      singlePeerConnection: location.origin.includes('meet.staging.livekit.io'),
+      singlePeerConnection: location.origin.startsWith('meet.staging.livekit.io'),
     };
   }, [props.userChoices, props.options.hq, props.options.codec]);
 
