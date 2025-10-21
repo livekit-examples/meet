@@ -13,19 +13,19 @@ importers:
         version: 5.35.1
       '@livekit/components-react':
         specifier: 2.9.15
-        version: 2.9.15(@livekit/krisp-noise-filter@0.3.4(livekit-client@2.15.11(@types/dom-mediacapture-record@1.0.22)))(livekit-client@2.15.11(@types/dom-mediacapture-record@1.0.22))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(tslib@2.8.1)
+        version: 2.9.15(@livekit/krisp-noise-filter@0.3.4(livekit-client@2.15.13(@types/dom-mediacapture-record@1.0.22)))(livekit-client@2.15.13(@types/dom-mediacapture-record@1.0.22))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(tslib@2.8.1)
       '@livekit/components-styles':
         specifier: 1.1.6
         version: 1.1.6
       '@livekit/krisp-noise-filter':
         specifier: 0.3.4
-        version: 0.3.4(livekit-client@2.15.11(@types/dom-mediacapture-record@1.0.22))
+        version: 0.3.4(livekit-client@2.15.13(@types/dom-mediacapture-record@1.0.22))
       '@livekit/track-processors':
         specifier: ^0.6.0
-        version: 0.6.1(@types/dom-mediacapture-transform@0.1.11)(livekit-client@2.15.11(@types/dom-mediacapture-record@1.0.22))
+        version: 0.6.1(@types/dom-mediacapture-transform@0.1.11)(livekit-client@2.15.13(@types/dom-mediacapture-record@1.0.22))
       livekit-client:
-        specifier: 2.15.11
-        version: 2.15.11(@types/dom-mediacapture-record@1.0.22)
+        specifier: 2.15.13
+        version: 2.15.13(@types/dom-mediacapture-record@1.0.22)
       livekit-server-sdk:
         specifier: 2.14.0
         version: 2.14.0
@@ -1634,8 +1634,8 @@ packages:
     resolution: {integrity: sha512-+bT2uH4E5LGE7h/n3evcS/sQlJXCpIp6ym8OWJ5eV6+67Dsql/LaaT7qJBAt2rzfoa/5QBGBhxDix1dMt2kQKQ==}
     engines: {node: '>= 0.8.0'}
 
-  livekit-client@2.15.11:
-    resolution: {integrity: sha512-9cHdAbSibPGyt7wWM+GAUswIOuklQHF9y561Oruzh0nNFNvRzMsE10oqJvjs0k6s2Jl+j/Z5Ar90bzVwLpu1yg==}
+  livekit-client@2.15.13:
+    resolution: {integrity: sha512-LovpU5vEaCnkmhL7iSXb/sYitzOibUShnmriONcRjjq2WNO+qV+EoPM82jE7kQ/BH58dW1+AtY4m/adndC5BWg==}
     peerDependencies:
       '@types/dom-mediacapture-record': ^1
 
@@ -2601,32 +2601,32 @@ snapshots:
       '@jridgewell/resolve-uri': 3.1.2
       '@jridgewell/sourcemap-codec': 1.5.5
 
-  '@livekit/components-core@0.12.10(livekit-client@2.15.11(@types/dom-mediacapture-record@1.0.22))(tslib@2.8.1)':
+  '@livekit/components-core@0.12.10(livekit-client@2.15.13(@types/dom-mediacapture-record@1.0.22))(tslib@2.8.1)':
     dependencies:
       '@floating-ui/dom': 1.6.13
-      livekit-client: 2.15.11(@types/dom-mediacapture-record@1.0.22)
+      livekit-client: 2.15.13(@types/dom-mediacapture-record@1.0.22)
       loglevel: 1.9.1
       rxjs: 7.8.2
       tslib: 2.8.1
 
-  '@livekit/components-react@2.9.15(@livekit/krisp-noise-filter@0.3.4(livekit-client@2.15.11(@types/dom-mediacapture-record@1.0.22)))(livekit-client@2.15.11(@types/dom-mediacapture-record@1.0.22))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(tslib@2.8.1)':
+  '@livekit/components-react@2.9.15(@livekit/krisp-noise-filter@0.3.4(livekit-client@2.15.13(@types/dom-mediacapture-record@1.0.22)))(livekit-client@2.15.13(@types/dom-mediacapture-record@1.0.22))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(tslib@2.8.1)':
     dependencies:
-      '@livekit/components-core': 0.12.10(livekit-client@2.15.11(@types/dom-mediacapture-record@1.0.22))(tslib@2.8.1)
+      '@livekit/components-core': 0.12.10(livekit-client@2.15.13(@types/dom-mediacapture-record@1.0.22))(tslib@2.8.1)
       clsx: 2.1.1
-      livekit-client: 2.15.11(@types/dom-mediacapture-record@1.0.22)
+      livekit-client: 2.15.13(@types/dom-mediacapture-record@1.0.22)
       react: 18.3.1
       react-dom: 18.3.1(react@18.3.1)
       tslib: 2.8.1
       usehooks-ts: 3.1.1(react@18.3.1)
     optionalDependencies:
-      '@livekit/krisp-noise-filter': 0.3.4(livekit-client@2.15.11(@types/dom-mediacapture-record@1.0.22))
+      '@livekit/krisp-noise-filter': 0.3.4(livekit-client@2.15.13(@types/dom-mediacapture-record@1.0.22))
 
   '@livekit/components-styles@1.1.6': {}
 
-  '@livekit/krisp-noise-filter@0.3.4(livekit-client@2.15.11(@types/dom-mediacapture-record@1.0.22))':
+  '@livekit/krisp-noise-filter@0.3.4(livekit-client@2.15.13(@types/dom-mediacapture-record@1.0.22))':
     dependencies:
       '@livekit/mutex': 1.1.1
-      livekit-client: 2.15.11(@types/dom-mediacapture-record@1.0.22)
+      livekit-client: 2.15.13(@types/dom-mediacapture-record@1.0.22)
 
   '@livekit/mutex@1.1.1': {}
 
@@ -2638,11 +2638,11 @@ snapshots:
     dependencies:
       '@bufbuild/protobuf': 1.10.1
 
-  '@livekit/track-processors@0.6.1(@types/dom-mediacapture-transform@0.1.11)(livekit-client@2.15.11(@types/dom-mediacapture-record@1.0.22))':
+  '@livekit/track-processors@0.6.1(@types/dom-mediacapture-transform@0.1.11)(livekit-client@2.15.13(@types/dom-mediacapture-record@1.0.22))':
     dependencies:
       '@mediapipe/tasks-vision': 0.10.14
       '@types/dom-mediacapture-transform': 0.1.11
-      livekit-client: 2.15.11(@types/dom-mediacapture-record@1.0.22)
+      livekit-client: 2.15.13(@types/dom-mediacapture-record@1.0.22)
 
   '@mediapipe/tasks-vision@0.10.14': {}
 
@@ -3463,7 +3463,7 @@ snapshots:
       '@typescript-eslint/parser': 8.8.0(eslint@9.33.0)(typescript@5.9.2)
       eslint: 9.33.0
       eslint-import-resolver-node: 0.3.9
-      eslint-import-resolver-typescript: 3.6.3(@typescript-eslint/parser@8.8.0(eslint@9.33.0)(typescript@5.9.2))(eslint-import-resolver-node@0.3.9)(eslint-plugin-import@2.31.0(@typescript-eslint/parser@8.8.0(eslint@9.33.0)(typescript@5.9.2))(eslint@9.33.0))(eslint@9.33.0)
+      eslint-import-resolver-typescript: 3.6.3(@typescript-eslint/parser@8.8.0(eslint@9.33.0)(typescript@5.9.2))(eslint-import-resolver-node@0.3.9)(eslint-plugin-import@2.31.0)(eslint@9.33.0)
       eslint-plugin-import: 2.31.0(@typescript-eslint/parser@8.8.0(eslint@9.33.0)(typescript@5.9.2))(eslint-import-resolver-typescript@3.6.3)(eslint@9.33.0)
       eslint-plugin-jsx-a11y: 6.10.0(eslint@9.33.0)
       eslint-plugin-react: 7.37.1(eslint@9.33.0)
@@ -3483,13 +3483,13 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  eslint-import-resolver-typescript@3.6.3(@typescript-eslint/parser@8.8.0(eslint@9.33.0)(typescript@5.9.2))(eslint-import-resolver-node@0.3.9)(eslint-plugin-import@2.31.0(@typescript-eslint/parser@8.8.0(eslint@9.33.0)(typescript@5.9.2))(eslint@9.33.0))(eslint@9.33.0):
+  eslint-import-resolver-typescript@3.6.3(@typescript-eslint/parser@8.8.0(eslint@9.33.0)(typescript@5.9.2))(eslint-import-resolver-node@0.3.9)(eslint-plugin-import@2.31.0)(eslint@9.33.0):
     dependencies:
       '@nolyfill/is-core-module': 1.0.39
       debug: 4.4.1
       enhanced-resolve: 5.18.1
       eslint: 9.33.0
-      eslint-module-utils: 2.12.0(@typescript-eslint/parser@8.8.0(eslint@9.33.0)(typescript@5.9.2))(eslint-import-resolver-node@0.3.9)(eslint-import-resolver-typescript@3.6.3(@typescript-eslint/parser@8.8.0(eslint@9.33.0)(typescript@5.9.2))(eslint-import-resolver-node@0.3.9)(eslint-plugin-import@2.31.0(@typescript-eslint/parser@8.8.0(eslint@9.33.0)(typescript@5.9.2))(eslint@9.33.0))(eslint@9.33.0))(eslint@9.33.0)
+      eslint-module-utils: 2.12.0(@typescript-eslint/parser@8.8.0(eslint@9.33.0)(typescript@5.9.2))(eslint-import-resolver-node@0.3.9)(eslint-import-resolver-typescript@3.6.3)(eslint@9.33.0)
       fast-glob: 3.3.2
       get-tsconfig: 4.8.1
       is-bun-module: 1.2.1
@@ -3502,14 +3502,14 @@ snapshots:
       - eslint-import-resolver-webpack
       - supports-color
 
-  eslint-module-utils@2.12.0(@typescript-eslint/parser@8.8.0(eslint@9.33.0)(typescript@5.9.2))(eslint-import-resolver-node@0.3.9)(eslint-import-resolver-typescript@3.6.3(@typescript-eslint/parser@8.8.0(eslint@9.33.0)(typescript@5.9.2))(eslint-import-resolver-node@0.3.9)(eslint-plugin-import@2.31.0(@typescript-eslint/parser@8.8.0(eslint@9.33.0)(typescript@5.9.2))(eslint@9.33.0))(eslint@9.33.0))(eslint@9.33.0):
+  eslint-module-utils@2.12.0(@typescript-eslint/parser@8.8.0(eslint@9.33.0)(typescript@5.9.2))(eslint-import-resolver-node@0.3.9)(eslint-import-resolver-typescript@3.6.3)(eslint@9.33.0):
     dependencies:
       debug: 3.2.7
     optionalDependencies:
       '@typescript-eslint/parser': 8.8.0(eslint@9.33.0)(typescript@5.9.2)
       eslint: 9.33.0
       eslint-import-resolver-node: 0.3.9
-      eslint-import-resolver-typescript: 3.6.3(@typescript-eslint/parser@8.8.0(eslint@9.33.0)(typescript@5.9.2))(eslint-import-resolver-node@0.3.9)(eslint-plugin-import@2.31.0(@typescript-eslint/parser@8.8.0(eslint@9.33.0)(typescript@5.9.2))(eslint@9.33.0))(eslint@9.33.0)
+      eslint-import-resolver-typescript: 3.6.3(@typescript-eslint/parser@8.8.0(eslint@9.33.0)(typescript@5.9.2))(eslint-import-resolver-node@0.3.9)(eslint-plugin-import@2.31.0)(eslint@9.33.0)
     transitivePeerDependencies:
       - supports-color
 
@@ -3524,7 +3524,7 @@ snapshots:
       doctrine: 2.1.0
       eslint: 9.33.0
       eslint-import-resolver-node: 0.3.9
-      eslint-module-utils: 2.12.0(@typescript-eslint/parser@8.8.0(eslint@9.33.0)(typescript@5.9.2))(eslint-import-resolver-node@0.3.9)(eslint-import-resolver-typescript@3.6.3(@typescript-eslint/parser@8.8.0(eslint@9.33.0)(typescript@5.9.2))(eslint-import-resolver-node@0.3.9)(eslint-plugin-import@2.31.0(@typescript-eslint/parser@8.8.0(eslint@9.33.0)(typescript@5.9.2))(eslint@9.33.0))(eslint@9.33.0))(eslint@9.33.0)
+      eslint-module-utils: 2.12.0(@typescript-eslint/parser@8.8.0(eslint@9.33.0)(typescript@5.9.2))(eslint-import-resolver-node@0.3.9)(eslint-import-resolver-typescript@3.6.3)(eslint@9.33.0)
       hasown: 2.0.2
       is-core-module: 2.15.1
       is-glob: 4.0.3
@@ -3994,7 +3994,7 @@ snapshots:
       prelude-ls: 1.2.1
       type-check: 0.4.0
 
-  livekit-client@2.15.11(@types/dom-mediacapture-record@1.0.22):
+  livekit-client@2.15.13(@types/dom-mediacapture-record@1.0.22):
     dependencies:
       '@livekit/mutex': 1.1.1
       '@livekit/protocol': 1.42.2
