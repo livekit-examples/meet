@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { decodePassphrase, isMeetStaging } from '@/lib/client-utils';
+import { decodePassphrase } from '@/lib/client-utils';
 import { DebugMode } from '@/lib/Debug';
 import { KeyboardShortcuts } from '@/lib/KeyboardShortcuts';
 import { RecordingIndicator } from '@/lib/RecordingIndicator';
@@ -129,7 +129,7 @@ function VideoConferenceComponent(props: {
       adaptiveStream: true,
       dynacast: true,
       e2ee: keyProvider && worker && e2eeEnabled ? { keyProvider, worker } : undefined,
-      singlePeerConnection: isMeetStaging(),
+      singlePeerConnection: true,
     };
   }, [props.userChoices, props.options.hq, props.options.codec]);
 
