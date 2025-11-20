@@ -19,7 +19,7 @@
     "@livekit/krisp-noise-filter": "0.3.4",
     "@livekit/track-processors": "^0.6.0",
     "livekit-client": "2.16.0",
-    "livekit-server-sdk": "2.14.1",
+    "livekit-server-sdk": "2.14.2",
     "next": "15.2.4",
     "react": "18.3.1",
     "react-dom": "18.3.1",
