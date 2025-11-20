@@ -21,6 +21,7 @@ export function VideoConferenceClientImpl(props: {
   liveKitUrl: string;
   token: string;
   codec: VideoCodec | undefined;
+  singlePeerConnection: boolean | undefined;
 }) {
   const keyProvider = new ExternalE2EEKeyProvider();
   const { worker, e2eePassphrase } = useSetupE2EE();
@@ -43,7 +44,7 @@ export function VideoConferenceClientImpl(props: {
             worker,
           }
         : undefined,
-      singlePeerConnection: true,
+      singlePeerConnection: props.singlePeerConnection,
     };
   }, [e2eeEnabled, props.codec, keyProvider, worker]);
 
