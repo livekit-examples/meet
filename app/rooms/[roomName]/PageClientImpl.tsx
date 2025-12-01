@@ -7,6 +7,8 @@ import { KeyboardShortcuts } from '@/lib/KeyboardShortcuts';
 import { RecordingIndicator } from '@/lib/RecordingIndicator';
 import { SettingsMenu } from '@/lib/SettingsMenu';
 import { ConnectionDetails } from '@/lib/types';
+import { SubtitlesOverlay } from '@/lib/SubtitlesOverlay';
+import { useSubtitleSettings } from '@/lib/SubtitlesSettings';
 import {
   formatChatMessageLinks,
   LocalUserChoices,
@@ -100,6 +102,7 @@ function VideoConferenceComponent(props: {
   const keyProvider = new ExternalE2EEKeyProvider();
   const { worker, e2eePassphrase } = useSetupE2EE();
   const e2eeEnabled = !!(e2eePassphrase && worker);
+  const { settings: subtitleSettings } = useSubtitleSettings();
 
   const [e2eeSetupComplete, setE2eeSetupComplete] = React.useState(false);
 
@@ -223,8 +226,9 @@ function VideoConferenceComponent(props: {
         <KeyboardShortcuts />
         <VideoConference
           chatMessageFormatter={formatChatMessageLinks}
-          SettingsComponent={SHOW_SETTINGS_MENU ? SettingsMenu : undefined}
+          SettingsComponent={SettingsMenu}
         />
+        <SubtitlesOverlay settings={subtitleSettings} />
         <DebugMode />
         <RecordingIndicator />
       </RoomContext.Provider>
