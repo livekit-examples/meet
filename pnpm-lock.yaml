@@ -27,8 +27,8 @@ importers:
         specifier: 2.16.0
         version: 2.16.0(@types/dom-mediacapture-record@1.0.22)
       livekit-server-sdk:
-        specifier: 2.14.1
-        version: 2.14.1
+        specifier: 2.14.2
+        version: 2.14.2
       next:
         specifier: 15.2.4
         version: 15.2.4(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
@@ -1641,8 +1641,8 @@ packages:
     peerDependencies:
       '@types/dom-mediacapture-record': ^1
 
-  livekit-server-sdk@2.14.1:
-    resolution: {integrity: sha512-kdpNXKJXps+5jzN4SmGN1w3TVSSDlS45c99R73oqz69EAlApiRT7AeEd3hAn0j2VOCFQ4tr8tegxnL+NbPA/WQ==}
+  livekit-server-sdk@2.14.2:
+    resolution: {integrity: sha512-4mvPwxd3mjtB3ISTv6DHADaAPqTEw/zZWLDPTyPOGYR01hbedAhVBAMWSFrnVeQddqCiELfAqDkbFAR+B0CuVw==}
     engines: {node: '>=18'}
 
   loader-runner@4.3.1:
@@ -1732,6 +1732,7 @@ packages:
   next@15.2.4:
     resolution: {integrity: sha512-VwL+LAaPSxEkd3lU2xWbgEOtrM8oedmyhBqaVNmgKB+GvZlCy9rgaEc+y2on0wv+l0oSFqLtYD6dcC1eAedUaQ==}
     engines: {node: ^18.18.0 || ^19.8.0 || >= 20.0.0}
+    deprecated: This version has a security vulnerability. Please upgrade to a patched version. See https://nextjs.org/blog/CVE-2025-66478 for more details.
     hasBin: true
     peerDependencies:
       '@opentelemetry/api': ^1.1.0
@@ -4007,7 +4008,7 @@ snapshots:
       typed-emitter: 2.1.0
       webrtc-adapter: 9.0.3
 
-  livekit-server-sdk@2.14.1:
+  livekit-server-sdk@2.14.2:
     dependencies:
       '@bufbuild/protobuf': 1.10.1
       '@livekit/protocol': 1.42.2
