@@ -7,8 +7,7 @@ import { KeyboardShortcuts } from '@/lib/KeyboardShortcuts';
 import { RecordingIndicator } from '@/lib/RecordingIndicator';
 import { SettingsMenu } from '@/lib/SettingsMenu';
 import { ConnectionDetails } from '@/lib/types';
-import { SubtitlesOverlay } from '@/lib/SubtitlesOverlay';
-import { useSubtitleSettings } from '@/lib/SubtitlesSettings';
+import { SubtitlesOverlay, SubtitleProvider } from '@/lib/SubtitlesOverlay';
 import {
   formatChatMessageLinks,
   LocalUserChoices,
@@ -68,7 +67,7 @@ export function PageClientImpl(props: {
     const connectionDetailsData = await connectionDetailsResp.json();
     setConnectionDetails(connectionDetailsData);
   }, []);
-  const handlePreJoinError = React.useCallback((e: any) => console.error(e), []);
+  const handlePreJoinError = React.useCallback((e: Error) => console.error(e), []);
 
   return (
     <main data-lk-theme="default" style={{ height: '100%' }}>
@@ -102,7 +101,6 @@ function VideoConferenceComponent(props: {
   const keyProvider = new ExternalE2EEKeyProvider();
   const { worker, e2eePassphrase } = useSetupE2EE();
   const e2eeEnabled = !!(e2eePassphrase && worker);
-  const { settings: subtitleSettings } = useSubtitleSettings();
 
   const [e2eeSetupComplete, setE2eeSetupComplete] = React.useState(false);
 
@@ -223,14 +221,16 @@ function VideoConferenceComponent(props: {
   return (
     <div className="lk-room-container">
       <RoomContext.Provider value={room}>
-        <KeyboardShortcuts />
-        <VideoConference
-          chatMessageFormatter={formatChatMessageLinks}
-          SettingsComponent={SettingsMenu}
-        />
-        <SubtitlesOverlay settings={subtitleSettings} />
-        <DebugMode />
-        <RecordingIndicator />
+        <SubtitleProvider>
+          <KeyboardShortcuts />
+          <VideoConference
+            chatMessageFormatter={formatChatMessageLinks}
+            SettingsComponent={SettingsMenu}
+          />
+          <SubtitlesOverlay />
+          <DebugMode />
+          <RecordingIndicator />
+        </SubtitleProvider>
       </RoomContext.Provider>
     </div>
   );

@@ -11,7 +11,7 @@ import {
 import styles from '../styles/SettingsMenu.module.css';
 import { CameraSettings } from './CameraSettings';
 import { MicrophoneSettings } from './MicrophoneSettings';
-import { SubtitlesSettings, useSubtitleSettings } from './SubtitlesSettings';
+import { SubtitlesSettings } from './SubtitlesSettings';
 /**
  * @alpha
  */
@@ -24,7 +24,6 @@ export function SettingsMenu(props: SettingsMenuProps) {
   const layoutContext = useMaybeLayoutContext();
   const room = useRoomContext();
   const recordingEndpoint = process.env.NEXT_PUBLIC_LK_RECORD_ENDPOINT;
-  const { settings: subtitleSettings, updateSettings: updateSubtitleSettings } = useSubtitleSettings();
 
   const settings = React.useMemo(() => {
     return {
@@ -128,12 +127,7 @@ export function SettingsMenu(props: SettingsMenuProps) {
             )}
           </>
         )}
-        {activeTab === 'subtitles' && (
-          <SubtitlesSettings 
-            settings={subtitleSettings} 
-            onChange={updateSubtitleSettings} 
-          />
-        )}
+        {activeTab === 'subtitles' && <SubtitlesSettings />}
         {activeTab === 'recording' && (
           <>
             <h3>Record Meeting</h3>

@@ -1,0 +1,134 @@
+.tooltipContainer {
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  margin-top: 0.5rem;
+  z-index: 100;
+}
+
+.tooltip {
+  background: var(--lk-bg2, #1a1a1a);
+  border: 1px solid var(--lk-border-color, rgba(255, 255, 255, 0.15));
+  border-radius: 0.5rem;
+  padding: 1rem;
+  min-width: 280px;
+  max-width: 320px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+}
+
+.tooltip::after {
+  content: '';
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  border: 8px solid transparent;
+  border-bottom-color: var(--lk-bg2, #1a1a1a);
+}
+
+.title {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.9);
+  margin: 0 0 0.75rem 0;
+  line-height: 1.4;
+}
+
+.emailInput {
+  width: 100%;
+  padding: 0.5rem 0.75rem;
+  background: var(--lk-bg, #111);
+  border: 1px solid var(--lk-border-color, rgba(255, 255, 255, 0.15));
+  border-radius: 0.375rem;
+  color: white;
+  font-size: 0.875rem;
+  margin-bottom: 0.75rem;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.emailInput:focus {
+  border-color: var(--lk-accent-bg, #ff6352);
+}
+
+.emailInput::placeholder {
+  color: rgba(255, 255, 255, 0.4);
+}
+
+.buttons {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.skipButton {
+  flex: 1;
+  padding: 0.5rem 0.75rem;
+  background: transparent;
+  border: 1px solid var(--lk-border-color, rgba(255, 255, 255, 0.15));
+  border-radius: 0.375rem;
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 0.8125rem;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.skipButton:hover {
+  background: rgba(255, 255, 255, 0.05);
+  color: white;
+}
+
+.subscribeButton {
+  flex: 1;
+  padding: 0.5rem 0.75rem;
+  background: var(--lk-accent-bg, #ff6352);
+  border: none;
+  border-radius: 0.375rem;
+  color: white;
+  font-size: 0.8125rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.subscribeButton:hover {
+  opacity: 0.9;
+}
+
+.subscribeButton:disabled,
+.skipButton:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.5rem;
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 0.8125rem;
+}
+
+.spinner {
+  width: 1rem;
+  height: 1rem;
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  border-top-color: var(--lk-accent-bg, #ff6352);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.error {
+  color: #ff4444;
+  font-size: 0.75rem;
+  margin-top: 0.5rem;
+}
+
