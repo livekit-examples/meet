@@ -2,19 +2,14 @@
 
 import React from 'react';
 import { decodePassphrase } from '@/lib/client-utils';
+import { formatChatMessage } from '@/lib/chat-utils';
 import { DebugMode } from '@/lib/Debug';
 import { KeyboardShortcuts } from '@/lib/KeyboardShortcuts';
 import { RecordingIndicator } from '@/lib/RecordingIndicator';
 import { SettingsMenu } from '@/lib/SettingsMenu';
 import { ConnectionDetails } from '@/lib/types';
 import { SubtitlesOverlay, SubtitleProvider } from '@/lib/SubtitlesOverlay';
-import {
-  formatChatMessageLinks,
-  LocalUserChoices,
-  PreJoin,
-  RoomContext,
-  VideoConference,
-} from '@livekit/components-react';
+import { LocalUserChoices, PreJoin, RoomContext, VideoConference } from '@livekit/components-react';
 import {
   ExternalE2EEKeyProvider,
   RoomOptions,
@@ -33,7 +28,6 @@ import { useLowCPUOptimizer } from '@/lib/usePerfomanceOptimiser';
 
 const CONN_DETAILS_ENDPOINT =
   process.env.NEXT_PUBLIC_CONN_DETAILS_ENDPOINT ?? '/api/connection-details';
-const SHOW_SETTINGS_MENU = process.env.NEXT_PUBLIC_SHOW_SETTINGS_MENU == 'true';
 
 export function PageClientImpl(props: {
   roomName: string;
@@ -224,7 +218,7 @@ function VideoConferenceComponent(props: {
         <SubtitleProvider>
           <KeyboardShortcuts />
           <VideoConference
-            chatMessageFormatter={formatChatMessageLinks}
+            chatMessageFormatter={formatChatMessage}
             SettingsComponent={SettingsMenu}
           />
           <SubtitlesOverlay />

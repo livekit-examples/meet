@@ -102,7 +102,8 @@ function EmailPopup({
 
 export function SubtitlesSettings() {
   const room = useRoomContext();
-  const { settings, updateSettings, hasAgent, summaryEmail } = useSubtitleSettings();
+  const { settings, updateSettings, hasAgent, summaryEmail, setSummaryEmail } =
+    useSubtitleSettings();
   const [showPopup, setShowPopup] = React.useState(false);
   const [isSpawning, setIsSpawning] = React.useState(false);
   const [spawnError, setSpawnError] = React.useState<string | null>(null);
@@ -125,14 +126,17 @@ export function SubtitlesSettings() {
     setSpawnError(null);
 
     try {
+      const payload = {
+        roomName: room.name,
+        email: email || undefined,
+        e2eePassphrase: getPassphrase(),
+      };
+      console.log('[SubtitlesSettings] Spawning agent with:', payload);
+
       const response = await fetch('/api/agent/spawn', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          roomName: room.name,
-          email: email || undefined,
-          e2eePassphrase: getPassphrase(),
-        }),
+        body: JSON.stringify(payload),
       });
 
       if (!response.ok) {
@@ -160,6 +164,7 @@ export function SubtitlesSettings() {
 
   const handleSkip = async () => {
     if (await spawnAgent()) {
+      setSummaryEmail(null);
       updateSettings({ ...settings, enabled: true });
       setShowPopup(false);
     }
@@ -167,6 +172,7 @@ export function SubtitlesSettings() {
 
   const handleSubscribe = async (email: string) => {
     if (await spawnAgent(email)) {
+      setSummaryEmail(email);
       updateSettings({ ...settings, enabled: true });
       setShowPopup(false);
     }

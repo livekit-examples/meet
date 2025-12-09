@@ -24,6 +24,7 @@ interface SubtitleContextType {
   updateSettings: (settings: SubtitleSettings) => void;
   hasAgent: boolean;
   summaryEmail: string | null;
+  setSummaryEmail: (email: string | null) => void;
 }
 
 const SubtitleContext = React.createContext<SubtitleContextType | null>(null);
@@ -109,8 +110,29 @@ export function SubtitleProvider({ children }: { children: React.ReactNode }) {
     }
   }, []);
 
+  const updateSummaryEmail = React.useCallback((email: string | null) => {
+    setSummaryEmail(email);
+    try {
+      if (email) {
+        localStorage.setItem('summary-email', email);
+      } else {
+        localStorage.removeItem('summary-email');
+      }
+    } catch (e) {
+      console.error('Failed to save summary email:', e);
+    }
+  }, []);
+
   return (
-    <SubtitleContext.Provider value={{ settings, updateSettings, hasAgent, summaryEmail }}>
+    <SubtitleContext.Provider
+      value={{
+        settings,
+        updateSettings,
+        hasAgent,
+        summaryEmail,
+        setSummaryEmail: updateSummaryEmail,
+      }}
+    >
       {children}
     </SubtitleContext.Provider>
   );
