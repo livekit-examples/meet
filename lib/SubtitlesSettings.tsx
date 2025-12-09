@@ -102,7 +102,7 @@ function EmailPopup({
 
 export function SubtitlesSettings() {
   const room = useRoomContext();
-  const { settings, updateSettings, hasAgent } = useSubtitleSettings();
+  const { settings, updateSettings, hasAgent, summaryEmail } = useSubtitleSettings();
   const [showPopup, setShowPopup] = React.useState(false);
   const [isSpawning, setIsSpawning] = React.useState(false);
   const [spawnError, setSpawnError] = React.useState<string | null>(null);
@@ -251,6 +251,27 @@ export function SubtitlesSettings() {
               </select>
             </div>
           </section>
+
+          {/* Summary email status */}
+          <div
+            style={{
+              marginTop: '0.5rem',
+              padding: '0.75rem',
+              background: 'var(--lk-bg, rgba(0,0,0,0.3))',
+              borderRadius: '0.375rem',
+              fontSize: '0.8125rem',
+            }}
+          >
+            <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+              <span style={{ opacity: 0.7 }}>📧</span>
+              <span style={{ opacity: 0.7 }}>Summary:</span>
+              {summaryEmail ? (
+                <span style={{ color: 'var(--lk-accent-bg, #1fd5f9)' }}>{summaryEmail}</span>
+              ) : (
+                <span style={{ opacity: 0.5, fontStyle: 'italic' }}>No email set</span>
+              )}
+            </div>
+          </div>
         </>
       )}
     </div>

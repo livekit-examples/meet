@@ -23,6 +23,7 @@ interface SubtitleContextType {
   settings: SubtitleSettings;
   updateSettings: (settings: SubtitleSettings) => void;
   hasAgent: boolean;
+  summaryEmail: string | null;
 }
 
 const SubtitleContext = React.createContext<SubtitleContextType | null>(null);
@@ -41,8 +42,9 @@ export function SubtitleProvider({ children }: { children: React.ReactNode }) {
   const room = useRoomContext();
   const [settings, setSettings] = React.useState<SubtitleSettings>(defaultSubtitleSettings);
   const [hasAgent, setHasAgent] = React.useState(false);
+  const [summaryEmail, setSummaryEmail] = React.useState<string | null>(null);
 
-  // Load visual settings from localStorage
+  // Load visual settings and email from localStorage
   React.useEffect(() => {
     try {
       const saved = localStorage.getItem('subtitle-settings');
@@ -54,6 +56,11 @@ export function SubtitleProvider({ children }: { children: React.ReactNode }) {
           position: parsed.position ?? prev.position,
           backgroundColor: parsed.backgroundColor ?? prev.backgroundColor,
         }));
+      }
+      // Load saved email
+      const savedEmail = localStorage.getItem('summary-email');
+      if (savedEmail) {
+        setSummaryEmail(savedEmail);
       }
     } catch (e) {
       console.error('Failed to load subtitle settings:', e);
@@ -103,7 +110,7 @@ export function SubtitleProvider({ children }: { children: React.ReactNode }) {
   }, []);
 
   return (
-    <SubtitleContext.Provider value={{ settings, updateSettings, hasAgent }}>
+    <SubtitleContext.Provider value={{ settings, updateSettings, hasAgent, summaryEmail }}>
       {children}
     </SubtitleContext.Provider>
   );
@@ -114,13 +121,19 @@ interface SubtitleLine {
   speaker: string;
   text: string;
   timestamp: number;
-  displayTime: number;
+  expireAt: number;
 }
 
-function calculateDisplayTime(text: string): number {
+function calculateDisplayTime(text: string, queueLength: number = 0): number {
   const charsPerSecond = 15;
   const calculated = (text.length / charsPerSecond) * 1000;
-  return Math.max(2000, Math.min(8000, calculated));
+  const baseTime = Math.max(2000, Math.min(8000, calculated));
+
+  // Reduce display time when queue is backing up
+  // Queue 0-1: full time, Queue 2: 70%, Queue 3+: 50%
+  if (queueLength >= 3) return Math.max(1000, baseTime * 0.5);
+  if (queueLength >= 2) return Math.max(1500, baseTime * 0.7);
+  return baseTime;
 }
 
 export function SubtitlesOverlay() {
@@ -129,34 +142,94 @@ export function SubtitlesOverlay() {
   const [lines, setLines] = React.useState<SubtitleLine[]>([]);
   const lineIdRef = React.useRef(0);
   const queueRef = React.useRef<SubtitleLine[]>([]);
-  const currentTimeoutRef = React.useRef<NodeJS.Timeout | null>(null);
-  const currentLineIdRef = React.useRef<string | null>(null);
+  const rafRef = React.useRef<number | null>(null);
+  const hasActiveContent = React.useRef(false);
 
-  const showNext = React.useCallback(() => {
-    if (currentTimeoutRef.current) {
-      clearTimeout(currentTimeoutRef.current);
-      currentTimeoutRef.current = null;
-    }
+  // Process subtitles - clean expired lines and show queued ones
+  // All logic in single setLines call to avoid race conditions
+  const processSubtitles = React.useCallback(() => {
+    const now = Date.now();
 
-    if (currentLineIdRef.current) {
-      setLines((prev) => prev.filter((l) => l.id !== currentLineIdRef.current));
-      currentLineIdRef.current = null;
-    }
+    setLines((prev) => {
+      // Filter out expired lines
+      let result = prev.filter((l) => l.expireAt > now);
+      const queueLength = queueRef.current.length;
 
-    if (queueRef.current.length === 0) return;
+      // When queue is building up, aggressively expire older lines
+      // Keep only the most recent line when queue has 2+ items waiting
+      if (queueLength >= 2 && result.length > 1) {
+        result = result.slice(-1);
+      }
 
-    const nextLine = queueRef.current.shift()!;
-    nextLine.timestamp = Date.now();
-    currentLineIdRef.current = nextLine.id;
+      // Show next line from queue if:
+      // - No lines are currently showing, OR
+      // - Queue is building up (show new content faster)
+      const shouldShowNext = result.length === 0 || queueLength > 0;
 
-    setLines((prev) => [...prev.slice(-2), nextLine]);
+      if (shouldShowNext && queueLength > 0) {
+        const nextLine = queueRef.current.shift()!;
+        nextLine.timestamp = now;
+        nextLine.expireAt = now + calculateDisplayTime(nextLine.text, queueRef.current.length);
+        result = [...result.slice(-1), nextLine]; // Keep max 2 lines
+      }
 
-    currentTimeoutRef.current = setTimeout(() => {
-      setLines((prev) => prev.filter((l) => l.id !== nextLine.id));
-      currentLineIdRef.current = null;
-      showNext();
-    }, nextLine.displayTime);
+      // Track if we have content to display (for RAF optimization)
+      hasActiveContent.current = result.length > 0 || queueRef.current.length > 0;
+
+      return result;
+    });
   }, []);
+
+  // RAF loop - only runs when there's active content
+  const tick = React.useCallback(() => {
+    processSubtitles();
+
+    // Continue loop only if there's content to process
+    if (hasActiveContent.current) {
+      rafRef.current = requestAnimationFrame(tick);
+    } else {
+      rafRef.current = null;
+    }
+  }, [processSubtitles]);
+
+  // Start RAF loop when needed
+  const startLoop = React.useCallback(() => {
+    if (rafRef.current === null && settings.enabled) {
+      rafRef.current = requestAnimationFrame(tick);
+    }
+  }, [tick, settings.enabled]);
+
+  // Handle visibility change - immediately clean up when tab becomes visible
+  React.useEffect(() => {
+    if (!settings.enabled) return;
+
+    const handleVisibilityChange = () => {
+      if (document.visibilityState === 'visible') {
+        // Process immediately when tab becomes visible
+        processSubtitles();
+        startLoop();
+      }
+    };
+
+    document.addEventListener('visibilitychange', handleVisibilityChange);
+    return () => {
+      document.removeEventListener('visibilitychange', handleVisibilityChange);
+    };
+  }, [settings.enabled, processSubtitles, startLoop]);
+
+  // Clean up RAF when disabled
+  React.useEffect(() => {
+    if (!settings.enabled && rafRef.current) {
+      cancelAnimationFrame(rafRef.current);
+      rafRef.current = null;
+    }
+    return () => {
+      if (rafRef.current) {
+        cancelAnimationFrame(rafRef.current);
+        rafRef.current = null;
+      }
+    };
+  }, [settings.enabled]);
 
   React.useEffect(() => {
     if (!room || !settings.enabled) return;
@@ -174,21 +247,25 @@ export function SubtitlesOverlay() {
         if (!raw) return;
 
         const data = JSON.parse(raw);
+        const now = Date.now();
         const newLine: SubtitleLine = {
           id: `sub-${lineIdRef.current++}`,
           speaker: data.speaker || 'Unknown',
           text: data.text || raw,
-          timestamp: Date.now(),
-          displayTime: calculateDisplayTime(data.text || raw),
+          timestamp: now,
+          expireAt: now + calculateDisplayTime(data.text || raw),
         };
 
         queueRef.current.push(newLine);
 
+        // If queue is backing up, skip older items more aggressively
+        // Keep only last 2 items to prevent falling too far behind
         if (queueRef.current.length > 2) {
-          showNext();
-        } else if (!currentLineIdRef.current) {
-          showNext();
+          queueRef.current = queueRef.current.slice(-2);
         }
+
+        // Start processing loop
+        startLoop();
       } catch (e) {
         console.error('Failed to parse subtitle:', e);
       }
@@ -197,9 +274,9 @@ export function SubtitlesOverlay() {
     room.on(RoomEvent.DataReceived, handleData);
     return () => {
       room.off(RoomEvent.DataReceived, handleData);
-      if (currentTimeoutRef.current) clearTimeout(currentTimeoutRef.current);
+      queueRef.current = [];
     };
-  }, [room, settings.enabled, showNext]);
+  }, [room, settings.enabled, startLoop]);
 
   if (!settings.enabled || lines.length === 0) return null;
 
