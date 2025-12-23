@@ -13,13 +13,13 @@ importers:
         version: 5.35.1
       '@livekit/components-react':
         specifier: 2.9.16
-        version: 2.9.16(@livekit/krisp-noise-filter@0.3.4(livekit-client@2.16.0(@types/dom-mediacapture-record@1.0.22)))(livekit-client@2.16.0(@types/dom-mediacapture-record@1.0.22))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(tslib@2.8.1)
+        version: 2.9.16(@livekit/krisp-noise-filter@0.4.0(livekit-client@2.16.0(@types/dom-mediacapture-record@1.0.22)))(livekit-client@2.16.0(@types/dom-mediacapture-record@1.0.22))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(tslib@2.8.1)
       '@livekit/components-styles':
         specifier: 1.2.0
         version: 1.2.0
       '@livekit/krisp-noise-filter':
-        specifier: 0.3.4
-        version: 0.3.4(livekit-client@2.16.0(@types/dom-mediacapture-record@1.0.22))
+        specifier: 0.4.0
+        version: 0.4.0(livekit-client@2.16.0(@types/dom-mediacapture-record@1.0.22))
       '@livekit/track-processors':
         specifier: ^0.6.0
         version: 0.6.1(@types/dom-mediacapture-transform@0.1.11)(livekit-client@2.16.0(@types/dom-mediacapture-record@1.0.22))
@@ -463,8 +463,8 @@ packages:
     resolution: {integrity: sha512-74/rt0lDh6aHmOPmWAeDE9C4OrNW9RIdmhX/YRbovQBVNGNVWojRjl3FgQZ5LPFXO6l1maKB4JhXcBFENVxVvw==}
     engines: {node: '>=18'}
 
-  '@livekit/krisp-noise-filter@0.3.4':
-    resolution: {integrity: sha512-gvC0OevzIPBAr8f2S4P/BdUxVJYp7rvDoORHAmU6yppK6NKn+GNbkMosz0NpsI+Te18etBBOjaKmhoD7/PoXVA==}
+  '@livekit/krisp-noise-filter@0.4.0':
+    resolution: {integrity: sha512-daxC5o8qJC0BlG915lpNta2fcbs7v5wdNAA+WqH+i00jy6DEPdhAplxcAQ76VC88eMAxPJ7V641+/voBnMlB2g==}
     peerDependencies:
       livekit-client: ^2.0.8
 
@@ -1724,6 +1724,7 @@ packages:
   next@15.2.6:
     resolution: {integrity: sha512-DIKFctUpZoCq5ok2ztVU+PqhWsbiqM9xNP7rHL2cAp29NQcmDp7Y6JnBBhHRbFt4bCsCZigj6uh+/Gwh2158Wg==}
     engines: {node: ^18.18.0 || ^19.8.0 || >= 20.0.0}
+    deprecated: This version has a security vulnerability. Please upgrade to a patched version. See https://nextjs.org/blog/security-update-2025-12-11 for more details.
     hasBin: true
     peerDependencies:
       '@opentelemetry/api': ^1.1.0
@@ -2606,7 +2607,7 @@ snapshots:
       rxjs: 7.8.2
       tslib: 2.8.1
 
-  '@livekit/components-react@2.9.16(@livekit/krisp-noise-filter@0.3.4(livekit-client@2.16.0(@types/dom-mediacapture-record@1.0.22)))(livekit-client@2.16.0(@types/dom-mediacapture-record@1.0.22))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(tslib@2.8.1)':
+  '@livekit/components-react@2.9.16(@livekit/krisp-noise-filter@0.4.0(livekit-client@2.16.0(@types/dom-mediacapture-record@1.0.22)))(livekit-client@2.16.0(@types/dom-mediacapture-record@1.0.22))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(tslib@2.8.1)':
     dependencies:
       '@livekit/components-core': 0.12.11(livekit-client@2.16.0(@types/dom-mediacapture-record@1.0.22))(tslib@2.8.1)
       clsx: 2.1.1
@@ -2618,11 +2619,11 @@ snapshots:
       tslib: 2.8.1
       usehooks-ts: 3.1.1(react@18.3.1)
     optionalDependencies:
-      '@livekit/krisp-noise-filter': 0.3.4(livekit-client@2.16.0(@types/dom-mediacapture-record@1.0.22))
+      '@livekit/krisp-noise-filter': 0.4.0(livekit-client@2.16.0(@types/dom-mediacapture-record@1.0.22))
 
   '@livekit/components-styles@1.2.0': {}
 
-  '@livekit/krisp-noise-filter@0.3.4(livekit-client@2.16.0(@types/dom-mediacapture-record@1.0.22))':
+  '@livekit/krisp-noise-filter@0.4.0(livekit-client@2.16.0(@types/dom-mediacapture-record@1.0.22))':
     dependencies:
       '@livekit/mutex': 1.1.1
       livekit-client: 2.16.0(@types/dom-mediacapture-record@1.0.22)
