@@ -7,12 +7,13 @@ import styles from '../styles/Home.module.css';
 
 function Tabs(props: React.PropsWithChildren<{}>) {
   const searchParams = useSearchParams();
-  const tabIndex = searchParams?.get('tab') === 'custom' ? 1 : 0;
+  const tab = searchParams?.get('tab');
+  const tabIndex = tab === 'custom' ? 1 : tab === 'dual' ? 2 : 0;
 
   const router = useRouter();
   function onTabSelected(index: number) {
-    const tab = index === 1 ? 'custom' : 'demo';
-    router.push(`/?tab=${tab}`);
+    const tabName = index === 1 ? 'custom' : index === 2 ? 'dual' : 'demo';
+    router.push(`/?tab=${tabName}`);
   }
 
   let tabs = React.Children.map(props.children, (child, index) => {
@@ -160,6 +161,26 @@ function CustomConnectionTab(props: { label: string }) {
   );
 }
 
+function DualRoomTab(_props: { label: string }) {
+  const router = useRouter();
+
+  return (
+    <div className={styles.tabContent}>
+      <p style={{ margin: 0 }}>
+        Connect to two rooms simultaneously - perfect for monitoring multiple sessions or watching
+        screen shares from a separate room.
+      </p>
+      <button
+        style={{ marginTop: '1rem' }}
+        className="lk-button"
+        onClick={() => router.push('/dual-rooms')}
+      >
+        Start Dual Room Session
+      </button>
+    </div>
+  );
+}
+
 export default function Page() {
   return (
     <>
@@ -182,6 +203,7 @@ export default function Page() {
           <Tabs>
             <DemoMeetingTab label="Demo" />
             <CustomConnectionTab label="Custom" />
+            <DualRoomTab label="Dual Room" />
           </Tabs>
         </Suspense>
       </main>
