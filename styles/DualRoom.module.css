@@ -109,6 +109,59 @@
   align-items: center;
 }
 
+.volumeControl {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.volumeSlider {
+  width: 80px;
+  height: 4px;
+  -webkit-appearance: none;
+  appearance: none;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 2px;
+  outline: none;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.volumeSlider:hover {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+.volumeSlider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 14px;
+  height: 14px;
+  background: var(--lk-foreground);
+  border-radius: 50%;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.volumeSlider::-webkit-slider-thumb:hover {
+  background: white;
+  transform: scale(1.2);
+}
+
+.volumeSlider::-moz-range-thumb {
+  width: 14px;
+  height: 14px;
+  background: var(--lk-foreground);
+  border-radius: 50%;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.volumeSlider::-moz-range-thumb:hover {
+  background: white;
+  transform: scale(1.2);
+}
+
 .controlButton,
 .enlargeButton {
   background: transparent;
