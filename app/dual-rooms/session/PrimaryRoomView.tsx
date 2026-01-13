@@ -121,6 +121,7 @@ export function PrimaryRoomView({
   return (
     <LayoutContextProvider
       value={layoutContext}
+      // @ts-ignore
       onWidgetChange={(state) => setWidgetState(state)}
     >
       <div className={styles.primaryRoomInner}>
