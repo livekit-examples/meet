@@ -1,0 +1,43 @@
+services:
+  nextjs:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    env_file:
+      - .env
+    depends_on:
+      - livekit
+
+  livekit:
+    image: livekit/livekit-server:latest
+    ports:
+      - "7880:7880"  # HTTP
+      - "7881:7881"  # HTTPS/WSS
+      - "7882:7882/udp"  # WebRTC UDP
+    environment:
+      - LIVEKIT_CONFIG_FILE=/config/config.yaml
+    env_file:
+      - .env
+    volumes:
+      - ./livekit:/config
+    command: ["--config", "/config/config.yaml"]
+  
+# EXAMPLE CONFIG yaml for LiveKit
+# Save this as livekit/config.yaml
+# port: 7880
+# bind_addresses:
+#   - ""
+# api:
+#   key: your_actual_api_key
+#   secret: your_actual_api_secret
+# rtc:
+#   tcp_port: 7881
+#   port_range_start: 50000
+#   port_range_end: 60000
+# turn:
+#   enabled: true
+#   domain: localhost
+#   tls_port: 5349
+#   udp_port: 3478
