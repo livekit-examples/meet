@@ -1,15 +1,17 @@
 'use client';
 
+import React from 'react';
 import { decodePassphrase } from '@/lib/client-utils';
 import { DebugMode } from '@/lib/Debug';
+import { KeyboardShortcuts } from '@/lib/KeyboardShortcuts';
 import { RecordingIndicator } from '@/lib/RecordingIndicator';
 import { SettingsMenu } from '@/lib/SettingsMenu';
 import { ConnectionDetails } from '@/lib/types';
 import {
   formatChatMessageLinks,
-  LiveKitRoom,
   LocalUserChoices,
   PreJoin,
+  RoomContext,
   VideoConference,
 } from '@livekit/components-react';
 import {
@@ -20,9 +22,13 @@ import {
   Room,
   DeviceUnsupportedError,
   RoomConnectOptions,
+  RoomEvent,
+  TrackPublishDefaults,
+  VideoCaptureOptions,
 } from 'livekit-client';
 import { useRouter } from 'next/navigation';
-import React from 'react';
+import { useSetupE2EE } from '@/lib/useSetupE2EE';
+import { useLowCPUOptimizer } from '@/lib/usePerfomanceOptimiser';
 
 const CONN_DETAILS_ENDPOINT =
   process.env.NEXT_PUBLIC_CONN_DETAILS_ENDPOINT ?? '/api/connection-details';
@@ -91,15 +97,10 @@ function VideoConferenceComponent(props: {
     codec: VideoCodec;
   };
 }) {
-  const e2eePassphrase =
-    typeof window !== 'undefined' && decodePassphrase(location.hash.substring(1));
-
-  const worker =
-    typeof window !== 'undefined' &&
-    e2eePassphrase &&
-    new Worker(new URL('livekit-client/e2ee-worker', import.meta.url));
-  const e2eeEnabled = !!(e2eePassphrase && worker);
   const keyProvider = new ExternalE2EEKeyProvider();
+  const { worker, e2eePassphrase } = useSetupE2EE();
+  const e2eeEnabled = !!(e2eePassphrase && worker);
+
   const [e2eeSetupComplete, setE2eeSetupComplete] = React.useState(false);
 
   const roomOptions = React.useMemo((): RoomOptions => {
@@ -107,30 +108,28 @@ function VideoConferenceComponent(props: {
     if (e2eeEnabled && (videoCodec === 'av1' || videoCodec === 'vp9')) {
       videoCodec = undefined;
     }
+    const videoCaptureDefaults: VideoCaptureOptions = {
+      deviceId: props.userChoices.videoDeviceId ?? undefined,
+      resolution: props.options.hq ? VideoPresets.h2160 : VideoPresets.h720,
+    };
+    const publishDefaults: TrackPublishDefaults = {
+      dtx: false,
+      videoSimulcastLayers: props.options.hq
+        ? [VideoPresets.h1080, VideoPresets.h720]
+        : [VideoPresets.h540, VideoPresets.h216],
+      red: !e2eeEnabled,
+      videoCodec,
+    };
     return {
-      videoCaptureDefaults: {
-        deviceId: props.userChoices.videoDeviceId ?? undefined,
-        resolution: props.options.hq ? VideoPresets.h2160 : VideoPresets.h720,
-      },
-      publishDefaults: {
-        dtx: false,
-        videoSimulcastLayers: props.options.hq
-          ? [VideoPresets.h1080, VideoPresets.h720]
-          : [VideoPresets.h540, VideoPresets.h216],
-        red: !e2eeEnabled,
-        videoCodec,
-      },
+      videoCaptureDefaults: videoCaptureDefaults,
+      publishDefaults: publishDefaults,
       audioCaptureDefaults: {
         deviceId: props.userChoices.audioDeviceId ?? undefined,
       },
-      adaptiveStream: { pixelDensity: 'screen' },
+      adaptiveStream: true,
       dynacast: true,
-      e2ee: e2eeEnabled
-        ? {
-            keyProvider,
-            worker,
-          }
-        : undefined,
+      e2ee: keyProvider && worker && e2eeEnabled ? { keyProvider, worker } : undefined,
+      singlePeerConnection: true,
     };
   }, [props.userChoices, props.options.hq, props.options.codec]);
 
@@ -164,6 +163,41 @@ function VideoConferenceComponent(props: {
     };
   }, []);
 
+  React.useEffect(() => {
+    room.on(RoomEvent.Disconnected, handleOnLeave);
+    room.on(RoomEvent.EncryptionError, handleEncryptionError);
+    room.on(RoomEvent.MediaDevicesError, handleError);
+
+    if (e2eeSetupComplete) {
+      room
+        .connect(
+          props.connectionDetails.serverUrl,
+          props.connectionDetails.participantToken,
+          connectOptions,
+        )
+        .catch((error) => {
+          handleError(error);
+        });
+      if (props.userChoices.videoEnabled) {
+        room.localParticipant.setCameraEnabled(true).catch((error) => {
+          handleError(error);
+        });
+      }
+      if (props.userChoices.audioEnabled) {
+        room.localParticipant.setMicrophoneEnabled(true).catch((error) => {
+          handleError(error);
+        });
+      }
+    }
+    return () => {
+      room.off(RoomEvent.Disconnected, handleOnLeave);
+      room.off(RoomEvent.EncryptionError, handleEncryptionError);
+      room.off(RoomEvent.MediaDevicesError, handleError);
+    };
+  }, [e2eeSetupComplete, room, props.connectionDetails, props.userChoices]);
+
+  const lowPowerMode = useLowCPUOptimizer(room);
+
   const router = useRouter();
   const handleOnLeave = React.useCallback(() => router.push('/'), [router]);
   const handleError = React.useCallback((error: Error) => {
@@ -177,27 +211,23 @@ function VideoConferenceComponent(props: {
     );
   }, []);
 
+  React.useEffect(() => {
+    if (lowPowerMode) {
+      console.warn('Low power mode enabled');
+    }
+  }, [lowPowerMode]);
+
   return (
-    <>
-      <LiveKitRoom
-        connect={e2eeSetupComplete}
-        room={room}
-        token={props.connectionDetails.participantToken}
-        serverUrl={props.connectionDetails.serverUrl}
-        connectOptions={connectOptions}
-        video={props.userChoices.videoEnabled}
-        audio={props.userChoices.audioEnabled}
-        onDisconnected={handleOnLeave}
-        onEncryptionError={handleEncryptionError}
-        onError={handleError}
-      >
+    <div className="lk-room-container">
+      <RoomContext.Provider value={room}>
+        <KeyboardShortcuts />
         <VideoConference
           chatMessageFormatter={formatChatMessageLinks}
           SettingsComponent={SHOW_SETTINGS_MENU ? SettingsMenu : undefined}
         />
         <DebugMode />
         <RecordingIndicator />
-      </LiveKitRoom>
-    </>
+      </RoomContext.Provider>
+    </div>
   );
 }

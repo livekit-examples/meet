@@ -1,9 +1,3 @@
-.settingsCloseButton {
-  position: absolute;
-  right: var(--lk-grid-gap);
-  bottom: var(--lk-grid-gap);
-}
-
 .tabs {
   position: relative;
   display: flex;

@@ -1,4 +1,5 @@
 import { randomString } from '@/lib/client-utils';
+import { getLiveKitURL } from '@/lib/getLiveKitURL';
 import { ConnectionDetails } from '@/lib/types';
 import { AccessToken, AccessTokenOptions, VideoGrant } from 'livekit-server-sdk';
 import { NextRequest, NextResponse } from 'next/server';
@@ -6,6 +7,7 @@ import { NextRequest, NextResponse } from 'next/server';
 const API_KEY = process.env.LIVEKIT_API_KEY;
 const API_SECRET = process.env.LIVEKIT_API_SECRET;
 const LIVEKIT_URL = process.env.LIVEKIT_URL;
+
 const COOKIE_KEY = 'random-participant-postfix';
 
 export async function GET(request: NextRequest) {
@@ -15,7 +17,10 @@ export async function GET(request: NextRequest) {
     const participantName = request.nextUrl.searchParams.get('participantName');
     const metadata = request.nextUrl.searchParams.get('metadata') ?? '';
     const region = request.nextUrl.searchParams.get('region');
-    const livekitServerUrl = region ? getLiveKitURL(region) : LIVEKIT_URL;
+    if (!LIVEKIT_URL) {
+      throw new Error('LIVEKIT_URL is not defined');
+    }
+    const livekitServerUrl = region ? getLiveKitURL(LIVEKIT_URL, region) : LIVEKIT_URL;
     let randomParticipantPostfix = request.cookies.get(COOKIE_KEY)?.value;
     if (livekitServerUrl === undefined) {
       throw new Error('Invalid region');
@@ -73,21 +78,6 @@ function createParticipantToken(userInfo: AccessTokenOptions, roomName: string) 
   };
   at.addGrant(grant);
   return at.toJwt();
-}
-
-/**
- * Get the LiveKit server URL for the given region.
- */
-function getLiveKitURL(region: string | null): string {
-  let targetKey = 'LIVEKIT_URL';
-  if (region) {
-    targetKey = `LIVEKIT_URL_${region}`.toUpperCase();
-  }
-  const url = process.env[targetKey];
-  if (!url) {
-    throw new Error(`${targetKey} is not defined`);
-  }
-  return url;
 }
 
 function getCookieExpirationTime(): string {
