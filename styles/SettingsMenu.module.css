@@ -15,3 +15,10 @@
 .tabs > .tab[aria-pressed='true'] {
   border-color: var(--lk-accent-bg);
 }
+
+.row {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
