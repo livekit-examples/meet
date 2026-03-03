@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect, useState, useMemo } from 'react';
+import React, { useEffect, useState, useMemo, useRef } from 'react';
 import { decodePassphrase } from '@/lib/client-utils';
 import { ConnectionDetails } from '@/lib/types';
 import {
@@ -17,11 +17,14 @@ import {
   Room,
   DeviceUnsupportedError,
   RoomConnectOptions,
+  RoomEvent,
+  TranscriptionSegment,
 } from 'livekit-client';
 import { useRouter } from 'next/navigation';
 import '../../../styles/PageClientImpl.css';
 import { CustomVideoLayoutContextProvider } from '@/app/custom/layout/LayoutContextProvider';
 import CustomVideoLayout from '@/app/custom/layout/CustomVideoLayout';
+import Transcript from '@/lib/Transcript';
 
 const CONN_DETAILS_ENDPOINT =
   process.env.NEXT_PUBLIC_CONN_DETAILS_ENDPOINT ?? '/api/connection-details';
@@ -166,6 +169,27 @@ function VideoConferenceComponent(props: {
   const router = useRouter();
   const handleOnLeave = () => router.push('/');
 
+  const [latestText, setLatestText] = useState('');
+  const hideTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  useEffect(() => {
+    if (!room) return;
+
+    const updateTranscriptions = (segments: TranscriptionSegment[]) => {
+      if (segments.length > 0) {
+        setLatestText(segments[0].text);
+        if (hideTimer.current) clearTimeout(hideTimer.current);
+        hideTimer.current = setTimeout(() => setLatestText(''), 4400);
+      }
+    };
+
+    room.on(RoomEvent.TranscriptionReceived, updateTranscriptions);
+    return () => {
+      room.off(RoomEvent.TranscriptionReceived, updateTranscriptions);
+      if (hideTimer.current) clearTimeout(hideTimer.current);
+    };
+  }, [room]);
+
   if (!isClient) return null;
 
   return (
@@ -182,6 +206,7 @@ function VideoConferenceComponent(props: {
         <CustomVideoLayout />
         <RoomAudioRenderer />
       </CustomVideoLayoutContextProvider>
+      <Transcript latestText={latestText} />
     </LiveKitRoom>
   );
 }

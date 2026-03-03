@@ -1,0 +1,16 @@
+https://open.sphinx.chat/open {
+    log {
+        output stdout
+        format json
+        level DEBUG
+    }
+
+    handle {
+        redir "{query.red}" 302
+    }
+}
+
+https://chat.sphinx.chat:443 {
+    reverse_proxy http://livekit.sphinx:3000
+}
+
