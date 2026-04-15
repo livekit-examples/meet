@@ -39,6 +39,7 @@ export function PageClientImpl(props: {
   region?: string;
   hq: boolean;
   codec: VideoCodec;
+  singlePeerConnection: boolean;
 }) {
   const [preJoinChoices, setPreJoinChoices] = React.useState<LocalUserChoices | undefined>(
     undefined,
@@ -82,7 +83,11 @@ export function PageClientImpl(props: {
         <VideoConferenceComponent
           connectionDetails={connectionDetails}
           userChoices={preJoinChoices}
-          options={{ codec: props.codec, hq: props.hq }}
+          options={{
+            codec: props.codec,
+            hq: props.hq,
+            singlePeerConnection: props.singlePeerConnection,
+          }}
         />
       )}
     </main>
@@ -95,6 +100,7 @@ function VideoConferenceComponent(props: {
   options: {
     hq: boolean;
     codec: VideoCodec;
+    singlePeerConnection: boolean;
   };
 }) {
   const keyProvider = new ExternalE2EEKeyProvider();
@@ -129,7 +135,7 @@ function VideoConferenceComponent(props: {
       adaptiveStream: true,
       dynacast: true,
       e2ee: keyProvider && worker && e2eeEnabled ? { keyProvider, worker } : undefined,
-      singlePeerConnection: true,
+      singlePeerConnection: props.options.singlePeerConnection,
     };
   }, [props.userChoices, props.options.hq, props.options.codec]);
 

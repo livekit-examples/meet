@@ -12,6 +12,7 @@ export default async function Page({
     region?: string;
     hq?: string;
     codec?: string;
+    singlePC?: string;
   }>;
 }) {
   const _params = await params;
@@ -21,6 +22,7 @@ export default async function Page({
       ? _searchParams.codec
       : 'vp9';
   const hq = _searchParams.hq === 'true' ? true : false;
+  const singlePC = _searchParams.singlePC !== 'false';
 
   return (
     <PageClientImpl
@@ -28,6 +30,7 @@ export default async function Page({
       region={_searchParams.region}
       hq={hq}
       codec={codec}
+      singlePeerConnection={singlePC}
     />
   );
 }
