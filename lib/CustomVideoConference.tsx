@@ -2,7 +2,6 @@
 import * as React from 'react';
 import {
   CarouselLayout,
-  Chat,
   ConnectionStateToast,
   ControlBar,
   FocusLayoutContainer,
@@ -21,6 +20,9 @@ import { isEqualTrackRef, isTrackReference } from '@livekit/components-core';
 import type { TrackReferenceOrPlaceholder } from '@livekit/components-core';
 import { RoomEvent, Track } from 'livekit-client';
 import { CustomParticipantTile } from './CustomParticipantTile';
+import { WatchTogetherProvider, useWatchTogether } from './watchTogether/WatchTogetherContext';
+import { WatchTogetherTile } from './watchTogether/WatchTogetherTile';
+import { CustomChat } from './watchTogether/CustomChat';
 
 export interface CustomVideoConferenceProps extends React.HTMLAttributes<HTMLDivElement> {
   chatMessageFormatter?: MessageFormatter;
@@ -29,7 +31,15 @@ export interface CustomVideoConferenceProps extends React.HTMLAttributes<HTMLDiv
   SettingsComponent?: React.ComponentType;
 }
 
-export function CustomVideoConference({
+export function CustomVideoConference(props: CustomVideoConferenceProps) {
+  return (
+    <WatchTogetherProvider>
+      <CustomVideoConferenceInner {...props} />
+    </WatchTogetherProvider>
+  );
+}
+
+function CustomVideoConferenceInner({
   chatMessageFormatter,
   chatMessageDecoder,
   chatMessageEncoder,
@@ -42,6 +52,8 @@ export function CustomVideoConference({
     showSettings: false,
   });
   const lastAutoFocusedScreenShareTrack = React.useRef<TrackReferenceOrPlaceholder | null>(null);
+  const { state: watchState } = useWatchTogether();
+  const watchActive = watchState.active;
 
   const tracks = useTracks(
     [
@@ -98,7 +110,16 @@ export function CustomVideoConference({
     <div className="lk-video-conference" {...props}>
       <LayoutContextProvider value={layoutContext} onWidgetChange={setWidgetState}>
         <div className="lk-video-conference-inner">
-          {!focusTrack ? (
+          {watchActive ? (
+            <div className="lk-focus-layout-wrapper">
+              <FocusLayoutContainer>
+                <CarouselLayout tracks={tracks}>
+                  <CustomParticipantTile />
+                </CarouselLayout>
+                <WatchTogetherTile />
+              </FocusLayoutContainer>
+            </div>
+          ) : !focusTrack ? (
             <div className="lk-grid-layout-wrapper">
               <GridLayout tracks={tracks}>
                 <CustomParticipantTile />
@@ -116,7 +137,7 @@ export function CustomVideoConference({
           )}
           <ControlBar controls={{ chat: true, settings: !!SettingsComponent }} />
         </div>
-        <Chat
+        <CustomChat
           style={{ display: widgetState.showChat ? 'grid' : 'none' }}
           messageFormatter={chatMessageFormatter}
           messageEncoder={chatMessageEncoder}

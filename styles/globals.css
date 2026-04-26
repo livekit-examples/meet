@@ -151,3 +151,41 @@ h2 a {
 .lk-participant-volume-reset:not(:disabled):hover {
   background-color: rgba(255, 255, 255, 0.14);
 }
+
+.lk-watch-together-tile {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #000;
+  border-radius: var(--lk-border-radius);
+  overflow: hidden;
+}
+
+.lk-watch-together-video {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.lk-watch-together-overlay {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.375rem 0.625rem;
+  background-color: rgba(0, 0, 0, 0.55);
+  border-radius: calc(var(--lk-border-radius) / 2);
+  pointer-events: auto;
+  font-size: 0.75rem;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.lk-watch-together-stop {
+  padding: 0.25rem 0.625rem;
+  font-size: 0.75rem;
+}
