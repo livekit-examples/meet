@@ -2,7 +2,7 @@ const STORAGE_KEY = 'lk-participant-volumes';
 const CHANGE_EVENT = 'lk-participant-volume-change';
 
 export const VOLUME_MIN = 0;
-export const VOLUME_MAX = 1;
+export const VOLUME_MAX = 2;
 export const VOLUME_DEFAULT = 1;
 
 type VolumeMap = Record<string, number>;

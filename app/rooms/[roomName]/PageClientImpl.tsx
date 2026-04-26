@@ -134,6 +134,7 @@ function VideoConferenceComponent(props: {
       },
       adaptiveStream: true,
       dynacast: true,
+      webAudioMix: true,
       e2ee: keyProvider && worker && e2eeEnabled ? { keyProvider, worker } : undefined,
       singlePeerConnection: props.options.singlePeerConnection,
     };

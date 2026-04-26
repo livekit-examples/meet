@@ -39,6 +39,7 @@ export function VideoConferenceClientImpl(props: {
       },
       adaptiveStream: { pixelDensity: 'screen' },
       dynacast: true,
+      webAudioMix: true,
       e2ee: e2eeEnabled
         ? {
             keyProvider,
