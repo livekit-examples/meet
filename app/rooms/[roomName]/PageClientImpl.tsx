@@ -12,8 +12,8 @@ import {
   LocalUserChoices,
   PreJoin,
   RoomContext,
-  VideoConference,
 } from '@livekit/components-react';
+import { CustomVideoConference } from '@/lib/CustomVideoConference';
 import {
   ExternalE2EEKeyProvider,
   RoomOptions,
@@ -227,7 +227,7 @@ function VideoConferenceComponent(props: {
     <div className="lk-room-container">
       <RoomContext.Provider value={room}>
         <KeyboardShortcuts />
-        <VideoConference
+        <CustomVideoConference
           chatMessageFormatter={formatChatMessageLinks}
           SettingsComponent={SHOW_SETTINGS_MENU ? SettingsMenu : undefined}
         />

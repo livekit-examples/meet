@@ -1,6 +1,7 @@
 'use client';
 
-import { formatChatMessageLinks, RoomContext, VideoConference } from '@livekit/components-react';
+import { formatChatMessageLinks, RoomContext } from '@livekit/components-react';
+import { CustomVideoConference } from '@/lib/CustomVideoConference';
 import {
   ExternalE2EEKeyProvider,
   LogLevel,
@@ -85,7 +86,7 @@ export function VideoConferenceClientImpl(props: {
     <div className="lk-room-container">
       <RoomContext.Provider value={room}>
         <KeyboardShortcuts />
-        <VideoConference
+        <CustomVideoConference
           chatMessageFormatter={formatChatMessageLinks}
           SettingsComponent={
             process.env.NEXT_PUBLIC_SHOW_SETTINGS_MENU === 'true' ? SettingsMenu : undefined
