@@ -2,7 +2,7 @@ const STORAGE_KEY = 'lk-participant-volumes';
 const CHANGE_EVENT = 'lk-participant-volume-change';
 
 export const VOLUME_MIN = 0;
-export const VOLUME_MAX = 2;
+export const VOLUME_MAX = 1;
 export const VOLUME_DEFAULT = 1;
 
 type VolumeMap = Record<string, number>;
@@ -29,7 +29,8 @@ function write(map: VolumeMap) {
 export function getStoredVolume(identity: string): number | undefined {
   const map = read();
   const v = map[identity];
-  return typeof v === 'number' && Number.isFinite(v) ? v : undefined;
+  if (typeof v !== 'number' || !Number.isFinite(v)) return undefined;
+  return Math.min(VOLUME_MAX, Math.max(VOLUME_MIN, v));
 }
 
 export function setStoredVolume(identity: string, volume: number) {

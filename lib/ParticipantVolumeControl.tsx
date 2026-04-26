@@ -23,7 +23,11 @@ export function ParticipantVolumeControl({ participant }: Props) {
   const containerRef = React.useRef<HTMLDivElement>(null);
 
   React.useEffect(() => {
-    participant.setVolume(volume);
+    try {
+      participant.setVolume(volume);
+    } catch (err) {
+      console.warn('Failed to set participant volume', err);
+    }
   }, [participant, volume]);
 
   React.useEffect(() => {
@@ -48,7 +52,6 @@ export function ParticipantVolumeControl({ participant }: Props) {
 
   const muted = volume === 0;
   const reduced = volume < VOLUME_DEFAULT && volume > 0;
-  const boosted = volume > VOLUME_DEFAULT;
 
   return (
     <div
@@ -63,7 +66,7 @@ export function ParticipantVolumeControl({ participant }: Props) {
         title={`Volume: ${Math.round(volume * 100)}%`}
         onClick={() => setOpen((v) => !v)}
       >
-        <SpeakerIcon muted={muted} reduced={reduced} boosted={boosted} />
+        <SpeakerIcon muted={muted} reduced={reduced} />
       </button>
       {open && (
         <div className="lk-participant-volume-popover">
@@ -93,21 +96,10 @@ export function ParticipantVolumeControl({ participant }: Props) {
   );
 }
 
-function SpeakerIcon({
-  muted,
-  reduced,
-  boosted,
-}: {
-  muted: boolean;
-  reduced: boolean;
-  boosted: boolean;
-}) {
+function SpeakerIcon({ muted, reduced }: { muted: boolean; reduced: boolean }) {
   return (
     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-      <path
-        d="M3 9v6h4l5 4V5L7 9H3z"
-        fill="currentColor"
-      />
+      <path d="M3 9v6h4l5 4V5L7 9H3z" fill="currentColor" />
       {muted ? (
         <path
           d="M16 9l6 6M22 9l-6 6"
@@ -130,7 +122,7 @@ function SpeakerIcon({
               stroke="currentColor"
               strokeWidth="2"
               strokeLinecap="round"
-              opacity={boosted ? 1 : 0.8}
+              opacity={0.8}
             />
           )}
         </>
