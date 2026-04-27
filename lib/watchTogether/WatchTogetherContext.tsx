@@ -1,12 +1,21 @@
 'use client';
 import * as React from 'react';
 import { useDataChannel, useLocalParticipant } from '@livekit/components-react';
-import { WATCH_TOGETHER_TOPIC, type WatchSyncMessage, type WatchTogetherState } from './types';
+import {
+  WATCH_TOGETHER_TOPIC,
+  type EmbedKind,
+  type WatchSyncMessage,
+  type WatchTogetherEmbedState,
+  type WatchTogetherStreamState,
+} from './types';
 
 type Ctx = {
-  state: WatchTogetherState;
-  startVideo: (magnet: string) => void;
-  stopVideo: () => void;
+  embed: WatchTogetherEmbedState;
+  stream: WatchTogetherStreamState;
+  startEmbed: (kind: EmbedKind, src: string) => void;
+  stopEmbed: () => void;
+  startStream: (file: File) => void;
+  stopStream: () => void;
   sendSync: (msg: WatchSyncMessage) => void;
   subscribe: (listener: (msg: WatchSyncMessage) => void) => () => void;
 };
@@ -18,7 +27,8 @@ const decoder = new TextDecoder();
 
 export function WatchTogetherProvider({ children }: { children: React.ReactNode }) {
   const { localParticipant } = useLocalParticipant();
-  const [state, setState] = React.useState<WatchTogetherState>({ active: false });
+  const [embed, setEmbed] = React.useState<WatchTogetherEmbedState>({ active: false });
+  const [stream, setStream] = React.useState<WatchTogetherStreamState>({ active: false });
   const listenersRef = React.useRef(new Set<(msg: WatchSyncMessage) => void>());
 
   const { send } = useDataChannel(WATCH_TOGETHER_TOPIC, (msg) => {
@@ -30,25 +40,27 @@ export function WatchTogetherProvider({ children }: { children: React.ReactNode 
     }
     if (!parsed) return;
     const fromIdentity = msg.from?.identity;
-    if (parsed.type === 'start' && fromIdentity) {
-      setState({
+    if (parsed.type === 'start-embed' && fromIdentity) {
+      setEmbed({
         active: true,
-        magnet: parsed.magnet,
+        kind: parsed.kind,
+        src: parsed.src,
         hostIdentity: parsed.hostIdentity,
         isHost: fromIdentity === localParticipant.identity,
       });
     } else if (parsed.type === 'heartbeat' && fromIdentity) {
-      setState((prev) => {
+      setEmbed((prev) => {
         if (prev.active) return prev;
         return {
           active: true,
-          magnet: parsed.magnet,
-          hostIdentity: parsed.hostIdentity,
+          kind: parsed!.kind as EmbedKind,
+          src: (parsed as Extract<WatchSyncMessage, { type: 'heartbeat' }>).src,
+          hostIdentity: (parsed as Extract<WatchSyncMessage, { type: 'heartbeat' }>).hostIdentity,
           isHost: fromIdentity === localParticipant.identity,
         };
       });
     } else if (parsed.type === 'stop') {
-      setState({ active: false });
+      setEmbed({ active: false });
     }
     listenersRef.current.forEach((l) => l(parsed!));
   });
@@ -64,25 +76,27 @@ export function WatchTogetherProvider({ children }: { children: React.ReactNode 
     [send],
   );
 
-  const startVideo = React.useCallback(
-    (magnet: string) => {
+  const startEmbed = React.useCallback(
+    (kind: EmbedKind, src: string) => {
       const identity = localParticipant.identity;
-      const msg: WatchSyncMessage = {
-        type: 'start',
-        magnet,
-        hostIdentity: identity,
-        ts: Date.now(),
-      };
-      sendSync(msg);
-      setState({ active: true, magnet, hostIdentity: identity, isHost: true });
+      sendSync({ type: 'start-embed', kind, src, hostIdentity: identity, ts: Date.now() });
+      setEmbed({ active: true, kind, src, hostIdentity: identity, isHost: true });
     },
     [localParticipant.identity, sendSync],
   );
 
-  const stopVideo = React.useCallback(() => {
+  const stopEmbed = React.useCallback(() => {
     sendSync({ type: 'stop', ts: Date.now() });
-    setState({ active: false });
+    setEmbed({ active: false });
   }, [sendSync]);
+
+  const startStream = React.useCallback((file: File) => {
+    setStream({ active: true, file });
+  }, []);
+
+  const stopStream = React.useCallback(() => {
+    setStream({ active: false });
+  }, []);
 
   const subscribe = React.useCallback((listener: (msg: WatchSyncMessage) => void) => {
     listenersRef.current.add(listener);
@@ -92,8 +106,17 @@ export function WatchTogetherProvider({ children }: { children: React.ReactNode 
   }, []);
 
   const value = React.useMemo<Ctx>(
-    () => ({ state, startVideo, stopVideo, sendSync, subscribe }),
-    [state, startVideo, stopVideo, sendSync, subscribe],
+    () => ({
+      embed,
+      stream,
+      startEmbed,
+      stopEmbed,
+      startStream,
+      stopStream,
+      sendSync,
+      subscribe,
+    }),
+    [embed, stream, startEmbed, stopEmbed, startStream, stopStream, sendSync, subscribe],
   );
 
   return (

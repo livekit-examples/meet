@@ -7,7 +7,7 @@ import {
   type ChatProps,
 } from '@livekit/components-react';
 import { useWatchTogether } from './WatchTogetherContext';
-import { parseMagnetFromTorrentFile, SINTEL_MAGNET, BIG_BUCK_BUNNY_MAGNET } from './torrentParse';
+import { parseVideoUrl } from './parseVideoUrl';
 
 export function CustomChat({
   messageFormatter,
@@ -27,7 +27,7 @@ export function CustomChat({
     [messageDecoder, messageEncoder, channelTopic],
   );
   const { chatMessages, send, isSending } = useChat(chatOptions);
-  const { startVideo } = useWatchTogether();
+  const { startEmbed, startStream } = useWatchTogether();
 
   React.useEffect(() => {
     if (ulRef.current) ulRef.current.scrollTo({ top: ulRef.current.scrollHeight });
@@ -43,28 +43,28 @@ export function CustomChat({
       lastReadTimestamp.current = last.timestamp;
       return;
     }
-    const unread = chatMessages.filter((m) => !lastReadTimestamp.current || m.timestamp > lastReadTimestamp.current)
-      .length;
+    const unread = chatMessages.filter(
+      (m) => !lastReadTimestamp.current || m.timestamp > lastReadTimestamp.current,
+    ).length;
     if (unread > 0 && layoutContext.widget.state?.unreadMessages !== unread) {
       layoutContext.widget.dispatch?.({ msg: 'unread_msg', count: unread });
     }
   }, [chatMessages, layoutContext]);
 
-  const handleVideoCommand = React.useCallback(
-    (arg: string) => {
-      const trimmed = arg.trim();
-      if (trimmed === 'sintel') {
-        startVideo(SINTEL_MAGNET);
-      } else if (trimmed === 'bbb' || trimmed === 'bigbuckbunny') {
-        startVideo(BIG_BUCK_BUNNY_MAGNET);
-      } else if (trimmed.startsWith('magnet:')) {
-        startVideo(trimmed);
-      } else {
-        fileInputRef.current?.click();
-      }
-    },
-    [startVideo],
-  );
+  const handleVideoCommand = (arg: string) => {
+    const trimmed = arg.trim();
+    if (!trimmed) {
+      fileInputRef.current?.click();
+      return;
+    }
+    const parsed = parseVideoUrl(trimmed);
+    if (!parsed) {
+      alert(`Unrecognized URL: ${trimmed}`);
+      return;
+    }
+    if (parsed.kind === 'youtube') startEmbed('youtube', parsed.videoId);
+    else startEmbed('url', parsed.url);
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -85,17 +85,11 @@ export function CustomChat({
     input.focus();
   };
 
-  const handleFileSelected = async (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleFileSelected = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     e.target.value = '';
     if (!file) return;
-    try {
-      const buffer = await file.arrayBuffer();
-      const magnet = await parseMagnetFromTorrentFile(new Uint8Array(buffer));
-      startVideo(magnet);
-    } catch (err: any) {
-      alert(`Failed to parse torrent file: ${err?.message ?? err}`);
-    }
+    startStream(file);
   };
 
   return (
@@ -133,7 +127,7 @@ export function CustomChat({
           className="lk-form-control lk-chat-form-input"
           disabled={isSending}
           type="text"
-          placeholder="Enter a message or /video to share a torrent…"
+          placeholder="Message · /video <url> · /video to pick a file"
           onInput={(e) => e.stopPropagation()}
           onKeyDown={(e) => e.stopPropagation()}
           onKeyUp={(e) => e.stopPropagation()}
@@ -145,7 +139,7 @@ export function CustomChat({
       <input
         ref={fileInputRef}
         type="file"
-        accept=".torrent,application/x-bittorrent"
+        accept="video/*"
         style={{ display: 'none' }}
         onChange={handleFileSelected}
       />

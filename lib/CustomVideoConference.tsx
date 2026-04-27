@@ -21,7 +21,8 @@ import type { TrackReferenceOrPlaceholder } from '@livekit/components-core';
 import { RoomEvent, Track } from 'livekit-client';
 import { CustomParticipantTile } from './CustomParticipantTile';
 import { WatchTogetherProvider, useWatchTogether } from './watchTogether/WatchTogetherContext';
-import { WatchTogetherTile } from './watchTogether/WatchTogetherTile';
+import { EmbedTile } from './watchTogether/EmbedTile';
+import { StreamHostController } from './watchTogether/StreamHostController';
 import { CustomChat } from './watchTogether/CustomChat';
 
 export interface CustomVideoConferenceProps extends React.HTMLAttributes<HTMLDivElement> {
@@ -52,8 +53,8 @@ function CustomVideoConferenceInner({
     showSettings: false,
   });
   const lastAutoFocusedScreenShareTrack = React.useRef<TrackReferenceOrPlaceholder | null>(null);
-  const { state: watchState } = useWatchTogether();
-  const watchActive = watchState.active;
+  const { embed } = useWatchTogether();
+  const embedActive = embed.active;
 
   const tracks = useTracks(
     [
@@ -110,13 +111,13 @@ function CustomVideoConferenceInner({
     <div className="lk-video-conference" {...props}>
       <LayoutContextProvider value={layoutContext} onWidgetChange={setWidgetState}>
         <div className="lk-video-conference-inner">
-          {watchActive ? (
+          {embedActive ? (
             <div className="lk-focus-layout-wrapper">
               <FocusLayoutContainer>
                 <CarouselLayout tracks={tracks}>
                   <CustomParticipantTile />
                 </CarouselLayout>
-                <WatchTogetherTile />
+                <EmbedTile />
               </FocusLayoutContainer>
             </div>
           ) : !focusTrack ? (
@@ -152,6 +153,7 @@ function CustomVideoConferenceInner({
           </div>
         )}
       </LayoutContextProvider>
+      <StreamHostController />
       <RoomAudioRenderer />
       <ConnectionStateToast />
     </div>
