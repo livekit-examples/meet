@@ -13,13 +13,13 @@ importers:
         version: 5.35.1
       '@livekit/components-react':
         specifier: 2.9.20
-        version: 2.9.20(@livekit/krisp-noise-filter@0.4.2(livekit-client@2.18.7(@types/dom-mediacapture-record@1.0.22)))(livekit-client@2.18.7(@types/dom-mediacapture-record@1.0.22))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(tslib@2.8.1)
+        version: 2.9.20(@livekit/krisp-noise-filter@0.4.3(livekit-client@2.18.7(@types/dom-mediacapture-record@1.0.22)))(livekit-client@2.18.7(@types/dom-mediacapture-record@1.0.22))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(tslib@2.8.1)
       '@livekit/components-styles':
         specifier: 1.2.0
         version: 1.2.0
       '@livekit/krisp-noise-filter':
-        specifier: 0.4.2
-        version: 0.4.2(livekit-client@2.18.7(@types/dom-mediacapture-record@1.0.22))
+        specifier: 0.4.3
+        version: 0.4.3(livekit-client@2.18.7(@types/dom-mediacapture-record@1.0.22))
       '@livekit/track-processors':
         specifier: ^0.7.0
         version: 0.7.0(@types/dom-mediacapture-transform@0.1.11)(livekit-client@2.18.7(@types/dom-mediacapture-record@1.0.22))
@@ -497,8 +497,8 @@ packages:
     resolution: {integrity: sha512-74/rt0lDh6aHmOPmWAeDE9C4OrNW9RIdmhX/YRbovQBVNGNVWojRjl3FgQZ5LPFXO6l1maKB4JhXcBFENVxVvw==}
     engines: {node: '>=18'}
 
-  '@livekit/krisp-noise-filter@0.4.2':
-    resolution: {integrity: sha512-lASxGfwONINVHI28fGmq7pN3nc6EYVLzr2ncCYyVdsvP4Qk+NzP3asM3/m/UYHO/wOkCIN0kL/K1735zcEvy7Q==}
+  '@livekit/krisp-noise-filter@0.4.3':
+    resolution: {integrity: sha512-Ciu6GO+i49UM1zpTy5RD+N4ylwePJYaiu2DwzcvfxT4oH51ZMdAvAqb3kJD5WRGEq8ZuvJbgfa+/xuAu+/3zQw==}
     peerDependencies:
       livekit-client: ^2.18.7
 
@@ -2658,7 +2658,7 @@ snapshots:
       rxjs: 7.8.2
       tslib: 2.8.1
 
-  '@livekit/components-react@2.9.20(@livekit/krisp-noise-filter@0.4.2(livekit-client@2.18.7(@types/dom-mediacapture-record@1.0.22)))(livekit-client@2.18.7(@types/dom-mediacapture-record@1.0.22))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(tslib@2.8.1)':
+  '@livekit/components-react@2.9.20(@livekit/krisp-noise-filter@0.4.3(livekit-client@2.18.7(@types/dom-mediacapture-record@1.0.22)))(livekit-client@2.18.7(@types/dom-mediacapture-record@1.0.22))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(tslib@2.8.1)':
     dependencies:
       '@livekit/components-core': 0.12.13(livekit-client@2.18.7(@types/dom-mediacapture-record@1.0.22))(tslib@2.8.1)
       clsx: 2.1.1
@@ -2670,11 +2670,11 @@ snapshots:
       tslib: 2.8.1
       usehooks-ts: 3.1.1(react@18.3.1)
     optionalDependencies:
-      '@livekit/krisp-noise-filter': 0.4.2(livekit-client@2.18.7(@types/dom-mediacapture-record@1.0.22))
+      '@livekit/krisp-noise-filter': 0.4.3(livekit-client@2.18.7(@types/dom-mediacapture-record@1.0.22))
 
   '@livekit/components-styles@1.2.0': {}
 
-  '@livekit/krisp-noise-filter@0.4.2(livekit-client@2.18.7(@types/dom-mediacapture-record@1.0.22))':
+  '@livekit/krisp-noise-filter@0.4.3(livekit-client@2.18.7(@types/dom-mediacapture-record@1.0.22))':
     dependencies:
       '@livekit/mutex': 1.1.1
       '@livekit/protocol': 1.45.6
