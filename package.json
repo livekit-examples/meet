@@ -34,7 +34,7 @@
     "eslint-config-next": "15.5.6",
     "prettier": "3.7.3",
     "source-map-loader": "^5.0.0",
-    "typescript": "5.9.3",
+    "typescript": "6.0.3",
     "vitest": "^3.2.4"
   },
   "engines": {
