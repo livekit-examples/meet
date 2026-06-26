@@ -1,0 +1,12 @@
+{
+  "name": "livekit-meet-ui-harness",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "install-browsers": "playwright-core install chromium",
+    "test:original-volume": "node translation-original-volume.mjs"
+  },
+  "devDependencies": {
+    "playwright-core": "1.51.1"
+  }
+}
