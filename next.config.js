@@ -15,6 +15,9 @@ const nextConfig = {
       test: /\.mjs$/,
       enforce: 'pre',
       use: ['source-map-loader'],
+      // @mediapipe/tasks-vision (via @livekit/track-processors) references a
+      // source map it does not ship, which spams the build with parse warnings.
+      exclude: /node_modules\/.pnpm\/@mediapipe\+tasks-vision/,
     });
 
     return config;
