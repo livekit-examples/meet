@@ -1,7 +1,11 @@
+const path = require('path');
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: false,
   productionBrowserSourceMaps: true,
+  // Pin the workspace root to this repo so Next.js ignores unrelated parent lockfiles
+  outputFileTracingRoot: path.join(__dirname),
   images: {
     formats: ['image/webp'],
   },
