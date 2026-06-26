@@ -1,0 +1,157 @@
+.overlayRoot {
+  position: fixed;
+  top: 0.75rem;
+  right: 0.75rem;
+  z-index: 10;
+  pointer-events: none;
+}
+
+.panel {
+  pointer-events: auto;
+  width: min(18rem, calc(100vw - 1.5rem));
+  border: 1px solid var(--lk-border-color, rgba(255, 255, 255, 0.15));
+  border-radius: 0.5rem;
+  background: var(--lk-bg, #111);
+  color: var(--lk-fg, #fff);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
+  font-size: 0.875rem;
+}
+
+.panelHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  padding: 0.625rem 0.75rem;
+  border-bottom: 1px solid var(--lk-border-color, rgba(255, 255, 255, 0.15));
+  cursor: pointer;
+  user-select: none;
+}
+
+.panelHeaderTitle {
+  font-weight: 600;
+}
+
+.panelBody {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  padding: 0.75rem;
+}
+
+.panelBodyCollapsed {
+  display: none;
+}
+
+.row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+}
+
+.rowLabel {
+  flex-shrink: 0;
+}
+
+.checkboxLabel {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  cursor: pointer;
+}
+
+.select {
+  flex: 1;
+  min-width: 0;
+  max-width: 9rem;
+  padding: 0.25rem 0.5rem;
+  border: 1px solid var(--lk-border-color, rgba(255, 255, 255, 0.15));
+  border-radius: 0.25rem;
+  background: var(--lk-bg2, #1a1a1a);
+  color: var(--lk-fg, #fff);
+  font-size: 0.875rem;
+}
+
+.sliderRow {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.sliderHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+}
+
+.slider {
+  width: 100%;
+  accent-color: var(--lk-accent-bg, #ff6352);
+}
+
+.status {
+  font-size: 0.8125rem;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.error {
+  font-size: 0.8125rem;
+  color: #ff6352;
+}
+
+.captionBar {
+  position: fixed;
+  bottom: 5.5rem;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 9;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.375rem;
+  max-width: min(42rem, calc(100vw - 2rem));
+  pointer-events: none;
+}
+
+.translatedCaption {
+  padding: 0.5rem 0.75rem;
+  border-radius: 0.5rem;
+  background: rgba(0, 0, 0, 0.75);
+  color: #fff;
+  font-size: 1rem;
+  font-weight: 500;
+  line-height: 1.35;
+  text-align: center;
+}
+
+.sourceCaption {
+  padding: 0.375rem 0.625rem;
+  border-radius: 0.375rem;
+  background: rgba(0, 0, 0, 0.5);
+  color: rgba(255, 255, 255, 0.85);
+  font-size: 0.8125rem;
+  line-height: 1.35;
+  text-align: center;
+}
+
+.speakerLabel {
+  font-size: 0.75rem;
+  color: rgba(255, 255, 255, 0.55);
+}
+
+.collapseButton {
+  padding: 0.125rem 0.375rem;
+  border: none;
+  border-radius: 0.25rem;
+  background: transparent;
+  color: var(--lk-fg, #fff);
+  cursor: pointer;
+  font-size: 0.75rem;
+  opacity: 0.7;
+}
+
+.collapseButton:hover {
+  opacity: 1;
+}
