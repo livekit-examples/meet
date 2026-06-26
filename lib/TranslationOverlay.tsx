@@ -8,6 +8,8 @@ import { TRANSLATION_LANGUAGES } from '@/lib/realtime-translation-config';
 import { useRemoteTranslation, type TranslationStatus } from '@/lib/useRemoteTranslation';
 import styles from '@/styles/TranslationOverlay.module.css';
 
+const DUCKED_ORIGINAL_VOLUME = 0.15;
+
 type ParticipantCaptionState = {
   participantId: string;
   participantName: string;
@@ -115,7 +117,7 @@ export function TranslationOverlay() {
   const [panelOpen, setPanelOpen] = React.useState(true);
   const [enabled, setEnabled] = React.useState(false);
   const [language, setLanguage] = React.useState('en');
-  const [originalVolume, setOriginalVolume] = React.useState(0.15);
+  const [originalVolume, setOriginalVolume] = React.useState(1);
   const [translatedVolume, setTranslatedVolume] = React.useState(1);
   const [sourceCaptionsEnabled, setSourceCaptionsEnabled] = React.useState(false);
   const [noiseReductionEnabled, setNoiseReductionEnabled] = React.useState(false);
@@ -143,6 +145,13 @@ export function TranslationOverlay() {
     });
   }, []);
 
+  const handleEnabledChange = React.useCallback((nextEnabled: boolean) => {
+    setEnabled(nextEnabled);
+    // Auto-duck the original speakers while translation plays; restore on disable.
+    // The slider still lets the listener override this at any time.
+    setOriginalVolume(nextEnabled ? DUCKED_ORIGINAL_VOLUME : 1);
+  }, []);
+
   const removeCaptionState = React.useCallback((participantId: string) => {
     setCaptionStates((current) => {
       if (!current[participantId]) {
@@ -160,9 +169,9 @@ export function TranslationOverlay() {
       if (!(participant instanceof RemoteParticipant)) {
         continue;
       }
-      participant.setVolume(enabled ? originalVolume : 1, Track.Source.Microphone);
+      participant.setVolume(originalVolume, Track.Source.Microphone);
     }
-  }, [enabled, originalVolume, remoteParticipants]);
+  }, [originalVolume, remoteParticipants]);
 
   const activeCaptionStates = Object.values(captionStates);
   const aggregateStatus = getAggregateStatus(activeCaptionStates);
@@ -238,7 +247,7 @@ export function TranslationOverlay() {
                 type="checkbox"
                 checked={enabled}
                 disabled={!hasRemoteAudio}
-                onChange={(event) => setEnabled(event.target.checked)}
+                onChange={(event) => handleEnabledChange(event.target.checked)}
               />
               <span>Enable translation</span>
             </label>
