@@ -129,7 +129,7 @@ export const DebugMode = ({ logLevel }: { logLevel?: LogLevel }) => {
             </summary>
             <div>
               {Array.from(lp.trackPublications.values()).map((t) => (
-                <>
+                <React.Fragment key={t.trackSid}>
                   <div>
                     <i>
                       {t.source.toString()}
@@ -155,7 +155,7 @@ export const DebugMode = ({ logLevel }: { logLevel?: LogLevel }) => {
                       </tr>
                     </tbody>
                   </table>
-                </>
+                </React.Fragment>
               ))}
             </div>
           </details>
@@ -168,7 +168,7 @@ export const DebugMode = ({ logLevel }: { logLevel?: LogLevel }) => {
                 <tbody>
                   {lp.permissions &&
                     Object.entries(lp.permissions).map(([key, val]) => (
-                      <>
+                      <React.Fragment key={key}>
                         <tr>
                           <td>{key}</td>
                           {key !== 'canPublishSources' ? (
@@ -177,7 +177,7 @@ export const DebugMode = ({ logLevel }: { logLevel?: LogLevel }) => {
                             <td> {val.join(', ')} </td>
                           )}
                         </tr>
-                      </>
+                      </React.Fragment>
                     ))}
                 </tbody>
               </table>
@@ -199,7 +199,7 @@ export const DebugMode = ({ logLevel }: { logLevel?: LogLevel }) => {
               </summary>
               <div>
                 {Array.from(p.trackPublications.values()).map((t) => (
-                  <>
+                  <React.Fragment key={t.trackSid}>
                     <div>
                       <i>
                         {t.source.toString()}
@@ -231,7 +231,7 @@ export const DebugMode = ({ logLevel }: { logLevel?: LogLevel }) => {
                         )}
                       </tbody>
                     </table>
-                  </>
+                  </React.Fragment>
                 ))}
               </div>
             </details>

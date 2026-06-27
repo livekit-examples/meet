@@ -66,5 +66,6 @@ export async function GET(req: NextRequest) {
     if (error instanceof Error) {
       return new NextResponse(error.message, { status: 500 });
     }
+    return new NextResponse('Internal server error', { status: 500 });
   }
 }

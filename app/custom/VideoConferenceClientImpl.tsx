@@ -3,7 +3,6 @@
 import { formatChatMessageLinks, RoomContext } from '@livekit/components-react';
 import { CustomVideoConference } from '@/lib/CustomVideoConference';
 import {
-  ExternalE2EEKeyProvider,
   LogLevel,
   Room,
   RoomConnectOptions,
@@ -16,7 +15,7 @@ import { useEffect, useMemo, useState } from 'react';
 import { KeyboardShortcuts } from '@/lib/KeyboardShortcuts';
 import { SettingsMenu } from '@/lib/SettingsMenu';
 import { useSetupE2EE } from '@/lib/useSetupE2EE';
-import { useLowCPUOptimizer } from '@/lib/usePerfomanceOptimiser';
+import { useLowCPUOptimizer } from '@/lib/usePerformanceOptimiser';
 
 export function VideoConferenceClientImpl(props: {
   liveKitUrl: string;
@@ -24,9 +23,7 @@ export function VideoConferenceClientImpl(props: {
   codec: VideoCodec | undefined;
   singlePeerConnection: boolean | undefined;
 }) {
-  const keyProvider = new ExternalE2EEKeyProvider();
-  const { worker, e2eePassphrase } = useSetupE2EE();
-  const e2eeEnabled = !!(e2eePassphrase && worker);
+  const { worker, e2eePassphrase, keyProvider, e2eeEnabled } = useSetupE2EE();
 
   const [e2eeSetupComplete, setE2eeSetupComplete] = useState(false);
 
@@ -40,12 +37,7 @@ export function VideoConferenceClientImpl(props: {
       adaptiveStream: { pixelDensity: 'screen' },
       dynacast: true,
       webAudioMix: true,
-      e2ee: e2eeEnabled
-        ? {
-            keyProvider,
-            worker,
-          }
-        : undefined,
+      e2ee: e2eeEnabled && worker ? { keyProvider, worker } : undefined,
       singlePeerConnection: props.singlePeerConnection,
     };
   }, [e2eeEnabled, props.codec, keyProvider, worker]);
@@ -59,7 +51,7 @@ export function VideoConferenceClientImpl(props: {
   }, []);
 
   useEffect(() => {
-    if (e2eeEnabled) {
+    if (e2eeEnabled && e2eePassphrase) {
       keyProvider.setKey(e2eePassphrase).then(() => {
         room.setE2EEEnabled(true).then(() => {
           setE2eeSetupComplete(true);

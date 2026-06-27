@@ -1,7 +1,6 @@
 'use client';
 
 import React from 'react';
-import { decodePassphrase } from '@/lib/client-utils';
 import { DebugMode } from '@/lib/Debug';
 import { KeyboardShortcuts } from '@/lib/KeyboardShortcuts';
 import { RecordingIndicator } from '@/lib/RecordingIndicator';
@@ -15,7 +14,6 @@ import {
 } from '@livekit/components-react';
 import { CustomVideoConference } from '@/lib/CustomVideoConference';
 import {
-  ExternalE2EEKeyProvider,
   RoomOptions,
   VideoCodec,
   VideoPresets,
@@ -28,7 +26,7 @@ import {
 } from 'livekit-client';
 import { useRouter } from 'next/navigation';
 import { useSetupE2EE } from '@/lib/useSetupE2EE';
-import { useLowCPUOptimizer } from '@/lib/usePerfomanceOptimiser';
+import { useLowCPUOptimizer } from '@/lib/usePerformanceOptimiser';
 
 const CONN_DETAILS_ENDPOINT =
   process.env.NEXT_PUBLIC_CONN_DETAILS_ENDPOINT ?? '/api/connection-details';
@@ -103,9 +101,7 @@ function VideoConferenceComponent(props: {
     singlePeerConnection: boolean;
   };
 }) {
-  const keyProvider = new ExternalE2EEKeyProvider();
-  const { worker, e2eePassphrase } = useSetupE2EE();
-  const e2eeEnabled = !!(e2eePassphrase && worker);
+  const { worker, e2eePassphrase, keyProvider, e2eeEnabled } = useSetupE2EE();
 
   const [e2eeSetupComplete, setE2eeSetupComplete] = React.useState(false);
 
@@ -135,17 +131,25 @@ function VideoConferenceComponent(props: {
       adaptiveStream: true,
       dynacast: true,
       webAudioMix: true,
-      e2ee: keyProvider && worker && e2eeEnabled ? { keyProvider, worker } : undefined,
+      e2ee: e2eeEnabled && worker ? { keyProvider, worker } : undefined,
       singlePeerConnection: props.options.singlePeerConnection,
     };
-  }, [props.userChoices, props.options.hq, props.options.codec]);
+  }, [
+    props.userChoices,
+    props.options.hq,
+    props.options.codec,
+    props.options.singlePeerConnection,
+    e2eeEnabled,
+    keyProvider,
+    worker,
+  ]);
 
   const room = React.useMemo(() => new Room(roomOptions), []);
 
   React.useEffect(() => {
-    if (e2eeEnabled) {
+    if (e2eeEnabled && e2eePassphrase) {
       keyProvider
-        .setKey(decodePassphrase(e2eePassphrase))
+        .setKey(e2eePassphrase)
         .then(() => {
           room.setE2EEEnabled(true).catch((e) => {
             if (e instanceof DeviceUnsupportedError) {

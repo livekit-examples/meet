@@ -1,1 +1,11 @@
+# Normalize line endings to LF in the repo for all text files.
+# Prevents the whole tree from showing as "modified" on Windows/WSL checkouts
+# and keeps `prettier --check` (which expects LF) passing in CI.
+* text=auto eol=lf
+
+# Binary / LFS-tracked assets must not be normalized.
+*.png binary
+*.jpg binary
+*.webp binary
+*.ico binary
 public/background-images/*.jpg filter=lfs diff=lfs merge=lfs -text
