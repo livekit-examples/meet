@@ -16,6 +16,9 @@ import { KeyboardShortcuts } from '@/lib/KeyboardShortcuts';
 import { SettingsMenu } from '@/lib/SettingsMenu';
 import { useSetupE2EE } from '@/lib/useSetupE2EE';
 import { useLowCPUOptimizer } from '@/lib/usePerformanceOptimiser';
+import { useWakeLock } from '@/lib/useWakeLock';
+import { usePushToTalk } from '@/lib/usePushToTalk';
+import { PushToTalkIndicator } from '@/lib/PushToTalkIndicator';
 
 export function VideoConferenceClientImpl(props: {
   liveKitUrl: string;
@@ -75,10 +78,14 @@ export function VideoConferenceClientImpl(props: {
 
   useLowCPUOptimizer(room);
 
+  useWakeLock();
+  const pushToTalk = usePushToTalk(room);
+
   return (
     <div className="lk-room-container">
       <RoomContext.Provider value={room}>
         <KeyboardShortcuts />
+        <PushToTalkIndicator {...pushToTalk} />
         <CustomVideoConference
           chatMessageFormatter={formatChatMessageLinks}
           SettingsComponent={

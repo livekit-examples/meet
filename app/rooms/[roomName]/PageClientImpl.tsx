@@ -27,6 +27,9 @@ import {
 import { useRouter } from 'next/navigation';
 import { useSetupE2EE } from '@/lib/useSetupE2EE';
 import { useLowCPUOptimizer } from '@/lib/usePerformanceOptimiser';
+import { useWakeLock } from '@/lib/useWakeLock';
+import { usePushToTalk } from '@/lib/usePushToTalk';
+import { PushToTalkIndicator } from '@/lib/PushToTalkIndicator';
 
 const CONN_DETAILS_ENDPOINT =
   process.env.NEXT_PUBLIC_CONN_DETAILS_ENDPOINT ?? '/api/connection-details';
@@ -209,6 +212,9 @@ function VideoConferenceComponent(props: {
 
   const lowPowerMode = useLowCPUOptimizer(room);
 
+  useWakeLock();
+  const pushToTalk = usePushToTalk(room);
+
   const router = useRouter();
   const handleOnLeave = React.useCallback(() => router.push('/'), [router]);
   const handleError = React.useCallback((error: Error) => {
@@ -232,6 +238,7 @@ function VideoConferenceComponent(props: {
     <div className="lk-room-container">
       <RoomContext.Provider value={room}>
         <KeyboardShortcuts />
+        <PushToTalkIndicator {...pushToTalk} />
         <CustomVideoConference
           chatMessageFormatter={formatChatMessageLinks}
           SettingsComponent={SHOW_SETTINGS_MENU ? SettingsMenu : undefined}

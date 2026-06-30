@@ -1,0 +1,17 @@
+{
+  "name": "livekit-ptt-companion",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Global push-to-talk companion for the LiveKit voice chat. Captures a global key (works even when the browser is not focused, e.g. while gaming) and relays it to the browser over a localhost WebSocket.",
+  "bin": {
+    "livekit-ptt-companion": "index.js"
+  },
+  "scripts": {
+    "start": "node index.js",
+    "learn": "node index.js --learn"
+  },
+  "dependencies": {
+    "node-global-key-listener": "^0.3.0",
+    "ws": "^8.18.0"
+  }
+}
