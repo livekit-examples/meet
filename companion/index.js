@@ -18,13 +18,14 @@
 
 const { GlobalKeyboardListener } = require('node-global-key-listener');
 const { WebSocketServer } = require('ws');
+const { reduce } = require('./ptt-core');
 
 const PORT = Number(process.env.PTT_PORT) || 7331;
 const PTT_KEY = (process.env.PTT_KEY || 'F8').toUpperCase();
 const LEARN = process.argv.includes('--learn') || process.env.PTT_LEARN === '1';
 
 const wss = new WebSocketServer({ host: '127.0.0.1', port: PORT });
-let talking = false;
+let pttState = { talking: false };
 
 function broadcast(state) {
   const payload = JSON.stringify({ type: 'ptt', state });
@@ -49,8 +50,6 @@ wss.on('error', (err) => console.error('[companion] WebSocket server error:', er
 
 const keyboard = new GlobalKeyboardListener();
 keyboard.addListener((event) => {
-  const name = (event.name || '').toUpperCase();
-
   if (LEARN) {
     if (event.state === 'DOWN') {
       console.log(`[learn] key down: "${event.name}"`);
@@ -58,16 +57,11 @@ keyboard.addListener((event) => {
     return;
   }
 
-  if (name !== PTT_KEY) {
-    return;
+  const next = reduce(pttState, event, PTT_KEY);
+  if (next.broadcast) {
+    broadcast(next.broadcast);
   }
-  if (event.state === 'DOWN' && !talking) {
-    talking = true;
-    broadcast('down');
-  } else if (event.state === 'UP' && talking) {
-    talking = false;
-    broadcast('up');
-  }
+  pttState = next;
 });
 
 process.on('SIGINT', () => {
