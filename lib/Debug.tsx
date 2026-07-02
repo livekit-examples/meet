@@ -116,16 +116,16 @@ export const DebugMode = ({ logLevel }: { logLevel?: LogLevel }) => {
       <div className={styles.overlay}>
         <section id="room-info">
           <h3>
-            Room Info {room.name}: {roomSid}
+            房间信息 {room.name}: {roomSid}
           </h3>
         </section>
         <details open>
           <summary>
-            <b>Local Participant: {lp.identity}</b>
+            <b>本地参与者: {lp.identity}</b>
           </summary>
           <details open className={styles.detailsSection}>
             <summary>
-              <b>Published tracks</b>
+              <b>已发布轨道</b>
             </summary>
             <div>
               {Array.from(lp.trackPublications.values()).map((t) => (
@@ -138,8 +138,8 @@ export const DebugMode = ({ logLevel }: { logLevel?: LogLevel }) => {
                   </div>
                   <table>
                     <tbody>
-                      <tr>
-                        <td>Kind</td>
+                       <tr>
+                        <td>类型</td>
                         <td>
                           {t.kind}&nbsp;
                           {t.kind === 'video' && (
@@ -150,7 +150,7 @@ export const DebugMode = ({ logLevel }: { logLevel?: LogLevel }) => {
                         </td>
                       </tr>
                       <tr>
-                        <td>Bitrate</td>
+                        <td>比特率</td>
                         <td>{Math.ceil(t.track!.currentBitrate / 1000)} kbps</td>
                       </tr>
                     </tbody>
@@ -161,7 +161,7 @@ export const DebugMode = ({ logLevel }: { logLevel?: LogLevel }) => {
           </details>
           <details open className={styles.detailsSection}>
             <summary>
-              <b>Permissions</b>
+              <b>权限</b>
             </summary>
             <div>
               <table>
@@ -187,7 +187,7 @@ export const DebugMode = ({ logLevel }: { logLevel?: LogLevel }) => {
 
         <details>
           <summary>
-            <b>Remote Participants</b>
+            <b>远程参与者</b>
           </summary>
           {Array.from(room.remoteParticipants.values()).map((p) => (
             <details key={p.sid} className={styles.detailsSection}>
@@ -209,7 +209,7 @@ export const DebugMode = ({ logLevel }: { logLevel?: LogLevel }) => {
                     <table>
                       <tbody>
                         <tr>
-                          <td>Kind</td>
+                          <td>类型</td>
                           <td>
                             {t.kind}&nbsp;
                             {t.kind === 'video' && (
@@ -220,12 +220,12 @@ export const DebugMode = ({ logLevel }: { logLevel?: LogLevel }) => {
                           </td>
                         </tr>
                         <tr>
-                          <td>Status</td>
+                          <td>状态</td>
                           <td>{trackStatus(t)}</td>
                         </tr>
                         {t.track && (
                           <tr>
-                            <td>Bitrate</td>
+                            <td>比特率</td>
                             <td>{Math.ceil(t.track.currentBitrate / 1000)} kbps</td>
                           </tr>
                         )}
@@ -244,8 +244,8 @@ export const DebugMode = ({ logLevel }: { logLevel?: LogLevel }) => {
 
 function trackStatus(t: RemoteTrackPublication): string {
   if (t.isSubscribed) {
-    return t.isEnabled ? 'enabled' : 'disabled';
+    return t.isEnabled ? '已启用' : '已禁用';
   } else {
-    return 'unsubscribed';
+    return '未订阅';
   }
 }

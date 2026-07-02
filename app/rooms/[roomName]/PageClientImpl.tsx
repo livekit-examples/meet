@@ -149,7 +149,7 @@ function VideoConferenceComponent(props: {
           room.setE2EEEnabled(true).catch((e) => {
             if (e instanceof DeviceUnsupportedError) {
               alert(
-                `You're trying to join an encrypted meeting, but your browser does not support it. Please update it to the latest version and try again.`,
+                `您正在尝试加入加密会议，但您的浏览器不支持此功能。请更新浏览器至最新版本后重试。`,
               );
               console.error(e);
             } else {
@@ -208,12 +208,12 @@ function VideoConferenceComponent(props: {
   const handleOnLeave = React.useCallback(() => router.push('/'), [router]);
   const handleError = React.useCallback((error: Error) => {
     console.error(error);
-    alert(`Encountered an unexpected error, check the console logs for details: ${error.message}`);
+    alert(`遇到意外错误，请查看控制台日志了解详情：${error.message}`);
   }, []);
   const handleEncryptionError = React.useCallback((error: Error) => {
     console.error(error);
     alert(
-      `Encountered an unexpected encryption error, check the console logs for details: ${error.message}`,
+      `遇到意外加密错误，请查看控制台日志了解详情：${error.message}`,
     );
   }, []);
 

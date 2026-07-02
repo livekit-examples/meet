@@ -6,11 +6,11 @@ import { Toaster } from 'react-hot-toast';
 
 export const metadata: Metadata = {
   title: {
-    default: 'LiveKit Meet | Conference app build with LiveKit open source',
+    default: 'LiveKit Meet | 基于 LiveKit 开源项目构建的视频会议应用',
     template: '%s',
   },
   description:
-    'LiveKit is an open source WebRTC project that gives you everything needed to build scalable and real-time audio and/or video experiences in your applications.',
+    'LiveKit 是一个开源 WebRTC 项目，为您提供构建可扩展、实时音视频体验所需的一切。',
   twitter: {
     creator: '@livekitted',
     site: '@livekitted',
@@ -50,7 +50,7 @@ export const viewport: Viewport = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en">
+    <html lang="zh-CN">
       <body data-lk-theme="default">
         <Toaster />
         {children}

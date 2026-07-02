@@ -5,38 +5,38 @@
 # LiveKit Meet
 
 <p>
-  <a href="https://meet.livekit.io"><strong>Try the demo</strong></a>
+  <a href="https://meet.livekit.io"><strong>在线演示</strong></a>
   •
   <a href="https://github.com/livekit/components-js">LiveKit Components</a>
   •
-  <a href="https://docs.livekit.io/">LiveKit Docs</a>
+  <a href="https://docs.livekit.io/">LiveKit 文档</a>
   •
   <a href="https://livekit.io/cloud">LiveKit Cloud</a>
   •
-  <a href="https://blog.livekit.io/">Blog</a>
+  <a href="https://blog.livekit.io/">博客</a>
 </p>
 
 <br>
 
-LiveKit Meet is an open source video conferencing app built on [LiveKit Components](https://github.com/livekit/components-js), [LiveKit Cloud](https://cloud.livekit.io/), and Next.js. It's been completely redesigned from the ground up using our new components library.
+LiveKit Meet 是一个基于 [LiveKit Components](https://github.com/livekit/components-js)、[LiveKit Cloud](https://cloud.livekit.io/) 和 Next.js 构建的开源视频会议应用。它使用全新的组件库从头重新设计。
 
-![LiveKit Meet screenshot](./.github/assets/livekit-meet.jpg)
+![LiveKit Meet 截图](./.github/assets/livekit-meet.jpg)
 
-## Tech Stack
+## 技术栈
 
-- This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
-- App is built with [@livekit/components-react](https://github.com/livekit/components-js/) library.
+- 基于 [Next.js](https://nextjs.org/) 项目，使用 [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app) 初始化。
+- 应用使用 [@livekit/components-react](https://github.com/livekit/components-js/) 库构建。
 
-## Demo
+## 演示
 
-Give it a try at https://meet.livekit.io.
+访问 https://meet.livekit.io 在线体验。
 
-## Dev Setup
+## 开发环境搭建
 
-Steps to get a local dev setup up and running:
+本地开发环境搭建步骤：
 
-1. Run `pnpm install` to install all dependencies.
-2. Copy `.env.example` in the project root and rename it to `.env.local`.
-3. Update the missing environment variables in the newly created `.env.local` file.
-4. Run `pnpm dev` to start the development server and visit [http://localhost:3000](http://localhost:3000) to see the result.
-5. Start development 🎉
+1. 运行 `pnpm install` 安装所有依赖。
+2. 将项目根目录下的 `.env.example` 复制并重命名为 `.env.local`。
+3. 更新新创建的 `.env.local` 文件中缺失的环境变量。
+4. 运行 `pnpm dev` 启动开发服务器，访问 [http://localhost:3000](http://localhost:3000) 查看结果。
+5. 开始开发 🎉

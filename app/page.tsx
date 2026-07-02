@@ -54,9 +54,9 @@ function DemoMeetingTab(props: { label: string }) {
   };
   return (
     <div className={styles.tabContent}>
-      <p style={{ margin: 0 }}>Try LiveKit Meet for free with our live demo project.</p>
+      <p style={{ margin: 0 }}>免费体验 LiveKit Meet 在线演示。</p>
       <button style={{ marginTop: '1rem' }} className="lk-button" onClick={startMeeting}>
-        Start Meeting
+        开始会议
       </button>
       <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
         <div style={{ display: 'flex', flexDirection: 'row', gap: '1rem' }}>
@@ -66,11 +66,11 @@ function DemoMeetingTab(props: { label: string }) {
             checked={e2ee}
             onChange={(ev) => setE2ee(ev.target.checked)}
           ></input>
-          <label htmlFor="use-e2ee">Enable end-to-end encryption</label>
+          <label htmlFor="use-e2ee">启用端到端加密</label>
         </div>
         {e2ee && (
           <div style={{ display: 'flex', flexDirection: 'row', gap: '1rem' }}>
-            <label htmlFor="passphrase">Passphrase</label>
+            <label htmlFor="passphrase">加密密语</label>
             <input
               id="passphrase"
               type="password"
@@ -106,7 +106,7 @@ function CustomConnectionTab(props: { label: string }) {
   return (
     <form className={styles.tabContent} onSubmit={onSubmit}>
       <p style={{ marginTop: 0 }}>
-        Connect LiveKit Meet with a custom server using LiveKit Cloud or LiveKit Server.
+        使用 LiveKit Cloud 或 LiveKit Server 自定义服务器连接。
       </p>
       <input
         id="serverUrl"
@@ -118,7 +118,7 @@ function CustomConnectionTab(props: { label: string }) {
       <textarea
         id="token"
         name="token"
-        placeholder="Token"
+        placeholder="访问令牌"
         required
         rows={5}
         style={{ padding: '1px 2px', fontSize: 'inherit', lineHeight: 'inherit' }}
@@ -131,11 +131,11 @@ function CustomConnectionTab(props: { label: string }) {
             checked={e2ee}
             onChange={(ev) => setE2ee(ev.target.checked)}
           ></input>
-          <label htmlFor="use-e2ee">Enable end-to-end encryption</label>
+          <label htmlFor="use-e2ee">启用端到端加密</label>
         </div>
         {e2ee && (
           <div style={{ display: 'flex', flexDirection: 'row', gap: '1rem' }}>
-            <label htmlFor="passphrase">Passphrase</label>
+            <label htmlFor="passphrase">加密密语</label>
             <input
               id="passphrase"
               type="password"
@@ -154,7 +154,7 @@ function CustomConnectionTab(props: { label: string }) {
         className="lk-button"
         type="submit"
       >
-        Connect
+        连接
       </button>
     </form>
   );
@@ -167,34 +167,34 @@ export default function Page() {
         <div className="header">
           <img src="/images/livekit-meet-home.svg" alt="LiveKit Meet" width="360" height="45" />
           <h2>
-            Open source video conferencing app built on{' '}
+            基于{' '}
             <a href="https://github.com/livekit/components-js?ref=meet" rel="noopener">
               LiveKit&nbsp;Components
             </a>
-            ,{' '}
+            、{' '}
             <a href="https://livekit.io/cloud?ref=meet" rel="noopener">
               LiveKit&nbsp;Cloud
             </a>{' '}
-            and Next.js.
+            和 Next.js 构建的开源视频会议应用。
           </h2>
         </div>
-        <Suspense fallback="Loading">
+        <Suspense fallback="加载中">
           <Tabs>
-            <DemoMeetingTab label="Demo" />
-            <CustomConnectionTab label="Custom" />
+            <DemoMeetingTab label="演示" />
+            <CustomConnectionTab label="自定义" />
           </Tabs>
         </Suspense>
       </main>
       <footer data-lk-theme="default">
-        Hosted on{' '}
+        托管于{' '}
         <a href="https://livekit.io/cloud?ref=meet" rel="noopener">
           LiveKit Cloud
         </a>
-        . Source code on{' '}
+        。源代码托管于{' '}
         <a href="https://github.com/livekit/meet?ref=meet" rel="noopener">
           GitHub
         </a>
-        .
+        。
       </footer>
     </>
   );
