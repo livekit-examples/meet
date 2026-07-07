@@ -54,10 +54,11 @@ connects. Hold the key to talk.
 
 ## Configuration
 
-| Env var    | Default | Description                                                                           |
-| ---------- | ------- | ------------------------------------------------------------------------------------- |
-| `PTT_KEY`  | `F8`    | Key name (uppercase) used as the talk button.                                         |
-| `PTT_PORT` | `7331`  | Local WebSocket port. Match `NEXT_PUBLIC_PTT_WS_URL` in the web app if you change it. |
+| Env var       | Default   | Description                                                                                                    |
+| ------------- | --------- | -------------------------------------------------------------------------------------------------------------- |
+| `PTT_KEY`     | `F8`      | Key name (uppercase) used as the talk button.                                                                  |
+| `PTT_PORT`    | `7331`    | Local WebSocket port. Match `NEXT_PUBLIC_PTT_WS_URL` in the web app if you change it.                          |
+| `PTT_ORIGINS` | allow all | Comma-separated allowlist of browser origins (e.g. `https://chat.example.com`). Unset = accept any local page. |
 
 If you change the port, point the web app at it with
 `NEXT_PUBLIC_PTT_WS_URL=ws://127.0.0.1:<port>`.
@@ -71,6 +72,9 @@ and drop it into the Startup folder — press <kbd>Win</kbd>+<kbd>R</kbd>, type
 ## Notes / limitations
 
 - Listens on `127.0.0.1` only — not reachable from the network.
+- Any web page open in your browser can connect to the localhost socket and observe
+  the talk-key state (a one-key keylogger, effectively). Set `PTT_ORIGINS` to your
+  chat's origin to lock it down.
 - Windows only for now; the hook is OS-specific. macOS/Linux would need their own hook
   (the `node-global-key-listener` package supports them, but this is untested here).
 - Some anti-cheat / antivirus software is wary of global keyboard hooks; allow the

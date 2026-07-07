@@ -1,5 +1,6 @@
 import React from 'react';
-import type { Room } from 'livekit-client';
+import { RoomEvent, Track } from 'livekit-client';
+import type { LocalTrackPublication, Room } from 'livekit-client';
 
 const DEFAULT_WS_URL = 'ws://127.0.0.1:7331';
 
@@ -34,12 +35,25 @@ export function usePushToTalk(room: Room): PushToTalkState {
     let ws: WebSocket | null = null;
     let retryTimer: ReturnType<typeof setTimeout> | undefined;
     let disposed = false;
+    let wsConnected = false;
+    let keyHeld = false;
 
     const setMic = (on: boolean) => {
       room.localParticipant.setMicrophoneEnabled(on).catch((err) => {
         console.error('Push-to-talk failed to toggle microphone', err);
       });
     };
+
+    // The join flow enables the mic right after connecting; if the companion
+    // socket opens before that, its initial mute would lose the race and the
+    // mic would stay hot. Re-assert walkie-talkie mute whenever a mic track
+    // gets published while the key is up.
+    const onLocalTrackPublished = (pub: LocalTrackPublication) => {
+      if (pub.source === Track.Source.Microphone && wsConnected && !keyHeld) {
+        setMic(false);
+      }
+    };
+    room.on(RoomEvent.LocalTrackPublished, onLocalTrackPublished);
 
     const connect = () => {
       if (disposed) {
@@ -53,6 +67,7 @@ export function usePushToTalk(room: Room): PushToTalkState {
       }
 
       ws.onopen = () => {
+        wsConnected = true;
         setConnected(true);
         // Walkie-talkie mode: start muted, open only while the key is held.
         setMic(false);
@@ -68,10 +83,13 @@ export function usePushToTalk(room: Room): PushToTalkState {
           return;
         }
         const open = msg.state === 'down';
+        keyHeld = open;
         setTalking(open);
         setMic(open);
       };
       ws.onclose = () => {
+        wsConnected = false;
+        keyHeld = false;
         setConnected(false);
         setTalking(false);
         if (!disposed) {
@@ -88,6 +106,7 @@ export function usePushToTalk(room: Room): PushToTalkState {
     return () => {
       disposed = true;
       clearTimeout(retryTimer);
+      room.off(RoomEvent.LocalTrackPublished, onLocalTrackPublished);
       if (ws) {
         ws.onclose = null;
         ws.close();

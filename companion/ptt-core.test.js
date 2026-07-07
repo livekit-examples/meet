@@ -15,44 +15,27 @@ describe('reduce', () => {
   const KEY = 'F8';
 
   it('ignores keys other than the configured one', () => {
-    expect(reduce({ talking: false }, { name: 'A', state: 'DOWN' }, KEY)).toEqual({
-      talking: false,
-      broadcast: null,
-    });
+    expect(reduce(false, { name: 'A', state: 'DOWN' }, KEY)).toBe(false);
+    expect(reduce(true, { name: 'A', state: 'UP' }, KEY)).toBe(true);
   });
 
   it('matches the talk key case-insensitively', () => {
-    expect(reduce({ talking: false }, { name: 'f8', state: 'DOWN' }, KEY)).toEqual({
-      talking: true,
-      broadcast: 'down',
-    });
+    expect(reduce(false, { name: 'f8', state: 'DOWN' }, KEY)).toBe(true);
   });
 
-  it('opens the mic on key down', () => {
-    expect(reduce({ talking: false }, { name: 'F8', state: 'DOWN' }, KEY)).toEqual({
-      talking: true,
-      broadcast: 'down',
-    });
+  it('starts talking on key down', () => {
+    expect(reduce(false, { name: 'F8', state: 'DOWN' }, KEY)).toBe(true);
   });
 
-  it('does not re-broadcast on auto-repeat while already talking', () => {
-    expect(reduce({ talking: true }, { name: 'F8', state: 'DOWN' }, KEY)).toEqual({
-      talking: true,
-      broadcast: null,
-    });
+  it('stays talking on auto-repeat (no transition, so the caller does not re-broadcast)', () => {
+    expect(reduce(true, { name: 'F8', state: 'DOWN' }, KEY)).toBe(true);
   });
 
-  it('closes the mic on key up', () => {
-    expect(reduce({ talking: true }, { name: 'F8', state: 'UP' }, KEY)).toEqual({
-      talking: false,
-      broadcast: 'up',
-    });
+  it('stops talking on key up', () => {
+    expect(reduce(true, { name: 'F8', state: 'UP' }, KEY)).toBe(false);
   });
 
-  it('ignores key up when not talking', () => {
-    expect(reduce({ talking: false }, { name: 'F8', state: 'UP' }, KEY)).toEqual({
-      talking: false,
-      broadcast: null,
-    });
+  it('stays quiet on key up when not talking', () => {
+    expect(reduce(false, { name: 'F8', state: 'UP' }, KEY)).toBe(false);
   });
 });

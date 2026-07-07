@@ -53,18 +53,30 @@ export function StreamHostController() {
 
         if (videoTrack) {
           const lvt = new LocalVideoTrack(videoTrack, undefined, true);
-          publishedRef.current.video = await room.localParticipant.publishTrack(lvt, {
+          const pub = await room.localParticipant.publishTrack(lvt, {
             source: Track.Source.ScreenShare,
             videoEncoding: { maxBitrate: 5_000_000, maxFramerate: 30 },
             videoSimulcastLayers: [VideoPresets.h1440, VideoPresets.h1080, VideoPresets.h720],
             simulcast: true,
           });
+          // Cleanup may have run while publishTrack was in flight; the track
+          // would otherwise stay published with nobody left to unpublish it.
+          if (cancelled) {
+            room.localParticipant.unpublishTrack(lvt, true).catch(() => {});
+            return;
+          }
+          publishedRef.current.video = pub;
         }
         if (audioTrack) {
           const lat = new LocalAudioTrack(audioTrack, undefined, true);
-          publishedRef.current.audio = await room.localParticipant.publishTrack(lat, {
+          const pub = await room.localParticipant.publishTrack(lat, {
             source: Track.Source.ScreenShareAudio,
           });
+          if (cancelled) {
+            room.localParticipant.unpublishTrack(lat, true).catch(() => {});
+            return;
+          }
+          publishedRef.current.audio = pub;
         }
       } catch (err: any) {
         if (!cancelled) setError(err?.message ?? String(err));
@@ -92,12 +104,7 @@ export function StreamHostController() {
 
   return (
     <div className="lk-watch-together-host-panel">
-      <video
-        ref={videoRef}
-        className="lk-watch-together-host-video"
-        controls
-        playsInline
-      />
+      <video ref={videoRef} className="lk-watch-together-host-video" controls playsInline />
       <div className="lk-watch-together-host-controls">
         <span className="lk-watch-together-host-label">
           {error ? `Error: ${error}` : `Sharing: ${stream.file.name}`}

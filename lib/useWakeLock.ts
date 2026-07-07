@@ -21,9 +21,15 @@ export function useWakeLock(enabled: boolean = true) {
         return;
       }
       try {
-        sentinel = await navigator.wakeLock.request('screen');
-        sentinel.addEventListener('release', () => {
-          sentinel = null;
+        const lock = await navigator.wakeLock.request('screen');
+        // The effect may have been cleaned up while the request was in flight.
+        if (cancelled) {
+          lock.release().catch(() => {});
+          return;
+        }
+        sentinel = lock;
+        lock.addEventListener('release', () => {
+          if (sentinel === lock) sentinel = null;
         });
       } catch (err) {
         // e.g. NotAllowedError when the tab isn't visible, or low-power mode.

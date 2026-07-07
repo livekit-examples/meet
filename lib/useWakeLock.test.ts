@@ -1,6 +1,5 @@
-// @vitest-environment jsdom
-import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
-import { act, cleanup, renderHook } from '@testing-library/react';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
+import { act, renderHook } from '@testing-library/react';
 import { useWakeLock } from './useWakeLock';
 
 function stubWakeLock() {
@@ -16,11 +15,6 @@ beforeEach(() => {
     configurable: true,
     get: () => 'visible',
   });
-});
-
-afterEach(() => {
-  cleanup();
-  vi.unstubAllGlobals();
 });
 
 describe('useWakeLock', () => {

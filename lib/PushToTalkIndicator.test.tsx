@@ -1,10 +1,7 @@
-// @vitest-environment jsdom
-import { afterEach, describe, expect, it } from 'vitest';
-import { cleanup, render, screen } from '@testing-library/react';
+import { describe, expect, it } from 'vitest';
+import { render, screen } from '@testing-library/react';
 import * as React from 'react';
 import { PushToTalkIndicator } from './PushToTalkIndicator';
-
-afterEach(cleanup);
 
 describe('PushToTalkIndicator', () => {
   it('renders nothing when the companion is not connected', () => {

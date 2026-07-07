@@ -1,6 +1,6 @@
-// @vitest-environment jsdom
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
-import { act, cleanup, renderHook } from '@testing-library/react';
+import { act, renderHook } from '@testing-library/react';
+import { RoomEvent, Track } from 'livekit-client';
 import { usePushToTalk } from './usePushToTalk';
 
 type Handler = ((ev: any) => void) | null;
@@ -35,10 +35,23 @@ class FakeWebSocket {
 
 function makeRoom() {
   const setMicrophoneEnabled = vi.fn().mockResolvedValue(undefined);
-  return {
-    room: { localParticipant: { setMicrophoneEnabled } } as any,
-    setMicrophoneEnabled,
-  };
+  const handlers = new Map<string, Set<(...args: any[]) => void>>();
+  const room = {
+    localParticipant: { setMicrophoneEnabled },
+    on(event: string, fn: (...args: any[]) => void) {
+      if (!handlers.has(event)) handlers.set(event, new Set());
+      handlers.get(event)!.add(fn);
+      return room;
+    },
+    off(event: string, fn: (...args: any[]) => void) {
+      handlers.get(event)?.delete(fn);
+      return room;
+    },
+    emit(event: string, ...args: any[]) {
+      handlers.get(event)?.forEach((fn) => fn(...args));
+    },
+  } as any;
+  return { room, setMicrophoneEnabled };
 }
 
 beforeEach(() => {
@@ -47,9 +60,6 @@ beforeEach(() => {
 });
 
 afterEach(() => {
-  cleanup();
-  vi.unstubAllGlobals();
-  vi.unstubAllEnvs();
   vi.useRealTimers();
 });
 
@@ -109,6 +119,29 @@ describe('usePushToTalk', () => {
       vi.advanceTimersByTime(3000);
     });
     expect(FakeWebSocket.instances).toHaveLength(2);
+  });
+
+  it('re-mutes the mic when a mic track is published while the key is up', () => {
+    const { room, setMicrophoneEnabled } = makeRoom();
+    renderHook(() => usePushToTalk(room));
+    act(() => FakeWebSocket.instances[0].open());
+    setMicrophoneEnabled.mockClear();
+
+    // Simulates the join flow publishing the mic after the companion connected.
+    act(() => room.emit(RoomEvent.LocalTrackPublished, { source: Track.Source.Microphone }));
+    expect(setMicrophoneEnabled).toHaveBeenCalledWith(false);
+  });
+
+  it('does not re-mute a published mic track while the key is held', () => {
+    const { room, setMicrophoneEnabled } = makeRoom();
+    renderHook(() => usePushToTalk(room));
+    const ws = FakeWebSocket.instances[0];
+    act(() => ws.open());
+    act(() => ws.emit({ type: 'ptt', state: 'down' }));
+    setMicrophoneEnabled.mockClear();
+
+    act(() => room.emit(RoomEvent.LocalTrackPublished, { source: Track.Source.Microphone }));
+    expect(setMicrophoneEnabled).not.toHaveBeenCalled();
   });
 
   it('does nothing when the endpoint is disabled', () => {

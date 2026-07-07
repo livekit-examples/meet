@@ -1,9 +1,7 @@
 'use client';
 import * as React from 'react';
-import type { WatchSyncMessage } from './types';
-
-const HEARTBEAT_INTERVAL_MS = 5000;
-const DRIFT_TOLERANCE_S = 0.6;
+import { DRIFT_TOLERANCE_S, HEARTBEAT_INTERVAL_MS, type WatchSyncMessage } from './types';
+import { GestureOverlay } from './GestureOverlay';
 
 type Props = {
   src: string;
@@ -15,55 +13,50 @@ type Props = {
 
 export function UrlPlayer({ src, hostIdentity, isHost, sendSync, subscribe }: Props) {
   const videoRef = React.useRef<HTMLVideoElement>(null);
-  const ignoreEventsRef = React.useRef(false);
+  // Autoplay with sound is blocked until the viewer interacts with the page;
+  // when play() rejects we show a click-to-play overlay instead of failing silently.
+  const [needsGesture, setNeedsGesture] = React.useState(false);
+
+  const tryPlay = React.useCallback(() => {
+    videoRef.current?.play().then(
+      () => setNeedsGesture(false),
+      () => setNeedsGesture(true),
+    );
+  }, []);
 
   React.useEffect(() => {
     if (!videoRef.current || isHost) return;
     const v = videoRef.current;
     return subscribe((msg) => {
       if (msg.type === 'play') {
-        ignoreEventsRef.current = true;
         if (Math.abs(v.currentTime - msg.currentTime) > DRIFT_TOLERANCE_S)
           v.currentTime = msg.currentTime;
-        v.play().catch(() => {});
-        queueMicrotask(() => (ignoreEventsRef.current = false));
+        tryPlay();
       } else if (msg.type === 'pause') {
-        ignoreEventsRef.current = true;
         v.pause();
+        setNeedsGesture(false);
         if (Math.abs(v.currentTime - msg.currentTime) > DRIFT_TOLERANCE_S)
           v.currentTime = msg.currentTime;
-        queueMicrotask(() => (ignoreEventsRef.current = false));
       } else if (msg.type === 'seek') {
-        ignoreEventsRef.current = true;
         v.currentTime = msg.currentTime;
-        queueMicrotask(() => (ignoreEventsRef.current = false));
       } else if (msg.type === 'heartbeat') {
-        if (Math.abs(v.currentTime - msg.currentTime) > DRIFT_TOLERANCE_S) {
-          ignoreEventsRef.current = true;
+        if (Math.abs(v.currentTime - msg.currentTime) > DRIFT_TOLERANCE_S)
           v.currentTime = msg.currentTime;
-          queueMicrotask(() => (ignoreEventsRef.current = false));
+        if (msg.isPlaying && v.paused) tryPlay();
+        if (!msg.isPlaying && !v.paused) {
+          v.pause();
+          setNeedsGesture(false);
         }
-        if (msg.isPlaying && v.paused) v.play().catch(() => {});
-        if (!msg.isPlaying && !v.paused) v.pause();
       }
     });
-  }, [subscribe, isHost]);
+  }, [subscribe, isHost, tryPlay]);
 
   React.useEffect(() => {
     if (!isHost || !videoRef.current) return;
     const v = videoRef.current;
-    const onPlay = () => {
-      if (ignoreEventsRef.current) return;
-      sendSync({ type: 'play', currentTime: v.currentTime, ts: Date.now() });
-    };
-    const onPause = () => {
-      if (ignoreEventsRef.current) return;
-      sendSync({ type: 'pause', currentTime: v.currentTime, ts: Date.now() });
-    };
-    const onSeeked = () => {
-      if (ignoreEventsRef.current) return;
-      sendSync({ type: 'seek', currentTime: v.currentTime, ts: Date.now() });
-    };
+    const onPlay = () => sendSync({ type: 'play', currentTime: v.currentTime, ts: Date.now() });
+    const onPause = () => sendSync({ type: 'pause', currentTime: v.currentTime, ts: Date.now() });
+    const onSeeked = () => sendSync({ type: 'seek', currentTime: v.currentTime, ts: Date.now() });
     v.addEventListener('play', onPlay);
     v.addEventListener('pause', onPause);
     v.addEventListener('seeked', onSeeked);
@@ -86,14 +79,18 @@ export function UrlPlayer({ src, hostIdentity, isHost, sendSync, subscribe }: Pr
     };
   }, [isHost, src, hostIdentity, sendSync]);
 
+  // No crossOrigin attribute: a plain (no-cors) media fetch works under
+  // COEP: credentialless without the server having to send CORS headers.
   return (
-    <video
-      ref={videoRef}
-      className="lk-watch-together-video"
-      src={src}
-      controls={isHost}
-      playsInline
-      crossOrigin="anonymous"
-    />
+    <div className="lk-watch-together-video-wrap">
+      <video
+        ref={videoRef}
+        className="lk-watch-together-video"
+        src={src}
+        controls={isHost}
+        playsInline
+      />
+      {!isHost && needsGesture && <GestureOverlay onClick={tryPlay} />}
+    </div>
   );
 }

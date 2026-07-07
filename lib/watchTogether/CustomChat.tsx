@@ -36,10 +36,7 @@ export function CustomChat({
   React.useEffect(() => {
     if (!layoutContext || chatMessages.length === 0) return;
     const last = chatMessages[chatMessages.length - 1];
-    if (
-      layoutContext.widget.state?.showChat &&
-      lastReadTimestamp.current !== last.timestamp
-    ) {
+    if (layoutContext.widget.state?.showChat && lastReadTimestamp.current !== last.timestamp) {
       lastReadTimestamp.current = last.timestamp;
       return;
     }
@@ -80,7 +77,12 @@ export function CustomChat({
       return;
     }
 
-    await send(text);
+    try {
+      await send(text);
+    } catch (err) {
+      console.error('Failed to send chat message', err);
+      return; // keep the draft so the user can retry
+    }
     input.value = '';
     input.focus();
   };
@@ -108,8 +110,7 @@ export function CustomChat({
       <ul className="lk-list lk-chat-messages" ref={ulRef}>
         {chatMessages.map((msg, idx, arr) => {
           const hideName = idx >= 1 && arr[idx - 1].from === msg.from;
-          const hideTimestamp =
-            hideName && msg.timestamp - arr[idx - 1].timestamp < 60_000;
+          const hideTimestamp = hideName && msg.timestamp - arr[idx - 1].timestamp < 60_000;
           return (
             <ChatEntry
               key={msg.id ?? idx}

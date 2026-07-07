@@ -9,8 +9,11 @@
  * connects to it and opens the mic only while the key is held.
  *
  * Config (environment variables):
- *   PTT_PORT   WebSocket port (default 7331)
- *   PTT_KEY    Key name to use as the talk button (default "F8")
+ *   PTT_PORT     WebSocket port (default 7331)
+ *   PTT_KEY      Key name to use as the talk button (default "F8")
+ *   PTT_ORIGINS  Comma-separated list of allowed browser origins, e.g.
+ *                "https://chat.example.com". Default: allow all (any local
+ *                web page can observe the talk-key state otherwise).
  *
  * Run `npm run learn` (or `node index.js --learn`) and press a key to discover
  * its exact name, then set PTT_KEY to that name.
@@ -23,9 +26,13 @@ const { reduce } = require('./ptt-core');
 const PORT = Number(process.env.PTT_PORT) || 7331;
 const PTT_KEY = (process.env.PTT_KEY || 'F8').toUpperCase();
 const LEARN = process.argv.includes('--learn') || process.env.PTT_LEARN === '1';
+const ALLOWED_ORIGINS = (process.env.PTT_ORIGINS || '')
+  .split(',')
+  .map((s) => s.trim())
+  .filter(Boolean);
 
 const wss = new WebSocketServer({ host: '127.0.0.1', port: PORT });
-let pttState = { talking: false };
+let talking = false;
 
 function broadcast(state) {
   const payload = JSON.stringify({ type: 'ptt', state });
@@ -45,7 +52,15 @@ wss.on('listening', () => {
     console.log('[companion] Hold it to talk. Run `npm run learn` to find a key name.');
   }
 });
-wss.on('connection', () => console.log('[companion] browser connected'));
+wss.on('connection', (socket, req) => {
+  const origin = req.headers.origin;
+  if (ALLOWED_ORIGINS.length > 0 && !ALLOWED_ORIGINS.includes(origin)) {
+    console.warn(`[companion] rejected connection from origin: ${origin || 'unknown'}`);
+    socket.close(1008, 'origin not allowed');
+    return;
+  }
+  console.log('[companion] browser connected');
+});
 wss.on('error', (err) => console.error('[companion] WebSocket server error:', err.message));
 
 const keyboard = new GlobalKeyboardListener();
@@ -57,11 +72,11 @@ keyboard.addListener((event) => {
     return;
   }
 
-  const next = reduce(pttState, event, PTT_KEY);
-  if (next.broadcast) {
-    broadcast(next.broadcast);
+  const next = reduce(talking, event, PTT_KEY);
+  if (next !== talking) {
+    broadcast(next ? 'down' : 'up');
   }
-  pttState = next;
+  talking = next;
 });
 
 process.on('SIGINT', () => {

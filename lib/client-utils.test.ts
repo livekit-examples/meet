@@ -1,4 +1,4 @@
-import { afterEach, describe, expect, it, vi } from 'vitest';
+import { describe, expect, it, vi } from 'vitest';
 import {
   decodePassphrase,
   encodePassphrase,
@@ -7,10 +7,6 @@ import {
   isMeetStaging,
   randomString,
 } from './client-utils';
-
-afterEach(() => {
-  vi.unstubAllGlobals();
-});
 
 describe('randomString', () => {
   it('returns a string of the requested length', () => {

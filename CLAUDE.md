@@ -29,8 +29,9 @@ pnpm format:check     # prettier --check (CI gate)
 pnpm format:write     # prettier --write
 ```
 
-There is one unit-test file (`lib/getLiveKitURL.test.ts`, vitest). To run a single
-test file: `pnpm vitest run lib/getLiveKitURL.test.ts`.
+Unit tests (vitest) live next to the code as `*.test.ts(x)` files in `lib/`, plus
+`companion/ptt-core.test.js`. To run a single test file:
+`pnpm vitest run lib/getLiveKitURL.test.ts`.
 
 CI (`.github/workflows/test.yaml`) runs, in order: `pnpm lint`, `pnpm format:check`,
 `pnpm test`. All three must pass.
@@ -93,6 +94,7 @@ Public (`NEXT_PUBLIC_*`, shipped to the browser):
 | `NEXT_PUBLIC_LK_RECORD_ENDPOINT`                                | unset                     | Base path for recording controls (e.g. `/api/record`). Recording UI is hidden if unset.                          |
 | `NEXT_PUBLIC_CONN_DETAILS_ENDPOINT`                             | `/api/connection-details` | Override the token endpoint (used by `PageClientImpl`).                                                          |
 | `NEXT_PUBLIC_DATADOG_CLIENT_TOKEN` / `NEXT_PUBLIC_DATADOG_SITE` | unset                     | If both set, LiveKit client logs are forwarded to Datadog (`lib/Debug.tsx`).                                     |
+| `NEXT_PUBLIC_PTT_WS_URL`                                        | `ws://127.0.0.1:7331`     | WebSocket endpoint of the local push-to-talk companion (`companion/`). Set to an empty string to disable.        |
 
 ## Per-room URL parameters
 
@@ -120,10 +122,13 @@ Room behavior is tuned through query/hash parameters rather than settings:
   JWT to anyone who requests one for a room name. Fine for a demo; gate it for real use.
 - **E2EE + recording are mutually exclusive.** Server-side Egress cannot record an
   encrypted room; `SettingsMenu` throws if you try.
-- **`useSetupE2EE` constructs a `Worker` during render** when a passphrase is present;
-  it is not memoized, so it can create a worker per render. If you touch E2EE, prefer
-  memoizing the worker/key provider.
+- **`useSetupE2EE` memoizes the E2EE worker/key provider per mount** and terminates
+  the worker on unmount. Keep it that way — an unmemoized `Worker` created during
+  render leaks a worker per render.
 - **`reactStrictMode` is `false`** (`next.config.js`) — effects do not double-invoke
   in dev, which hides some cleanup bugs. Test connection/teardown carefully.
 - **COOP/COEP headers** are set globally in `next.config.js` (required for the E2EE
   WebWorker / SharedArrayBuffer). Cross-origin assets must be `credentialless`-compatible.
+  Cross-origin **iframes** are blocked under COEP unless they load `credentialless` —
+  the watch-together YouTube player creates its iframe manually with that attribute
+  (Chromium-only; Firefox does not support credentialless iframes).

@@ -10,28 +10,27 @@ function normalizeKeyName(name) {
 }
 
 /**
- * Reduce a keyboard event against the current talk state.
+ * Compute the next talking state from a keyboard event.
  *
- * @param {{ talking: boolean }} state    current state
+ * @param {boolean} talking  current talking state
  * @param {{ name?: string, state?: string }} event  key event (state is 'DOWN' | 'UP')
- * @param {string} pttKey                 configured talk key name
- * @returns {{ talking: boolean, broadcast: 'down' | 'up' | null }}
- *          next state and the message to broadcast (null = nothing changed).
+ * @param {string} pttKey    configured talk key name
+ * @returns {boolean} next talking state
  *
- * Keeps the mic from re-triggering on auto-repeat by only emitting on an actual
- * not-talking -> talking (DOWN) or talking -> not-talking (UP) transition.
+ * The caller broadcasts only when the value changes, which keeps the mic from
+ * re-triggering on key auto-repeat (repeated DOWNs while already talking).
  */
-function reduce(state, event, pttKey) {
+function reduce(talking, event, pttKey) {
   if (normalizeKeyName(event.name) !== normalizeKeyName(pttKey)) {
-    return { talking: state.talking, broadcast: null };
+    return talking;
   }
-  if (event.state === 'DOWN' && !state.talking) {
-    return { talking: true, broadcast: 'down' };
+  if (event.state === 'DOWN') {
+    return true;
   }
-  if (event.state === 'UP' && state.talking) {
-    return { talking: false, broadcast: 'up' };
+  if (event.state === 'UP') {
+    return false;
   }
-  return { talking: state.talking, broadcast: null };
+  return talking;
 }
 
 module.exports = { normalizeKeyName, reduce };

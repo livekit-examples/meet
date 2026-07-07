@@ -164,10 +164,43 @@ h2 a {
   overflow: hidden;
 }
 
+.lk-watch-together-video-wrap {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 .lk-watch-together-video {
   width: 100%;
   height: 100%;
   object-fit: contain;
+}
+
+.lk-watch-together-gesture {
+  position: absolute;
+  inset: 0;
+  margin: auto;
+  width: max-content;
+  height: max-content;
+  padding: 0.625rem 1.25rem;
+  font-size: 1rem;
+  z-index: 2;
+  opacity: 0;
+  animation: lk-watch-together-gesture-in 0.2s ease forwards;
+}
+
+/* the delay hides a transient not-playing state (YouTube's cued->playing) when autoplay works */
+.lk-watch-together-gesture-delayed {
+  animation-delay: 0.4s;
+}
+
+@keyframes lk-watch-together-gesture-in {
+  to {
+    opacity: 1;
+  }
 }
 
 .lk-watch-together-overlay {

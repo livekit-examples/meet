@@ -5,6 +5,9 @@
 /.pnp
 .pnp.js
 
+# npm lockfile (this repo uses pnpm; see pnpm-lock.yaml)
+/package-lock.json
+
 # testing
 /coverage
 
@@ -36,3 +39,6 @@ yarn-error.log*
 
 # typescript
 *.tsbuildinfo
+
+# easyeda MCP local cache (not part of this project)
+/.easyeda-mcp-pro/

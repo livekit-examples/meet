@@ -2,6 +2,7 @@
 import * as React from 'react';
 import { useDataChannel, useLocalParticipant } from '@livekit/components-react';
 import {
+  HEARTBEAT_TIMEOUT_MS,
   WATCH_TOGETHER_TOPIC,
   type EmbedKind,
   type WatchSyncMessage,
@@ -30,6 +31,7 @@ export function WatchTogetherProvider({ children }: { children: React.ReactNode 
   const [embed, setEmbed] = React.useState<WatchTogetherEmbedState>({ active: false });
   const [stream, setStream] = React.useState<WatchTogetherStreamState>({ active: false });
   const listenersRef = React.useRef(new Set<(msg: WatchSyncMessage) => void>());
+  const lastHeartbeatRef = React.useRef(0);
 
   const { send } = useDataChannel(WATCH_TOGETHER_TOPIC, (msg) => {
     let parsed: WatchSyncMessage | null = null;
@@ -40,6 +42,9 @@ export function WatchTogetherProvider({ children }: { children: React.ReactNode 
     }
     if (!parsed) return;
     const fromIdentity = msg.from?.identity;
+    if (parsed.type === 'start-embed' || parsed.type === 'heartbeat') {
+      lastHeartbeatRef.current = Date.now();
+    }
     if (parsed.type === 'start-embed' && fromIdentity) {
       setEmbed({
         active: true,
@@ -64,6 +69,19 @@ export function WatchTogetherProvider({ children }: { children: React.ReactNode 
     }
     listenersRef.current.forEach((l) => l(parsed!));
   });
+
+  // If the host vanishes without sending "stop" (tab crash, network drop),
+  // viewers would be stuck on a frozen embed — drop it once heartbeats stop.
+  React.useEffect(() => {
+    if (!embed.active || embed.isHost) return;
+    lastHeartbeatRef.current = Date.now();
+    const timer = window.setInterval(() => {
+      if (Date.now() - lastHeartbeatRef.current > HEARTBEAT_TIMEOUT_MS) {
+        setEmbed({ active: false });
+      }
+    }, 5_000);
+    return () => window.clearInterval(timer);
+  }, [embed]);
 
   const sendSync = React.useCallback(
     (msg: WatchSyncMessage) => {
@@ -119,9 +137,7 @@ export function WatchTogetherProvider({ children }: { children: React.ReactNode 
     [embed, stream, startEmbed, stopEmbed, startStream, stopStream, sendSync, subscribe],
   );
 
-  return (
-    <WatchTogetherContext.Provider value={value}>{children}</WatchTogetherContext.Provider>
-  );
+  return <WatchTogetherContext.Provider value={value}>{children}</WatchTogetherContext.Provider>;
 }
 
 export function useWatchTogether() {

@@ -1,5 +1,12 @@
 export const WATCH_TOGETHER_TOPIC = 'watch-together';
 
+// Hosts broadcast a heartbeat on this cadence while an embed is active.
+export const HEARTBEAT_INTERVAL_MS = 5000;
+// Viewers treat three missed beats (plus slack) as "host gone".
+export const HEARTBEAT_TIMEOUT_MS = 3 * HEARTBEAT_INTERVAL_MS + 1000;
+// Viewers only re-seek when they drift further than this from the host.
+export const DRIFT_TOLERANCE_S = 0.6;
+
 export type EmbedKind = 'url' | 'youtube';
 
 export type WatchSyncMessage =
@@ -28,6 +35,4 @@ export type WatchTogetherEmbedState =
       isHost: boolean;
     };
 
-export type WatchTogetherStreamState =
-  | { active: false }
-  | { active: true; file: File };
+export type WatchTogetherStreamState = { active: false } | { active: true; file: File };

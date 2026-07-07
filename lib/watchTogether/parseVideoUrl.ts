@@ -1,6 +1,4 @@
-export type ParsedVideoUrl =
-  | { kind: 'youtube'; videoId: string }
-  | { kind: 'url'; url: string };
+export type ParsedVideoUrl = { kind: 'youtube'; videoId: string } | { kind: 'url'; url: string };
 
 const YOUTUBE_HOSTS = new Set([
   'youtube.com',

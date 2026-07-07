@@ -1,9 +1,7 @@
 'use client';
 import * as React from 'react';
-import type { WatchSyncMessage } from './types';
-
-const HEARTBEAT_INTERVAL_MS = 5000;
-const DRIFT_TOLERANCE_S = 0.6;
+import { DRIFT_TOLERANCE_S, HEARTBEAT_INTERVAL_MS, type WatchSyncMessage } from './types';
+import { GestureOverlay } from './GestureOverlay';
 
 declare global {
   interface Window {
@@ -42,58 +40,82 @@ type Props = {
 export function YouTubePlayer({ videoId, hostIdentity, isHost, sendSync, subscribe }: Props) {
   const containerRef = React.useRef<HTMLDivElement>(null);
   const playerRef = React.useRef<any>(null);
-  const ignoreEventsRef = React.useRef(false);
+  // Keep sendSync in a ref so a changing identity doesn't tear down the player.
+  const sendSyncRef = React.useRef(sendSync);
+  sendSyncRef.current = sendSync;
+  const lastSyncTimeRef = React.useRef(0);
   const [error, setError] = React.useState<string | null>(null);
   const [ready, setReady] = React.useState(false);
+  const [playing, setPlaying] = React.useState(false);
+  const [shouldPlay, setShouldPlay] = React.useState(false);
 
   React.useEffect(() => {
-    if (!containerRef.current) return;
+    const container = containerRef.current;
+    if (!container) return;
     let cancelled = false;
     let player: any = null;
 
+    // The app is crossOriginIsolated (COOP/COEP for E2EE), which blocks
+    // cross-origin iframes unless they load credentialless — so we create the
+    // iframe ourselves instead of letting the IFrame API do it. Firefox does
+    // not support credentialless iframes, so YouTube mode is Chromium-only.
+    const iframe = document.createElement('iframe');
+    iframe.setAttribute('credentialless', '');
+    (iframe as any).credentialless = true;
+    const params = new URLSearchParams({
+      enablejsapi: '1',
+      playsinline: '1',
+      rel: '0',
+      controls: isHost ? '1' : '0',
+      disablekb: isHost ? '0' : '1',
+      origin: window.location.origin,
+    });
+    iframe.src = `https://www.youtube.com/embed/${encodeURIComponent(videoId)}?${params.toString()}`;
+    iframe.allow = 'autoplay; encrypted-media; picture-in-picture';
+    iframe.allowFullscreen = true;
+    container.appendChild(iframe);
+
     loadYouTubeApi()
       .then((YT) => {
-        if (cancelled || !containerRef.current) return;
-        player = new YT.Player(containerRef.current, {
-          videoId,
-          width: '100%',
-          height: '100%',
-          playerVars: {
-            controls: isHost ? 1 : 0,
-            disablekb: isHost ? 0 : 1,
-            modestbranding: 1,
-            rel: 0,
-            playsinline: 1,
-          },
+        if (cancelled) return;
+        player = new YT.Player(iframe, {
           events: {
             onReady: () => {
+              if (cancelled) return;
               playerRef.current = player;
               setReady(true);
             },
             onStateChange: (e: any) => {
-              if (!isHost || ignoreEventsRef.current) return;
+              if (cancelled) return;
               const state = e.data;
+              setPlaying(state === YT.PlayerState.PLAYING || state === YT.PlayerState.BUFFERING);
+              if (!isHost) return;
               const t = player.getCurrentTime();
               if (state === YT.PlayerState.PLAYING) {
-                sendSync({ type: 'play', currentTime: t, ts: Date.now() });
+                sendSyncRef.current({ type: 'play', currentTime: t, ts: Date.now() });
               } else if (state === YT.PlayerState.PAUSED) {
-                sendSync({ type: 'pause', currentTime: t, ts: Date.now() });
+                sendSyncRef.current({ type: 'pause', currentTime: t, ts: Date.now() });
               }
             },
           },
         });
       })
-      .catch((err) => setError(err?.message ?? String(err)));
+      .catch((err) => {
+        if (!cancelled) setError(err?.message ?? String(err));
+      });
 
     return () => {
       cancelled = true;
       try {
-        playerRef.current?.destroy?.();
+        player?.destroy?.();
       } catch {}
       playerRef.current = null;
+      iframe.remove();
       setReady(false);
+      setPlaying(false);
+      setShouldPlay(false);
     };
-  }, [videoId, isHost, sendSync]);
+  }, [videoId, isHost]);
 
   React.useEffect(() => {
     if (!ready || isHost) return;
@@ -102,25 +124,25 @@ export function YouTubePlayer({ videoId, hostIdentity, isHost, sendSync, subscri
       if (!player) return;
       const cur = player.getCurrentTime?.() ?? 0;
       if (msg.type === 'play') {
-        ignoreEventsRef.current = true;
-        if (Math.abs(cur - msg.currentTime) > DRIFT_TOLERANCE_S) player.seekTo(msg.currentTime, true);
-        player.playVideo();
-        queueMicrotask(() => (ignoreEventsRef.current = false));
-      } else if (msg.type === 'pause') {
-        ignoreEventsRef.current = true;
-        player.pauseVideo();
-        if (Math.abs(cur - msg.currentTime) > DRIFT_TOLERANCE_S) player.seekTo(msg.currentTime, true);
-        queueMicrotask(() => (ignoreEventsRef.current = false));
-      } else if (msg.type === 'seek') {
-        ignoreEventsRef.current = true;
-        player.seekTo(msg.currentTime, true);
-        queueMicrotask(() => (ignoreEventsRef.current = false));
-      } else if (msg.type === 'heartbeat') {
-        if (Math.abs(cur - msg.currentTime) > DRIFT_TOLERANCE_S) {
-          ignoreEventsRef.current = true;
+        if (Math.abs(cur - msg.currentTime) > DRIFT_TOLERANCE_S)
           player.seekTo(msg.currentTime, true);
-          queueMicrotask(() => (ignoreEventsRef.current = false));
-        }
+        lastSyncTimeRef.current = msg.currentTime;
+        setShouldPlay(true);
+        player.playVideo();
+      } else if (msg.type === 'pause') {
+        player.pauseVideo();
+        if (Math.abs(cur - msg.currentTime) > DRIFT_TOLERANCE_S)
+          player.seekTo(msg.currentTime, true);
+        lastSyncTimeRef.current = msg.currentTime;
+        setShouldPlay(false);
+      } else if (msg.type === 'seek') {
+        player.seekTo(msg.currentTime, true);
+        lastSyncTimeRef.current = msg.currentTime;
+      } else if (msg.type === 'heartbeat') {
+        if (Math.abs(cur - msg.currentTime) > DRIFT_TOLERANCE_S)
+          player.seekTo(msg.currentTime, true);
+        lastSyncTimeRef.current = msg.currentTime;
+        setShouldPlay(msg.isPlaying);
         const isPlaying = player.getPlayerState?.() === 1;
         if (msg.isPlaying && !isPlaying) player.playVideo();
         if (!msg.isPlaying && isPlaying) player.pauseVideo();
@@ -133,7 +155,7 @@ export function YouTubePlayer({ videoId, hostIdentity, isHost, sendSync, subscri
     const heartbeat = window.setInterval(() => {
       const player = playerRef.current;
       if (!player) return;
-      sendSync({
+      sendSyncRef.current({
         type: 'heartbeat',
         kind: 'youtube',
         src: videoId,
@@ -144,11 +166,24 @@ export function YouTubePlayer({ videoId, hostIdentity, isHost, sendSync, subscri
       });
     }, HEARTBEAT_INTERVAL_MS);
     return () => window.clearInterval(heartbeat);
-  }, [ready, isHost, videoId, hostIdentity, sendSync]);
+  }, [ready, isHost, videoId, hostIdentity]);
+
+  const handleGesture = () => {
+    const player = playerRef.current;
+    if (!player) return;
+    player.seekTo?.(lastSyncTimeRef.current, true);
+    player.playVideo?.();
+  };
+
+  // Without a prior gesture the browser only allows muted autoplay, so when the
+  // host is playing but we aren't, offer a click-to-play fallback (delayed to
+  // hide the brief cued→playing transition when autoplay works).
+  const needsGesture = ready && !isHost && shouldPlay && !playing;
 
   return (
     <div className="lk-watch-together-yt-wrap">
       <div ref={containerRef} className="lk-watch-together-yt-frame" />
+      {needsGesture && <GestureOverlay onClick={handleGesture} delayed />}
       {error && <div className="lk-watch-together-status">YouTube error: {error}</div>}
     </div>
   );

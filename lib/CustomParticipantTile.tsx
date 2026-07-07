@@ -65,10 +65,7 @@ export function CustomParticipantTile(props: ParticipantTileProps) {
           manageSubscription={autoManageSubscription}
         />
       ) : isTrackReference(trackRef) ? (
-        <AudioTrack
-          trackRef={trackRef}
-          onSubscriptionStatusChanged={handleSubscriptionChange}
-        />
+        <AudioTrack trackRef={trackRef} onSubscriptionStatusChanged={handleSubscriptionChange} />
       ) : null}
       <div className="lk-participant-placeholder">
         <ParticipantPlaceholder />
@@ -107,7 +104,6 @@ function isPinned(trackRef: ReturnType<typeof useEnsureTrackRef>, pinState: any)
   if (!Array.isArray(pinState)) return false;
   return pinState.some(
     (p: any) =>
-      p?.participant?.identity === trackRef.participant.identity &&
-      p?.source === trackRef.source,
+      p?.participant?.identity === trackRef.participant.identity && p?.source === trackRef.source,
   );
 }
