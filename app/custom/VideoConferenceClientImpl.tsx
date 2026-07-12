@@ -2,14 +2,7 @@
 
 import { formatChatMessageLinks, RoomContext } from '@livekit/components-react';
 import { CustomVideoConference } from '@/lib/CustomVideoConference';
-import {
-  LogLevel,
-  Room,
-  RoomConnectOptions,
-  RoomOptions,
-  VideoPresets,
-  type VideoCodec,
-} from 'livekit-client';
+import { LogLevel, Room, RoomConnectOptions, type VideoCodec } from 'livekit-client';
 import { DebugMode } from '@/lib/Debug';
 import { useEffect, useMemo, useState } from 'react';
 import { KeyboardShortcuts } from '@/lib/KeyboardShortcuts';
@@ -19,6 +12,7 @@ import { useLowCPUOptimizer } from '@/lib/usePerformanceOptimiser';
 import { useWakeLock } from '@/lib/useWakeLock';
 import { usePushToTalk } from '@/lib/usePushToTalk';
 import { PushToTalkIndicator } from '@/lib/PushToTalkIndicator';
+import { buildCustomRoomOptions } from '@/lib/roomOptions';
 
 export function VideoConferenceClientImpl(props: {
   liveKitUrl: string;
@@ -30,19 +24,14 @@ export function VideoConferenceClientImpl(props: {
 
   const [e2eeSetupComplete, setE2eeSetupComplete] = useState(false);
 
-  const roomOptions = useMemo((): RoomOptions => {
-    return {
-      publishDefaults: {
-        videoSimulcastLayers: [VideoPresets.h540, VideoPresets.h216],
-        red: !e2eeEnabled,
-        videoCodec: props.codec,
-      },
-      adaptiveStream: { pixelDensity: 'screen' },
-      dynacast: true,
-      webAudioMix: true,
-      e2ee: e2eeEnabled && worker ? { keyProvider, worker } : undefined,
+  const roomOptions = useMemo(() => {
+    return buildCustomRoomOptions({
+      codec: props.codec,
+      e2eeEnabled,
+      keyProvider,
       singlePeerConnection: props.singlePeerConnection,
-    };
+      worker,
+    });
   }, [e2eeEnabled, props.codec, keyProvider, worker]);
 
   const room = useMemo(() => new Room(roomOptions), [roomOptions]);
