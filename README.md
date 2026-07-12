@@ -41,6 +41,8 @@ customized fork of [LiveKit Meet](https://github.com/livekit/meet).
 - ⚡ **Automatic low-CPU optimization** that degrades video quality under pressure.
 - ⌨️ **Keyboard shortcuts** and a **debug overlay** (`Shift+D`).
 - 📊 Optional **Datadog** log forwarding.
+- 🍿 **Synchronized room cinema** for direct MP4/WebM/Ogg URLs, HLS streams,
+  YouTube links, and local video files shared over LiveKit.
 
 ## Tech stack
 
@@ -132,6 +134,27 @@ recorded.
 > are **unauthenticated** — anyone who knows a room name can request a token or
 > start/stop a recording. They exist for demo purposes. **Add authentication and
 > authorization before deploying to production.**
+
+## Room cinema
+
+Use the **Кинотеатр** pill in the upper-left corner of a connected room. The current
+host can choose one of two source modes:
+
+- **Link or YouTube** synchronizes play, pause, seeking, and playback position over a
+  reliable LiveKit data channel. Direct MP4/WebM/Ogg URLs use the browser player;
+  HLS (`.m3u8`) uses `hls.js`; YouTube watch, shorts, live, and embed URLs use the
+  YouTube IFrame API.
+- **Local file** stays on the host's device. The browser captures the local player and
+  publishes its video and audio as LiveKit screen-share tracks, so there is no upload
+  or file-size limit in the Next.js app.
+
+Only the current host can replace or stop an active linked source. If the host leaves,
+viewers release the stale player after the heartbeat timeout. Viewers may need to click
+the playback overlay once because browsers block unmuted autoplay.
+
+Direct sources must be playable by the browser, and HLS origins must allow cross-origin
+fetches. YouTube playback is most reliable in Chromium: this app's global COEP header
+requires a `credentialless` iframe, which Firefox does not currently support.
 
 ## Deployment
 

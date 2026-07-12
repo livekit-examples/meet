@@ -16,7 +16,7 @@ function loadYouTubeApi(): Promise<any> {
   if (typeof window === 'undefined') return Promise.reject(new Error('SSR'));
   if (window.YT && window.YT.Player) return Promise.resolve(window.YT);
   if (ytApiPromise) return ytApiPromise;
-  ytApiPromise = new Promise((resolve) => {
+  ytApiPromise = new Promise((resolve, reject) => {
     const previous = window.onYouTubeIframeAPIReady;
     window.onYouTubeIframeAPIReady = () => {
       previous?.();
@@ -24,6 +24,10 @@ function loadYouTubeApi(): Promise<any> {
     };
     const tag = document.createElement('script');
     tag.src = 'https://www.youtube.com/iframe_api';
+    tag.onerror = () => {
+      ytApiPromise = null;
+      reject(new Error('Не удалось загрузить YouTube IFrame API'));
+    };
     document.head.appendChild(tag);
   });
   return ytApiPromise;
@@ -66,7 +70,7 @@ export function YouTubePlayer({ videoId, hostIdentity, isHost, sendSync, subscri
       enablejsapi: '1',
       playsinline: '1',
       rel: '0',
-      controls: isHost ? '1' : '0',
+      controls: '1',
       disablekb: isHost ? '0' : '1',
       origin: window.location.origin,
     });
@@ -184,7 +188,12 @@ export function YouTubePlayer({ videoId, hostIdentity, isHost, sendSync, subscri
     <div className="lk-watch-together-yt-wrap">
       <div ref={containerRef} className="lk-watch-together-yt-frame" />
       {needsGesture && <GestureOverlay onClick={handleGesture} delayed />}
-      {error && <div className="lk-watch-together-status">YouTube error: {error}</div>}
+      {!ready && !error && <div className="lk-watch-together-status">Подключение к YouTube…</div>}
+      {error && (
+        <div className="lk-watch-together-status lk-watch-together-error">
+          Ошибка YouTube: {error}
+        </div>
+      )}
     </div>
   );
 }

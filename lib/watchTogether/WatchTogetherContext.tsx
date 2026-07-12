@@ -4,6 +4,7 @@ import { useDataChannel, useLocalParticipant } from '@livekit/components-react';
 import {
   HEARTBEAT_TIMEOUT_MS,
   WATCH_TOGETHER_TOPIC,
+  isWatchSyncMessage,
   type EmbedKind,
   type WatchSyncMessage,
   type WatchTogetherEmbedState,
@@ -32,20 +33,26 @@ export function WatchTogetherProvider({ children }: { children: React.ReactNode 
   const [stream, setStream] = React.useState<WatchTogetherStreamState>({ active: false });
   const listenersRef = React.useRef(new Set<(msg: WatchSyncMessage) => void>());
   const lastHeartbeatRef = React.useRef(0);
+  const embedRef = React.useRef(embed);
+  embedRef.current = embed;
 
   const { send } = useDataChannel(WATCH_TOGETHER_TOPIC, (msg) => {
-    let parsed: WatchSyncMessage | null = null;
+    let parsed: unknown;
     try {
-      parsed = JSON.parse(decoder.decode(msg.payload)) as WatchSyncMessage;
+      parsed = JSON.parse(decoder.decode(msg.payload));
     } catch {
       return;
     }
-    if (!parsed) return;
+    if (!isWatchSyncMessage(parsed)) return;
     const fromIdentity = msg.from?.identity;
-    if (parsed.type === 'start-embed' || parsed.type === 'heartbeat') {
+    if (!fromIdentity) return;
+
+    if (parsed.type === 'start-embed') {
+      if (parsed.hostIdentity !== fromIdentity) return;
+      const current = embedRef.current;
+      if (current.active && current.hostIdentity !== fromIdentity) return;
       lastHeartbeatRef.current = Date.now();
-    }
-    if (parsed.type === 'start-embed' && fromIdentity) {
+      setStream({ active: false });
       setEmbed({
         active: true,
         kind: parsed.kind,
@@ -53,21 +60,30 @@ export function WatchTogetherProvider({ children }: { children: React.ReactNode 
         hostIdentity: parsed.hostIdentity,
         isHost: fromIdentity === localParticipant.identity,
       });
-    } else if (parsed.type === 'heartbeat' && fromIdentity) {
+    } else if (parsed.type === 'heartbeat') {
+      if (parsed.hostIdentity !== fromIdentity) return;
+      const current = embedRef.current;
+      if (current.active && current.hostIdentity !== fromIdentity) return;
+      lastHeartbeatRef.current = Date.now();
       setEmbed((prev) => {
         if (prev.active) return prev;
         return {
           active: true,
-          kind: parsed!.kind as EmbedKind,
-          src: (parsed as Extract<WatchSyncMessage, { type: 'heartbeat' }>).src,
-          hostIdentity: (parsed as Extract<WatchSyncMessage, { type: 'heartbeat' }>).hostIdentity,
+          kind: parsed.kind,
+          src: parsed.src,
+          hostIdentity: parsed.hostIdentity,
           isHost: fromIdentity === localParticipant.identity,
         };
       });
-    } else if (parsed.type === 'stop') {
+    } else {
+      const current = embedRef.current;
+      if (!current.active || current.hostIdentity !== fromIdentity) return;
+    }
+
+    if (parsed.type === 'stop') {
       setEmbed({ active: false });
     }
-    listenersRef.current.forEach((l) => l(parsed!));
+    listenersRef.current.forEach((listener) => listener(parsed));
   });
 
   // If the host vanishes without sending "stop" (tab crash, network drop),
@@ -96,7 +112,10 @@ export function WatchTogetherProvider({ children }: { children: React.ReactNode 
 
   const startEmbed = React.useCallback(
     (kind: EmbedKind, src: string) => {
+      const current = embedRef.current;
+      if (current.active && !current.isHost) return;
       const identity = localParticipant.identity;
+      setStream({ active: false });
       sendSync({ type: 'start-embed', kind, src, hostIdentity: identity, ts: Date.now() });
       setEmbed({ active: true, kind, src, hostIdentity: identity, isHost: true });
     },
@@ -108,9 +127,18 @@ export function WatchTogetherProvider({ children }: { children: React.ReactNode 
     setEmbed({ active: false });
   }, [sendSync]);
 
-  const startStream = React.useCallback((file: File) => {
-    setStream({ active: true, file });
-  }, []);
+  const startStream = React.useCallback(
+    (file: File) => {
+      const current = embedRef.current;
+      if (current.active && !current.isHost) return;
+      if (current.active) {
+        sendSync({ type: 'stop', ts: Date.now() });
+        setEmbed({ active: false });
+      }
+      setStream({ active: true, file });
+    },
+    [sendSync],
+  );
 
   const stopStream = React.useCallback(() => {
     setStream({ active: false });

@@ -60,6 +60,8 @@ Everything else is a browser client that talks WebRTC directly to LiveKit.
 | `useSetupE2EE.ts`           | Reads the passphrase from `location.hash` and spins up the `livekit-client/e2ee-worker` Web Worker.                                                                        |
 | `usePerfomanceOptimiser.ts` | `useLowCPUOptimizer` — listens for `LocalTrackCpuConstrained` and degrades publisher/subscriber video quality.                                                             |
 | `SettingsMenu.tsx`          | In-room settings drawer (Media / Recording tabs). Gated by `NEXT_PUBLIC_SHOW_SETTINGS_MENU`.                                                                               |
+| `CustomVideoConference.tsx` | Conference layout with participant volume controls, custom chat, and the watch-together cinema stage.                                                                      |
+| `watchTogether/**`          | Cinema source picker, synchronized URL/HLS/YouTube players, and local-file publication through LiveKit screen-share tracks.                                                |
 | `CameraSettings.tsx`        | Camera device + background effects (blur / virtual background via `@livekit/track-processors`).                                                                            |
 | `MicrophoneSettings.tsx`    | Mic device + Krisp enhanced noise cancellation (auto-on for non-low-power devices).                                                                                        |
 | `RecordingIndicator.tsx`    | Red inset border + toast while the room is being recorded.                                                                                                                 |
@@ -152,6 +154,46 @@ Key `RoomOptions` decisions (`PageClientImpl.tsx`):
 
 `isLowPowerDevice()` (`< 6` logical cores) also drives defaults elsewhere — e.g. Krisp
 noise-filter quality and whether it auto-enables.
+
+## Watch-together cinema
+
+`CustomVideoConference` always mounts `WatchTogetherProvider` and a visible
+`CinemaPanel`. A participant can start a direct media URL, a YouTube URL, or a local
+video file. Starting linked media moves the conference into focus layout with the
+player as the main stage and participant tracks in the carousel.
+
+### Linked media synchronization
+
+- `parseVideoUrl` normalizes URLs and extracts video IDs from YouTube watch, short,
+  embed, live, `youtu.be`, and privacy-enhanced embed links.
+- Progressive sources use the native `<video>` element. HLS playlists use native HLS
+  where available and `hls.js` elsewhere, with recovery for fatal network and media
+  errors.
+- YouTube uses the IFrame API. The iframe is created manually with `credentialless`
+  because the app is cross-origin isolated for E2EE.
+- The host sends `start-embed`, `play`, `pause`, `seek`, and a 2.5-second heartbeat on
+  the reliable `watch-together` LiveKit data topic. Viewers re-seek only after drift
+  exceeds 600 ms.
+- Incoming packets are schema-validated. Control and stop packets are accepted only
+  from the identity recorded as the current host. Only that host can replace an active
+  linked source.
+- Heartbeats let late joiners discover the active source. Three missed heartbeats plus
+  slack clear the player after an ungraceful host disconnect.
+- Browsers commonly reject unmuted autoplay. Both players expose a synchronized
+  click-to-play fallback for affected viewers.
+
+### Local files
+
+Local files are never uploaded to Next.js. `StreamHostController` creates an object URL,
+plays the file in a host-only `<video>`, captures it with `captureStream()`, wraps the
+result in LiveKit local video/audio tracks, and publishes them as screen-share sources.
+The regular screen-share focus and subscription path then delivers the media to viewers.
+Stopping the source unpublishes both tracks, stops them, and revokes the object URL.
+
+This requires a browser with `HTMLMediaElement.captureStream()` and a file codec that
+the browser can decode. Direct/HLS sources must also satisfy the remote origin's CORS
+and media-access policy. YouTube mode is effectively Chromium-only while Firefox lacks
+credentialless iframe support under COEP.
 
 ## Build & tooling
 

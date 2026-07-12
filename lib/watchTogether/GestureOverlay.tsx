@@ -18,7 +18,7 @@ export function GestureOverlay({ onClick, delayed }: Props) {
   }`;
   return (
     <button type="button" className={className} onClick={onClick}>
-      ▶ Click to play
+      ▶ Включить воспроизведение
     </button>
   );
 }
