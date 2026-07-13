@@ -66,6 +66,23 @@ h2 a {
   text-decoration: none;
 }
 
+.lk-chat-header .lk-chat-close-button {
+  position: absolute;
+  right: 0.75rem;
+  width: 2.75rem;
+  height: 2.75rem;
+  padding: 0;
+}
+
+.lk-chat-close-button svg {
+  width: 1.2rem;
+  height: 1.2rem;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+}
+
 .lk-participant-volume {
   position: absolute;
   top: 0.25rem;

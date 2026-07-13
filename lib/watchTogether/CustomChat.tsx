@@ -104,10 +104,15 @@ export function CustomChat({
         Messages
         {layoutContext && (
           <button
-            className="lk-close-button"
+            type="button"
+            className="lk-button lk-chat-close-button"
+            aria-label="Закрыть чат"
+            title="Закрыть чат"
             onClick={() => layoutContext.widget.dispatch?.({ msg: 'toggle_chat' })}
           >
-            ×
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M6 6l12 12M18 6 6 18" />
+            </svg>
           </button>
         )}
       </div>
