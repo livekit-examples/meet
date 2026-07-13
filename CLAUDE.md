@@ -60,7 +60,8 @@ Two ways to join a room, each with its own entry route and client component:
   - `record/start` + `record/stop` → control LiveKit Egress (S3 output).
 - `lib/` holds the reusable pieces: token-region helper, E2EE setup, the low-CPU
   performance optimizer, and the in-room UI add-ons (settings menu, camera/mic
-  settings, debug overlay, recording indicator, keyboard shortcuts).
+  settings, debug overlay, recording indicator, keyboard shortcuts, synchronized
+  room cinema).
 
 ## Conventions
 

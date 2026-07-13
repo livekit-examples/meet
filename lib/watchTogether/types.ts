@@ -1,7 +1,7 @@
 export const WATCH_TOGETHER_TOPIC = 'watch-together';
 
 // Hosts broadcast a heartbeat on this cadence while an embed is active.
-export const HEARTBEAT_INTERVAL_MS = 5000;
+export const HEARTBEAT_INTERVAL_MS = 2500;
 // Viewers treat three missed beats (plus slack) as "host gone".
 export const HEARTBEAT_TIMEOUT_MS = 3 * HEARTBEAT_INTERVAL_MS + 1000;
 // Viewers only re-seek when they drift further than this from the host.
@@ -24,6 +24,47 @@ export type WatchSyncMessage =
       ts: number;
     }
   | { type: 'stop'; ts: number };
+
+export function isWatchSyncMessage(value: unknown): value is WatchSyncMessage {
+  if (!value || typeof value !== 'object') return false;
+  const message = value as Record<string, unknown>;
+  if (typeof message.type !== 'string' || !isFiniteNumber(message.ts)) return false;
+
+  if (message.type === 'stop') return true;
+  if (message.type === 'play' || message.type === 'pause' || message.type === 'seek') {
+    return isFiniteNumber(message.currentTime) && message.currentTime >= 0;
+  }
+  if (message.type === 'start-embed') {
+    return (
+      isEmbedKind(message.kind) &&
+      typeof message.src === 'string' &&
+      message.src.length > 0 &&
+      typeof message.hostIdentity === 'string' &&
+      message.hostIdentity.length > 0
+    );
+  }
+  if (message.type === 'heartbeat') {
+    return (
+      isEmbedKind(message.kind) &&
+      typeof message.src === 'string' &&
+      message.src.length > 0 &&
+      typeof message.hostIdentity === 'string' &&
+      message.hostIdentity.length > 0 &&
+      isFiniteNumber(message.currentTime) &&
+      message.currentTime >= 0 &&
+      typeof message.isPlaying === 'boolean'
+    );
+  }
+  return false;
+}
+
+function isEmbedKind(value: unknown): value is EmbedKind {
+  return value === 'url' || value === 'youtube';
+}
+
+function isFiniteNumber(value: unknown): value is number {
+  return typeof value === 'number' && Number.isFinite(value);
+}
 
 export type WatchTogetherEmbedState =
   | { active: false }

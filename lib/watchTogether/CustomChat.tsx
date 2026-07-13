@@ -27,7 +27,7 @@ export function CustomChat({
     [messageDecoder, messageEncoder, channelTopic],
   );
   const { chatMessages, send, isSending } = useChat(chatOptions);
-  const { startEmbed, startStream } = useWatchTogether();
+  const { embed, startEmbed, startStream } = useWatchTogether();
 
   React.useEffect(() => {
     if (ulRef.current) ulRef.current.scrollTo({ top: ulRef.current.scrollHeight });
@@ -49,6 +49,10 @@ export function CustomChat({
   }, [chatMessages, layoutContext]);
 
   const handleVideoCommand = (arg: string) => {
+    if (embed.active && !embed.isHost) {
+      alert('Сейчас просмотром управляет другой участник. Дождитесь завершения показа.');
+      return;
+    }
     const trimmed = arg.trim();
     if (!trimmed) {
       fileInputRef.current?.click();
@@ -100,10 +104,15 @@ export function CustomChat({
         Messages
         {layoutContext && (
           <button
-            className="lk-close-button"
+            type="button"
+            className="lk-button lk-chat-close-button"
+            aria-label="Закрыть чат"
+            title="Закрыть чат"
             onClick={() => layoutContext.widget.dispatch?.({ msg: 'toggle_chat' })}
           >
-            ×
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M6 6l12 12M18 6 6 18" />
+            </svg>
           </button>
         )}
       </div>
@@ -128,7 +137,7 @@ export function CustomChat({
           className="lk-form-control lk-chat-form-input"
           disabled={isSending}
           type="text"
-          placeholder="Message · /video <url> · /video to pick a file"
+          placeholder="Сообщение · /video <ссылка>"
           onInput={(e) => e.stopPropagation()}
           onKeyDown={(e) => e.stopPropagation()}
           onKeyUp={(e) => e.stopPropagation()}

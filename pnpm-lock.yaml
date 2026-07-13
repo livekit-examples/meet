@@ -26,6 +26,9 @@ importers:
       '@livekit/track-processors':
         specifier: ^0.7.0
         version: 0.7.0(@types/dom-mediacapture-transform@0.1.11)(livekit-client@2.17.3(@types/dom-mediacapture-record@1.0.22))
+      hls.js:
+        specifier: ^1.6.16
+        version: 1.6.16
       livekit-client:
         specifier: 2.17.3
         version: 2.17.3(@types/dom-mediacapture-record@1.0.22)
@@ -1603,6 +1606,9 @@ packages:
   hasown@2.0.2:
     resolution: {integrity: sha512-0hJU9SCPvmMzIBdZFqNPXWa6dqh7WdH0cII9y+CyS8rG3nL48Bclra9HmKhVVUHyPWNH5Y7xDwAB7bfgSjkUMQ==}
     engines: {node: '>= 0.4'}
+
+  hls.js@1.6.16:
+    resolution: {integrity: sha512-VSIRpLfRwlAAdGL4wiTucx2ScRipo0ed1FBatWkyt832jC4CReKstga6yIhYVwGu9LOBjuX9wzmRMeQdBJtzEA==}
 
   html-encoding-sniffer@6.0.0:
     resolution: {integrity: sha512-CV9TW3Y3f8/wT0BRFc1/KAVQ3TUHiXmaAb6VW9vtiMFf7SLoMd1PdAc4W3KFOFETBJUb90KatHqlsZMWV+R9Gg==}
@@ -4166,6 +4172,8 @@ snapshots:
   hasown@2.0.2:
     dependencies:
       function-bind: 1.1.2
+
+  hls.js@1.6.16: {}
 
   html-encoding-sniffer@6.0.0:
     dependencies:

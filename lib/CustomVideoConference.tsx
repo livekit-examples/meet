@@ -24,6 +24,7 @@ import { WatchTogetherProvider, useWatchTogether } from './watchTogether/WatchTo
 import { EmbedTile } from './watchTogether/EmbedTile';
 import { StreamHostController } from './watchTogether/StreamHostController';
 import { CustomChat } from './watchTogether/CustomChat';
+import { CinemaPanel } from './watchTogether/CinemaPanel';
 
 export interface CustomVideoConferenceProps extends React.HTMLAttributes<HTMLDivElement> {
   chatMessageFormatter?: MessageFormatter;
@@ -136,6 +137,7 @@ function CustomVideoConferenceInner({
               </FocusLayoutContainer>
             </div>
           )}
+          <CinemaPanel />
           <ControlBar controls={{ chat: true, settings: !!SettingsComponent }} />
         </div>
         <CustomChat

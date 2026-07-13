@@ -14,15 +14,11 @@ import {
 } from '@livekit/components-react';
 import { CustomVideoConference } from '@/lib/CustomVideoConference';
 import {
-  RoomOptions,
   VideoCodec,
-  VideoPresets,
   Room,
   DeviceUnsupportedError,
   RoomConnectOptions,
   RoomEvent,
-  TrackPublishDefaults,
-  VideoCaptureOptions,
 } from 'livekit-client';
 import { useRouter } from 'next/navigation';
 import { useSetupE2EE } from '@/lib/useSetupE2EE';
@@ -30,6 +26,7 @@ import { useLowCPUOptimizer } from '@/lib/usePerformanceOptimiser';
 import { useWakeLock } from '@/lib/useWakeLock';
 import { usePushToTalk } from '@/lib/usePushToTalk';
 import { PushToTalkIndicator } from '@/lib/PushToTalkIndicator';
+import { buildManagedRoomOptions } from '@/lib/roomOptions';
 
 const CONN_DETAILS_ENDPOINT =
   process.env.NEXT_PUBLIC_CONN_DETAILS_ENDPOINT ?? '/api/connection-details';
@@ -108,35 +105,17 @@ function VideoConferenceComponent(props: {
 
   const [e2eeSetupComplete, setE2eeSetupComplete] = React.useState(false);
 
-  const roomOptions = React.useMemo((): RoomOptions => {
-    let videoCodec: VideoCodec | undefined = props.options.codec ? props.options.codec : 'vp9';
-    if (e2eeEnabled && (videoCodec === 'av1' || videoCodec === 'vp9')) {
-      videoCodec = undefined;
-    }
-    const videoCaptureDefaults: VideoCaptureOptions = {
-      deviceId: props.userChoices.videoDeviceId ?? undefined,
-      resolution: props.options.hq ? VideoPresets.h2160 : VideoPresets.h720,
-    };
-    const publishDefaults: TrackPublishDefaults = {
-      dtx: false,
-      videoSimulcastLayers: props.options.hq
-        ? [VideoPresets.h1080, VideoPresets.h720]
-        : [VideoPresets.h540, VideoPresets.h216],
-      red: !e2eeEnabled,
-      videoCodec,
-    };
-    return {
-      videoCaptureDefaults: videoCaptureDefaults,
-      publishDefaults: publishDefaults,
-      audioCaptureDefaults: {
-        deviceId: props.userChoices.audioDeviceId ?? undefined,
-      },
-      adaptiveStream: true,
-      dynacast: true,
-      webAudioMix: true,
-      e2ee: e2eeEnabled && worker ? { keyProvider, worker } : undefined,
+  const roomOptions = React.useMemo(() => {
+    return buildManagedRoomOptions({
+      audioDeviceId: props.userChoices.audioDeviceId,
+      codec: props.options.codec,
+      e2eeEnabled,
+      hq: props.options.hq,
+      keyProvider,
       singlePeerConnection: props.options.singlePeerConnection,
-    };
+      videoDeviceId: props.userChoices.videoDeviceId,
+      worker,
+    });
   }, [
     props.userChoices,
     props.options.hq,

@@ -4,6 +4,8 @@
 
 # LiveKit Meet
 
+**Documentation:** English | [Русский](./README.ru.md)
+
 <p>
   <a href="https://meet.livekit.io"><strong>Try the demo</strong></a>
   •
@@ -41,6 +43,8 @@ customized fork of [LiveKit Meet](https://github.com/livekit/meet).
 - ⚡ **Automatic low-CPU optimization** that degrades video quality under pressure.
 - ⌨️ **Keyboard shortcuts** and a **debug overlay** (`Shift+D`).
 - 📊 Optional **Datadog** log forwarding.
+- 🍿 **Synchronized room cinema** for direct MP4/WebM/Ogg URLs, HLS streams,
+  YouTube links, and local video files shared over LiveKit.
 
 ## Tech stack
 
@@ -58,19 +62,63 @@ connection lifecycle, E2EE, and recording. Repo conventions and gotchas live in
 
 Give it a try at https://meet.livekit.io.
 
-## Dev setup
+## Quick start
 
-Requirements: **Node.js ≥ 18** (CI uses Node 24) and **pnpm** (`pnpm@10.18.2`).
+Requirements: **Node.js >= 18** (CI uses Node 24). The repository pins
+`pnpm@10.18.2`; Corepack can run that exact version without a global pnpm install.
 
-1. Run `pnpm install` to install all dependencies.
-2. Copy `.env.example` in the project root and rename it to `.env.local`.
-3. Update the missing environment variables in the newly created `.env.local` file
-   (`LIVEKIT_API_KEY`, `LIVEKIT_API_SECRET`, and `LIVEKIT_URL` are required — generate
-   the key/secret from the [LiveKit Cloud dashboard](https://cloud.livekit.io/) or your
-   own server).
-4. Run `pnpm dev` to start the development server and visit
-   [http://localhost:3000](http://localhost:3000) to see the result.
-5. Start development 🎉
+1. Install dependencies:
+
+   ```bash
+   corepack pnpm install
+   ```
+
+2. Create the local environment file:
+
+   ```bash
+   # macOS, Linux, or WSL
+   cp .env.example .env.local
+
+   # Windows PowerShell
+   Copy-Item .env.example .env.local
+   ```
+
+3. Create a project in the [LiveKit Cloud dashboard](https://cloud.livekit.io/) (or
+   use your own LiveKit server), then put its credentials in `.env.local`:
+
+   ```dotenv
+   LIVEKIT_API_KEY=your-api-key
+   LIVEKIT_API_SECRET=your-api-secret
+   LIVEKIT_URL=wss://your-project.livekit.cloud
+   ```
+
+   These three values are required for the **Demo** tab to create working rooms. Use
+   the WebSocket URL (`wss://`), not the dashboard or an `https://` URL. Keep the API
+   secret server-side and never prefix it with `NEXT_PUBLIC_`.
+
+4. Start the development server:
+
+   ```bash
+   corepack pnpm dev
+   ```
+
+5. Open [http://localhost:3000](http://localhost:3000), select **Demo**, click
+   **Start Meeting**, enter a participant name, and join. To test a second participant,
+   open the resulting room URL in another browser profile or an incognito window.
+
+If the `pnpm` command already exists, `pnpm install` and `pnpm dev` are equivalent.
+If `pnpm` is missing, keep using the `corepack pnpm ...` form shown above.
+
+For a production-mode local check:
+
+```bash
+corepack pnpm build
+corepack pnpm start
+```
+
+Public `NEXT_PUBLIC_*` variables are embedded during `build`; set them before running
+that command. See the [Russian README](./README.ru.md) for a more detailed walkthrough
+and troubleshooting guide.
 
 ## Scripts
 
@@ -106,6 +154,7 @@ CI runs `lint`, `format:check`, and `test` on every push and pull request.
 | `NEXT_PUBLIC_LK_RECORD_ENDPOINT`                               | Base path for recording controls, e.g. `/api/record`. Recording UI is hidden if unset.    |
 | `NEXT_PUBLIC_CONN_DETAILS_ENDPOINT`                            | Override the token endpoint (default `/api/connection-details`).                          |
 | `NEXT_PUBLIC_DATADOG_CLIENT_TOKEN`, `NEXT_PUBLIC_DATADOG_SITE` | If both set, forward client logs to Datadog.                                              |
+| `NEXT_PUBLIC_PTT_WS_URL`                                       | Push-to-talk companion URL (default `ws://127.0.0.1:7331`; empty disables it).            |
 
 ## Configuring a room via URL
 
@@ -132,6 +181,27 @@ recorded.
 > are **unauthenticated** — anyone who knows a room name can request a token or
 > start/stop a recording. They exist for demo purposes. **Add authentication and
 > authorization before deploying to production.**
+
+## Room cinema
+
+Use the **Кинотеатр** pill in the upper-left corner of a connected room. The current
+host can choose one of two source modes:
+
+- **Link or YouTube** synchronizes play, pause, seeking, and playback position over a
+  reliable LiveKit data channel. Direct MP4/WebM/Ogg URLs use the browser player;
+  HLS (`.m3u8`) uses `hls.js`; YouTube watch, shorts, live, and embed URLs use the
+  YouTube IFrame API.
+- **Local file** stays on the host's device. The browser captures the local player and
+  publishes its video and audio as LiveKit screen-share tracks, so there is no upload
+  or file-size limit in the Next.js app.
+
+Only the current host can replace or stop an active linked source. If the host leaves,
+viewers release the stale player after the heartbeat timeout. Viewers may need to click
+the playback overlay once because browsers block unmuted autoplay.
+
+Direct sources must be playable by the browser, and HLS origins must allow cross-origin
+fetches. YouTube playback is most reliable in Chromium: this app's global COEP header
+requires a `credentialless` iframe, which Firefox does not currently support.
 
 ## Deployment
 
