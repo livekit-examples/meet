@@ -1,29 +1,35 @@
-# LiveKit push-to-talk companion
+# LiveKit local companion
 
-A tiny Windows helper that gives the web chat **global** push-to-talk (walkie-talkie)
-— it works even when the browser is not the focused window (e.g. while you're playing
-a game). A web page on its own cannot capture a key while another app is focused; this
-companion can, because it uses a low-level OS keyboard hook.
+One localhost helper provides two optional browser capabilities:
 
-## How it works
+- global push-to-talk, even while a game or another window has focus;
+- standard BitTorrent peer support for the room cinema.
 
+The web app discovers capabilities over `ws://127.0.0.1:7331`. Torrent playback uses
+the companion when available and automatically falls back to browser WebTorrent when
+it is not running. The fallback can only reach WebRTC-compatible peers; the companion
+can reach regular BitTorrent peers.
+
+## Data flow
+
+```text
+regular torrent peers -> companion -> localhost HTTP range stream
+                      -> host browser <video> -> captureStream()
+                      -> LiveKit screen-share -> room viewers
 ```
-[companion (this app)]                         [voice chat in the browser]
- • global keyboard hook (key down/up)           • connects to ws://127.0.0.1:7331
-   — fires even when the browser is in the       • key down → opens the mic
-     background / a game is focused              • key up   → mutes the mic
- • localhost-only WebSocket server  ──────────► • shows a "🎙️ Рация" badge
-```
 
-While the companion is connected the call is in walkie-talkie mode: the mic stays
-muted and only opens while you hold the key.
+Torrent data and files never go to the Next.js server. Pieces are stored in an OS
+temporary directory on the host and deleted when playback stops or the owning browser
+socket disconnects. LiveKit receives only the encoded real-time media stream.
 
 ## Requirements
 
-- **Windows** (uses a Windows keyboard hook).
-- **Node.js 18+**.
-- A **Chromium-based browser** (Chrome/Edge) for the chat — they allow a secure page
-  to connect to `ws://127.0.0.1` (loopback). Firefox may block it.
+- Node.js 18 or newer.
+- Windows for the global keyboard hook.
+- Chrome or Edge is recommended for localhost media capture.
+
+The torrent service itself is Node-based, but the current companion also initializes a
+Windows keyboard hook, so other operating systems are not supported yet.
 
 ## Setup
 
@@ -32,50 +38,84 @@ cd companion
 npm install
 ```
 
-Find the name of the key you want to use as the talk button:
+Find the global talk-key name:
 
 ```bash
 npm run learn
 ```
 
-Press the key — its name is printed (e.g. `F8`, `CAPS LOCK`, `MOUSE RIGHT`...). Then
-start the companion with that key:
+Then start both PTT and torrent capabilities:
 
-```bash
+```powershell
 # PowerShell
 $env:PTT_KEY="F8"; npm start
+```
 
-# cmd.exe
+```bat
+:: cmd.exe
 set PTT_KEY=F8 && npm start
 ```
 
-Open the voice chat in Chrome — a `🎙️ Рация подключена` badge appears once it
-connects. Hold the key to talk.
+Keep this process running while the browser room is open. The cinema's **Torrent** tab
+will choose it automatically; there is no engine toggle.
 
-## Configuration
+## Ports and configuration
 
-| Env var       | Default   | Description                                                                                                    |
-| ------------- | --------- | -------------------------------------------------------------------------------------------------------------- |
-| `PTT_KEY`     | `F8`      | Key name (uppercase) used as the talk button.                                                                  |
-| `PTT_PORT`    | `7331`    | Local WebSocket port. Match `NEXT_PUBLIC_PTT_WS_URL` in the web app if you change it.                          |
-| `PTT_ORIGINS` | allow all | Comma-separated allowlist of browser origins (e.g. `https://chat.example.com`). Unset = accept any local page. |
+| Variable            | Default           | Purpose                                                                          |
+| ------------------- | ----------------- | -------------------------------------------------------------------------------- |
+| `PTT_KEY`           | `F8`              | Global key name used as the talk button.                                         |
+| `PTT_PORT`          | `7331`            | Local capability WebSocket port.                                                 |
+| `TORRENT_PORT`      | `PTT_PORT + 1`    | Local HTTP range-stream port used by the host browser.                           |
+| `COMPANION_ORIGINS` | torrent: loopback | Comma-separated trusted browser origins, for example `https://chat.example.com`. |
+| `PTT_ORIGINS`       | torrent: loopback | Legacy alias used when `COMPANION_ORIGINS` is unset.                             |
 
-If you change the port, point the web app at it with
-`NEXT_PUBLIC_PTT_WS_URL=ws://127.0.0.1:<port>`.
+If the WebSocket port changes, configure the web app before building:
 
-## Autostart on login (optional)
+```dotenv
+NEXT_PUBLIC_COMPANION_WS_URL=ws://127.0.0.1:7441
+```
 
-Create a shortcut to `start.cmd` (a one-liner running `npm start` with your `PTT_KEY`)
-and drop it into the Startup folder — press <kbd>Win</kbd>+<kbd>R</kbd>, type
-`shell:startup`, and place the shortcut there.
+To disable global push-to-talk while keeping torrent support:
 
-## Notes / limitations
+```dotenv
+NEXT_PUBLIC_COMPANION_WS_URL=ws://127.0.0.1:7331
+NEXT_PUBLIC_PTT_WS_URL=
+```
 
-- Listens on `127.0.0.1` only — not reachable from the network.
-- Any web page open in your browser can connect to the localhost socket and observe
-  the talk-key state (a one-key keylogger, effectively). Set `PTT_ORIGINS` to your
-  chat's origin to lock it down.
-- Windows only for now; the hook is OS-specific. macOS/Linux would need their own hook
-  (the `node-global-key-listener` package supports them, but this is untested here).
-- Some anti-cheat / antivirus software is wary of global keyboard hooks; allow the
-  bundled key-listener helper if prompted.
+For a web app opened from a deployed domain, trust its exact origin before starting
+the companion:
+
+```powershell
+$env:COMPANION_ORIGINS="https://chat.example.com"; npm start
+```
+
+Without an explicit allowlist, remote origins can still use the legacy PTT relay but
+the companion does not advertise or accept torrent commands from them. Local
+`localhost`, `127.0.0.1`, and `[::1]` development origins are trusted automatically.
+
+## Torrent behavior
+
+- Accepts magnet links and `.torrent` files up to 2 MB.
+- Automatically selects the largest MP4/M4V/WebM/OGG/MOV/MKV file.
+- Supports HTTP byte ranges, so seeking prioritizes the required torrent pieces.
+- Shows peers, download speed, progress, and the selected engine in the host panel.
+- Runs one torrent session at a time and replaces the previous session on a new start.
+- Deletes the temporary piece store on stop, disconnect, or companion shutdown.
+
+The browser still has to decode the selected container and codecs. MP4 with H.264/AAC
+and WebM are the most portable choices; MKV and HEVC support varies by browser and OS.
+
+## Security
+
+- Both servers bind to `127.0.0.1` and are not reachable from the LAN.
+- Torrent stream paths contain a random token.
+- Torrent commands are enabled by default only for loopback web origins. Set an exact
+  `COMPANION_ORIGINS` allowlist when the app is hosted on another domain.
+- The legacy PTT relay still accepts connections from other origins when no allowlist
+  is configured. Set `COMPANION_ORIGINS` to restrict the entire WebSocket.
+- Use torrents only for content you are authorized to download and share.
+
+## Autostart
+
+Create a shortcut that runs `npm start` in this directory and place it in the Windows
+Startup folder (`Win+R`, then `shell:startup`).

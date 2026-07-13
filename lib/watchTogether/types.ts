@@ -76,4 +76,14 @@ export type WatchTogetherEmbedState =
       isHost: boolean;
     };
 
-export type WatchTogetherStreamState = { active: false } | { active: true; file: File };
+export type TorrentInput =
+  | { kind: 'magnet'; magnet: string; name: string }
+  | { kind: 'torrent-file'; bytes: Uint8Array; name: string };
+
+export type WatchTogetherStreamSource =
+  | { kind: 'file'; file: File }
+  | { kind: 'torrent'; input: TorrentInput };
+
+export type WatchTogetherStreamState =
+  | { active: false }
+  | { active: true; source: WatchTogetherStreamSource };

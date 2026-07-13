@@ -1,8 +1,7 @@
 import React from 'react';
 import { RoomEvent, Track } from 'livekit-client';
 import type { LocalTrackPublication, Room } from 'livekit-client';
-
-const DEFAULT_WS_URL = 'ws://127.0.0.1:7331';
+import { getPushToTalkWsUrl } from './companion';
 
 export type PushToTalkState = {
   /** True once connected to the local companion app. */
@@ -27,7 +26,7 @@ export function usePushToTalk(room: Room): PushToTalkState {
   const [talking, setTalking] = React.useState(false);
 
   React.useEffect(() => {
-    const url = process.env.NEXT_PUBLIC_PTT_WS_URL ?? DEFAULT_WS_URL;
+    const url = getPushToTalkWsUrl();
     if (!url) {
       return;
     }

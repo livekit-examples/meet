@@ -52,7 +52,12 @@ export function useLowCPUOptimizer(room: Room, options: Partial<LowCPUOptimizerO
     return () => {
       room.localParticipant.off(ParticipantEvent.LocalTrackCpuConstrained, handleCpuConstrained);
     };
-  }, [room, opts.reducePublisherVideoQuality, opts.reduceSubscriberVideoQuality]);
+  }, [
+    room,
+    opts.disableVideoProcessing,
+    opts.reducePublisherVideoQuality,
+    opts.reduceSubscriberVideoQuality,
+  ]);
 
   React.useEffect(() => {
     const lowerQuality = (_: RemoteTrack, publication: RemoteTrackPublication) => {

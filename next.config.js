@@ -9,6 +9,8 @@ const nextConfig = {
     // Important: return the modified config
     config.module.rules.push({
       test: /\.mjs$/,
+      // MediaPipe publishes this bundle with a sourceMappingURL but omits the map.
+      exclude: /node_modules[\\/]@mediapipe[\\/]tasks-vision[\\/]vision_bundle\.mjs$/,
       enforce: 'pre',
       use: ['source-map-loader'],
     });

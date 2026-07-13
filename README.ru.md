@@ -138,6 +138,7 @@ participant token. Этот режим не запрашивает токен ч
 | `NEXT_PUBLIC_SHOW_SETTINGS_MENU=true` | Показать настройки устройств, фона, Krisp и записи.                  |
 | `NEXT_PUBLIC_LK_RECORD_ENDPOINT`      | Endpoint записи, обычно `/api/record`.                               |
 | `NEXT_PUBLIC_CONN_DETAILS_ENDPOINT`   | Другой endpoint выдачи токена. По умолчанию локальный API.           |
+| `NEXT_PUBLIC_COMPANION_WS_URL`        | WebSocket companion для PTT и обычных BitTorrent-пиров.              |
 | `NEXT_PUBLIC_PTT_WS_URL`              | WebSocket локального PTT helper. По умолчанию `ws://127.0.0.1:7331`. |
 | `NEXT_PUBLIC_DATADOG_CLIENT_TOKEN`    | Client token Datadog. Нужен вместе с `NEXT_PUBLIC_DATADOG_SITE`.     |
 | `NEXT_PUBLIC_DATADOG_SITE`            | Site Datadog.                                                        |
@@ -155,14 +156,23 @@ participant token. Этот режим не запрашивает токен ч
   LiveKit data channel.
 - **Локальный файл:** файл остаётся на компьютере ведущего. Браузер захватывает его
   как media stream и публикует через LiveKit как screen share.
+- **Торрент:** вставьте magnet-ссылку или выберите `.torrent`. Кинотеатр сначала
+  использует локальный companion с обычными BitTorrent-пирами. Если companion не
+  установлен или не запущен, автоматически включается браузерный WebTorrent.
+
+Торрент скачивает только ведущий. Зрители не подключаются к раздаче, а получают один
+готовый видеопоток через LiveKit. Next.js-сервер не загружает и не хранит torrent-файл
+или видео. Browser fallback видит только WebRTC-совместимых WebTorrent-пиров и web
+seeds, поэтому для обычных публичных magnet-ссылок рекомендуется запустить companion.
 
 Прямой источник должен разрешать CORS и воспроизводиться браузером. YouTube в этом
 приложении надёжнее работает в Chromium-браузерах из-за ограничений COEP и iframe.
 
-## Глобальный push-to-talk
+## Локальный companion
 
 Веб-страница не видит нажатия клавиш, когда фокус находится в игре или другом
-приложении. Для глобальной кнопки разговора используется отдельный Windows helper:
+приложении. Companion добавляет глобальную кнопку разговора и поддержку обычных
+BitTorrent-пиров для кинотеатра:
 
 ```powershell
 cd companion
@@ -171,14 +181,25 @@ npm run learn
 $env:PTT_KEY="F8"; npm start
 ```
 
-После подключения helper микрофон работает в режиме рации: удержание выбранной
-клавиши включает микрофон, отпускание выключает. Подробности находятся в
+После подключения companion микрофон работает в режиме рации: удержание выбранной
+клавиши включает микрофон, отпускание выключает. Торрент-вкладка автоматически
+обнаруживает тот же процесс. Подробности находятся в
 [`companion/README.md`](./companion/README.md).
 
-Чтобы полностью отключить попытку подключения к helper, добавьте в `.env.local`:
+Если сайт открыт не с `localhost`, перед запуском companion укажите его точный origin:
+
+```powershell
+$env:COMPANION_ORIGINS="https://ваш-чат.example.com"; npm start
+```
+
+Без этой настройки torrent-команды с внешнего сайта намеренно не принимаются, и
+кинотеатр автоматически использует браузерный WebTorrent.
+
+Чтобы отключить только рацию, но оставить torrent companion, добавьте в `.env.local`:
 
 ```dotenv
 NEXT_PUBLIC_PTT_WS_URL=
+NEXT_PUBLIC_COMPANION_WS_URL=ws://127.0.0.1:7331
 ```
 
 ## Запись комнаты
@@ -241,7 +262,7 @@ LiveKit-проекту, а браузер или firewall не блокируе�
 - [`ARCHITECTURE.md`](./ARCHITECTURE.md) — архитектура, маршруты и жизненный цикл
   подключения.
 - [`CLAUDE.md`](./CLAUDE.md) — команды и правила для разработчиков.
-- [`companion/README.md`](./companion/README.md) — настройка глобального PTT helper.
+- [`companion/README.md`](./companion/README.md) — настройка PTT и torrent companion.
 
 ## Лицензия
 

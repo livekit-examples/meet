@@ -6,6 +6,7 @@ import {
   WATCH_TOGETHER_TOPIC,
   isWatchSyncMessage,
   type EmbedKind,
+  type TorrentInput,
   type WatchSyncMessage,
   type WatchTogetherEmbedState,
   type WatchTogetherStreamState,
@@ -17,6 +18,7 @@ type Ctx = {
   startEmbed: (kind: EmbedKind, src: string) => void;
   stopEmbed: () => void;
   startStream: (file: File) => void;
+  startTorrent: (input: TorrentInput) => void;
   stopStream: () => void;
   sendSync: (msg: WatchSyncMessage) => void;
   subscribe: (listener: (msg: WatchSyncMessage) => void) => () => void;
@@ -135,7 +137,20 @@ export function WatchTogetherProvider({ children }: { children: React.ReactNode 
         sendSync({ type: 'stop', ts: Date.now() });
         setEmbed({ active: false });
       }
-      setStream({ active: true, file });
+      setStream({ active: true, source: { kind: 'file', file } });
+    },
+    [sendSync],
+  );
+
+  const startTorrent = React.useCallback(
+    (input: TorrentInput) => {
+      const current = embedRef.current;
+      if (current.active && !current.isHost) return;
+      if (current.active) {
+        sendSync({ type: 'stop', ts: Date.now() });
+        setEmbed({ active: false });
+      }
+      setStream({ active: true, source: { kind: 'torrent', input } });
     },
     [sendSync],
   );
@@ -158,11 +173,22 @@ export function WatchTogetherProvider({ children }: { children: React.ReactNode 
       startEmbed,
       stopEmbed,
       startStream,
+      startTorrent,
       stopStream,
       sendSync,
       subscribe,
     }),
-    [embed, stream, startEmbed, stopEmbed, startStream, stopStream, sendSync, subscribe],
+    [
+      embed,
+      stream,
+      startEmbed,
+      stopEmbed,
+      startStream,
+      startTorrent,
+      stopStream,
+      sendSync,
+      subscribe,
+    ],
   );
 
   return <WatchTogetherContext.Provider value={value}>{children}</WatchTogetherContext.Provider>;

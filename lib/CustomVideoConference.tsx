@@ -67,9 +67,13 @@ function CustomVideoConferenceInner({
 
   const layoutContext = useCreateLayoutContext();
 
-  const screenShareTracks = tracks
-    .filter(isTrackReference)
-    .filter((track) => track.publication.source === Track.Source.ScreenShare);
+  const screenShareTracks = React.useMemo(
+    () =>
+      tracks
+        .filter(isTrackReference)
+        .filter((track) => track.publication.source === Track.Source.ScreenShare),
+    [tracks],
+  );
 
   const focusTrack = usePinnedTracks(layoutContext)?.[0];
   const carouselTracks = tracks.filter((track) => !isEqualTrackRef(track, focusTrack));
@@ -102,11 +106,7 @@ function CustomVideoConferenceInner({
         layoutContext.pin.dispatch?.({ msg: 'set_pin', trackReference: updatedFocus });
       }
     }
-  }, [
-    screenShareTracks.map((t) => `${t.publication.trackSid}_${t.publication.isSubscribed}`).join(),
-    focusTrack?.publication?.trackSid,
-    tracks,
-  ]);
+  }, [focusTrack, layoutContext.pin, screenShareTracks, tracks]);
 
   return (
     <div className="lk-video-conference" {...props}>

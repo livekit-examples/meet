@@ -32,7 +32,7 @@ export function VideoConferenceClientImpl(props: {
       singlePeerConnection: props.singlePeerConnection,
       worker,
     });
-  }, [e2eeEnabled, props.codec, keyProvider, worker]);
+  }, [e2eeEnabled, props.codec, props.singlePeerConnection, keyProvider, worker]);
 
   const room = useMemo(() => new Room(roomOptions), [roomOptions]);
 

@@ -9,6 +9,12 @@ import {
   type LocalTrackPublication,
 } from 'livekit-client';
 import { useWatchTogether } from './WatchTogetherContext';
+import {
+  formatTorrentSpeed,
+  prepareTorrentSource,
+  type TorrentEngine,
+  type TorrentSourceStatus,
+} from './torrentSource';
 
 export function StreamHostController() {
   const room = useRoomContext();
@@ -20,29 +26,48 @@ export function StreamHostController() {
   }>({});
   const [error, setError] = React.useState<string | null>(null);
   const [status, setStatus] = React.useState('Подготовка файла…');
-  const streamFile = stream.active ? stream.file : null;
+  const [detail, setDetail] = React.useState('');
+  const streamSource = stream.active ? stream.source : null;
 
   React.useEffect(() => {
-    if (!streamFile || !videoRef.current) return;
+    if (!streamSource || !videoRef.current) return;
     const video = videoRef.current;
-    const url = URL.createObjectURL(streamFile);
-    video.src = url;
     setError(null);
     setStatus('Подготовка файла…');
+    setDetail(streamSource.kind === 'file' ? streamSource.file.name : streamSource.input.name);
 
     let cancelled = false;
+    let objectUrl: string | null = null;
+    let sourceCleanup = () => {};
+    const abortController = new AbortController();
 
     const publish = async () => {
       try {
-        await new Promise<void>((resolve, reject) => {
-          const onLoaded = () => resolve();
-          const onError = () => reject(new Error('Failed to load video file'));
-          video.addEventListener('loadedmetadata', onLoaded, { once: true });
-          video.addEventListener('error', onError, { once: true });
-        });
+        let torrentEngine: TorrentEngine | null = null;
+        let sourceName: string;
+        if (streamSource.kind === 'file') {
+          sourceName = streamSource.file.name;
+          objectUrl = URL.createObjectURL(streamSource.file);
+          video.src = objectUrl;
+        } else {
+          const prepared = await prepareTorrentSource(
+            video,
+            streamSource.input,
+            (torrentStatus) => {
+              if (!cancelled) updateTorrentStatus(torrentStatus, setStatus, setDetail);
+            },
+            abortController.signal,
+          );
+          sourceCleanup = prepared.cleanup;
+          torrentEngine = prepared.engine;
+          sourceName = prepared.fileName;
+        }
+
+        await waitForMetadata(video);
         if (cancelled) return;
 
         setStatus('Запуск воспроизведения…');
+        setDetail(sourceName);
         await video.play().catch(() => {
           /* autoplay may be blocked, but captureStream still works */
         });
@@ -88,9 +113,10 @@ export function StreamHostController() {
           publishedRef.current.audio = pub;
         }
         if (!videoTrack) throw new Error('В выбранном файле не найден видеопоток.');
-        setStatus('В эфире');
+        setStatus(torrentEngine ? `В эфире · ${engineLabel(torrentEngine)}` : 'В эфире');
+        setDetail(sourceName);
       } catch (err: any) {
-        if (!cancelled) setError(err?.message ?? String(err));
+        if (!cancelled && err?.name !== 'AbortError') setError(err?.message ?? String(err));
       }
     };
 
@@ -98,6 +124,8 @@ export function StreamHostController() {
 
     return () => {
       cancelled = true;
+      abortController.abort();
+      sourceCleanup();
       const { video: vp, audio: ap } = publishedRef.current;
       publishedRef.current = {};
       if (vp?.track) room.localParticipant.unpublishTrack(vp.track, true).catch(() => {});
@@ -107,9 +135,9 @@ export function StreamHostController() {
         video.removeAttribute('src');
         video.load();
       } catch {}
-      URL.revokeObjectURL(url);
+      if (objectUrl) URL.revokeObjectURL(objectUrl);
     };
-  }, [streamFile, room]);
+  }, [streamSource, room]);
 
   if (!stream.active) return null;
 
@@ -119,7 +147,7 @@ export function StreamHostController() {
       <div className="lk-watch-together-host-controls">
         <span className="lk-watch-together-host-label">
           <strong>{error ? 'Ошибка трансляции' : status}</strong>
-          <span>{error ?? stream.file.name}</span>
+          <span>{error ?? detail}</span>
         </span>
         <button type="button" className="lk-button" onClick={stopStream}>
           Завершить
@@ -127,4 +155,50 @@ export function StreamHostController() {
       </div>
     </div>
   );
+}
+
+function waitForMetadata(video: HTMLVideoElement): Promise<void> {
+  if (video.readyState >= HTMLMediaElement.HAVE_METADATA) return Promise.resolve();
+  return new Promise((resolve, reject) => {
+    const onLoaded = () => {
+      cleanup();
+      resolve();
+    };
+    const onError = () => {
+      cleanup();
+      reject(new Error('Не удалось открыть видеопоток торрента.'));
+    };
+    const cleanup = () => {
+      video.removeEventListener('loadedmetadata', onLoaded);
+      video.removeEventListener('error', onError);
+    };
+    video.addEventListener('loadedmetadata', onLoaded);
+    video.addEventListener('error', onError);
+  });
+}
+
+function updateTorrentStatus(
+  torrentStatus: TorrentSourceStatus,
+  setStatus: (value: string) => void,
+  setDetail: (value: string) => void,
+) {
+  const engine = engineLabel(torrentStatus.engine);
+  if (torrentStatus.phase === 'error') {
+    setStatus(`Ошибка · ${engine}`);
+  } else if (torrentStatus.phase === 'ready') {
+    setStatus(`Буфер готов · ${engine}`);
+  } else {
+    setStatus(`Загрузка · ${engine}`);
+  }
+  const metrics = [
+    torrentStatus.peers !== undefined ? `${torrentStatus.peers} пиров` : null,
+    torrentStatus.downloadSpeed !== undefined
+      ? formatTorrentSpeed(torrentStatus.downloadSpeed)
+      : null,
+  ].filter(Boolean);
+  setDetail([torrentStatus.detail, ...metrics].join(' · '));
+}
+
+function engineLabel(engine: TorrentEngine): string {
+  return engine === 'companion' ? 'Companion' : 'WebTorrent';
 }

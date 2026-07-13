@@ -44,7 +44,7 @@ customized fork of [LiveKit Meet](https://github.com/livekit/meet).
 - ⌨️ **Keyboard shortcuts** and a **debug overlay** (`Shift+D`).
 - 📊 Optional **Datadog** log forwarding.
 - 🍿 **Synchronized room cinema** for direct MP4/WebM/Ogg URLs, HLS streams,
-  YouTube links, and local video files shared over LiveKit.
+  YouTube links, local files, and host-side torrents shared over LiveKit.
 
 ## Tech stack
 
@@ -154,6 +154,7 @@ CI runs `lint`, `format:check`, and `test` on every push and pull request.
 | `NEXT_PUBLIC_LK_RECORD_ENDPOINT`                               | Base path for recording controls, e.g. `/api/record`. Recording UI is hidden if unset.    |
 | `NEXT_PUBLIC_CONN_DETAILS_ENDPOINT`                            | Override the token endpoint (default `/api/connection-details`).                          |
 | `NEXT_PUBLIC_DATADOG_CLIENT_TOKEN`, `NEXT_PUBLIC_DATADOG_SITE` | If both set, forward client logs to Datadog.                                              |
+| `NEXT_PUBLIC_COMPANION_WS_URL`                                 | Local companion URL for PTT and standard BitTorrent peers.                                |
 | `NEXT_PUBLIC_PTT_WS_URL`                                       | Push-to-talk companion URL (default `ws://127.0.0.1:7331`; empty disables it).            |
 
 ## Configuring a room via URL
@@ -185,7 +186,7 @@ recorded.
 ## Room cinema
 
 Use the **Кинотеатр** pill in the upper-left corner of a connected room. The current
-host can choose one of two source modes:
+host can choose one of three source modes:
 
 - **Link or YouTube** synchronizes play, pause, seeking, and playback position over a
   reliable LiveKit data channel. Direct MP4/WebM/Ogg URLs use the browser player;
@@ -194,6 +195,11 @@ host can choose one of two source modes:
 - **Local file** stays on the host's device. The browser captures the local player and
   publishes its video and audio as LiveKit screen-share tracks, so there is no upload
   or file-size limit in the Next.js app.
+- **Torrent** accepts a magnet link or `.torrent` file. It first asks the local
+  [companion](./companion/README.md) to use regular BitTorrent peers. If the companion
+  is absent or too old, it automatically falls back to browser WebTorrent peers. In
+  both cases only the host downloads the torrent; viewers receive one LiveKit media
+  stream and never join the swarm.
 
 Only the current host can replace or stop an active linked source. If the host leaves,
 viewers release the stale player after the heartbeat timeout. Viewers may need to click
@@ -202,6 +208,13 @@ the playback overlay once because browsers block unmuted autoplay.
 Direct sources must be playable by the browser, and HLS origins must allow cross-origin
 fetches. YouTube playback is most reliable in Chromium: this app's global COEP header
 requires a `credentialless` iframe, which Firefox does not currently support.
+Browser WebTorrent can only reach WebRTC-capable peers and web seeds. Install and run
+the companion when ordinary public magnet links must work. Torrent playback still
+depends on the browser being able to decode the selected (largest) video file.
+
+When the web app is hosted outside localhost, set its exact origin in
+`COMPANION_ORIGINS` before starting the companion. Otherwise torrent capability is
+intentionally withheld and the cinema uses browser WebTorrent.
 
 ## Deployment
 

@@ -176,9 +176,7 @@ h2 a {
   display: flex;
   align-items: center;
   justify-content: center;
-  background:
-    radial-gradient(circle at 50% 30%, rgba(214, 76, 42, 0.14), transparent 38%),
-    #030303;
+  background: radial-gradient(circle at 50% 30%, rgba(214, 76, 42, 0.14), transparent 38%), #030303;
   border-radius: var(--lk-border-radius);
   overflow: hidden;
 }
@@ -466,9 +464,7 @@ h2 a {
   padding: 1.5rem;
   overflow-y: auto;
   color: #f7f2ed;
-  background:
-    linear-gradient(150deg, rgba(36, 28, 24, 0.96), rgba(12, 12, 12, 0.98) 48%),
-    #0c0c0c;
+  background: linear-gradient(150deg, rgba(36, 28, 24, 0.96), rgba(12, 12, 12, 0.98) 48%), #0c0c0c;
   border: 1px solid rgba(255, 255, 255, 0.12);
   border-radius: 1.25rem;
   box-shadow: 0 2rem 7rem rgba(0, 0, 0, 0.72);
@@ -544,7 +540,7 @@ h2 a {
 
 .lk-cinema-tabs {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: repeat(3, 1fr);
   gap: 0.25rem;
   margin: 1.5rem 0 1.25rem;
   padding: 0.25rem;
@@ -612,6 +608,70 @@ h2 a {
   color: rgba(255, 255, 255, 0.42);
   font-size: 0.72rem;
   line-height: 1.5;
+}
+
+.lk-cinema-torrent {
+  padding: 0.2rem 0;
+}
+
+.lk-cinema-torrent-divider {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin: 1rem 0;
+  color: rgba(255, 255, 255, 0.34);
+  font-size: 0.7rem;
+  text-transform: uppercase;
+}
+
+.lk-cinema-torrent-divider::before,
+.lk-cinema-torrent-divider::after {
+  content: '';
+  height: 1px;
+  flex: 1;
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.lk-cinema-torrent-file {
+  width: 100%;
+  min-height: 2.8rem;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.lk-cinema-engine-route {
+  display: grid;
+  grid-template-columns: auto auto 1fr auto auto auto 1fr;
+  align-items: center;
+  gap: 0.45rem;
+  margin-top: 1rem;
+  padding: 0.8rem;
+  color: rgba(255, 255, 255, 0.72);
+  background: rgba(0, 0, 0, 0.22);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 0.7rem;
+  font-size: 0.72rem;
+}
+
+.lk-cinema-engine-route > span {
+  display: grid;
+  width: 1.35rem;
+  height: 1.35rem;
+  place-items: center;
+  color: #1d0d08;
+  background: #f68a60;
+  border-radius: 50%;
+  font-size: 0.62rem;
+  font-weight: 800;
+}
+
+.lk-cinema-engine-route > i {
+  color: rgba(255, 255, 255, 0.38);
+  font-style: normal;
+}
+
+.lk-cinema-engine-route > b {
+  color: #f68a60;
+  font-size: 1rem;
 }
 
 .lk-cinema-dropzone {
@@ -698,6 +758,18 @@ h2 a {
 
   .lk-cinema-url-row {
     flex-direction: column;
+  }
+
+  .lk-cinema-tabs {
+    grid-template-columns: 1fr;
+  }
+
+  .lk-cinema-engine-route {
+    grid-template-columns: auto auto 1fr;
+  }
+
+  .lk-cinema-engine-route > b {
+    display: none;
   }
 
   .lk-watch-together-overlay {

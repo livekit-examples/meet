@@ -30,7 +30,7 @@ pnpm format:write     # prettier --write
 ```
 
 Unit tests (vitest) live next to the code as `*.test.ts(x)` files in `lib/`, plus
-`companion/ptt-core.test.js`. To run a single test file:
+`companion/*.test.js`. To run a single test file:
 `pnpm vitest run lib/getLiveKitURL.test.ts`.
 
 CI (`.github/workflows/test.yaml`) runs, in order: `pnpm lint`, `pnpm format:check`,
@@ -95,7 +95,8 @@ Public (`NEXT_PUBLIC_*`, shipped to the browser):
 | `NEXT_PUBLIC_LK_RECORD_ENDPOINT`                                | unset                     | Base path for recording controls (e.g. `/api/record`). Recording UI is hidden if unset.                          |
 | `NEXT_PUBLIC_CONN_DETAILS_ENDPOINT`                             | `/api/connection-details` | Override the token endpoint (used by `PageClientImpl`).                                                          |
 | `NEXT_PUBLIC_DATADOG_CLIENT_TOKEN` / `NEXT_PUBLIC_DATADOG_SITE` | unset                     | If both set, LiveKit client logs are forwarded to Datadog (`lib/Debug.tsx`).                                     |
-| `NEXT_PUBLIC_PTT_WS_URL`                                        | `ws://127.0.0.1:7331`     | WebSocket endpoint of the local push-to-talk companion (`companion/`). Set to an empty string to disable.        |
+| `NEXT_PUBLIC_COMPANION_WS_URL`                                  | `ws://127.0.0.1:7331`     | Local companion endpoint for torrent cinema and, unless overridden, PTT.                                         |
+| `NEXT_PUBLIC_PTT_WS_URL`                                        | companion URL             | Override the PTT endpoint. Set empty to disable only global push-to-talk.                                        |
 
 ## Per-room URL parameters
 

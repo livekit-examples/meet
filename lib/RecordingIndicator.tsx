@@ -4,11 +4,11 @@ import toast from 'react-hot-toast';
 
 export function RecordingIndicator() {
   const isRecording = useIsRecording();
-  const [wasRecording, setWasRecording] = React.useState(false);
+  const wasRecordingRef = React.useRef(false);
 
   React.useEffect(() => {
-    if (isRecording !== wasRecording) {
-      setWasRecording(isRecording);
+    if (isRecording !== wasRecordingRef.current) {
+      wasRecordingRef.current = isRecording;
       if (isRecording) {
         toast('This meeting is being recorded', {
           duration: 3000,

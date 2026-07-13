@@ -2,17 +2,23 @@
 import * as React from 'react';
 import { useWatchTogether } from './WatchTogetherContext';
 import { parseVideoUrl } from './parseVideoUrl';
+import { isMagnetUri } from './torrentSource';
+import type { TorrentInput } from './types';
 
-type Tab = 'link' | 'file';
+type Tab = 'link' | 'file' | 'torrent';
+
+const MAX_TORRENT_FILE_BYTES = 2 * 1024 * 1024;
 
 export function CinemaPanel() {
-  const { embed, stream, startEmbed, startStream } = useWatchTogether();
+  const { embed, stream, startEmbed, startStream, startTorrent } = useWatchTogether();
   const [open, setOpen] = React.useState(false);
   const [tab, setTab] = React.useState<Tab>('link');
   const [url, setUrl] = React.useState('');
+  const [magnet, setMagnet] = React.useState('');
   const [error, setError] = React.useState<string | null>(null);
   const [dragging, setDragging] = React.useState(false);
   const inputRef = React.useRef<HTMLInputElement>(null);
+  const torrentInputRef = React.useRef<HTMLInputElement>(null);
 
   React.useEffect(() => {
     if (!open) return;
@@ -55,9 +61,48 @@ export function CinemaPanel() {
     setOpen(false);
   };
 
+  const launchTorrent = (input: TorrentInput) => {
+    if (embed.active && !embed.isHost) {
+      setError('Сейчас просмотром управляет другой участник. Дождитесь завершения показа.');
+      return;
+    }
+    startTorrent(input);
+    setError(null);
+    setOpen(false);
+  };
+
+  const launchMagnet = (event: React.FormEvent) => {
+    event.preventDefault();
+    const value = magnet.trim();
+    if (!isMagnetUri(value)) {
+      setError('Нужна корректная magnet-ссылка BitTorrent.');
+      return;
+    }
+    launchTorrent({ kind: 'magnet', magnet: value, name: magnetDisplayName(value) });
+  };
+
+  const launchTorrentFile = async (file: File | undefined) => {
+    if (!file) return;
+    if (file.size > MAX_TORRENT_FILE_BYTES) {
+      setError('Файл .torrent слишком большой. Максимальный размер — 2 МБ.');
+      return;
+    }
+    try {
+      launchTorrent({
+        kind: 'torrent-file',
+        bytes: new Uint8Array(await file.arrayBuffer()),
+        name: file.name,
+      });
+    } catch {
+      setError('Не удалось прочитать файл .torrent.');
+    }
+  };
+
   const active = embed.active || stream.active;
   const activeLabel = stream.active
-    ? stream.file.name
+    ? stream.source.kind === 'file'
+      ? stream.source.file.name
+      : stream.source.input.name
     : embed.active
       ? embed.kind === 'youtube'
         ? 'YouTube'
@@ -127,6 +172,17 @@ export function CinemaPanel() {
               >
                 Файл с устройства
               </button>
+              <button
+                type="button"
+                role="tab"
+                aria-selected={tab === 'torrent'}
+                onClick={() => {
+                  setTab('torrent');
+                  setError(null);
+                }}
+              >
+                Торрент
+              </button>
             </div>
 
             {tab === 'link' ? (
@@ -154,7 +210,7 @@ export function CinemaPanel() {
                   должен разрешать воспроизведение из браузера.
                 </p>
               </form>
-            ) : (
+            ) : tab === 'file' ? (
               <div
                 className={`lk-cinema-dropzone${dragging ? ' lk-cinema-dropzone-active' : ''}`}
                 onDragEnter={(event) => {
@@ -192,6 +248,63 @@ export function CinemaPanel() {
                   }}
                 />
               </div>
+            ) : (
+              <div className="lk-cinema-torrent">
+                <form className="lk-cinema-link-form" onSubmit={launchMagnet}>
+                  <label htmlFor="cinema-magnet">Magnet-ссылка</label>
+                  <div className="lk-cinema-url-row">
+                    <input
+                      id="cinema-magnet"
+                      value={magnet}
+                      type="text"
+                      autoFocus
+                      spellCheck={false}
+                      placeholder="magnet:?xt=urn:btih:…"
+                      onChange={(event) => {
+                        setMagnet(event.target.value);
+                        setError(null);
+                      }}
+                    />
+                    <button type="submit" className="lk-button" disabled={!magnet.trim()}>
+                      Запустить
+                    </button>
+                  </div>
+                </form>
+                <div className="lk-cinema-torrent-divider">
+                  <span>или</span>
+                </div>
+                <button
+                  type="button"
+                  className="lk-button lk-cinema-torrent-file"
+                  onClick={() => torrentInputRef.current?.click()}
+                >
+                  Выбрать файл .torrent
+                </button>
+                <input
+                  ref={torrentInputRef}
+                  type="file"
+                  accept=".torrent,application/x-bittorrent"
+                  hidden
+                  onChange={(event) => {
+                    void launchTorrentFile(event.target.files?.[0]);
+                    event.target.value = '';
+                  }}
+                />
+                <div className="lk-cinema-engine-route" aria-label="Автоматический выбор движка">
+                  <span>1</span>
+                  <strong>Companion</strong>
+                  <i>обычные BitTorrent-пиры</i>
+                  <b>→</b>
+                  <span>2</span>
+                  <strong>WebTorrent</strong>
+                  <i>fallback в браузере</i>
+                </div>
+                <p className="lk-cinema-hint">
+                  Сначала используется локальный companion. Если он не установлен или не запущен,
+                  кинотеатр автоматически перейдёт на WebTorrent. На сервер приложения torrent-файл
+                  не загружается.
+                </p>
+              </div>
             )}
 
             {error && <div className="lk-cinema-error">{error}</div>}
@@ -207,4 +320,13 @@ export function CinemaPanel() {
       )}
     </div>
   );
+}
+
+function magnetDisplayName(magnet: string): string {
+  try {
+    const displayName = new URLSearchParams(magnet.slice(magnet.indexOf('?') + 1)).get('dn');
+    return displayName?.trim() || 'Torrent';
+  } catch {
+    return 'Torrent';
+  }
 }

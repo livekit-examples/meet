@@ -61,7 +61,7 @@ Everything else is a browser client that talks WebRTC directly to LiveKit.
 | `usePerfomanceOptimiser.ts` | `useLowCPUOptimizer` — listens for `LocalTrackCpuConstrained` and degrades publisher/subscriber video quality.                                                             |
 | `SettingsMenu.tsx`          | In-room settings drawer (Media / Recording tabs). Gated by `NEXT_PUBLIC_SHOW_SETTINGS_MENU`.                                                                               |
 | `CustomVideoConference.tsx` | Conference layout with participant volume controls, custom chat, and the watch-together cinema stage.                                                                      |
-| `watchTogether/**`          | Cinema source picker, synchronized URL/HLS/YouTube players, and local-file publication through LiveKit screen-share tracks.                                                |
+| `watchTogether/**`          | Cinema source picker, synchronized URL/HLS/YouTube players, and host-side local-file/torrent publication through LiveKit screen-share tracks.                              |
 | `CameraSettings.tsx`        | Camera device + background effects (blur / virtual background via `@livekit/track-processors`).                                                                            |
 | `MicrophoneSettings.tsx`    | Mic device + Krisp enhanced noise cancellation (auto-on for non-low-power devices).                                                                                        |
 | `RecordingIndicator.tsx`    | Red inset border + toast while the room is being recorded.                                                                                                                 |
@@ -158,9 +158,9 @@ noise-filter quality and whether it auto-enables.
 ## Watch-together cinema
 
 `CustomVideoConference` always mounts `WatchTogetherProvider` and a visible
-`CinemaPanel`. A participant can start a direct media URL, a YouTube URL, or a local
-video file. Starting linked media moves the conference into focus layout with the
-player as the main stage and participant tracks in the carousel.
+`CinemaPanel`. A participant can start a direct media URL, a YouTube URL, a local
+video file, or a torrent. Starting linked media moves the conference into focus layout
+with the player as the main stage and participant tracks in the carousel.
 
 ### Linked media synchronization
 
@@ -189,6 +189,22 @@ plays the file in a host-only `<video>`, captures it with `captureStream()`, wra
 result in LiveKit local video/audio tracks, and publishes them as screen-share sources.
 The regular screen-share focus and subscription path then delivers the media to viewers.
 Stopping the source unpublishes both tracks, stops them, and revokes the object URL.
+
+### Torrents
+
+Torrent playback uses the same host-only `<video>` and `captureStream()` publication
+path as local files. `torrentSource.ts` first opens the configured localhost companion
+WebSocket and waits for its `torrent` capability. The companion's Node WebTorrent
+client can use regular TCP/UDP BitTorrent peers, stores pieces in an OS temporary
+directory, and exposes the selected largest video through a tokenized localhost HTTP
+range stream. Closing the source or its WebSocket destroys the client and deletes the
+temporary directory.
+
+If no capable companion answers within the detection timeout, the browser dynamically
+loads the WebTorrent browser bundle and its service worker. This fallback never talks
+to Next.js but can only discover WebRTC-compatible WebTorrent peers and web seeds. In
+both modes viewers do not join the swarm: LiveKit receives and forwards only the
+captured encoded media tracks.
 
 This requires a browser with `HTMLMediaElement.captureStream()` and a file codec that
 the browser can decode. Direct/HLS sources must also satisfy the remote origin's CORS

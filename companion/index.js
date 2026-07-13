@@ -1,7 +1,7 @@
 'use strict';
 
 /**
- * LiveKit push-to-talk companion.
+ * LiveKit local companion.
  *
  * Captures one global key via a low-level keyboard hook (so it fires even when
  * the browser is not the focused window — e.g. while playing a game) and relays
@@ -13,7 +13,8 @@
  *   PTT_KEY      Key name to use as the talk button (default "F8")
  *   PTT_ORIGINS  Comma-separated list of allowed browser origins, e.g.
  *                "https://chat.example.com". Default: allow all (any local
- *                web page can observe the talk-key state otherwise).
+ *                web page can observe the talk-key state otherwise). Torrent
+ *                commands default to loopback web origins only.
  *
  * Run `npm run learn` (or `node index.js --learn`) and press a key to discover
  * its exact name, then set PTT_KEY to that name.
@@ -21,17 +22,26 @@
 
 const { GlobalKeyboardListener } = require('node-global-key-listener');
 const { WebSocketServer } = require('ws');
+const { isLoopbackOrigin } = require('./origin-core');
 const { reduce } = require('./ptt-core');
+const { TorrentService } = require('./torrent-service');
 
 const PORT = Number(process.env.PTT_PORT) || 7331;
 const PTT_KEY = (process.env.PTT_KEY || 'F8').toUpperCase();
 const LEARN = process.argv.includes('--learn') || process.env.PTT_LEARN === '1';
-const ALLOWED_ORIGINS = (process.env.PTT_ORIGINS || '')
+const TORRENT_PORT = Number(process.env.TORRENT_PORT) || PORT + 1;
+const ALLOWED_ORIGINS = (process.env.COMPANION_ORIGINS || process.env.PTT_ORIGINS || '')
   .split(',')
   .map((s) => s.trim())
   .filter(Boolean);
 
-const wss = new WebSocketServer({ host: '127.0.0.1', port: PORT });
+const wss = new WebSocketServer({
+  host: '127.0.0.1',
+  port: PORT,
+  // A 2 MB .torrent expands to roughly 2.8 MB as base64 JSON.
+  maxPayload: 4 * 1024 * 1024,
+});
+const torrentService = new TorrentService({ port: TORRENT_PORT });
 let talking = false;
 
 function broadcast(state) {
@@ -45,6 +55,7 @@ function broadcast(state) {
 
 wss.on('listening', () => {
   console.log(`[companion] WebSocket listening on ws://127.0.0.1:${PORT}`);
+  console.log(`[companion] Torrent stream will use http://127.0.0.1:${TORRENT_PORT}`);
   if (LEARN) {
     console.log('[companion] LEARN mode: press your desired talk key to see its name.');
   } else {
@@ -60,6 +71,13 @@ wss.on('connection', (socket, req) => {
     return;
   }
   console.log('[companion] browser connected');
+  const enableTorrent = ALLOWED_ORIGINS.length > 0 || isLoopbackOrigin(origin);
+  if (!enableTorrent) {
+    console.warn(
+      `[companion] torrent disabled for ${origin || 'unknown origin'}; set COMPANION_ORIGINS to trust it`,
+    );
+  }
+  torrentService.attachSocket(socket, { enableTorrent });
 });
 wss.on('error', (err) => console.error('[companion] WebSocket server error:', err.message));
 
@@ -79,8 +97,9 @@ keyboard.addListener((event) => {
   talking = next;
 });
 
-process.on('SIGINT', () => {
+process.on('SIGINT', async () => {
   console.log('\n[companion] shutting down');
+  await torrentService.close();
   wss.close();
   process.exit(0);
 });
