@@ -25,6 +25,7 @@ import {
   RoomEvent,
   TrackPublishDefaults,
   VideoCaptureOptions,
+  isSafariSpeakerSelectionSupported,
 } from 'livekit-client';
 import { useRouter } from 'next/navigation';
 import { useSetupE2EE } from '@/lib/useSetupE2EE';
@@ -136,6 +137,9 @@ function VideoConferenceComponent(props: {
       dynacast: true,
       e2ee: keyProvider && worker && e2eeEnabled ? { keyProvider, worker } : undefined,
       singlePeerConnection: props.options.singlePeerConnection,
+      // webAudioMix routes remote audio through AudioContext, which respects AudioContext.setSinkId()
+      // on iOS 26 where HTMLMediaElement.setSinkId() silently has no effect for WebRTC audio.
+      webAudioMix: isSafariSpeakerSelectionSupported(),
     };
   }, [props.userChoices, props.options.hq, props.options.codec]);
 
