@@ -36,6 +36,7 @@ const SHOW_SETTINGS_MENU = process.env.NEXT_PUBLIC_SHOW_SETTINGS_MENU == 'true';
 
 export function PageClientImpl(props: {
   roomName: string;
+  serverUrl?: string;
   region?: string;
   hq: boolean;
   codec: VideoCodec;
@@ -54,6 +55,14 @@ export function PageClientImpl(props: {
   const [connectionDetails, setConnectionDetails] = React.useState<ConnectionDetails | undefined>(
     undefined,
   );
+
+  // DNS and TLS state is cached by the browser, not the Room, so warming up on a separate Room
+  // speeds up the conference Room's connect.
+  React.useEffect(() => {
+    if (props.serverUrl) {
+      new Room().prepareConnection(props.serverUrl);
+    }
+  }, [props.serverUrl]);
 
   const handlePreJoinSubmit = React.useCallback(async (values: LocalUserChoices) => {
     setPreJoinChoices(values);
