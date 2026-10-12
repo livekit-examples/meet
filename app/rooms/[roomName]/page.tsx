@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { PageClientImpl } from './PageClientImpl';
 import { isVideoCodec } from '@/lib/types';
+import { getLiveKitURL } from '@/lib/getLiveKitURL';
 
 export default async function Page({
   params,
@@ -23,10 +24,14 @@ export default async function Page({
       : 'vp9';
   const hq = _searchParams.hq === 'true' ? true : false;
   const singlePC = _searchParams.singlePC !== 'false';
+  const serverUrl = process.env.LIVEKIT_URL
+    ? getLiveKitURL(process.env.LIVEKIT_URL, _searchParams.region ?? null)
+    : undefined;
 
   return (
     <PageClientImpl
       roomName={_params.roomName}
+      serverUrl={serverUrl}
       region={_searchParams.region}
       hq={hq}
       codec={codec}
