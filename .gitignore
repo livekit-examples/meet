@@ -38,3 +38,10 @@ yarn-error.log*
 
 # typescript
 *.tsbuildinfo
+ HEAD
+
+
+/transcripts
+/feedback-reports
+/.feedback-data
+/.transcript-data/

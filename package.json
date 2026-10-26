@@ -14,6 +14,7 @@
   },
   "dependencies": {
     "@datadog/browser-logs": "^5.23.3",
+    "@deepgram/sdk": "5.7.0",
     "@livekit/components-react": "2.9.23",
     "@livekit/components-styles": "1.2.0",
     "@livekit/krisp-noise-filter": "0.4.3",
