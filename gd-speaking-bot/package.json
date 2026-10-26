@@ -1,0 +1,39 @@
+{
+  "name": "agent-starter-node",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint \"**/*.{ts,js}\"",
+    "lint:fix": "eslint --fix \"**/*.{ts,js}\"",
+    "format": "prettier --write \"**/*.{ts,js,json,md}\"",
+    "format:check": "prettier --check \"**/*.{ts,js,json,md}\"",
+    "test": "vitest --run",
+    "test:watch": "vitest",
+    "dev": "lk agent dev --deployment gd-dev",
+    "start": "node src/main.ts start"
+  },
+  "engines": {
+    "node": ">=24.0.0",
+    "pnpm": ">=10.0.0"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.39.5",
+    "@trivago/prettier-plugin-sort-imports": "^5.2.2",
+    "@types/node": "^24.13.5",
+    "eslint": "^9.39.5",
+    "globals": "^16.5.0",
+    "jiti": "^2.7.0",
+    "typescript": "^5.9.3",
+    "typescript-eslint": "^8.70.0",
+    "vitest": "^4.1.11"
+  },
+  "dependencies": {
+    "@livekit/agents": "^1.9.3",
+    "@livekit/plugins-ai-coustics": "^0.3.2",
+    "@livekit/rtc-node": "^0.13.35",
+    "dotenv": "^17.4.2",
+    "zod": "^4.6.5"
+  }
+}

@@ -45,3 +45,16 @@ yarn-error.log*
 /feedback-reports
 /.feedback-data
 /.transcript-data/
+
+
+# Environment secrets
+.env*
+!.env.example
+!**/.env.example
+**/.env.local
+
+# Dependencies and generated files
+node_modules/
+**/node_modules/
+__pycache__/
+*.pyc

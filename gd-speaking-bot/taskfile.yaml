@@ -1,0 +1,80 @@
+version: "3"
+dotenv: [".env.local"]
+vars:
+  INDENT: 4
+  REL_PATH: "{{ relPath .USER_WORKING_DIR .ROOT_DIR }}"
+  VENV_DIR: ".venv"
+  NODE_MAIN: '{{ joinPath "./src" "main.ts" }}'
+
+tasks:
+  post_create:
+    desc: "Runs after this template is instantiated as a Sandbox or Bootstrap"
+    cmds:
+      - echo 'Your agent has been created!'
+      - echo 'To run the new agent locally:'
+      - echo ''
+      - echo '{{ indent .INDENT "cd" }} {{ .REL_PATH }}'
+      - task: help_install_hint_if_needed
+      - echo '{{ indent .INDENT "lk agent dev" }}'
+      - echo ''
+      - task: help_open_web_console
+      - echo 'To deploy your agent to LiveKit cloud:'
+      - echo ''
+      - echo '{{ indent .INDENT "lk agent deploy" }}'
+      - echo ''
+      - task: set_agent_name_if_present
+      - task: help_open_sandbox_if_present
+
+  help_install_hint_if_needed:
+    desc: "Print the local install hint, unless the CLI already installed dependencies"
+    status:
+      # Skip when `lk agent init --install` already ran the install task.
+      - test -n "$LIVEKIT_DEPS_INSTALLED"
+    cmds:
+      - echo '{{ indent .INDENT "pnpm install" }}'
+
+  set_agent_name_if_present:
+    desc: "When LIVEKIT_AGENT_NAME is set, configure the agent to use it on init"
+    status:
+      - test -z "$LIVEKIT_AGENT_NAME"
+    cmds:
+      - |
+        old="agentName: 'my-agent'"
+        new="agentName: '{{ .LIVEKIT_AGENT_NAME }}'"
+        file="{{ .NODE_MAIN }}"
+        tmp="$(mktemp)"
+        while IFS= read -r line; do
+          printf '%s\n' "${line//$old/$new}" >> "$tmp"
+        done < "$file"
+        mv "$tmp" "$file"
+
+  help_open_web_console:
+    status:
+      - test -z "$LIVEKIT_AGENT_NAME"
+    vars:
+      CONSOLE_URL: "https://cloud.livekit.io/projects/p_/agents/console"
+      CONSOLE_LINK: '{{ print "\x1b]8;;" .CONSOLE_URL "/?autoStart=true&agentName=" .LIVEKIT_AGENT_NAME "\x1b\\\x1b[36;4m" .CONSOLE_URL "/?autoStart=true&agentName=" .LIVEKIT_AGENT_NAME "\x1b[0m\x1b]8;;\x1b\\" }}'
+    cmds:
+      - echo 'Then open the web console:'
+      - echo ''
+      - echo '{{ indent .INDENT .CONSOLE_LINK }}'
+      - echo ''
+
+  help_open_sandbox_if_present:
+    desc: "When LIVEKIT_SANDBOX_ID is set, print the URL to open it"
+    status:
+      - test -z "$LIVEKIT_SANDBOX_ID"
+    vars:
+      SANDBOX_URL: 'https://{{ .LIVEKIT_SANDBOX_ID }}.sandbox.livekit.io'
+      SANDBOX_LINK: '{{ print "\x1b]8;;" .SANDBOX_URL "\x1b\\\x1b[36;4m" .SANDBOX_URL "\x1b[0m\x1b]8;;\x1b\\" }}'
+    cmds:
+      - echo 'To chat with your running agent, visit:'
+      - echo ''
+      - echo '{{ indent .INDENT .SANDBOX_LINK }}'
+      - echo ''
+
+
+  install:
+    desc: "Bootstrap application for local development"
+    cmds:
+      - "pnpm install"

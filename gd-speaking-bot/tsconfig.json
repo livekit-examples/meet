@@ -1,0 +1,30 @@
+{
+  "include": ["./src/**/*"],
+  "exclude": ["./node_modules", "**/*.test.ts", "**/*.spec.ts"],
+  "compilerOptions": {
+    "target": "ES2022",
+    "module": "ES2022",
+    "moduleResolution": "bundler",
+    "allowJs": false,
+    "strict": true,
+    "exactOptionalPropertyTypes": true,
+    "noFallthroughCasesInSwitch": true,
+    "noImplicitOverride": true,
+    "noImplicitReturns": true,
+    "noUncheckedIndexedAccess": true,
+    "skipLibCheck": true,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "forceConsistentCasingInFileNames": true,
+    "isolatedModules": true,
+    "verbatimModuleSyntax": true,
+    // Node strips types at runtime; tsc is used only for type checking.
+    // `allowImportingTsExtensions` permits the explicit `.ts` import
+    // specifiers that Node's native type stripping requires, and
+    // `erasableSyntaxOnly` rejects TS-only syntax (enums, namespaces,
+    // parameter properties) that Node cannot strip without transformation.
+    "noEmit": true,
+    "allowImportingTsExtensions": true,
+    "erasableSyntaxOnly": true
+  }
+}
