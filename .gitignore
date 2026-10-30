@@ -56,5 +56,7 @@ yarn-error.log*
 # Dependencies and generated files
 node_modules/
 **/node_modules/
+**/.venv/
+**/venv/
 __pycache__/
 *.pyc

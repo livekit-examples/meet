@@ -1,0 +1,1375 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Hackathon Jury</title>
+
+    <script src="https://cdn.jsdelivr.net/npm/livekit-client@2.20.1/dist/livekit-client.umd.js"></script>
+
+    <style>
+        :root {
+            --bg: #101827;
+            --panel: #1b2739;
+            --panel-light: #223149;
+            --blue: #4779e8;
+            --blue-hover: #3565d0;
+            --text: #f5f7fb;
+            --muted: #aab7cc;
+            --border: #354155;
+            --green: #48c78e;
+            --red: #f87171;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            background: #0b111b;
+            color: var(--text);
+            font-family: Inter, "Segoe UI", Arial, sans-serif;
+        }
+
+        .container {
+            width: 100%;
+            min-height: 100vh;
+            padding: 0 24px 96px;
+        }
+
+        .header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+            min-height: 76px;
+            max-width: 1440px;
+            margin: 0 auto;
+        }
+
+        .logo {
+            width: 40px;
+            height: 40px;
+            display: grid;
+            place-items: center;
+            border-radius: 12px;
+            background: #243b65;
+            color: #9ec1ff;
+            font-size: 21px;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .room-meta {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: var(--muted);
+            font-size: 13px;
+        }
+
+        .room-live {
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+            padding: 7px 10px;
+            border: 1px solid var(--border);
+            border-radius: 999px;
+            background: #152236;
+        }
+
+        .room-live::before {
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            background: #77859a;
+            content: "";
+        }
+
+        .room-live.connected::before {
+            background: var(--green);
+            box-shadow: 0 0 9px #48c78e77;
+        }
+
+        .header-title {
+            color: var(--text);
+            font-size: 15px;
+            font-weight: 650;
+        }
+
+        .room-name {
+            overflow: hidden;
+            max-width: 230px;
+            color: var(--muted);
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        h1 {
+            font-size: clamp(25px, 4vw, 34px);
+            margin: 0 0 6px;
+        }
+
+        h2 {
+            font-size: 18px;
+            margin: 0;
+        }
+
+        h3 {
+            font-size: 16px;
+            margin: 0 0 15px;
+        }
+
+        p {
+            color: var(--muted);
+            line-height: 1.6;
+            margin: 0;
+        }
+
+        .subtitle {
+            font-size: 14px;
+        }
+
+        .eyebrow {
+            color: #9ec1ff;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            margin-bottom: 6px;
+        }
+
+        .prejoin {
+            display: grid;
+            place-items: center;
+            min-height: calc(100vh - 180px);
+        }
+
+        .prejoin-card {
+            width: min(460px, 100%);
+            padding: 30px;
+            border: 1px solid var(--border);
+            border-radius: 18px;
+            background: var(--panel);
+        }
+
+        .prejoin-card h1 {
+            margin: 0 0 8px;
+            font-size: 25px;
+        }
+
+        .prejoin-card > p {
+            margin-bottom: 24px;
+            font-size: 14px;
+        }
+
+        .prejoin-card .form-grid {
+            grid-template-columns: 1fr;
+            gap: 16px;
+        }
+
+        .field-help {
+            display: block;
+            margin-top: 6px;
+            color: var(--muted);
+            font-size: 12px;
+        }
+
+        .conference {
+            display: none;
+            max-width: 1440px;
+            margin: 8px auto 0;
+        }
+
+        .conference.visible {
+            display: block;
+        }
+
+        .prejoin[hidden],
+        .conference[hidden],
+        .room-controls[hidden],
+        .participant-tile[hidden],
+        .tile-avatar[hidden],
+        button[hidden] {
+            display: none;
+        }
+
+        .meeting-status {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+            min-height: 42px;
+            margin-bottom: 10px;
+            color: var(--muted);
+            font-size: 13px;
+        }
+
+        .meeting-status strong {
+            color: var(--text);
+            font-weight: 600;
+        }
+
+        .jury-status {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .participant-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(min(320px, 100%), 1fr));
+            align-content: center;
+            gap: 12px;
+            min-height: min(68vh, 700px);
+        }
+
+        .participant-tile {
+            position: relative;
+            display: grid;
+            place-items: center;
+            min-width: 0;
+            min-height: 220px;
+            overflow: hidden;
+            border: 1px solid #29364a;
+            border-radius: 16px;
+            background: #182232;
+        }
+
+        .participant-tile video {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            max-height: none;
+            object-fit: cover;
+        }
+
+        .participant-tile.screen-tile video {
+            object-fit: contain;
+            background: #080c13;
+        }
+
+        .participant-tile video[hidden] {
+            display: none;
+        }
+
+        .tile-avatar {
+            display: grid;
+            place-items: center;
+            width: 84px;
+            height: 84px;
+            border-radius: 50%;
+            color: #d3e2ff;
+            background: #314a71;
+            font-size: 32px;
+            font-weight: 650;
+        }
+
+        .jury-tile .tile-avatar {
+            color: #c5f5df;
+            background: #17533f;
+        }
+
+        .tile-label {
+            position: absolute;
+            right: 12px;
+            bottom: 12px;
+            left: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+            padding: 9px 11px;
+            border-radius: 9px;
+            color: #fff;
+            background: #090d14bf;
+            font-size: 13px;
+        }
+
+        .tile-role {
+            overflow: hidden;
+            color: #c2cede;
+            font-size: 11px;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .jury-speaking {
+            border-color: #48c78e;
+            box-shadow: 0 0 0 2px #48c78e33;
+        }
+
+        .room-controls {
+            position: fixed;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            z-index: 3;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            min-height: 82px;
+            padding: 12px 20px;
+            border-top: 1px solid #29364a;
+            background: #101722f2;
+            backdrop-filter: blur(14px);
+        }
+
+        .room-control {
+            display: grid;
+            place-items: center;
+            width: 48px;
+            height: 48px;
+            padding: 0;
+            border: 1px solid #3c4656;
+            border-radius: 50%;
+            background: #283241;
+            font-size: 19px;
+        }
+
+        .room-control:hover:not(:disabled) {
+            background: #3a4658;
+        }
+
+        .room-control.active {
+            background: #d64c55;
+            border-color: #d64c55;
+        }
+
+        .room-control.leave {
+            width: 62px;
+            border-radius: 24px;
+            background: #d64c55;
+        }
+
+        .room-control.leave:hover:not(:disabled) {
+            background: #ba3943;
+        }
+
+        .control-divider {
+            width: 1px;
+            height: 30px;
+            margin: 0 5px;
+            background: #3c4656;
+        }
+
+        .room-control-wrap {
+            position: relative;
+        }
+
+        .room-control-label {
+            position: absolute;
+            top: 54px;
+            left: 50%;
+            color: var(--muted);
+            font-size: 10px;
+            white-space: nowrap;
+            transform: translateX(-50%);
+        }
+
+        .room-message {
+            width: min(1440px, 100%);
+            margin: 0 auto;
+            padding: 12px 0 0;
+            color: var(--muted);
+            font-size: 12px;
+        }
+
+        .audio-fallback {
+            margin: 8px 0;
+            background: #34445e;
+        }
+
+        .audio-fallback:hover {
+            background: #435675;
+        }
+
+        #remoteMedia audio {
+            display: none;
+        }
+
+        .flow {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .flow-step {
+            display: flex;
+            align-items: center;
+            gap: 11px;
+            min-width: 0;
+            padding: 14px 16px;
+            border: 1px solid var(--border);
+            border-radius: 13px;
+            background: #152236;
+        }
+
+        .flow-number {
+            display: grid;
+            place-items: center;
+            width: 30px;
+            height: 30px;
+            flex: 0 0 30px;
+            border-radius: 50%;
+            color: #b7c8e3;
+            background: #34445e;
+            font-size: 13px;
+            font-weight: 700;
+        }
+
+        .flow-step.active .flow-number,
+        .flow-step.complete .flow-number {
+            color: #071629;
+            background: #8db4ff;
+        }
+
+        .flow-step.complete {
+            border-color: #4779e866;
+        }
+
+        .flow-label {
+            color: var(--text);
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        .panel {
+            background: var(--panel);
+            border: 1px solid var(--border);
+            border-radius: 18px;
+            padding: 25px;
+            margin-bottom: 20px;
+        }
+
+        .section-heading {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .section-icon {
+            font-size: 22px;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 18px;
+        }
+
+        label {
+            display: block;
+            color: var(--muted);
+            font-size: 13px;
+            margin-bottom: 8px;
+        }
+
+        input {
+            width: 100%;
+            padding: 13px 14px;
+            color: var(--text);
+            background: #111d2e;
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            outline: none;
+            font-size: 14px;
+        }
+
+        input:focus {
+            border-color: #6f9cff;
+        }
+
+        button {
+            border: 0;
+            border-radius: 10px;
+            padding: 12px 17px;
+            color: white;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s, opacity 0.2s;
+        }
+
+        button:disabled {
+            opacity: 0.45;
+            cursor: not-allowed;
+        }
+
+        .primary-button {
+            width: 100%;
+            margin-top: 20px;
+            padding: 15px;
+            background: var(--blue);
+            font-size: 15px;
+        }
+
+        .primary-button:hover:not(:disabled) {
+            background: var(--blue-hover);
+        }
+
+        .control-button {
+            background: #34445e;
+        }
+
+        .control-button:hover:not(:disabled) {
+            background: #435675;
+        }
+
+        .danger-button {
+            background: #9f343c;
+        }
+
+        .danger-button:hover:not(:disabled) {
+            background: #b84049;
+        }
+
+        .status {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-top: 18px;
+            padding: 14px 16px;
+            border: 1px solid var(--border);
+            border-radius: 11px;
+            background: #152236;
+            color: var(--muted);
+            font-size: 14px;
+        }
+
+        .status-dot {
+            width: 9px;
+            height: 9px;
+            flex-shrink: 0;
+            border-radius: 50%;
+            background: #8b98aa;
+        }
+
+        .status-dot.connected {
+            background: var(--green);
+            box-shadow: 0 0 10px #48c78e55;
+        }
+
+        @media (max-width: 700px) {
+            .container {
+                padding: 0 12px 88px;
+            }
+
+            .header {
+                min-height: 64px;
+            }
+
+            .room-meta {
+                gap: 6px;
+                font-size: 11px;
+            }
+
+            .room-name {
+                max-width: 120px;
+            }
+
+            .prejoin-card {
+                padding: 22px;
+            }
+
+            .participant-grid {
+                grid-template-columns: repeat(auto-fit, minmax(min(160px, 100%), 1fr));
+                min-height: 60vh;
+                gap: 8px;
+            }
+
+            .participant-tile {
+                min-height: 170px;
+            }
+
+            .tile-avatar {
+                width: 60px;
+                height: 60px;
+                font-size: 25px;
+            }
+
+            .room-controls {
+                gap: 9px;
+                min-height: 74px;
+                padding: 8px;
+            }
+
+            .room-control {
+                width: 44px;
+                height: 44px;
+            }
+
+            .room-control-label {
+                top: 49px;
+            }
+
+            .room-control.leave {
+                width: 52px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <main class="container">
+        <header class="header">
+            <div class="brand">
+                <div class="logo">✦</div>
+                <div class="header-title">Hackathon Jury</div>
+            </div>
+            <div class="room-meta">
+                <span id="roomLive" class="room-live">Not connected</span>
+                <span id="headerParticipantCount">0 participants</span>
+            </div>
+        </header>
+
+        <section id="prejoin" class="prejoin">
+            <div class="prejoin-card">
+                <p class="eyebrow">Video meeting</p>
+                <h1>Join your team</h1>
+                <p>Everyone on your team joins the same room. The AI jury waits until your team is ready. This app does not set a participant limit; actual room capacity depends on LiveKit and participants' devices and networks.</p>
+                <div class="form-grid">
+                    <div>
+                        <label for="participantName">Participant name</label>
+                        <input id="participantName" maxlength="80" required
+                               placeholder="Enter your name" autocomplete="name">
+                    </div>
+                    <div>
+                        <label for="teamName">Team name</label>
+                        <input id="teamName" maxlength="100" required
+                               placeholder="Enter your team's name">
+                        <small class="field-help">Your teammates should use the same team name to join your room.</small>
+                    </div>
+                </div>
+                <button id="joinButton" class="primary-button" onclick="joinMeeting()">
+                    Join meeting
+                </button>
+                <div class="status">
+                    <span id="statusDot" class="status-dot"></span>
+                    <span id="status">Ready to join.</span>
+                </div>
+            </div>
+        </section>
+
+        <section id="conference" class="conference">
+            <div class="meeting-status">
+                <strong id="activeRoomName">Team room</strong>
+                <span class="jury-status">
+                    <span id="agentDot" class="status-dot"></span>
+                    <span id="agentStatus">Waiting for the AI jury to join...</span>
+                </span>
+            </div>
+            <div id="participantGrid" class="participant-grid">
+                <article id="localTile" class="participant-tile">
+                    <div id="localAvatar" class="tile-avatar">Y</div>
+                    <video id="cameraPreview" autoplay muted playsinline hidden></video>
+                    <div class="tile-label">
+                        <span id="localName">You</span>
+                        <span class="tile-role">You</span>
+                    </div>
+                </article>
+                <article id="localScreenTile" class="participant-tile screen-tile" hidden>
+                    <video id="screenPreview" autoplay muted playsinline></video>
+                    <div class="tile-label">
+                        <span>Your screen</span>
+                        <span class="tile-role">Presenting</span>
+                    </div>
+                </article>
+            </div>
+            <div id="remoteMedia" aria-live="polite"></div>
+            <button id="enableAudioButton" class="audio-fallback" type="button"
+                    onclick="enableAgentAudio()" aria-label="Enable meeting sound" hidden>
+                Enable meeting sound
+            </button>
+            <button id="startJuryButton" class="primary-button" type="button"
+                    onclick="startEvaluation()" hidden>
+                Everyone is here — start jury
+            </button>
+            <div id="meetingMessage" class="room-message">When everyone has joined, click “Everyone is here — start jury.”</div>
+        </section>
+
+        <section id="roomControls" class="room-controls" hidden>
+            <span class="room-control-wrap">
+                <button id="micButton" class="room-control" onclick="toggleMicrophone()"
+                        aria-label="Turn microphone off" title="Turn microphone off" disabled>🎙</button>
+                <span id="micLabel" class="room-control-label">Microphone off</span>
+            </span>
+            <span class="room-control-wrap">
+                <button id="cameraButton" class="room-control" onclick="toggleCamera()"
+                        aria-label="Turn camera on" title="Turn camera on" disabled>▣</button>
+                <span class="room-control-label">Camera</span>
+            </span>
+            <span class="room-control-wrap">
+                <button id="screenButton" class="room-control" onclick="toggleScreenShare()"
+                        aria-label="Share screen" title="Share screen" disabled>▤</button>
+                <span class="room-control-label">Present</span>
+            </span>
+            <span class="control-divider"></span>
+            <span class="room-control-wrap">
+                <button id="leaveButton" class="room-control leave" onclick="leaveMeeting()"
+                        aria-label="Leave meeting" title="Leave meeting" disabled>☎</button>
+                <span class="room-control-label">Leave</span>
+            </span>
+        </section>
+    </main>
+
+    <script>
+        let room = null;
+        let micEnabled = false;
+        let cameraEnabled = false;
+        let screenEnabled = false;
+        let juryStartCooldownTimer = null;
+        let evaluationRequestInProgress = false;
+
+        const $ = (id) => document.getElementById(id);
+
+        function setStatus(message, connected = false) {
+            $("status").textContent = message;
+            $("statusDot").classList.toggle("connected", connected);
+            if (!$("conference").hidden && message) {
+                $("meetingMessage").textContent = message;
+            }
+        }
+
+        function setAgentStatus(message, connected = false) {
+            $("agentStatus").textContent = message;
+            $("agentDot").classList.toggle("connected", connected);
+        }
+
+        function setMeetingControls(enabled) {
+            $("micButton").disabled = !enabled;
+            $("cameraButton").disabled = !enabled;
+            $("screenButton").disabled = !enabled;
+            $("leaveButton").disabled = !enabled;
+        }
+
+        function isJuryParticipant(participant) {
+            return participant.identity.toLowerCase().includes("agent") ||
+                (participant.name || "").toLowerCase().includes("agent");
+        }
+
+        function createParticipantTile(participant) {
+            const existing = $("participantGrid").querySelector(
+                `[data-participant-identity="${CSS.escape(participant.identity)}"]`
+            );
+            if (existing) {
+                return existing;
+            }
+
+            const isJury = isJuryParticipant(participant);
+            const name = participant.name || participant.identity;
+            const tile = document.createElement("article");
+            tile.className = `participant-tile${isJury ? " jury-tile" : ""}`;
+            tile.dataset.participantIdentity = participant.identity;
+
+            const avatar = document.createElement("div");
+            avatar.className = "tile-avatar";
+            avatar.textContent = isJury ? "✦" : name.charAt(0).toUpperCase();
+
+            const label = document.createElement("div");
+            label.className = "tile-label";
+            const participantName = document.createElement("span");
+            participantName.textContent = name;
+            const role = document.createElement("span");
+            role.className = "tile-role";
+            role.textContent = isJury ? "AI Jury" : "Team participant";
+            label.append(participantName, role);
+
+            tile.append(avatar, label);
+            $("participantGrid").appendChild(tile);
+            return tile;
+        }
+
+        function renderParticipants() {
+            if (!room) {
+                $("headerParticipantCount").textContent = "0 participants";
+                return;
+            }
+
+            const localName = room.localParticipant.name ||
+                $("participantName").value.trim() || "You";
+            $("localName").textContent = `${localName} (You)`;
+            $("localAvatar").textContent = localName.charAt(0).toUpperCase();
+
+            room.remoteParticipants.forEach(participant => {
+                createParticipantTile(participant);
+            });
+
+            const participantCount = room.remoteParticipants.size + 1;
+            $("headerParticipantCount").textContent =
+                `${participantCount} ${participantCount === 1 ? "participant" : "participants"}`;
+        }
+
+        function removeParticipantTile(participant) {
+            $("participantGrid").querySelector(
+                `[data-participant-identity="${CSS.escape(participant.identity)}"]`
+            )?.remove();
+            const participantCount = room ? room.remoteParticipants.size : 0;
+            $("headerParticipantCount").textContent =
+                `${participantCount} ${participantCount === 1 ? "participant" : "participants"}`;
+        }
+
+        function syncJuryStatus() {
+            if (!room) {
+                return false;
+            }
+
+            renderParticipants();
+            const jury = Array.from(room.remoteParticipants.values())
+                .find(isJuryParticipant);
+
+            if (jury) {
+                $("startJuryButton").hidden = true;
+                setAgentStatus("AI jury agent joined the meeting.", true);
+                $("meetingMessage").textContent =
+                    "The AI jury is here. Introduce your project and speak naturally when answering its questions.";
+                return true;
+            }
+
+            return false;
+        }
+
+        async function joinMeeting() {
+            $("joinButton").disabled = true;
+            setStatus("Joining the meeting...");
+            try {
+                const participantName = $("participantName").value.trim();
+                const teamName = $("teamName").value.trim();
+
+                if (!participantName || !teamName) {
+                    throw new Error("Please enter your participant name and team name.");
+                }
+
+                if (!window.LivekitClient) {
+                    throw new Error(
+                        "LiveKit library did not load. Check your internet connection and reload."
+                    );
+                }
+
+                setStatus("Getting meeting access...");
+
+                const response = await fetch("/api/token", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({
+                        participant_name: participantName,
+                        team_name: teamName
+                    })
+                });
+
+                const data = await response.json();
+
+                if (!response.ok) {
+                    throw new Error(data.detail || "Could not get meeting access.");
+                }
+
+                room = new LivekitClient.Room();
+
+                room.on(
+                    LivekitClient.RoomEvent.TrackSubscribed,
+                    (track, publication, participant) => {
+                        const element = track.attach();
+                        const isJury = isJuryParticipant(participant);
+
+                        if (track.kind === LivekitClient.Track.Kind.Audio) {
+                            element.autoplay = true;
+                            element.playsInline = true;
+                            element.controls = false;
+                            element.muted = false;
+                            element.dataset.participantIdentity = participant.identity;
+                            element.hidden = true;
+                            $("remoteMedia").appendChild(element);
+                            if (isJury) {
+                                setAgentStatus("AI jury is listening.", true);
+                                $("meetingMessage").textContent =
+                                    "The AI jury is listening. Speak naturally to present or answer a question.";
+                            }
+
+                            element.play().catch(error => {
+                                console.warn("Could not autoplay participant audio:", error);
+                                if (isJury) {
+                                    setAgentStatus("Enable meeting sound to hear the AI jury.", false);
+                                }
+                                $("enableAudioButton").hidden = false;
+                            });
+                        } else if (track.kind === LivekitClient.Track.Kind.Video) {
+                            element.autoplay = true;
+                            element.playsInline = true;
+                            element.controls = false;
+                            const tile = createParticipantTile(participant);
+                            tile.querySelector(".tile-avatar").hidden = true;
+                            tile.appendChild(element);
+                            if (publication.source === LivekitClient.Track.Source.ScreenShare) {
+                                tile.classList.add("screen-tile");
+                                const role = tile.querySelector(".tile-role");
+                                if (role) role.textContent = "Presenting";
+                            }
+                        }
+                    }
+                );
+
+                room.on(
+                    LivekitClient.RoomEvent.TrackUnsubscribed,
+                    (track) => {
+                        track.detach().forEach(element => {
+                            const tile = element.closest(".participant-tile");
+                            element.remove();
+                            if (tile && !tile.querySelector("video")) {
+                                const avatar = tile.querySelector(".tile-avatar");
+                                if (avatar) avatar.hidden = false;
+                            }
+                        });
+                    }
+                );
+
+                room.on(
+                    LivekitClient.RoomEvent.ParticipantConnected,
+                    participant => {
+                        createParticipantTile(participant);
+                        renderParticipants();
+                        syncJuryStatus();
+                    }
+                );
+
+                room.on(
+                    LivekitClient.RoomEvent.ParticipantDisconnected,
+                    (participant) => {
+                        removeParticipantTile(participant);
+                        if (isJuryParticipant(participant)) {
+                            $("remoteMedia").querySelectorAll(
+                                `[data-participant-identity="${CSS.escape(participant.identity)}"]`
+                            )
+                                .forEach(element => element.remove());
+                            if (!syncJuryStatus()) {
+                                setAgentStatus("AI jury agent disconnected.");
+                                $("startJuryButton").hidden = false;
+                                $("startJuryButton").disabled = false;
+                                $("startJuryButton").textContent = "Retry jury connection";
+                            }
+                        } else {
+                            renderParticipants();
+                        }
+                    }
+                );
+
+                room.on(LivekitClient.RoomEvent.ActiveSpeakersChanged, (speakers) => {
+                    document.querySelectorAll(".jury-tile").forEach(tile => {
+                        const identity = tile.dataset.participantIdentity;
+                        const jury = room?.remoteParticipants.get(identity);
+                        tile.classList.toggle(
+                            "jury-speaking",
+                            Boolean(jury && speakers.some(speaker => speaker.identity === identity))
+                        );
+                    });
+                    if (speakers.some(isJuryParticipant)) {
+                        setAgentStatus("AI jury is speaking.", true);
+                    } else if (syncJuryStatus()) {
+                        setAgentStatus("AI jury is listening.", true);
+                    }
+                }                );
+
+                const updateMicrophoneStatus = () => {
+                    if (!room) {
+                        return;
+                    }
+
+                    micEnabled = room.localParticipant.isMicrophoneEnabled;
+                    $("micButton").textContent = micEnabled ? "🎙" : "🔇";
+                    $("micButton").classList.toggle("active", !micEnabled);
+                    $("micButton").title = micEnabled
+                        ? "Turn microphone off"
+                        : "Turn microphone on";
+                    $("micButton").setAttribute("aria-label", $("micButton").title);
+                    $("micLabel").textContent = micEnabled
+                        ? "Microphone on"
+                        : "Microphone off";
+                };
+
+                room.on(LivekitClient.RoomEvent.TrackMuted, (publication, participant) => {
+                    if (
+                        participant === room.localParticipant &&
+                        publication.source === LivekitClient.Track.Source.Microphone
+                    ) {
+                        updateMicrophoneStatus();
+                    }
+                });
+
+                room.on(LivekitClient.RoomEvent.TrackUnmuted, (publication, participant) => {
+                    if (
+                        participant === room.localParticipant &&
+                        publication.source === LivekitClient.Track.Source.Microphone
+                    ) {
+                        updateMicrophoneStatus();
+                    }
+                });
+
+                room.on(LivekitClient.RoomEvent.Disconnected, () => {
+                    setStatus("Disconnected from the meeting.");
+                    setAgentStatus("Waiting for the AI agent to join...");
+                    $("remoteMedia").replaceChildren();
+                    $("enableAudioButton").hidden = true;
+                    setMeetingControls(false);
+                    $("roomControls").hidden = true;
+                    $("conference").hidden = true;
+                    $("conference").classList.remove("visible");
+                    $("prejoin").hidden = false;
+                    micEnabled = false;
+                    cameraEnabled = false;
+                    screenEnabled = false;
+                    clearTimeout(juryStartCooldownTimer);
+                    juryStartCooldownTimer = null;
+                    $("startJuryButton").hidden = true;
+                    $("startJuryButton").disabled = false;
+                    $("startJuryButton").textContent = "Everyone is here — start jury";
+                    $("roomLive").textContent = "Not connected";
+                    $("roomLive").classList.remove("connected");
+                    $("localTile").classList.remove("jury-speaking");
+                    Array.from(room?.remoteParticipants.values() ?? [])
+                        .forEach(removeParticipantTile);
+                    $("localScreenTile").hidden = true;
+                    renderParticipants();
+                });
+
+                setStatus("Connecting to the meeting...");
+
+                await room.connect(data.server_url, data.participant_token);
+
+                setMeetingControls(true);
+                $("prejoin").hidden = true;
+                $("conference").hidden = false;
+                $("conference").classList.add("visible");
+                $("roomControls").hidden = false;
+                $("roomLive").textContent = "Connected";
+                $("roomLive").classList.add("connected");
+                $("activeRoomName").textContent = data.room_name;
+                setStatus("Connected to room: " + data.room_name, true);
+                $("startJuryButton").hidden = false;
+                $("startJuryButton").disabled = false;
+                renderParticipants();
+                if (!syncJuryStatus()) {
+                    setAgentStatus("Waiting for your team to be ready.", false);
+                }
+
+                await toggleMicrophone(true);
+
+            } catch (error) {
+                if (room) {
+                    try {
+                        await room.disconnect();
+                    } catch (disconnectError) {
+                        console.error("Could not disconnect after meeting setup failed:", disconnectError);
+                    }
+                    room = null;
+                }
+                setStatus("Error: " + error.message);
+                $("conference").hidden = true;
+                $("roomControls").hidden = true;
+                $("prejoin").hidden = false;
+                $("joinButton").disabled = false;
+            }
+        }
+
+
+
+async function enableAgentAudio() {
+    const audioElements = $("remoteMedia").querySelectorAll("audio");
+
+    try {
+        await Promise.all(Array.from(audioElements, audio => audio.play()));
+        $("enableAudioButton").hidden = true;
+        setAgentStatus("AI jury audio connected.", true);
+    } catch (error) {
+        console.error("Could not play AI jury audio:", error);
+        setAgentStatus("Could not enable jury audio. Please try again.", false);
+    }
+}
+
+async function startEvaluation() {
+    if (!room || evaluationRequestInProgress || syncJuryStatus()) {
+        return;
+    }
+
+    evaluationRequestInProgress = true;
+    const startButton = $("startJuryButton");
+    startButton.disabled = true;
+    startButton.textContent = "Connecting the AI jury...";
+    try {
+        setAgentStatus("Connecting the AI jury...", false);
+
+        const response = await fetch("/api/evaluation/start", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                room_name: $("activeRoomName").textContent
+            })
+        });
+
+        const data = await response.json();
+
+        if (!response.ok) {
+            throw new Error(data.detail || "Could not start the AI jury.");
+        }
+
+        if (!syncJuryStatus()) {
+            setAgentStatus(
+                data.status === "starting"
+                    ? "The AI jury is still connecting. Please wait..."
+                    : "AI jury requested. Waiting for it to join...",
+                false
+            );
+            startButton.textContent = "Jury is joining...";
+            juryStartCooldownTimer = setTimeout(() => {
+                juryStartCooldownTimer = null;
+                if (room && !syncJuryStatus()) {
+                    startButton.disabled = false;
+                    startButton.textContent = "Retry jury connection";
+                }
+            }, 10000);
+        }
+
+    } catch (error) {
+        setAgentStatus(
+            "Could not connect the AI jury: " + error.message,
+            false
+        );
+
+        console.error("Jury startup error:", error);
+        startButton.disabled = false;
+        startButton.textContent = "Retry jury connection";
+    } finally {
+        evaluationRequestInProgress = false;
+    }
+}
+
+
+
+        async function toggleMicrophone(required = false) {
+            if (!room) return;
+
+            try {
+                const nextValue = !room.localParticipant.isMicrophoneEnabled;
+                const publication =
+                    await room.localParticipant.setMicrophoneEnabled(nextValue);
+                micEnabled = room.localParticipant.isMicrophoneEnabled;
+
+                if (nextValue && (!publication || publication.isMuted || !micEnabled)) {
+                    throw new Error(
+                        "The browser did not publish an active microphone track."
+                    );
+                }
+
+                $("micButton").textContent = micEnabled ? "🎙" : "🔇";
+                $("micButton").classList.toggle("active", !micEnabled);
+                $("micButton").title = micEnabled ? "Turn microphone off" : "Turn microphone on";
+                $("micButton").setAttribute("aria-label", $("micButton").title);
+                $("micLabel").textContent = micEnabled ? "Microphone on" : "Microphone off";
+                setStatus(micEnabled ? "Your microphone is on." : "Your microphone is off.", true);
+            } catch (error) {
+                const message = error.name === "NotAllowedError" ||
+                    error.name === "PermissionDeniedError"
+                    ? "Allow microphone access in your browser, then try again."
+                    : "Could not enable the microphone: " + error.message;
+                setStatus(message);
+                if (required) {
+                    throw new Error(
+                        message
+                    );
+                }
+            }
+        }
+
+        async function toggleCamera() {
+            if (!room) return;
+
+            try {
+                const nextValue = !cameraEnabled;
+
+                await room.localParticipant.setCameraEnabled(nextValue);
+                cameraEnabled = nextValue;
+
+                if (cameraEnabled) {
+                    const publication = Array.from(
+                        room.localParticipant.videoTrackPublications.values()
+                    ).find(p => p.source === LivekitClient.Track.Source.Camera);
+
+                    if (publication && publication.track) {
+                        $("cameraPreview").srcObject = new MediaStream([
+                            publication.track.mediaStreamTrack,
+                        ]);
+                        $("cameraPreview").hidden = false;
+                        $("localAvatar").hidden = true;
+                    }
+
+                    $("cameraButton").textContent = "▣";
+                    $("cameraButton").classList.remove("active");
+                    $("cameraButton").title = "Turn camera off";
+                } else {
+                    $("cameraPreview").srcObject = null;
+                    $("cameraPreview").hidden = true;
+                    $("localAvatar").hidden = false;
+                    $("cameraButton").textContent = "▣";
+                    $("cameraButton").classList.add("active");
+                    $("cameraButton").title = "Turn camera on";
+                }
+
+                $("cameraButton").setAttribute("aria-label", $("cameraButton").title);
+                setStatus(cameraEnabled ? "Your camera is on." : "Your camera is off.", true);
+            } catch (error) {
+                setStatus("Could not change camera: " + error.message);
+            }
+        }
+
+
+async function toggleScreenShare() {
+    if (!room) {
+        setStatus("Please join the meeting first.");
+        return;
+    }
+
+    if (!window.isSecureContext || !navigator.mediaDevices ||
+        !navigator.mediaDevices.getDisplayMedia) {
+        setStatus(
+            "Screen sharing requires a secure page. Open this meeting using HTTPS or localhost in Chrome or Edge."
+        );
+        return;
+    }
+
+    const button = $("screenButton");
+    button.disabled = true;
+
+    try {
+        if (!screenEnabled) {
+            // This must run directly from the button click
+            // so the browser can open its screen picker.
+            const publication =
+                await room.localParticipant.setScreenShareEnabled(true, {
+                    audio: false,
+                    contentHint: "detail",
+                });
+
+            if (!publication || !publication.track) {
+                throw new Error("The browser did not publish a screen-share video track.");
+            }
+
+            screenEnabled = true;
+            $("screenPreview").srcObject = new MediaStream([
+                publication.track.mediaStreamTrack,
+            ]);
+            $("localScreenTile").hidden = false;
+            const sharingRoom = room;
+            publication.track.mediaStreamTrack.addEventListener("ended", () => {
+                screenEnabled = false;
+                $("screenButton").textContent = "▤";
+                $("screenButton").title = "Share screen";
+                $("screenButton").setAttribute("aria-label", "Share screen");
+                $("localScreenTile").hidden = true;
+                $("screenPreview").srcObject = null;
+                setStatus("Screen sharing stopped.", true);
+                if (sharingRoom) {
+                    sharingRoom.localParticipant.setScreenShareEnabled(false).catch(error => {
+                        console.error("Could not unpublish the ended screen share:", error);
+                    });
+                }
+            }, { once: true });
+
+            button.textContent = "▤";
+            button.classList.add("active");
+            button.title = "Stop screen sharing";
+            setStatus("Screen sharing is on.", true);
+        } else {
+            await room.localParticipant.setScreenShareEnabled(false);
+            screenEnabled = false;
+
+            $("localScreenTile").hidden = true;
+            $("screenPreview").srcObject = null;
+            button.textContent = "▤";
+            button.classList.remove("active");
+            button.title = "Share screen";
+            setStatus("Screen sharing stopped.", true);
+        }
+    } catch (error) {
+        console.error("Screen-sharing error:", error);
+
+        const message = error.name === "NotAllowedError"
+            ? /Electron/i.test(navigator.userAgent)
+                ? "The VS Code built-in browser may block screen capture. Open this meeting in Chrome or Edge and try again."
+                : "Screen sharing was cancelled or blocked. Allow screen capture in your browser and try again."
+            : error.name === "NotFoundError"
+                ? "No screen or window is available to share."
+                : error.name === "NotReadableError"
+                    ? "The selected screen could not be captured. Close other capture apps and try again."
+                    : error.name === "SecurityError"
+                        ? "Screen sharing requires HTTPS or localhost."
+                        : error.message || "Unknown error";
+        setStatus("Screen-sharing failed: " + message);
+    } finally {
+        button.disabled = !room;
+    }
+}
+
+        async function leaveMeeting() {
+            try {
+                if (room) {
+                    await room.disconnect();
+                    room = null;
+                }
+            } catch (error) {
+                console.error("Error leaving meeting:", error);
+            }
+
+            micEnabled = false;
+            cameraEnabled = false;
+            screenEnabled = false;
+            clearTimeout(juryStartCooldownTimer);
+            juryStartCooldownTimer = null;
+            evaluationRequestInProgress = false;
+            $("startJuryButton").hidden = true;
+            $("startJuryButton").disabled = false;
+            $("startJuryButton").textContent = "Everyone is here — start jury";
+
+            setMeetingControls(false);
+
+            $("joinButton").disabled = false;
+            $("micButton").textContent = "🔇";
+            $("micButton").classList.add("active");
+            $("micButton").title = "Turn microphone on";
+            $("micButton").setAttribute("aria-label", "Turn microphone on");
+            $("micLabel").textContent = "Microphone off";
+            $("cameraButton").classList.remove("active");
+            $("screenButton").classList.remove("active");
+            $("cameraPreview").srcObject = null;
+            $("cameraPreview").hidden = true;
+            $("localAvatar").hidden = false;
+            $("screenPreview").srcObject = null;
+            $("localScreenTile").hidden = true;
+            $("remoteMedia").replaceChildren();
+            $("enableAudioButton").hidden = true;
+            Array.from(document.querySelectorAll("[data-participant-identity]"))
+                .forEach(tile => tile.remove());
+            $("conference").hidden = true;
+            $("conference").classList.remove("visible");
+            $("roomControls").hidden = true;
+            $("prejoin").hidden = false;
+            $("roomLive").textContent = "Not connected";
+            $("roomLive").classList.remove("connected");
+            renderParticipants();
+
+            setStatus("You have left the meeting.");
+            setAgentStatus("Waiting for the AI agent to join...");
+        }
+    </script>
+</body>
+</html>
