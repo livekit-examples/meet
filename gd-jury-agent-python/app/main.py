@@ -74,11 +74,8 @@ def room_name_for_team(team_name: str) -> str:
 
 
 @app.get("/")
-async def home():
-    return {
-        "message": "AI Hackathon Jury Agent API is running",
-        "status": "healthy",
-    }
+async def root():
+    return FileResponse(BASE_DIR / "templates" / "meeting.html")
 
 
 @app.get("/health")
