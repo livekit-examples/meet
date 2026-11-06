@@ -32,4 +32,38 @@ describe('getLiveKitURL', () => {
       'https://myproject.ap.production.livekit.cloud/room?foo=bar',
     );
   });
+
+  it('accepts hyphenated region labels', () => {
+    expect(getLiveKitURL('wss://myproject.livekit.cloud', 'us-west')).toBe(
+      'wss://myproject.us-west.production.livekit.cloud/',
+    );
+  });
+
+  it.each([
+    'example.com/x',
+    'example.com?',
+    'example.com#',
+    'example.com\\x',
+    'example.com%2Fx',
+    'a.b',
+    'a@example.com/x',
+    'example.com:443/x',
+    'EU',
+    '-eu',
+    'eu-',
+    ' eu',
+    'eu ',
+    'x'.repeat(64),
+  ])('rejects invalid region %j', (region) => {
+    expect(getLiveKitURL('wss://myproject.livekit.cloud', region)).toBeUndefined();
+  });
+
+  it('rejects invalid regions for non-livekit.cloud hosts too', () => {
+    expect(getLiveKitURL('wss://example.com', 'example.com/x')).toBeUndefined();
+  });
+
+  it('only rewrites hosts that end in .livekit.cloud', () => {
+    const url = 'wss://livekit.cloud.example.com';
+    expect(getLiveKitURL(url, 'eu')).toBe(url + '/');
+  });
 });
