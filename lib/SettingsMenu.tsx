@@ -1,16 +1,18 @@
 'use client';
+
 import * as React from 'react';
-import { Track } from 'livekit-client';
 import {
   useMaybeLayoutContext,
   MediaDeviceMenu,
-  TrackToggle,
   useRoomContext,
   useIsRecording,
 } from '@livekit/components-react';
 import styles from '../styles/SettingsMenu.module.css';
 import { CameraSettings } from './CameraSettings';
 import { MicrophoneSettings } from './MicrophoneSettings';
+import { useSettingsState } from './SettingsContext';
+import { KeyBinding, KeyCommand } from './types';
+import { keybindingOptions } from './keybindings';
 /**
  * @alpha
  */
@@ -20,6 +22,7 @@ export interface SettingsMenuProps extends React.HTMLAttributes<HTMLDivElement> 
  * @alpha
  */
 export function SettingsMenu(props: SettingsMenuProps) {
+  const { state, set: setSettingsState } = useSettingsState();
   const layoutContext = useMaybeLayoutContext();
   const room = useRoomContext();
   const recordingEndpoint = process.env.NEXT_PUBLIC_LK_RECORD_ENDPOINT;
@@ -28,7 +31,11 @@ export function SettingsMenu(props: SettingsMenuProps) {
     return {
       media: { camera: true, microphone: true, label: 'Media Devices', speaker: true },
       recording: recordingEndpoint ? { label: 'Recording' } : undefined,
-    };
+      keyboard: {
+        label: 'Keybindings',
+        keybindings: keybindingOptions,
+      },
+    } as const;
   }, []);
 
   const tabs = React.useMemo(
@@ -73,6 +80,16 @@ export function SettingsMenu(props: SettingsMenuProps) {
     }
   };
 
+  const setKeyBinding = (key: KeyCommand, binds: KeyBinding | [KeyBinding, KeyBinding]) => {
+    setSettingsState((prev) => ({
+      ...prev,
+      keybindings: {
+        ...prev.keybindings,
+        [key]: binds,
+      },
+    }));
+  };
+
   return (
     <div className="settings-menu" style={{ width: '100%', position: 'relative' }} {...props}>
       <div className={styles.tabs}>
@@ -85,10 +102,7 @@ export function SettingsMenu(props: SettingsMenuProps) {
                 onClick={() => setActiveTab(tab)}
                 aria-pressed={tab === activeTab}
               >
-                {
-                  // @ts-ignore
-                  settings[tab].label
-                }
+                {settings[tab].label}
               </button>
             ),
         )}
@@ -137,6 +151,36 @@ export function SettingsMenu(props: SettingsMenuProps) {
               <button disabled={processingRecRequest} onClick={() => toggleRoomRecording()}>
                 {isRecording ? 'Stop' : 'Start'} Recording
               </button>
+            </section>
+          </>
+        )}
+        {activeTab === 'keyboard' && (
+          <>
+            <h3>PTT</h3>
+            <section>
+              <button
+                className="lk-button"
+                onClick={() => {
+                  setSettingsState((prev) => ({ ...prev, enablePTT: !prev.enablePTT }));
+                }}
+              >
+                {`${state.enablePTT ? 'Disable' : 'Enable'} PTT`}
+              </button>
+            </section>
+            <h4>PTT trigger</h4>
+            <section>
+              {settings.keyboard.keybindings[KeyCommand.PTT]?.map(({ label, binds }) => (
+                <div key={label}>
+                  <input
+                    type="radio"
+                    name="ptt"
+                    id={label}
+                    defaultChecked={state.keybindings[KeyCommand.PTT] === binds}
+                    onChange={() => setKeyBinding(KeyCommand.PTT, binds)}
+                  />
+                  <label htmlFor={label}>{label}</label>
+                </div>
+              ))}
             </section>
           </>
         )}
