@@ -40,7 +40,7 @@ importers:
         version: 18.3.1(react@18.3.1)
       react-hot-toast:
         specifier: ^2.5.2
-        version: 2.5.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+        version: 2.6.1(@types/react-dom@18.3.7(@types/react@18.3.28))(@types/react@18.3.28)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       tinykeys:
         specifier: ^3.0.0
         version: 3.1.0
@@ -71,7 +71,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: ^4.0.0
-        version: 4.1.12(@types/node@24.12.4)(vite@7.3.6(@types/node@24.12.4)(terser@5.51.3))
+        version: 4.1.12(@types/node@24.12.4)(vite@7.3.6(@types/node@24.12.4)(terser@5.51.4))
 
 packages:
 
@@ -1101,6 +1101,9 @@ packages:
   csstype@3.2.3:
     resolution: {integrity: sha512-z1HGKcYy2xA8AGQfwrn0PAy+PB7X/GSj3UVJW9qKyn43xWa+gl5nXmU4qqLMRzWVLFC8KusUX8T/0kCiOYpAIQ==}
 
+  csstype@3.2.4:
+    resolution: {integrity: sha512-PoKaoPzQapnEoqUSnHx1u6W6ku8CVEgKsnpmmzU3m1nwkidpPBQ8V/Zq2+bWNrsOKoKLwTGdbx6xF7BXP1zLVQ==}
+
   damerau-levenshtein@1.0.8:
     resolution: {integrity: sha512-sdQSFB7+llfUcQHUQO3+B8ERRj0Oa4w9POWMI/puGtuf7gFywGmkaLCElnudfTiKZV+NvHqL0ifzdrI8Ro7ESA==}
 
@@ -1458,8 +1461,8 @@ packages:
     resolution: {integrity: sha512-DpLKbNU4WylpxJykQujfCcwYWiV/Jhm50Goo0wrVILAv5jOr9d+H+UR3PhSCD2rCCEIg0uc+G+muBTwD54JhDQ==}
     engines: {node: '>= 0.4'}
 
-  goober@2.1.16:
-    resolution: {integrity: sha512-erjk19y1U33+XAMe1VTvIONHYoSqE4iS7BYUZfHaqeohLmnC0FdxEh7rQU+6MZ4OajItzjZFSRtVANrQwNq6/g==}
+  goober@2.1.19:
+    resolution: {integrity: sha512-U7veizMqxyKlM58+Z5j2ngJBH/r9siDmxpvNxSw0PylF6WQvrASJEZrxh1hidRBJc2jqoBVSyOban5u8m+6Rxg==}
     peerDependencies:
       csstype: ^3.0.10
 
@@ -1923,12 +1926,19 @@ packages:
     peerDependencies:
       react: ^18.3.1
 
-  react-hot-toast@2.5.2:
-    resolution: {integrity: sha512-Tun3BbCxzmXXM7C+NI4qiv6lT0uwGh4oAfeJyNOjYUejTsm35mK9iCaYLGv8cBz9L5YxZLx/2ii7zsIwPtPUdw==}
+  react-hot-toast@2.6.1:
+    resolution: {integrity: sha512-gjFsf05dxcku0FkyMtFH+XmYFdA2odXfBVknEr/IZ+XpUjwsgvtY2616sOpUynK+l9ykQDRNpaJ1hYfuximUiA==}
     engines: {node: '>=10'}
     peerDependencies:
+      '@types/react': '*'
+      '@types/react-dom': '*'
       react: '>=16'
       react-dom: '>=16'
+    peerDependenciesMeta:
+      '@types/react':
+        optional: true
+      '@types/react-dom':
+        optional: true
 
   react-is@16.13.1:
     resolution: {integrity: sha512-24e6ynE2H+OKt4kqsOvNd8kBpV65zoxbA4BVsEOB3ARVWQki/DHzaUoC5KuON/BiccDaCCTZBuOcfZs70kR8bQ==}
@@ -2186,8 +2196,8 @@ packages:
       uglify-js:
         optional: true
 
-  terser@5.51.3:
-    resolution: {integrity: sha512-j5jPZZ6Sz0Eg2unusKhdRzUhUlHXJ3Bw2AkIXyJ6AqajWwihUlZOdJS+KSnZzmtVk6mFGdm3hHg0+M2sgyEz5Q==}
+  terser@5.51.4:
+    resolution: {integrity: sha512-VPi1CkDvCWLGUVIToctNBG+NdHbSXwOPjHJnQ3pdB0XknaldnI76wSkAFOGxV2ZdkzOP5d6gpQ5c58XvDghRvw==}
     engines: {node: '>=10'}
     hasBin: true
 
@@ -3003,13 +3013,13 @@ snapshots:
       chai: 6.3.0
       tinyrainbow: 3.2.0
 
-  '@vitest/mocker@4.1.12(vite@7.3.6(@types/node@24.12.4)(terser@5.51.3))':
+  '@vitest/mocker@4.1.12(vite@7.3.6(@types/node@24.12.4)(terser@5.51.4))':
     dependencies:
       '@vitest/spy': 4.1.12
       estree-walker: 3.0.3
       magic-string: 0.30.21
     optionalDependencies:
-      vite: 7.3.6(@types/node@24.12.4)(terser@5.51.3)
+      vite: 7.3.6(@types/node@24.12.4)(terser@5.51.4)
 
   '@vitest/pretty-format@4.1.12':
     dependencies:
@@ -3314,6 +3324,8 @@ snapshots:
       which: 2.0.2
 
   csstype@3.2.3: {}
+
+  csstype@3.2.4: {}
 
   damerau-levenshtein@1.0.8: {}
 
@@ -3863,9 +3875,9 @@ snapshots:
       define-properties: 1.2.1
       gopd: 1.0.1
 
-  goober@2.1.16(csstype@3.2.3):
+  goober@2.1.19(csstype@3.2.4):
     dependencies:
-      csstype: 3.2.3
+      csstype: 3.2.4
 
   gopd@1.0.1:
     dependencies:
@@ -4302,12 +4314,15 @@ snapshots:
       react: 18.3.1
       scheduler: 0.23.2
 
-  react-hot-toast@2.5.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1):
+  react-hot-toast@2.6.1(@types/react-dom@18.3.7(@types/react@18.3.28))(@types/react@18.3.28)(react-dom@18.3.1(react@18.3.1))(react@18.3.1):
     dependencies:
-      csstype: 3.2.3
-      goober: 2.1.16(csstype@3.2.3)
+      csstype: 3.2.4
+      goober: 2.1.19(csstype@3.2.4)
       react: 18.3.1
       react-dom: 18.3.1(react@18.3.1)
+    optionalDependencies:
+      '@types/react': 18.3.28
+      '@types/react-dom': 18.3.7(@types/react@18.3.28)
 
   react-is@16.13.1: {}
 
@@ -4594,10 +4609,10 @@ snapshots:
       '@jridgewell/trace-mapping': 0.3.31
       jest-worker: 27.5.1
       schema-utils: 4.8.5(webpack@5.95.0)
-      terser: 5.51.3
+      terser: 5.51.4
       webpack: 5.95.0
 
-  terser@5.51.3:
+  terser@5.51.4:
     dependencies:
       '@jridgewell/source-map': 0.3.11
       acorn: 8.19.0
@@ -4700,7 +4715,7 @@ snapshots:
       lodash.debounce: 4.0.8
       react: 18.3.1
 
-  vite@7.3.6(@types/node@24.12.4)(terser@5.51.3):
+  vite@7.3.6(@types/node@24.12.4)(terser@5.51.4):
     dependencies:
       esbuild: 0.28.2
       fdir: 6.5.0(picomatch@4.0.7)
@@ -4711,12 +4726,12 @@ snapshots:
     optionalDependencies:
       '@types/node': 24.12.4
       fsevents: 2.3.3
-      terser: 5.51.3
+      terser: 5.51.4
 
-  vitest@4.1.12(@types/node@24.12.4)(vite@7.3.6(@types/node@24.12.4)(terser@5.51.3)):
+  vitest@4.1.12(@types/node@24.12.4)(vite@7.3.6(@types/node@24.12.4)(terser@5.51.4)):
     dependencies:
       '@vitest/expect': 4.1.12
-      '@vitest/mocker': 4.1.12(vite@7.3.6(@types/node@24.12.4)(terser@5.51.3))
+      '@vitest/mocker': 4.1.12(vite@7.3.6(@types/node@24.12.4)(terser@5.51.4))
       '@vitest/pretty-format': 4.1.12
       '@vitest/runner': 4.1.12
       '@vitest/snapshot': 4.1.12
@@ -4733,7 +4748,7 @@ snapshots:
       tinyexec: 1.3.1
       tinyglobby: 0.2.17
       tinyrainbow: 3.2.0
-      vite: 7.3.6(@types/node@24.12.4)(terser@5.51.3)
+      vite: 7.3.6(@types/node@24.12.4)(terser@5.51.4)
       why-is-node-running: 2.3.0
     optionalDependencies:
       '@types/node': 24.12.4
