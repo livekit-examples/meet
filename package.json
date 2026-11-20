@@ -27,7 +27,7 @@
     "tinykeys": "^3.0.0"
   },
   "devDependencies": {
-    "@types/node": "24.12.4",
+    "@types/node": "26.6.6",
     "@types/react": "18.3.28",
     "@types/react-dom": "18.3.7",
     "eslint": "9.39.4",
