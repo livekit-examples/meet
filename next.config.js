@@ -1,6 +1,9 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: false,
+  // Metadata must render in <head> on every route: browsers only read
+  // <link rel="manifest"> from <head>, and the room pages render on demand.
+  htmlLimitedBots: /.*/,
   productionBrowserSourceMaps: true,
   images: {
     formats: ['image/webp'],
