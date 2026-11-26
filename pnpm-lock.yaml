@@ -46,8 +46,8 @@ importers:
         version: 3.1.0
     devDependencies:
       '@types/node':
-        specifier: 24.12.4
-        version: 24.12.4
+        specifier: 26.6.11
+        version: 26.6.11
       '@types/react':
         specifier: 18.3.28
         version: 18.3.28
@@ -71,7 +71,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: ^4.0.0
-        version: 4.1.12(@types/node@24.12.4)(vite@7.3.6(@types/node@24.12.4)(terser@5.51.3))
+        version: 4.1.12(@types/node@26.6.11)(vite@7.3.6(@types/node@26.6.11)(terser@5.51.3))
 
 packages:
 
@@ -760,8 +760,8 @@ packages:
   '@types/json5@0.0.29':
     resolution: {integrity: sha512-dRLjCWHYg4oaA77cxO64oO+7JwCwnIzkZPdrrC71jQmQtlhM556pwKo5bUzqvZndkVbeFLIIi+9TC40JNF5hNQ==}
 
-  '@types/node@24.12.4':
-    resolution: {integrity: sha512-GUUEShf+PBCGW2KaXwcIt3Yk+e3pkKwWKb9GSyM9WQVE+ep2jzmHdGsHzu4wgcZy5fN9FBdVzjpBQsYlpfpgLA==}
+  '@types/node@26.6.11':
+    resolution: {integrity: sha512-uUyQ2XLEz+EXh34lmS3GhKrkqn/8FU7KUiKRpk347At2bmnMVWss45yz8b4FG/tUtmV1tV/+TVkITItPROyeeQ==}
 
   '@types/prop-types@15.7.13':
     resolution: {integrity: sha512-hCZTSvwbzWGvhqxp/RqVqwU999pBf2vp7hzIjiYOsl8wqOmUxkQ6ddw1cV3l8811+kdUFus/q4d1Y3E3SyEifA==}
@@ -2256,8 +2256,8 @@ packages:
   unbox-primitive@1.0.2:
     resolution: {integrity: sha512-61pPlCD9h51VoreyJ0BReideM3MDKMKnh6+V9L08331ipq6Q8OFXZYiqP6n/tbHx4s5I9uRhcye6BrbkizkBDw==}
 
-  undici-types@7.16.0:
-    resolution: {integrity: sha512-Zz+aZWSj8LE6zoxD+xrjh4VfkIG8Ya6LvYkZqtUQGJPZjYl53ypCaUwWqo7eI0x66KBGeRo+mlBEkMSeSZ38Nw==}
+  undici-types@8.9.0:
+    resolution: {integrity: sha512-KTDyRTYX8sWmKXAikPHHSyc63CRPETMctyjKFupcC6OBLXT3xsN0e9aF7m+mIXutFWpUXuedtowG7iLOzp0kQg==}
 
   update-browserslist-db@1.4.0:
     resolution: {integrity: sha512-WPJuOnjI9FWDct4fB+ej4Mz8opLaw5CDcZ2t44tFZ0vIQVYWzBhWR3mkixuUj/A7+vY4V9+ApOZ2YYLwdgq46w==}
@@ -2896,9 +2896,9 @@ snapshots:
 
   '@types/json5@0.0.29': {}
 
-  '@types/node@24.12.4':
+  '@types/node@26.6.11':
     dependencies:
-      undici-types: 7.16.0
+      undici-types: 8.9.0
 
   '@types/prop-types@15.7.13': {}
 
@@ -3003,13 +3003,13 @@ snapshots:
       chai: 6.3.0
       tinyrainbow: 3.2.0
 
-  '@vitest/mocker@4.1.12(vite@7.3.6(@types/node@24.12.4)(terser@5.51.3))':
+  '@vitest/mocker@4.1.12(vite@7.3.6(@types/node@26.6.11)(terser@5.51.3))':
     dependencies:
       '@vitest/spy': 4.1.12
       estree-walker: 3.0.3
       magic-string: 0.30.21
     optionalDependencies:
-      vite: 7.3.6(@types/node@24.12.4)(terser@5.51.3)
+      vite: 7.3.6(@types/node@26.6.11)(terser@5.51.3)
 
   '@vitest/pretty-format@4.1.12':
     dependencies:
@@ -4029,7 +4029,7 @@ snapshots:
 
   jest-worker@27.5.1:
     dependencies:
-      '@types/node': 24.12.4
+      '@types/node': 26.6.11
       merge-stream: 2.0.0
       supports-color: 8.1.1
 
@@ -4683,7 +4683,7 @@ snapshots:
       has-symbols: 1.0.3
       which-boxed-primitive: 1.0.2
 
-  undici-types@7.16.0: {}
+  undici-types@8.9.0: {}
 
   update-browserslist-db@1.4.0(browserslist@4.29.6):
     dependencies:
@@ -4700,7 +4700,7 @@ snapshots:
       lodash.debounce: 4.0.8
       react: 18.3.1
 
-  vite@7.3.6(@types/node@24.12.4)(terser@5.51.3):
+  vite@7.3.6(@types/node@26.6.11)(terser@5.51.3):
     dependencies:
       esbuild: 0.28.2
       fdir: 6.5.0(picomatch@4.0.7)
@@ -4709,14 +4709,14 @@ snapshots:
       rollup: 4.68.7
       tinyglobby: 0.2.17
     optionalDependencies:
-      '@types/node': 24.12.4
+      '@types/node': 26.6.11
       fsevents: 2.3.3
       terser: 5.51.3
 
-  vitest@4.1.12(@types/node@24.12.4)(vite@7.3.6(@types/node@24.12.4)(terser@5.51.3)):
+  vitest@4.1.12(@types/node@26.6.11)(vite@7.3.6(@types/node@26.6.11)(terser@5.51.3)):
     dependencies:
       '@vitest/expect': 4.1.12
-      '@vitest/mocker': 4.1.12(vite@7.3.6(@types/node@24.12.4)(terser@5.51.3))
+      '@vitest/mocker': 4.1.12(vite@7.3.6(@types/node@26.6.11)(terser@5.51.3))
       '@vitest/pretty-format': 4.1.12
       '@vitest/runner': 4.1.12
       '@vitest/snapshot': 4.1.12
@@ -4733,10 +4733,10 @@ snapshots:
       tinyexec: 1.3.1
       tinyglobby: 0.2.17
       tinyrainbow: 3.2.0
-      vite: 7.3.6(@types/node@24.12.4)(terser@5.51.3)
+      vite: 7.3.6(@types/node@26.6.11)(terser@5.51.3)
       why-is-node-running: 2.3.0
     optionalDependencies:
-      '@types/node': 24.12.4
+      '@types/node': 26.6.11
     transitivePeerDependencies:
       - msw
 
